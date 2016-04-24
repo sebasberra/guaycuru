@@ -8,6 +8,6 @@ yaaukaniga:
     type:     annotation
     prefix:   /guaycuru/yaaukaniga/
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+#app:
+#    resource: "@AppBundle/Controller/"
+#    type:     annotation
