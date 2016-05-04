@@ -1,0 +1,21 @@
+{% if titleOptions is not defined or titleOptions is null %} {% set titleOptions = { '#tab1' : 'titulo1','#tab2' : 'titulo2','#tab3':'titulo3'} %} {% endif%} {% if option is not defined or option is null %} {% set option = { 'tab1': 'contenido1',
+'tab2':'contenido2', 'tab3':'contenido3'} %} {% endif%} {% block tabs %}
+<script>
+	$(function() {
+		$(".tabs").tabs();
+	});
+</script>
+
+<div class="tabs">
+	<ul>
+		{% block tabsTitleOption %} {% for key, value in titleOptions %}
+		<li><a href="{{key}}">{{ value | raw }}</a></li> {% endfor %} {% endblock %}
+	</ul>
+	{% block tabsOption %} {% for key, value in option %}
+	<div id="{{key}}">
+		<p>{{ value | raw }}</p>
+	</div>
+	{% endfor %} {% endblock %}
+</div>
+
+{% endblock %}

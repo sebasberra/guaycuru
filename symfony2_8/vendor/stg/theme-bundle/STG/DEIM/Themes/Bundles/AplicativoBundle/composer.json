@@ -1,0 +1,45 @@
+{
+	"name" : "stg/theme-bundle",
+	"type" : "symfony-bundle",
+	"description" : "Bundle de temas para UI",
+	"keywords" : [
+		"Twig",
+		"HTML5",
+		"CSS3",
+		"jQuery-UI",
+		"Bootstrap",
+		"Responsive",
+		"STG",
+		"jQuery"
+	],
+	"homepage" : "http://www.santafe.gov.ar/assets",
+	"authors" : [{
+			"name" : "Aguilar, Lucas",
+			"homepage" : "http://www.santafe.gov.ar",
+			"email" : "laguilar@santafe.gov.ar"
+		}, {
+			"name" : "Baroni, Federico",
+			"homepage" : "http://www.santafe.gov.ar",
+			"email" : "fbaroni@santafe.gov.ar"
+		}, {
+			"name" : "Godoy, Matias",
+			"homepage" : "http://www.santafe.gov.ar",
+			"email" : "mgodoy@santafe.gov.ar"
+		}, {
+			"name" : "Azario, Alejandro",
+			"homepage" : "http://www.santafe.gov.ar",
+			"email" : "aazario@santafe.gov.ar"
+		}
+	],
+	"require" : {
+		"php" : ">=5.3.3",
+		"symfony/framework-bundle" : "~2.3",
+		"knplabs/knp-paginator-bundle" : "~2.4"		
+	},
+	"autoload" : {
+		"psr-0" : {
+			"STG\\DEIM\\Themes\\Bundles\\AplicativoBundle" : ""
+		}
+	},
+	"target-dir" : "STG/DEIM/Themes/Bundles/AplicativoBundle"
+}

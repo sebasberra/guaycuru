@@ -1,0 +1,32 @@
+{% if options is not defined or options is null %} {% set options = { 'Titulo': 'contenido1 one', 'Titulo2':'contenido2 two', 'Titulo3':'contenido3'} %} {% endif%} {% block accordion %} {% block jsAccordion %}
+<script>
+            $(function() {
+                $("#accordion").accordion({
+                    heightStyle: "fill",
+                    collapsible: true
+                });
+            });
+        </script>
+{% endblock %} {% block ayudaAccordion %}
+<div class="ui-widget">
+	<div style="margin-top: 20px; margin-bottom: 20px; padding: 10px;" class="ui-state-highlight ui-corner-all">
+		<p>
+			<span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"> </span> <strong> {% block Titulo %} Ayuda General: {% endblock %} </strong> {% block header %} Esta es la ayuda general del sistema. Por cada opción se describen las
+			principales funcionalidades. {% endblock %}
+		</p>
+	</div>
+</div>
+{% endblock %} {% block cuerpoAccordion %}
+<div id="accordion">
+
+	{% for key, value in options %}
+
+	<h3>{{key}}</h3>
+	<div>
+		<p>{{ value | raw }}</p>
+	</div>
+
+	{% endfor %}
+
+</div>
+{% endblock %} {% endblock %}

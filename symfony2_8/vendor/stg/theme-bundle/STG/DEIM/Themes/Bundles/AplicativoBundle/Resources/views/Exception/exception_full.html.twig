@@ -1,0 +1,13 @@
+{% extends 'ThemeAplicativoBundle:Exception:layout.html.twig' %} {% block cuerpo %}
+<div>
+	<div class="ui-widget">
+		<div style="padding: 10px; margin-top: 20px; margin-bottom: 20px" class="ui-state-error ui-corner-all">
+			<p>
+				<span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>{{ errorMessage }}</strong>
+			</p>
+		</div>
+	</div>
+</div>
+<div class="excepcion">{% include 'TwigBundle:Exception:exception.html.twig' %}</div>
+{% endblock %}
+

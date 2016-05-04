@@ -1,0 +1,18 @@
+{% if breadoption is not defined or breadoption is null %}
+
+   {% set breadoption = { 'Inicio': '#', 'Crear/Modificar':'#'} %}
+{% endif %}
+
+{% block breadcrumb %}
+<div class="row">
+	<div class="twelvecol ruta-name">
+		{% for key, value in breadoption %} {% if loop.last %}
+		<div style="float: left;">{{ key }}</div>
+		{% else %}
+		<div style="float: left;">
+			<a href="{{ value }}">{{ key }}</a>
+		</div>
+		<span style="float: left;" class="ui-icon ui-icon-arrow-1-e"> </span> {% endif %} {% endfor %}
+	</div>
+</div>
+{% endblock %}

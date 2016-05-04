@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ encabezado_titulo }}</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="author" content="" />
+<meta name="copyright" content="&copy;" />
+<meta name="robot" content="all" />
+
+{% include 'ThemeAplicativoBundle:Default:css-jquery-ui-theme.html.twig'%} {% include 'ThemeAplicativoBundle:Default:css.html.twig' %} {% include 'ThemeAplicativoBundle:Default:ie.html.twig' %} {% block styles %}
+<!-- BLOQUE STYLES BASE -->
+
+{% endblock %}
+</head>
+
+<body id="top">
+
+	<div class="container">
+		{% include 'ThemeAplicativoBundle:Default:top.html.twig' %} {#% include 'ThemeAplicativoBundle:Default:menu.html.twig' %#}
+
+		<div class="row">
+			<div class="twelvecol tool-bars">
+				<ul class="ui-widget ui-helper-clearfix" id="icons">
+
+					{% block barraHerramientas %}
+					<li id="ver_ayuda" title="Clic para ver ayuda" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-info"> </span></li>
+					<li title="" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-carat-1-n"> </span></li>
+					<li title="" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-carat-1-ne"> </span></li> {% endblock %}
+
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</div>
+
+		<div>
+			<div class="header_menu">
+				<!-- a id="logo" href="#">Logo</a-->
+				<div id="menu">
+					<a class="nav-mobile" id="nav-mobile" href="#"> </a>
+					<ul>
+						{% block menu %} {% block submenus %}
+
+						<li><a class="opcion" href="#">Solicitudes</a>
+
+							<div>
+								<ul class="submenu">
+									<li><a href="#" target="_top" class="sub-menu">Listado</a></li>
+								</ul>
+							</div></li>
+						<li><a class="opcion" href="#">Perfiles</a>
+
+							<div>
+								<ul class="submenu">
+
+									<li><a href="#" target="_top" class="sub-menu">Listado</a></li>
+									<li><a href="#" target="_top" class="sub-menu">Crear Perfil</a></li>
+
+								</ul>
+
+							</div></li>
+						<li><a class="opcion" href="#">Servicios</a>
+							<div>
+								<ul class="submenu">
+
+									<li><a href="#" target="_top" class="sub-menu">Listado</a></li>
+									<li><a href="#" target="_top" class="sub-menu">Crear Servicio</a></li>
+
+								</ul>
+
+							</div></li> {% endblock %} {% endblock %}
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		{# ruta de navegacion #} {% block javascriptsIncludes %} {% include 'ThemeAplicativoBundle:Default:jquery.html.twig' %} {% include 'ThemeAplicativoBundle:Default:javascript-standard-gobierno.html.twig' %} {% endblock %} {% block javascripts %} {%
+		endblock %} {% block jquery %}
+		<!-- BLOQUE jquery BASE -->
+		{% endblock %} {% block cuerpo %}
+
+		<div class="row">
+			<div class="twelvecol ruta-name">
+
+				<div style="float: left;">
+					<a href="#">Inicio</a>
+				</div>
+				<span style="float: left;" class="ui-icon ui-icon-arrow-1-e"> </span>
+
+				<div style="float: left;">Listado</div>
+			</div>
+		</div>
+
+		<div class="row form">
+			<form>
+				<div class="row">
+					<h3>Componente:</h3>
+					<div class="contenido">{{ componente | raw }}</div>
+				</div>
+			</form>
+		</div>
+
+		{% endblock %} {% include 'ThemeAplicativoBundle:Default:footer.html.twig' %} {% include 'ThemeAplicativoBundle:Default:modales.html.twig' %}
+
+	</div>
+
+	<div id="myProgressBar" style="visibility: hidden;"></div>
+</body>
+</html>

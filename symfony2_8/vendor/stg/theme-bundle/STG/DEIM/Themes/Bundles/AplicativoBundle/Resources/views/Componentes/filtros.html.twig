@@ -1,0 +1,62 @@
+
+{% block filtros %}
+    <form class="form" action='' name="formularioFiltros">
+            <div class="row">
+                <h4>Filtros de búsqueda:</h4>
+            </div>    
+            <div class="row">
+                <fieldset>
+                {% for filtro in filtros %}
+                    {% if loop.index is divisibleby(4) %}
+                        <div class='threecol last'>
+                    {% else %}
+                        <div class='threecol'>
+                    {% endif %}        
+                        {% if filtro.type == 'si_no' %}
+                            <label>{{filtro.label | capitalize}}</label>
+                            <select name="{{filtro.propiedad}}">
+                                <option value="">Seleccione una opción</option> 
+                                <option value="1" {{ filtro.value == '1' ? 'SELECTED' : '' }}>{{ filtro.options? filtro.options['si'] : 'Sí' }}</option> 
+                                <option value="0" {{ filtro.value == '0' ? 'SELECTED' : '' }}>{{ filtro.options? filtro.options['no'] : 'No' }}</option> 
+                            </select>
+                            
+                        {% elseif filtro.type == 'entidad'  %}
+                            <label>{{filtro.label | capitalize}}</label>
+                            <select name="{{ filtro.propiedad['name'] }}">
+                                <option value="">Seleccione una opción</option> 
+                                {% for entidad in filtro.propiedad['entidades'] %}
+                                    <option value="{{ entidad['id'] }}" {{ filtro.value == entidad['id'] ? 'SELECTED' : '' }}>{{ entidad['nombre'] }}</option> 
+                                {% endfor %}
+                            </select>
+                            
+                        {% elseif filtro.type == 'opciones' %}
+                            <label>{{ filtro.label | capitalize }}</label>
+                            <select name="{{filtro.propiedad}}">
+                                <option value="">Seleccione una opción</option> 
+                                {% for clave, option in filtro.options %}
+                                    <option value="{{ clave }}" {{ filtro.value == clave ? 'SELECTED' : '' }}>{{ option }}</option> 
+                                {% endfor %}    
+                            </select>
+                            
+                        {% elseif filtro.type == 'fecha'  %}
+                            <label>Fecha inicio</label>
+                            <input type="text" name="{{ filtro.propiedad['inicio'] }}" class="campo_fecha" value="{{ filtro.value['inicio'] }}">
+                            <label>Fecha fin</label>
+                            <input type="text" name="{{ filtro.propiedad['fin'] }}" class="campo_fecha" value="{{ filtro.value['fin'] }}">
+                        
+                        {% else %}
+                            <label>{{filtro.label | capitalize}}</label>
+                            <input type="text" name="{{filtro.propiedad}}" value="{{filtro.value}}">
+                        {% endif %}    
+                    </div>
+                {% endfor %}
+                </fieldset>
+            </div>
+            <div class='row'>    
+                <div class='threecol last'>
+                    <input type="submit" value="Buscar"></input>
+                </div>
+            </div>    
+
+    </form>
+{% endblock %} 
