@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2016-06-13T19:44:49" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
+<XMI verified="false" xmi.version="1.2" timestamp="2016-06-15T06:23:55" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -71,7 +71,7 @@
         <UML:AssociationEnd changeability="changeable" visibility="public" isNavigable="true" isSpecification="false" xmi.id="Xa4eYUYP83ze" type="VtHNjuZ2D9i6" name="" aggregation="none"/>
        </UML:Association.connection>
       </UML:Association>
-      <UML:UseCase visibility="public" isSpecification="false" namespace="Use Case View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="xT3kt0blsYjj" comment="Titulo: &#xa;&#x9;Pedir informe completo&#xa;&#xa;Inicio: &#xa;&#x9;Se inicia con el mensaje de pedido de informe completo de camas desde un cliente Web Services&#xa;&#xa;Funciones primarias: &#xa;&#x9;Generar un informe completo del estado de las camas del efector que pide el informe&#xa;&#xa;Funciones secundarias: &#xa;&#xa;Escenarios primarios:&#xa;&#x9;&#xa;&#xa;Escenarios secundarios:&#xa;&#xa;Necesidades no funcionales:&#xa;&#x9;&#xa;Finalizacion:" name="Pedir informe completo"/>
+      <UML:UseCase visibility="public" isSpecification="false" namespace="Use Case View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="xT3kt0blsYjj" comment="Titulo: &#xa;&#x9;Pedir informe completo&#xa;&#xa;Inicio: &#xa;&#x9;Se inicia con el mensaje de pedido de informe completo de camas desde un cliente Web Services&#xa;&#xa;Funciones primarias: &#xa;&#x9;Generar un informe completo del estado de las camas del efector que pide el informe&#xa;&#xa;Funciones secundarias: &#xa;&#xa;Escenarios primarios:&#xa;&#x9;Los servidores locales instalados en los distintos efectores poseen la informacion mas actualizada, y para mantener los datos sincronizados con el servidor central en la infraestructura de la STG es necesario implementar un proceso que se encargue de dicha tarea. Este programa necesita pedir un informe periodicamente al servidor central con los datos centrales utilizando un Web Services&#xa;&#xa;Escenarios secundarios:&#xa;&#xa;Necesidades no funcionales:&#xa;&#x9;&#xa;Finalizacion:&#xa;&#x9;Termina con el envio de un mensaje WS al cliente con la informacion del estado actual del stock de camas del servidor central" name="Pedir informe completo"/>
       <UML:Actor visibility="public" isSpecification="false" namespace="Use Case View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="wjRI7Lq4ntoe" comment="El proceso sync puede ser una tarea programada o cron que periodicamente ejecuta un proceso de resincronizacion del estado de las camas" name="Proceso sync"/>
       <UML:Association visibility="public" isSpecification="false" namespace="Use Case View" xmi.id="QJbsTOGP6fhB" name="">
        <UML:Association.connection>
