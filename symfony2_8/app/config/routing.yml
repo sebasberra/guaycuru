@@ -1,3 +1,20 @@
+tembures:
+    resource: "@TemburesBundle/Resources/config/routing.yml"
+    prefix:   /tembures
+
+qiluazus:
+    resource: "@QiluazusBundle/Resources/config/routing.yml"
+    prefix:   /qiluazus
+
+yaaukaniga:
+    resource: "@YaaukanigaBundle/Resources/config/routing.yml"
+    prefix:   /yaaukaniga
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    
+#theme_aplicativo:
+#    resource: "@ThemeAplicativoBundle/Resources/config/routing.yml"
+#    prefix:   /
+

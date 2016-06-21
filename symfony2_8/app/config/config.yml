@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@YaaukanigaBundle/Resources/config/services.yml" }
+    - { resource: "@QiluazusBundle/Resources/config/services.yml" }
+    - { resource: "@TemburesBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -64,3 +67,21 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+    
+# theme-bundle    
+#theme_aplicativo:
+#    datos_aplicativo:
+#        encabezado:
+#            titulo: "%datos_aplicativo_encabezado_titulo%"
+#            nombre_dependencia: "%datos_aplicativo_encabezado_nombre_dependencia%"
+#            nombre_organismo: "%datos_aplicativo_nombre_organismo%"
+#            path_ayuda: "%datos_aplicativo_path_ayuda%"
+#            path_home: "%datos_aplicativo_path_home%"
+#            path_logout: "%datos_aplicativo_path_logout%"
+#            webmaster_correo: "%datos_aplicativo_webmaster_correo%"
+
+#        pie_pagina:
+#            titulo: "%datos_aplicativo_pie_pagina_titulo%"
+#            domicilio: "%datos_aplicativo_pie_pagina_domicilio%"
+#            telefono: "%datos_aplicativo_pie_pagina_telefono%"
+#            copyright: "%datos_aplicativo_pie_pagina_copyright%"
