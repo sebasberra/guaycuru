@@ -1,0 +1,3 @@
+qiluazus_homepage:
+    path:     /
+    defaults: { _controller: QiluazusBundle:Default:index }

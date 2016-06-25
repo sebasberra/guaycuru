@@ -1,0 +1,4 @@
+services:
+#    qiluazus.example:
+#        class: Guaycuru\QiluazusBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
