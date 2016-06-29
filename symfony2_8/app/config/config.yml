@@ -5,6 +5,7 @@ imports:
     - { resource: "@YaaukanigaBundle/Resources/config/services.yml" }
     - { resource: "@QiluazusBundle/Resources/config/services.yml" }
     - { resource: "@TemburesBundle/Resources/config/services.yml" }
+    - { resource: "@DBHmi2Bundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -69,19 +70,42 @@ swiftmailer:
     spool:     { type: memory }
     
 # theme-bundle    
-#theme_aplicativo:
-#    datos_aplicativo:
-#        encabezado:
-#            titulo: "%datos_aplicativo_encabezado_titulo%"
-#            nombre_dependencia: "%datos_aplicativo_encabezado_nombre_dependencia%"
-#            nombre_organismo: "%datos_aplicativo_nombre_organismo%"
-#            path_ayuda: "%datos_aplicativo_path_ayuda%"
-#            path_home: "%datos_aplicativo_path_home%"
-#            path_logout: "%datos_aplicativo_path_logout%"
-#            webmaster_correo: "%datos_aplicativo_webmaster_correo%"
+theme_aplicativo:
+    datos_aplicativo:
+        encabezado:
+            titulo: "%datos_aplicativo_encabezado_titulo%"
+            nombre_dependencia: "%datos_aplicativo_encabezado_nombre_dependencia%"
+            nombre_organismo: "%datos_aplicativo_encabezado_nombre_organismo%"
+            path_ayuda: "%datos_aplicativo_path_ayuda%"
+            path_home: "%datos_aplicativo_path_home%"
+            path_logout: "%datos_aplicativo_path_logout%"
+            webmaster_correo: "%datos_aplicativo_webmaster_correo%"
 
-#        pie_pagina:
-#            titulo: "%datos_aplicativo_pie_pagina_titulo%"
-#            domicilio: "%datos_aplicativo_pie_pagina_domicilio%"
-#            telefono: "%datos_aplicativo_pie_pagina_telefono%"
-#            copyright: "%datos_aplicativo_pie_pagina_copyright%"
+        pie_pagina:
+            titulo: "%datos_aplicativo_pie_pagina_titulo%"
+            domicilio: "%datos_aplicativo_pie_pagina_domicilio%"
+            telefono: "%datos_aplicativo_pie_pagina_telefono%"
+            copyright: "%datos_aplicativo_pie_pagina_copyright%"
+
+# knp paginator            
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+        
+# doctrine
+doctrine:
+    dbal:
+        driver: %database_driver%
+        host: %database_host%
+        port: %database_port%
+        dbname: %database_name%
+        user: %database_user%
+        password: %database_password%
+        charset: UTF8

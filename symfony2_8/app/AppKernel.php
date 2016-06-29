@@ -22,7 +22,9 @@ class AppKernel extends Kernel
             new Guaycuru\YaaukanigaBundle\YaaukanigaBundle(),
             new Guaycuru\QiluazusBundle\QiluazusBundle(),
             new Guaycuru\TemburesBundle\TemburesBundle(),
-            //new STG\DEIM\Themes\Bundles\AplicativoBundle\ThemeAplicativoBundle(),
+            new STG\DEIM\Themes\Bundles\AplicativoBundle\ThemeAplicativoBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Guaycuru\DBHmi2Bundle\DBHmi2Bundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

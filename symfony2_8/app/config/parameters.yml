@@ -1,0 +1,25 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: hmi2_iturraspe
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeIt
+    
+    datos_aplicativo_encabezado_titulo: 'Administración de la Intranet Provincial'
+    datos_aplicativo_encabezado_nombre_dependencia: 'Secretaría de tecnologías para la gestión'
+    datos_aplicativo_encabezado_nombre_organismo: 'Ministerio de Gobierno y Reforma del Estado'
+    datos_aplicativo_pie_pagina_titulo: 'GOBIERNO DE SANTA FE'
+    datos_aplicativo_pie_pagina_domicilio: '3 de Febrero 2649 (S3000DEE) Santa Fe'
+    datos_aplicativo_pie_pagina_telefono: '54 342 4506600 | 4506700 | 4506800'
+    datos_aplicativo_pie_pagina_copyright: '© 2013 - Todos los derechos reservados. Créditos | Términos y condiciones'
+    datos_aplicativo_webmaster_correo: webmaster@santafe.gov.ar 
+    datos_aplicativo_path_ayuda: 'ruta_ayuda'
+    datos_aplicativo_path_logout: 'ruta_logout'
+    datos_aplicativo_path_home: 'ruta_home'
+

@@ -1,3 +1,7 @@
 qiluazus_homepage:
     path:     /
     defaults: { _controller: QiluazusBundle:Default:index }
+    
+qiluazus_internaciones:
+    pattern:     /internaciones
+    defaults: { _controller: QiluazusBundle:Listados:internaciones }
