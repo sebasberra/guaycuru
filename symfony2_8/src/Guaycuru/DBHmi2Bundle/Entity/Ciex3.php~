@@ -1,0 +1,46 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ciex3
+ *
+ * @ORM\Table(name="ciex_3", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_3dig", columns={"cod_3dig"})}, indexes={@ORM\Index(name="idx_descripcion", columns={"descripcion"})})
+ * @ORM\Entity
+ */
+class Ciex3
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_3dig", type="string", length=3, nullable=false)
+     */
+    private $cod3dig;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=false)
+     */
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="desc_red", type="string", length=50, nullable=false)
+     */
+    private $descRed;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_ciex_3", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCiex3;
+
+
+}

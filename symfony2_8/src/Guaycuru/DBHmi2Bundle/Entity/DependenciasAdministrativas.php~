@@ -1,0 +1,46 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * DependenciasAdministrativas
+ *
+ * @ORM\Table(name="dependencias_administrativas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_dep_adm", columns={"cod_dep_adm"})})
+ * @ORM\Entity
+ */
+class DependenciasAdministrativas
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_dep_adm", type="string", length=1, nullable=false)
+     */
+    private $codDepAdm;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_dep_adm", type="string", length=50, nullable=false)
+     */
+    private $nomDepAdm;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo_dep_adm", type="string", length=1, nullable=false)
+     */
+    private $tipoDepAdm;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_dependencia_adm", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idDependenciaAdm;
+
+
+}

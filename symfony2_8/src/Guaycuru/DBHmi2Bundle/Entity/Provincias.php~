@@ -1,0 +1,49 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Provincias
+ *
+ * @ORM\Table(name="provincias", indexes={@ORM\Index(name="provincias_fk_id_pais", columns={"id_pais"}), @ORM\Index(name="idx_nom_prov", columns={"nom_prov"})})
+ * @ORM\Entity
+ */
+class Provincias
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_prov", type="string", length=50, nullable=false)
+     */
+    private $nomProv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_prov", type="string", length=2, nullable=false)
+     */
+    private $codProv;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_prov", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idProv;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Paises
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Paises")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_pais", referencedColumnName="id_pais")
+     * })
+     */
+    private $idPais;
+
+
+}

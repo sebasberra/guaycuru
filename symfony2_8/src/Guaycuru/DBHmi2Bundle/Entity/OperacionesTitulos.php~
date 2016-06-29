@@ -1,0 +1,80 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * OperacionesTitulos
+ *
+ * @ORM\Table(name="operaciones_titulos", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_descripcion", columns={"descripcion"}), @ORM\UniqueConstraint(name="idx_unique_desc_red", columns={"desc_red"})}, indexes={@ORM\Index(name="idx_fk_id_operacion_desde", columns={"id_operacion_desde"}), @ORM\Index(name="idx_fk_id_operacion_hasta", columns={"id_operacion_hasta"})})
+ * @ORM\Entity
+ */
+class OperacionesTitulos
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="capitulo", type="smallint", nullable=false)
+     */
+    private $capitulo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_operacion_desde", type="string", length=4, nullable=false)
+     */
+    private $codOperacionDesde;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_operacion_hasta", type="string", length=4, nullable=false)
+     */
+    private $codOperacionHasta;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=false)
+     */
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="desc_red", type="string", length=50, nullable=false)
+     */
+    private $descRed;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_operacion_titulo", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idOperacionTitulo;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Operaciones
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Operaciones")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_operacion_hasta", referencedColumnName="id_operacion")
+     * })
+     */
+    private $idOperacionHasta;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Operaciones
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Operaciones")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_operacion_desde", referencedColumnName="id_operacion")
+     * })
+     */
+    private $idOperacionDesde;
+
+
+}

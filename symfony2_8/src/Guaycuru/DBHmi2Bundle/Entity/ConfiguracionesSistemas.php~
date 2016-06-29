@@ -1,0 +1,49 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ConfiguracionesSistemas
+ *
+ * @ORM\Table(name="configuraciones_sistemas", indexes={@ORM\Index(name="fk_configuraciones_sistemas_id_efector", columns={"id_efector"})})
+ * @ORM\Entity
+ */
+class ConfiguracionesSistemas
+{
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="activa", type="boolean", nullable=false)
+     */
+    private $activa;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
+     */
+    private $observaciones;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_configuracion_sistema", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idConfiguracionSistema;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Efectores
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Efectores")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
+     * })
+     */
+    private $idEfector;
+
+
+}

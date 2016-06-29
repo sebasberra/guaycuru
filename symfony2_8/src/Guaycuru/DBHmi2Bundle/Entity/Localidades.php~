@@ -1,0 +1,77 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Localidades
+ *
+ * @ORM\Table(name="localidades", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_loc_cod_dpto_cod_prov_cod_pais", columns={"cod_loc", "cod_dpto", "cod_prov", "cod_pais"})}, indexes={@ORM\Index(name="localidades_fk_id_dpto", columns={"id_dpto"}), @ORM\Index(name="idx_nom_loc", columns={"nom_loc"})})
+ * @ORM\Entity
+ */
+class Localidades
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_loc", type="string", length=50, nullable=false)
+     */
+    private $nomLoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_loc", type="string", length=2, nullable=false)
+     */
+    private $codLoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_dpto", type="string", length=3, nullable=false)
+     */
+    private $codDpto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_prov", type="string", length=2, nullable=false)
+     */
+    private $codProv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_pais", type="string", length=3, nullable=false)
+     */
+    private $codPais;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_postal", type="string", length=4, nullable=true)
+     */
+    private $codPostal;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_localidad", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idLocalidad;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Departamentos
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Departamentos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_dpto", referencedColumnName="id_dpto")
+     * })
+     */
+    private $idDpto;
+
+
+}

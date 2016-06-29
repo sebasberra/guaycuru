@@ -1,0 +1,95 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ClasificacionesCamas
+ *
+ * @ORM\Table(name="clasificaciones_camas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_clasificacion_cama", columns={"clasificacion_cama"})})
+ * @ORM\Entity
+ */
+class ClasificacionesCamas
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clasificacion_cama", type="string", length=50, nullable=false)
+     */
+    private $clasificacionCama;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="abreviatura", type="string", length=5, nullable=false)
+     */
+    private $abreviatura;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="definicion", type="text", length=65535, nullable=true)
+     */
+    private $definicion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="tipo_cuidado_progresivo", type="boolean", nullable=false)
+     */
+    private $tipoCuidadoProgresivo;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="critica", type="boolean", nullable=false)
+     */
+    private $critica;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="categoria_edad", type="string", length=3, nullable=false)
+     */
+    private $categoriaEdad;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_expiracion", type="date", nullable=true)
+     */
+    private $fechaExpiracion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="oxigeno", type="boolean", nullable=false)
+     */
+    private $oxigeno;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="respirador", type="boolean", nullable=false)
+     */
+    private $respirador;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="aislamiento", type="boolean", nullable=false)
+     */
+    private $aislamiento;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="id_clasificacion_cama", type="boolean")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idClasificacionCama;
+
+
+}

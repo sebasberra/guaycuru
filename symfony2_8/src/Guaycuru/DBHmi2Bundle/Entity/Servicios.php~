@@ -1,0 +1,46 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Servicios
+ *
+ * @ORM\Table(name="servicios", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_servicio", columns={"cod_servicio"})})
+ * @ORM\Entity
+ */
+class Servicios
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_servicio", type="string", length=3, nullable=false)
+     */
+    private $codServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_servicio", type="string", length=255, nullable=false)
+     */
+    private $nomServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_red_servicio", type="string", length=30, nullable=false)
+     */
+    private $nomRedServicio;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_servicio", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idServicio;
+
+
+}

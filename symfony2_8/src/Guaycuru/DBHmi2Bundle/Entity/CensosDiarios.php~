@@ -1,0 +1,171 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CensosDiarios
+ *
+ * @ORM\Table(name="censos_diarios", indexes={@ORM\Index(name="idx_fecha_censo", columns={"fecha_censo"}), @ORM\Index(name="idx_id_efector_servicio", columns={"id_efector_servicio"}), @ORM\Index(name="idx_id_sala", columns={"id_sala"})})
+ * @ORM\Entity
+ */
+class CensosDiarios
+{
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_censo", type="date", nullable=false)
+     */
+    private $fechaCenso;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="existencia_0", type="smallint", nullable=false)
+     */
+    private $existencia0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ingresos", type="smallint", nullable=false)
+     */
+    private $ingresos;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pases_de", type="smallint", nullable=false)
+     */
+    private $pasesDe;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pases_de_servicios", type="smallint", nullable=false)
+     */
+    private $pasesDeServicios;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="altas", type="smallint", nullable=false)
+     */
+    private $altas;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="defunciones_menos_48", type="smallint", nullable=false)
+     */
+    private $defuncionesMenos48;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="defunciones_mas_48", type="smallint", nullable=false)
+     */
+    private $defuncionesMas48;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pases_a", type="smallint", nullable=false)
+     */
+    private $pasesA;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pases_a_servicios", type="smallint", nullable=false)
+     */
+    private $pasesAServicios;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="existencia_24", type="smallint", nullable=false)
+     */
+    private $existencia24;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="entradas_salidas_dia", type="smallint", nullable=false)
+     */
+    private $entradasSalidasDia;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pacientes_dia", type="smallint", nullable=false)
+     */
+    private $pacientesDia;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="dias_estada", type="smallint", nullable=false)
+     */
+    private $diasEstada;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_camas_sala", type="smallint", nullable=false)
+     */
+    private $totalCamasSala;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="camas_disponibles", type="smallint", nullable=false)
+     */
+    private $camasDisponibles;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     */
+    private $baja;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=false)
+     */
+    private $fechaModificacion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_censo_diario", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCensoDiario;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\EfectoresServicios
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\EfectoresServicios")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_efector_servicio", referencedColumnName="id_efector_servicio")
+     * })
+     */
+    private $idEfectorServicio;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Salas
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Salas")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_sala", referencedColumnName="id_sala")
+     * })
+     */
+    private $idSala;
+
+
+}

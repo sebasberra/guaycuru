@@ -1,0 +1,693 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Internaciones
+ *
+ * @ORM\Table(name="internaciones", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_periodo_informe_nro_informe", columns={"periodo_informe", "nro_informe"}), @ORM\UniqueConstraint(name="idx_unique_ing_hc_sies", columns={"ing_hc_sies"})}, indexes={@ORM\Index(name="fk_id_efector", columns={"id_efector"}), @ORM\Index(name="fk_id_efector_derivado_de", columns={"deriv1_id_efector"}), @ORM\Index(name="fk_id_efector_derivado_a", columns={"deriv2_id_efector"}), @ORM\Index(name="fk_id_localidad", columns={"id_localidad"}), @ORM\Index(name="fk_diag_presuntivo_id_ciex_4", columns={"diag_presuntivo_id_ciex_4"}), @ORM\Index(name="fk_causa_ext_id_ciex_4", columns={"causa_ext_id_ciex_4"}), @ORM\Index(name="idx_apellido", columns={"apellido"}), @ORM\Index(name="idx_nombre", columns={"nombre"}), @ORM\Index(name="idx_ing_fecha_hora", columns={"ing_fecha_hora"}), @ORM\Index(name="idx_egr_fecha_hora", columns={"egr_fecha_hora"}), @ORM\Index(name="idx_esp_pred_cod_servicio", columns={"esp_pred_cod_servicio"}), @ORM\Index(name="idx_backup_nro_doc", columns={"backup_nro_doc", "backup_id_tipo_doc"}), @ORM\Index(name="idx_id_persona", columns={"id_persona"}), @ORM\Index(name="idx_egr_id_servicio_estadistica", columns={"egr_id_servicio_estadistica"}), @ORM\Index(name="idx_ing_id_servicio_estadistica", columns={"ing_id_servicio_estadistica"}), @ORM\Index(name="idx_nro_informe", columns={"nro_informe"}), @ORM\Index(name="idx_os_rnos", columns={"os_rnos"}), @ORM\Index(name="idx_diag_presuntivo_texto", columns={"diag_presuntivo_texto"}), @ORM\Index(name="idx_diag_principal_texto", columns={"diag_principal_texto"}), @ORM\Index(name="idx_causa_ext_descripcion", columns={"causa_ext_descripcion"}), @ORM\Index(name="idx_id_paciente", columns={"id_paciente"})})
+ * @ORM\Entity
+ */
+class Internaciones
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="periodo_informe", type="string", length=4, nullable=false)
+     */
+    private $periodoInforme;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nro_informe", type="integer", nullable=false)
+     */
+    private $nroInforme;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="claveestd", type="string", length=8, nullable=false)
+     */
+    private $claveestd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_efector", type="string", length=255, nullable=false)
+     */
+    private $nomEfector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_dpto", type="string", length=3, nullable=false)
+     */
+    private $codDpto;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="nodo", type="boolean", nullable=false)
+     */
+    private $nodo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_dep_adm", type="string", length=1, nullable=false)
+     */
+    private $codDepAdm;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_paciente", type="integer", nullable=false)
+     */
+    private $idPaciente;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_persona", type="integer", nullable=true)
+     */
+    private $idPersona;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellido", type="string", length=255, nullable=false)
+     */
+    private $apellido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sexo", type="string", length=1, nullable=false)
+     */
+    private $sexo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_calle", type="string", length=255, nullable=false)
+     */
+    private $domCalle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_nro", type="string", length=20, nullable=false)
+     */
+    private $domNro;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_piso", type="string", length=10, nullable=true)
+     */
+    private $domPiso;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_dpto", type="string", length=10, nullable=true)
+     */
+    private $domDpto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_telefono", type="string", length=80, nullable=true)
+     */
+    private $domTelefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_barrio", type="string", length=255, nullable=true)
+     */
+    private $domBarrio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_cod_loc", type="string", length=2, nullable=false)
+     */
+    private $domCodLoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_cod_dpto", type="string", length=3, nullable=false)
+     */
+    private $domCodDpto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_cod_prov", type="string", length=2, nullable=false)
+     */
+    private $domCodProv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dom_cod_pais", type="string", length=3, nullable=false)
+     */
+    private $domCodPais;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="os_asociado_a", type="string", length=1, nullable=false)
+     */
+    private $osAsociadoA;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="os_nombre", type="string", length=255, nullable=true)
+     */
+    private $osNombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="os_rnos", type="string", length=6, nullable=true)
+     */
+    private $osRnos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="os_condicion", type="string", length=1, nullable=true)
+     */
+    private $osCondicion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="situacion_laboral", type="string", length=1, nullable=false)
+     */
+    private $situacionLaboral;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="instruccion", type="string", length=2, nullable=false)
+     */
+    private $instruccion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ocupacion_habitual", type="string", length=5, nullable=false)
+     */
+    private $ocupacionHabitual;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_hospitalizado_por", type="string", length=1, nullable=false)
+     */
+    private $ingHospitalizadoPor;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="ing_fecha_hora", type="datetime", nullable=false)
+     */
+    private $ingFechaHora;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="ing_edad", type="boolean", nullable=false)
+     */
+    private $ingEdad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_tipo_edad", type="string", length=1, nullable=false)
+     */
+    private $ingTipoEdad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_medio_traslado", type="string", length=1, nullable=true)
+     */
+    private $ingMedioTraslado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_cod_servicio", type="string", length=3, nullable=false)
+     */
+    private $ingCodServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_sector", type="string", length=1, nullable=false)
+     */
+    private $ingSector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_subsector", type="string", length=1, nullable=false)
+     */
+    private $ingSubsector;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ing_medico_idperson", type="integer", nullable=true)
+     */
+    private $ingMedicoIdperson;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="ing_derivado", type="boolean", nullable=false)
+     */
+    private $ingDerivado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_hc_sies", type="string", length=20, nullable=true)
+     */
+    private $ingHcSies;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="ing_judicial", type="boolean", nullable=false)
+     */
+    private $ingJudicial;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ing_judicial_observacion", type="string", length=255, nullable=true)
+     */
+    private $ingJudicialObservacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv1_claveestd", type="string", length=8, nullable=true)
+     */
+    private $deriv1Claveestd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv1_nom_efector", type="string", length=255, nullable=true)
+     */
+    private $deriv1NomEfector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv1_cod_dep_adm", type="string", length=1, nullable=true)
+     */
+    private $deriv1CodDepAdm;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv1_cod_loc", type="string", length=2, nullable=true)
+     */
+    private $deriv1CodLoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv1_cod_dpto", type="string", length=3, nullable=true)
+     */
+    private $deriv1CodDpto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv1_cod_prov", type="string", length=2, nullable=true)
+     */
+    private $deriv1CodProv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv1_cod_pais", type="string", length=3, nullable=true)
+     */
+    private $deriv1CodPais;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="diag_presuntivo_texto", type="string", length=255, nullable=false)
+     */
+    private $diagPresuntivoTexto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="diag_principal_texto", type="string", length=255, nullable=true)
+     */
+    private $diagPrincipalTexto;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="egr_fecha_hora", type="datetime", nullable=true)
+     */
+    private $egrFechaHora;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="egr_total_dias_estada", type="smallint", nullable=true)
+     */
+    private $egrTotalDiasEstada;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="egr_prorroga", type="boolean", nullable=true)
+     */
+    private $egrProrroga;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="egr_dias_prorroga", type="smallint", nullable=true)
+     */
+    private $egrDiasProrroga;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="egr_tipo", type="string", length=1, nullable=true)
+     */
+    private $egrTipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="egr_medio_traslado", type="string", length=1, nullable=true)
+     */
+    private $egrMedioTraslado;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="egr_autopsia", type="boolean", nullable=true)
+     */
+    private $egrAutopsia;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="egr_cod_servicio", type="string", length=3, nullable=true)
+     */
+    private $egrCodServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="egr_sector", type="string", length=1, nullable=true)
+     */
+    private $egrSector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="egr_subsector", type="string", length=1, nullable=true)
+     */
+    private $egrSubsector;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="egr_completo", type="boolean", nullable=false)
+     */
+    private $egrCompleto;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="egr_medico_idperson", type="integer", nullable=true)
+     */
+    private $egrMedicoIdperson;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="causa_ext_producido_por", type="string", length=1, nullable=true)
+     */
+    private $causaExtProducidoPor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="causa_ext_lugar", type="string", length=1, nullable=true)
+     */
+    private $causaExtLugar;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="causa_ext_descripcion", type="string", length=255, nullable=true)
+     */
+    private $causaExtDescripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv2_claveestd", type="string", length=8, nullable=true)
+     */
+    private $deriv2Claveestd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv2_nom_efector", type="string", length=255, nullable=true)
+     */
+    private $deriv2NomEfector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv2_cod_dep_adm", type="string", length=1, nullable=true)
+     */
+    private $deriv2CodDepAdm;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv2_cod_loc", type="string", length=2, nullable=true)
+     */
+    private $deriv2CodLoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv2_cod_dpto", type="string", length=3, nullable=true)
+     */
+    private $deriv2CodDpto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv2_cod_prov", type="string", length=2, nullable=true)
+     */
+    private $deriv2CodProv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deriv2_cod_pais", type="string", length=3, nullable=true)
+     */
+    private $deriv2CodPais;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="nac_fecha", type="date", nullable=true)
+     */
+    private $nacFecha;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="nac_semanas_gest", type="boolean", nullable=true)
+     */
+    private $nacSemanasGest;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="nac_paridad", type="boolean", nullable=true)
+     */
+    private $nacParidad;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="nac_parto_multiple", type="boolean", nullable=true)
+     */
+    private $nacPartoMultiple;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="esp_pred_cod_servicio", type="string", length=3, nullable=true)
+     */
+    private $espPredCodServicio;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="backup_id_tipo_doc", type="boolean", nullable=false)
+     */
+    private $backupIdTipoDoc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="backup_nro_doc", type="integer", nullable=false)
+     */
+    private $backupNroDoc;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="backup_egr_medico_id_tipo_doc", type="boolean", nullable=true)
+     */
+    private $backupEgrMedicoIdTipoDoc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="backup_egr_medico_nro_doc", type="integer", nullable=true)
+     */
+    private $backupEgrMedicoNroDoc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="backup_egr_medico_matricula", type="smallint", nullable=true)
+     */
+    private $backupEgrMedicoMatricula;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=false)
+     */
+    private $fechaModificacion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_internacion", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idInternacion;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Ciex4
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Ciex4")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="causa_ext_id_ciex_4", referencedColumnName="id_ciex_4")
+     * })
+     */
+    private $causaExtCiex4;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\ServiciosEstadistica
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\ServiciosEstadistica")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ing_id_servicio_estadistica", referencedColumnName="id_servicio_estadistica")
+     * })
+     */
+    private $ingServicioEstadistica;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\ServiciosEstadistica
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\ServiciosEstadistica")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="egr_id_servicio_estadistica", referencedColumnName="id_servicio_estadistica")
+     * })
+     */
+    private $egrServicioEstadistica;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Ciex4
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Ciex4")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="diag_presuntivo_id_ciex_4", referencedColumnName="id_ciex_4")
+     * })
+     */
+    private $diagPresuntivoCiex4;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Localidades
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Localidades")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_localidad", referencedColumnName="id_localidad")
+     * })
+     */
+    private $idLocalidad;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Efectores
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Efectores")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="deriv1_id_efector", referencedColumnName="id_efector")
+     * })
+     */
+    private $deriv1Efector;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Efectores
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Efectores")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="deriv2_id_efector", referencedColumnName="id_efector")
+     * })
+     */
+    private $deriv2Efector;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Efectores
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Efectores")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
+     * })
+     */
+    private $idEfector;
+
+
+}

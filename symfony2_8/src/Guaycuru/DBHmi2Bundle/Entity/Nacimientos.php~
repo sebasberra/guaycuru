@@ -1,0 +1,63 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Nacimientos
+ *
+ * @ORM\Table(name="nacimientos", indexes={@ORM\Index(name="fk_id_internacion", columns={"id_internacion"})})
+ * @ORM\Entity
+ */
+class Nacimientos
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="peso", type="smallint", nullable=false)
+     */
+    private $peso;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="condicion_al_nacer", type="boolean", nullable=false)
+     */
+    private $condicionAlNacer;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="terminacion", type="boolean", nullable=true)
+     */
+    private $terminacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="sexo", type="boolean", nullable=false)
+     */
+    private $sexo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_nacimiento", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idNacimiento;
+
+    /**
+     * @var \Guaycuru\DBHmi2Bundle\Entity\Internaciones
+     *
+     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Internaciones")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_internacion", referencedColumnName="id_internacion")
+     * })
+     */
+    private $idInternacion;
+
+
+}

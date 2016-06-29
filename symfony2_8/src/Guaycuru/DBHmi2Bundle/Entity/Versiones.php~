@@ -1,0 +1,39 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Versiones
+ *
+ * @ORM\Table(name="versiones")
+ * @ORM\Entity
+ */
+class Versiones
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="version", type="string", length=255, nullable=false)
+     */
+    private $version;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
+     */
+    private $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="base", type="string", length=255)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $base;
+
+
+}

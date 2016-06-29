@@ -1,0 +1,53 @@
+<?php
+
+namespace Guaycuru\DBHmi2Bundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SubnodosOld
+ *
+ * @ORM\Table(name="subnodos_old", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_numregion_numsubregion", columns={"numregion", "numsubregion"})})
+ * @ORM\Entity
+ */
+class SubnodosOld
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_nodo", type="integer", nullable=false)
+     */
+    private $idNodo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_subnodo", type="string", length=255, nullable=false)
+     */
+    private $nomSubnodo;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="numregion", type="boolean", nullable=false)
+     */
+    private $numregion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="numsubregion", type="smallint", nullable=false)
+     */
+    private $numsubregion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_subnodo", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idSubnodo;
+
+
+}

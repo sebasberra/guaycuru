@@ -16,7 +16,7 @@ class ListadosController extends Controller
         //$productos = 
         //    $em->getRepository('QiluazusBundle:Camas')->findByIdEfector(72);
 
-        $dql   = "SELECT c FROM QiluazusBundle:Camas c";
+        $dql   = "SELECT c FROM DBHmi2Bundle:Camas c";
         $query = $em->createQuery($dql);
 
         $paginator  = $this->get('knp_paginator');
