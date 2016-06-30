@@ -5,3 +5,7 @@ qiluazus_homepage:
 qiluazus_internaciones:
     pattern:     /internaciones
     defaults: { _controller: QiluazusBundle:Listados:internaciones }
+    
+qiluazus_ejemplo:
+    pattern:     /ejemplo
+    defaults: { _controller: QiluazusBundle:Listados:ejemplo }

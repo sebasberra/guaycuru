@@ -29,5 +29,13 @@ class ListadosController extends Controller
         // parameters to template
         return $this->render('QiluazusBundle:Default:listados.html.twig', array('pagination' => $pagination));
     }
+    
+    public function ejemploAction()
+    {
+        // parameters to template
+        return $this->render('QiluazusBundle:Default:section_example.html.twig');
+        
+    }
+    
 }
 
