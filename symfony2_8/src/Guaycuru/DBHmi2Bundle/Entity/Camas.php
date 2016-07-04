@@ -3,6 +3,7 @@
 namespace Guaycuru\DBHmi2Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use STG\DEIM\Themes\Bundles\AplicativoBundle\Annotation\Filter;
 
 /**
  * Camas
@@ -16,6 +17,8 @@ class Camas
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
+     * 
+     * @Filter(type="text", label="Nombre de cama")
      */
     private $nombre;
 
@@ -23,6 +26,9 @@ class Camas
      * @var string
      *
      * @ORM\Column(name="estado", type="string", length=1, nullable=false)
+     * 
+     * * @Filter(type="text", label="Estado")
+     * 
      */
     private $estado;
 
@@ -63,6 +69,7 @@ class Camas
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
      * })
+     *  
      */
     private $idEfector;
 
@@ -73,6 +80,8 @@ class Camas
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_clasificacion_cama", referencedColumnName="id_clasificacion_cama")
      * })
+     * 
+     * 
      */
     private $idClasificacionCama;
 

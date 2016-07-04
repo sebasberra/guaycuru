@@ -3,3 +3,75 @@
 {# De esta manera podemos extender la vista base definida para nuestra vista. #}
 {% extends 'ThemeAplicativoBundle:Default:base.html.twig' %}
 
+
+
+{% block barraHerramientas %}
+
+{% endblock %}
+
+{% block menu %}
+
+{% endblock %}
+
+{% block submenus %}
+
+{% endblock %}
+
+{% block cuerpo %}
+
+    {% embed 'ThemeAplicativoBundle:Componentes:filtros.html.twig' %}
+    
+        
+    
+    {% endembed %}
+    
+    
+    {% embed 'ThemeAplicativoBundle:Componentes:tabla.html.twig' %}
+       
+        {% block TituloTabla %}Estado de las camas. Efector:{% endblock %}
+
+        {% block headerTabla %}
+        
+        <td class="columns-dest">Nombre</td>
+        <td class="columns-dest">Estado</td>
+        
+        {% endblock %}
+            
+        {% block cuerpoTabla %}
+ 
+        
+            {% for cama in pagination %}
+                
+                <tr>    
+                    <td>{{ cama.nombre }}</td>
+                    <td>{{ cama.estado }}</td>
+                </tr>
+                
+            {% endfor %}
+
+            
+                
+        {% endblock %}
+ 
+        {% block paginacion %}
+        
+        {{ knp_pagination_render(pagination) }}
+           
+        {% endblock %}
+        
+    {% endembed %}
+
+    
+{% endblock %}
+
+{% block javascriptsIncludes %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block jquery %}
+
+{% endblock %}
