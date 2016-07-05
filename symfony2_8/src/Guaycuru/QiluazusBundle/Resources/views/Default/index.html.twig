@@ -34,6 +34,7 @@
         
         <td class="columns-dest">Nombre</td>
         <td class="columns-dest">Estado</td>
+        <td class="columns-dest">Efector</td>
         
         {% endblock %}
             
@@ -45,6 +46,7 @@
                 <tr>    
                     <td>{{ cama.nombre }}</td>
                     <td>{{ cama.estado }}</td>
+                    <td>{{ cama.Efectores.nomEfector }}</td>
                 </tr>
                 
             {% endfor %}
