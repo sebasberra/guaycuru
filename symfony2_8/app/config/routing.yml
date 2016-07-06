@@ -5,15 +5,15 @@ db_hmi2:
 
 tembures:
     resource: "@TemburesBundle/Resources/config/routing.yml"
-    prefix:   /tembures
+    prefix:   guaycuru/tembures
 
 qiluazus:
     resource: "@QiluazusBundle/Resources/config/routing.yml"
-    prefix:   /qiluazus
+    prefix:   guaycuru/qiluazus
 
 yaaukaniga:
     resource: "@YaaukanigaBundle/Resources/config/routing.yml"
-    prefix:   /yaaukaniga
+    prefix:   guaycuru/yaaukaniga
 
 app:
     resource: "@AppBundle/Controller/"

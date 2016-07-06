@@ -10,27 +10,39 @@ class ListadosController extends Controller
     public function internacionesAction()
     {
 
+        $camas = new \Guaycuru\DBHmi2Bundle\Entity\Camas();
+        
         $filtros = 
                 $this
                     ->get('stg.deim.themes.aplicativo.filtro')
-                    ->getFiltros(new Entity());
+                    ->getFiltros($camas);
 
         $consulta = 
                 $this
                     ->get('stg.deim.themes.aplicativo.filtro')
                     ->generarConsultaMultiplesFiltros(
-                            $this->Camas, $filtros
+                            'DBHmi2Bundle:Camas', $filtros
                             );
         
         // doctrine manager
         $em = $this->getDoctrine()->getManager();
-
-        //$productos = 
-        //    $em->getRepository('QiluazusBundle:Camas')->findByIdEfector(72);
-
-        // $dql   = "SELECT c FROM DBHmi2Bundle:Camas c";
-        // $query = $em->createQuery($dql);
-        $query = $consulta;
+        $dql   = "SELECT c FROM DBHmi2Bundle:Camas c";
+        $query = $em->createQuery($dql);
+        
+        $filtro = array();
+        $filtro[0]["columna"] = "nombre";
+        $filtro[0]["type"] = "text";
+        $filtro[0]["source"] = "";
+        $filtro[0]["propiedad"] = "nombre";
+        $filtro[0]["label"] = " Nombre de cama";
+        $filtro[0]["value"] = null;
+        $filtro[0]["options"] = null;
+        
+        dump($filtros);
+        dump($filtro);
+        dump($consulta);
+        dump($query);
+        die();
         
         // $paginator  = $this->get('knp_paginator');
         // $pagination = $paginator->paginate(
@@ -84,10 +96,22 @@ class ListadosController extends Controller
         );
         
         
+        // filtros
+        $filtros = array();
+        $filtros[0]["columna"] = "nombre";
+        $filtros[0]["type"] = "text";
+        $filtros[0]["source"] = "";
+        $filtros[0]["propiedad"] = "nombre";
+        $filtros[0]["label"] = " Nombre de cama";
+        $filtros[0]["value"] = null;
+        $filtros[0]["options"] = null;
         
         return $this->render(
-                'QiluazusBundle:Default:camas.html.twig', 
-                array('pagination' => $pagination));
+                'QiluazusBundle:Default:listados.html.twig',               
+                array(
+                    'pagination' => $pagination,
+                    'filtros' => $filtros)
+                );
         
     }
     

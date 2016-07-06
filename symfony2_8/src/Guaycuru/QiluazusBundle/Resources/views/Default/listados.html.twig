@@ -1,38 +1,75 @@
 {# consulta listados de camas #}
 
-{% include 'ThemeAplicativoBundle:Componentes:tabla.html.twig' %}
+{% extends 'ThemeAplicativoBundle:Default:base.html.twig' %}
 
-{% embed 'ThemeAplicativoBundle:Componentes:tabla.html.twig' %}
+{% block cuerpo %} 
 
-{% block TituloTabla %}Listado de camas 
+    {% embed 'ThemeAplicativoBundle:Componentes:filtros.html.twig' %}
+    
+        
+    {% endembed %}
+    
+    {% embed 'ThemeAplicativoBundle:Componentes:tabla.html.twig' %}
 
-<div class="count">
-    {{ pagination.getTotalItemCount }}
-</div>
+        {% block TituloTabla %}
+            
+            Listado de camas. Registros encontrados: {{ pagination.getTotalItemCount }}
+           
+        {% endblock %}
+
+        {% block headerTabla %}
+            <tr>
+                <td>Efector</td>
+                <td>Sala</td>
+                <td>Habitación</td>
+                <td>Cama</td>
+                <td>Estado</td>
+                <td>Clasificación</td>
+                <td>Baja</td>
+            </tr>
+        {% endblock %}
+
+        {% block cuerpoTabla %}
+
+
+            {% for cama in pagination %}
+                                
+                <tr>
+                    <td>{{ cama.idHabitacion.idSala.idEfector.nomEfector }}</td>
+                    <td>{{ cama.idHabitacion.idSala.nombre }}</td>
+                    <td>{{ cama.idHabitacion.nombre }}</td>
+                    <td>{{ cama.nombre }}</td>
+                    <td>
+                        {% if cama.estado == "L" %}LIBRE
+                        {% elseif cama.estado == "O" %}OCUPADA
+                        {% elseif cama.estado == "F" %}FUERA DE SERVICIO
+                        {% else %}DESCONOCIDO
+                        {% endif %}</td>
+                    <td>{{ cama.idClasificacionCama.clasificacionCama }}</td>
+                    <td>{% if cama.baja == 0 %}NO
+                        {% else %}SI
+                        {% endif %}</td>
+
+                </tr>
+
+            {% endfor %}
+
+            <div class="navigation">
+
+                {{ knp_pagination_render(pagination) }}
+
+            </div>
+
+            <tr> 
+                <td>{{ dump(pagination) }} </td>
+
+            </tr>
+
+        {% endblock %}
+
+
+
+    {% endembed %}
+
 
 {% endblock %}
-
-{% block headerTabla %}
-
-{% endblock %}
-
-{% block cuerpoTabla %}
-
-
-{% for cama in pagination %}
-<tr {% if loop.index is odd %}class="color"{% endif %}>
-    <td>{{ cama.idCama }}</td>
-    <td>{{ cama.nombre }}</td>
-    <td>{{ cama.estado }}</td>
-</tr>
-{% endfor %}
-
-<div class="navigation">
-    {{ knp_pagination_render(pagination) }}
-</div>
-
-{% endblock %}
-
-
-
-{% endembed %}
