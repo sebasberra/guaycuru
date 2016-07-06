@@ -17,14 +17,14 @@ class ListadosController extends Controller
                     ->get('stg.deim.themes.aplicativo.filtro')
                     ->getFiltros($camas);
 
-        $consulta = 
+        $query = 
                 $this
                     ->get('stg.deim.themes.aplicativo.filtro')
                     ->generarConsultaMultiplesFiltros(
                             'DBHmi2Bundle:Camas', $filtros
                             );
         
-        // doctrine manager
+        /* doctrine manager
         $em = $this->getDoctrine()->getManager();
         $dql   = "SELECT c FROM DBHmi2Bundle:Camas c";
         $query = $em->createQuery($dql);
@@ -42,17 +42,23 @@ class ListadosController extends Controller
         dump($filtro);
         dump($consulta);
         dump($query);
-        die();
+        die();*/
         
-        // $paginator  = $this->get('knp_paginator');
-        // $pagination = $paginator->paginate(
-        //    $query, /* query NOT result */
-        //    1/*page number*/,
-        //    10/*limit per page*/
-        // );
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            1/*page number*/,
+            10/*limit per page*/
+         );
 
         // parameters to template
-        return $this->render('QiluazusBundle:Default:listados.html.twig', array('filtros' => $filtros));
+        return $this->render(
+                'QiluazusBundle:Default:camas.html.twig', 
+                array(
+                    'filtros' => $filtros,
+                    'pagination' => $pagination)
+                );
+        
     }
     
     public function ejemploAction()
@@ -98,10 +104,10 @@ class ListadosController extends Controller
         
         // filtros
         $filtros = array();
-        $filtros[0]["columna"] = "nombre";
+        $filtros[0]["columna"] = "id_efector";
         $filtros[0]["type"] = "text";
         $filtros[0]["source"] = "";
-        $filtros[0]["propiedad"] = "nombre";
+        $filtros[0]["propiedad"] = "id_efector";
         $filtros[0]["label"] = " Nombre de cama";
         $filtros[0]["value"] = null;
         $filtros[0]["options"] = null;

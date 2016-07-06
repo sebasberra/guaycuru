@@ -1,0 +1,88 @@
+{# camas.html.twig #}
+
+{% extends 'ThemeAplicativoBundle:Default:base.html.twig' %}
+
+
+
+{% block barraHerramientas %}
+
+{% endblock %}
+
+{% block menu %}
+
+{% endblock %}
+
+{% block submenus %}
+
+{% endblock %}
+
+{% block cuerpo %}
+
+    {% embed 'ThemeAplicativoBundle:Componentes:filtros.html.twig' %}
+    
+        
+    
+    {% endembed %}
+    
+    
+    {% embed 'ThemeAplicativoBundle:Componentes:tabla.html.twig' %}
+       
+        {% block TituloTabla %}Estado de las camas. Efector:{% endblock %}
+
+        {% block headerTabla %}
+        
+        <td class="columns-dest">Efector</td>    
+        <td class="columns-dest">Sala</td>
+        <td class="columns-dest">Habitacion</td>
+        <td class="columns-dest">Nombre</td>
+        <td class="columns-dest">Estado</td>
+        <td class="columns-dest">Clasificación de cama</td>
+                
+        {% endblock %}
+            
+        {% block cuerpoTabla %}
+ 
+        
+            {% for cama in pagination %}
+                
+                <tr>
+                    <td>{{ cama.idEfector.nomEfector }}</td>
+                    <td>{{ cama.idHabitacion.idSala.nombre }}</td>
+                    <td>{{ cama.idHabitacion.nombre }}</td>
+                    <td>{{ cama.nombre }}</td>
+                    <td>{{ cama.estado }}</td>
+                    <td>{{ cama.idClasificacionCama.clasificacionCama }}</td>
+                </tr>
+                                   
+            {% endfor %}
+
+            <tr>
+                <td>{{ dump(filtros) }}</td>
+                <td>{{ dump(pagination) }}</td>
+            </tr>
+            
+                
+        {% endblock %}
+ 
+        {% block paginacion %}
+        
+        {{ knp_pagination_render(pagination) }}
+           
+        {% endblock %}
+        
+    {% endembed %}
+
+    
+{% endblock %}
+
+{% block javascriptsIncludes %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block jquery %}
+
+{% endblock %}
