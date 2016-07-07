@@ -34,11 +34,136 @@
 
 {% block cuerpo %} 
 
-    {% embed 'ThemeAplicativoBundle:Componentes:filtros.html.twig' %}
-    
+    <form class="form" onsubmit="return false;">
         
-    {% endembed %}
+            <div class="row">
+                
+                <h4>Búsqueda de camas:</h4>
+                
+            </div>
+        
+            <div class="row">
+                
+                <fieldset>
+                    
+                    
+                    {# 1 #}
+                    
+                    <div class='threecol'>
+                        
+                        <label>Efector</label>
+                            
+                        <select name="idEfector">
+                            
+                            <option value="">Seleccione una opción</option> 
+                            {% for efector in efectores %}
+                            
+                            <option value={{ efector.idEfector }}> {{efector.nomEfector }}</option> 
+                            
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                    
+                    {# 2 #}
+                    
+                    <div class='threecol'>
+                        
+                        <label>Sala</label>
+                            
+                        <select name="idSala">
+                            
+                            <option value="">Seleccione una opción</option> 
+                            {% for sala in salas %}
+                            
+                            <option value={{ sala.idSala }}> {{sala.nombre }}</option> 
+                            
+                            {% endfor %} 
+                            
+                        </select>
+                        
+                    </div>
+                    
+                    {# 3 #}
+                    
+                    <div class='threecol last'>
+                        
+                        <label>Habitación</label>
+                            
+                        <select name="idHabitacion">
+                            
+                            <option value="">Seleccione una opción</option> 
+                            {% for habitacion in habitaciones %}
+                            
+                            <option value={{ habitacion.idHabitacion }}> {{habitacion.nombre }}</option> 
+                            
+                            {% endfor %} 
+                            
+                        </select>
+                            
+                    </div>
+                    
+                    {# 4 #}
+                    <div class='threecol'>
+                        
+                        <label>Cama</label>
+                        <input type="text" name="id_cama" value="1">
+                                                
+                    </div>
+                    
+                    {# 5 #}
+                    
+                    <div class='threecol'>
+                        
+                        <label>Estado de la cama</label>
+                            
+                        <select name="estado">
+                            
+                            <option value="">Seleccione una opción</option> 
+                            <option value="1" selected="selected">Libre</option> 
+                            <option value="2" >Ocupada</option> 
+                            <option value="3" >Fuera de servicio</option> 
+                            
+                        </select>
+                        
+                    </div>
+                    
+                    {# 6 #}
+                    
+                    <div class='threecol last'>
+                        
+                        <label>Clasificación de cama</label>
+                        
+                        <select name="idClasificacionCama">
+                            
+                            <option value="">Seleccione una opción</option> 
+                            {% for clasificacionCama in clasificacionesCamas %}
+                            
+                            <option value={{ clasificacionCama.idClasificacionCama }}>{{clasificacionCama.clasificacionCama }}</option> 
+                            
+                            {% endfor %} 
+                            
+                        </select>
+                        
+                    </div>
+                    
+                </fieldset>
+                    
+            </div>
+                    
+            <div class='row'>
+                
+                <div class='threecol last'>
+                    
+                    <input type="submit" value="Buscar"></input>
+                    
+                </div>
+                
+            </div>    
+
+    </form>
     
+                
     {% embed 'ThemeAplicativoBundle:Componentes:tabla.html.twig' %}
 
         {% block TituloTabla %}
@@ -90,10 +215,14 @@
 
             </div>
 
+            
             <tr> 
-                <td>{{ dump(pagination) }} </td>
+                {# <td>{{ dump(pagination) }} </td> 
+                <td> {{ dump(clasificacionesCamas) }} </td> #}
 
             </tr>
+            
+            
 
         {% endblock %}
 

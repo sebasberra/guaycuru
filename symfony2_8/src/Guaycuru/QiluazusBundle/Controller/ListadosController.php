@@ -74,7 +74,44 @@ class ListadosController extends Controller
             $idClasificacionCama)
     {
         
-        $qb = $this->getDoctrine()->getManager()->createQuery(
+        // doctrine manager
+        $em = $this->getDoctrine()->getManager();
+        
+        // clasificaciones_camas
+        $q4 = $em->createQuery(
+                'SELECT cc 
+                FROM DBHmi2Bundle:ClasificacionesCamas AS cc
+                ORDER BY cc.clasificacionCama');
+        $clasificacionesCamas = $q4->getResult();
+        
+        /*
+        dump($clasificacionesCamas);
+        die();*/
+        
+        // efectores
+        $q1 = $em->createQuery(
+                'SELECT e 
+                FROM DBHmi2Bundle:Efectores AS e
+                ORDER BY e.nomEfector');
+        $efectores = $q1->getResult();
+        
+        // salas
+        $q2 = $em->createQuery(
+                'SELECT s 
+                FROM DBHmi2Bundle:Salas AS s
+                ORDER BY s.nombre');
+        $salas = $q2->getResult();
+        
+        // habitaciones
+        $q3 = $em->createQuery(
+                'SELECT h 
+                FROM DBHmi2Bundle:Habitaciones AS h
+                ORDER BY h.nombre');
+        $habitaciones = $q3->getResult();
+        
+        
+        
+        $qb = $em->createQuery(
                 'SELECT c, h, s, e
                  FROM DBHmi2Bundle:Camas AS c
                  INNER JOIN c.idHabitacion h
@@ -102,7 +139,7 @@ class ListadosController extends Controller
         );
         
         
-        // filtros
+        /* filtros
         $filtros = array();
         $filtros[0]["columna"] = "id_efector";
         $filtros[0]["type"] = "text";
@@ -110,13 +147,24 @@ class ListadosController extends Controller
         $filtros[0]["propiedad"] = "id_efector";
         $filtros[0]["label"] = " Nombre de cama";
         $filtros[0]["value"] = null;
-        $filtros[0]["options"] = null;
+        $filtros[0]["options"] = null;*/
         
+        /*
         return $this->render(
                 'QiluazusBundle:Default:listados.html.twig',               
                 array(
                     'pagination' => $pagination,
                     'filtros' => $filtros)
+                ); */
+        
+        return $this->render(
+                'QiluazusBundle:Default:listados.html.twig',               
+                array(
+                    'pagination' => $pagination,
+                    'efectores' => $efectores,
+                    'salas' => $salas,
+                    'habitaciones' => $habitaciones,
+                    'clasificacionesCamas' => $clasificacionesCamas)
                 );
         
     }

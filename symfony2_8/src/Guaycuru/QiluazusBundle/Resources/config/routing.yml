@@ -19,4 +19,4 @@ qiluazus_camas:
         _controller: QiluazusBundle:Listados:camas
         id_efector: 72
         estado: 'L'
-        idClasificacionCama: 2
+        idClasificacionCama: 12
