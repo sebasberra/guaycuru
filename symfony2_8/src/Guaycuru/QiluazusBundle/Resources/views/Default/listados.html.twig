@@ -2,6 +2,36 @@
 
 {% extends 'ThemeAplicativoBundle:Default:base.html.twig' %}
 
+{% block menu %} 
+    
+    {% block submenus %}
+        
+        <li class=''><a href='index.html'><span>Inicio</span></a></li>
+        
+        <li class='has-sub'><a href='#'><span>Consultas</span></a>
+            
+            <ul>
+                <li class='has-sub'><a href='#'><span>Camas</span></a>
+                    <ul>
+                        <li><a href='#'><span>Libres</span></a></li>
+                        <li class='last'><a href='#'><span>Todas</span></a></li>
+                    </ul>
+                </li>
+                <li class='has-sub'><a href='#'><span>Estadísticas</span></a>
+                    <ul>
+                        <li><a href='#'><span>Ocupación</span></a></li>
+                        <li class='last'><a href='#'><span>Efectores</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href='#'><span>Acerca de</span></a></li>
+        <li class='last'><a href='#'><span>Contacto</span></a></li>
+
+    {% endblock %}
+
+{% endblock %}
+
 {% block cuerpo %} 
 
     {% embed 'ThemeAplicativoBundle:Componentes:filtros.html.twig' %}
