@@ -83,9 +83,9 @@ class ClasificacionesCamas
     private $aislamiento;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="id_clasificacion_cama", type="boolean")
+     * @ORM\Column(name="id_clasificacion_cama", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */

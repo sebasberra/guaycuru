@@ -79,14 +79,11 @@ class ListadosController extends Controller
         
         // clasificaciones_camas
         $q4 = $em->createQuery(
-                'SELECT cc 
-                FROM DBHmi2Bundle:ClasificacionesCamas AS cc
-                ORDER BY cc.clasificacionCama');
+                'SELECT c '.
+                'FROM DBHmi2Bundle:ClasificacionesCamas c ');/*.
+                'WHERE 1 '.
+                'ORDER BY cc.clasificacionCama');*/
         $clasificacionesCamas = $q4->getResult();
-        
-        /*
-        dump($clasificacionesCamas);
-        die();*/
         
         // efectores
         $q1 = $em->createQuery(
@@ -94,6 +91,11 @@ class ListadosController extends Controller
                 FROM DBHmi2Bundle:Efectores AS e
                 ORDER BY e.nomEfector');
         $efectores = $q1->getResult();
+        
+        /*
+        dump($clasificacionesCamas);
+        dump($efectores);
+        die();*/
         
         // salas
         $q2 = $em->createQuery(
