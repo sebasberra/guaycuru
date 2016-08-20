@@ -57,4 +57,9 @@ source hmi2guaycuru_camas_rutinas.sql
 source localidades_efectores_servicios.sql
 
 /* migra los datos del efector a la estructura hmi2guaycuru_camas */
-source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos.sql
+
+/* iturraspe */
+source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_iturraspe.sql
+
+/* cullen */
+source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_cullen.sql
