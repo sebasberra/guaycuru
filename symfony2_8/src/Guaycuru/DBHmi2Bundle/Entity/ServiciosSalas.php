@@ -7,11 +7,34 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ServiciosSalas
  *
- * @ORM\Table(name="servicios_salas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_id_efector_servicio_id_sala", columns={"id_efector_servicio", "id_sala"})}, indexes={@ORM\Index(name="fk_id_sala", columns={"id_sala"}), @ORM\Index(name="IDX_D8861F428239A6E4", columns={"id_efector_servicio"})})
+ * @ORM\Table(name="servicios_salas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_id_efector_servicio_id_sala", columns={"id_efector_servicio", "id_sala"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_id_efector_servicio_id_sala", columns={"id_efector", "id_efector_servicio", "id_sala"})}, indexes={@ORM\Index(name="idx_fk_servicios_salas_id_sala", columns={"id_sala"}), @ORM\Index(name="fk_servicios_salas_id_efector_idx", columns={"id_efector"}), @ORM\Index(name="IDX_D8861F428239A6E4", columns={"id_efector_servicio"})})
  * @ORM\Entity
  */
 class ServiciosSalas
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_servicio_sala", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idServicioSala;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="agudo_cronico", type="boolean", nullable=false)
+     */
+    private $agudoCronico;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="tipo_servicio_sala", type="boolean", nullable=false)
+     */
+    private $tipoServicioSala;
+
     /**
      * @var boolean
      *
@@ -27,18 +50,19 @@ class ServiciosSalas
     private $fechaModificacion;
 
     /**
-     * @var integer
+     * @var \Efectores
      *
-     * @ORM\Column(name="id_servicio_sala", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\ManyToOne(targetEntity="Efectores")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
+     * })
      */
-    private $idServicioSala;
+    private $idEfector;
 
     /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\EfectoresServicios
+     * @var \EfectoresServicios
      *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\EfectoresServicios")
+     * @ORM\ManyToOne(targetEntity="EfectoresServicios")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_efector_servicio", referencedColumnName="id_efector_servicio")
      * })
@@ -46,9 +70,9 @@ class ServiciosSalas
     private $idEfectorServicio;
 
     /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Salas
+     * @var \Salas
      *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Salas")
+     * @ORM\ManyToOne(targetEntity="Salas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_sala", referencedColumnName="id_sala")
      * })
@@ -56,6 +80,62 @@ class ServiciosSalas
     private $idSala;
 
 
+
+    /**
+     * Get idServicioSala
+     *
+     * @return integer 
+     */
+    public function getIdServicioSala()
+    {
+        return $this->idServicioSala;
+    }
+
+    /**
+     * Set agudoCronico
+     *
+     * @param boolean $agudoCronico
+     * @return ServiciosSalas
+     */
+    public function setAgudoCronico($agudoCronico)
+    {
+        $this->agudoCronico = $agudoCronico;
+
+        return $this;
+    }
+
+    /**
+     * Get agudoCronico
+     *
+     * @return boolean 
+     */
+    public function getAgudoCronico()
+    {
+        return $this->agudoCronico;
+    }
+
+    /**
+     * Set tipoServicioSala
+     *
+     * @param boolean $tipoServicioSala
+     * @return ServiciosSalas
+     */
+    public function setTipoServicioSala($tipoServicioSala)
+    {
+        $this->tipoServicioSala = $tipoServicioSala;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoServicioSala
+     *
+     * @return boolean 
+     */
+    public function getTipoServicioSala()
+    {
+        return $this->tipoServicioSala;
+    }
 
     /**
      * Set baja
@@ -104,13 +184,26 @@ class ServiciosSalas
     }
 
     /**
-     * Get idServicioSala
+     * Set idEfector
      *
-     * @return integer 
+     * @param \Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector
+     * @return ServiciosSalas
      */
-    public function getIdServicioSala()
+    public function setIdEfector(\Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector = null)
     {
-        return $this->idServicioSala;
+        $this->idEfector = $idEfector;
+
+        return $this;
+    }
+
+    /**
+     * Get idEfector
+     *
+     * @return \Guaycuru\DBHmi2Bundle\Entity\Efectores 
+     */
+    public function getIdEfector()
+    {
+        return $this->idEfector;
     }
 
     /**

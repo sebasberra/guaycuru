@@ -7,11 +7,27 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Localidades
  *
- * @ORM\Table(name="localidades", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_loc_cod_dpto_cod_prov_cod_pais", columns={"cod_loc", "cod_dpto", "cod_prov", "cod_pais"})}, indexes={@ORM\Index(name="localidades_fk_id_dpto", columns={"id_dpto"}), @ORM\Index(name="idx_nom_loc", columns={"nom_loc"})})
+ * @ORM\Table(name="localidades", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_loc_cod_dpto_cod_prov_cod_pais", columns={"cod_loc", "cod_dpto", "cod_prov", "cod_pais"})}, indexes={@ORM\Index(name="idx_fk_localidades_id_dpto", columns={"id_dpto"}), @ORM\Index(name="idx_nom_loc", columns={"nom_loc"})})
  * @ORM\Entity
  */
 class Localidades
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_localidad", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idLocalidad;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_dpto", type="integer", nullable=true)
+     */
+    private $idDpto;
+
     /**
      * @var string
      *
@@ -54,26 +70,40 @@ class Localidades
      */
     private $codPostal;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_localidad", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idLocalidad;
+
 
     /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Departamentos
+     * Get idLocalidad
      *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Departamentos")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_dpto", referencedColumnName="id_dpto")
-     * })
+     * @return integer 
      */
-    private $idDpto;
+    public function getIdLocalidad()
+    {
+        return $this->idLocalidad;
+    }
 
+    /**
+     * Set idDpto
+     *
+     * @param integer $idDpto
+     * @return Localidades
+     */
+    public function setIdDpto($idDpto)
+    {
+        $this->idDpto = $idDpto;
 
+        return $this;
+    }
+
+    /**
+     * Get idDpto
+     *
+     * @return integer 
+     */
+    public function getIdDpto()
+    {
+        return $this->idDpto;
+    }
 
     /**
      * Set nomLoc
@@ -211,38 +241,5 @@ class Localidades
     public function getCodPostal()
     {
         return $this->codPostal;
-    }
-
-    /**
-     * Get idLocalidad
-     *
-     * @return integer 
-     */
-    public function getIdLocalidad()
-    {
-        return $this->idLocalidad;
-    }
-
-    /**
-     * Set idDpto
-     *
-     * @param \Guaycuru\DBHmi2Bundle\Entity\Departamentos $idDpto
-     * @return Localidades
-     */
-    public function setIdDpto(\Guaycuru\DBHmi2Bundle\Entity\Departamentos $idDpto = null)
-    {
-        $this->idDpto = $idDpto;
-
-        return $this;
-    }
-
-    /**
-     * Get idDpto
-     *
-     * @return \Guaycuru\DBHmi2Bundle\Entity\Departamentos 
-     */
-    public function getIdDpto()
-    {
-        return $this->idDpto;
     }
 }

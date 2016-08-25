@@ -7,11 +7,27 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ServiciosEstadistica
  *
- * @ORM\Table(name="servicios_estadistica", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_servicio_sector_subsector", columns={"cod_servicio", "sector", "subsector"})}, indexes={@ORM\Index(name="fk_id_servicio", columns={"id_servicio"})})
+ * @ORM\Table(name="servicios_estadistica", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_servicio_sector_subsector", columns={"cod_servicio", "sector", "subsector"})}, indexes={@ORM\Index(name="idx_fk_servicios_estadistica_id_servicio", columns={"id_servicio"})})
  * @ORM\Entity
  */
 class ServiciosEstadistica
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_servicio_estadistica", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idServicioEstadistica;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_servicio", type="integer", nullable=false)
+     */
+    private $idServicio;
+
     /**
      * @var string
      *
@@ -47,33 +63,40 @@ class ServiciosEstadistica
      */
     private $nomRedServicioEstadistica;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="tipo_servicio_estadistica", type="boolean", nullable=false)
-     */
-    private $tipoServicioEstadistica;
+
 
     /**
-     * @var integer
+     * Get idServicioEstadistica
      *
-     * @ORM\Column(name="id_servicio_estadistica", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @return integer 
      */
-    private $idServicioEstadistica;
+    public function getIdServicioEstadistica()
+    {
+        return $this->idServicioEstadistica;
+    }
 
     /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Servicios
+     * Set idServicio
      *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Servicios")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_servicio", referencedColumnName="id_servicio")
-     * })
+     * @param integer $idServicio
+     * @return ServiciosEstadistica
      */
-    private $idServicio;
+    public function setIdServicio($idServicio)
+    {
+        $this->idServicio = $idServicio;
 
+        return $this;
+    }
 
+    /**
+     * Get idServicio
+     *
+     * @return integer 
+     */
+    public function getIdServicio()
+    {
+        return $this->idServicio;
+    }
 
     /**
      * Set codServicio
@@ -188,61 +211,5 @@ class ServiciosEstadistica
     public function getNomRedServicioEstadistica()
     {
         return $this->nomRedServicioEstadistica;
-    }
-
-    /**
-     * Set tipoServicioEstadistica
-     *
-     * @param boolean $tipoServicioEstadistica
-     * @return ServiciosEstadistica
-     */
-    public function setTipoServicioEstadistica($tipoServicioEstadistica)
-    {
-        $this->tipoServicioEstadistica = $tipoServicioEstadistica;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoServicioEstadistica
-     *
-     * @return boolean 
-     */
-    public function getTipoServicioEstadistica()
-    {
-        return $this->tipoServicioEstadistica;
-    }
-
-    /**
-     * Get idServicioEstadistica
-     *
-     * @return integer 
-     */
-    public function getIdServicioEstadistica()
-    {
-        return $this->idServicioEstadistica;
-    }
-
-    /**
-     * Set idServicio
-     *
-     * @param \Guaycuru\DBHmi2Bundle\Entity\Servicios $idServicio
-     * @return ServiciosEstadistica
-     */
-    public function setIdServicio(\Guaycuru\DBHmi2Bundle\Entity\Servicios $idServicio = null)
-    {
-        $this->idServicio = $idServicio;
-
-        return $this;
-    }
-
-    /**
-     * Get idServicio
-     *
-     * @return \Guaycuru\DBHmi2Bundle\Entity\Servicios 
-     */
-    public function getIdServicio()
-    {
-        return $this->idServicio;
     }
 }

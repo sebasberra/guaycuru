@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ClasificacionesCamas
  *
- * @ORM\Table(name="clasificaciones_camas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_clasificacion_cama", columns={"clasificacion_cama"})})
+ * @ORM\Table(name="clasificaciones_camas")
  * @ORM\Entity
  */
 class ClasificacionesCamas
 {
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="id_clasificacion_cama", type="boolean", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idClasificacionCama;
+
     /**
      * @var string
      *
@@ -50,16 +59,9 @@ class ClasificacionesCamas
     /**
      * @var string
      *
-     * @ORM\Column(name="categoria_edad", type="string", length=3, nullable=false)
+     * @ORM\Column(name="categoria_edad", type="string", length=5, nullable=false)
      */
     private $categoriaEdad;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_expiracion", type="date", nullable=true)
-     */
-    private $fechaExpiracion;
 
     /**
      * @var boolean
@@ -83,15 +85,23 @@ class ClasificacionesCamas
     private $aislamiento;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="id_clasificacion_cama", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="fecha_expiracion", type="date", nullable=true)
      */
-    private $idClasificacionCama;
+    private $fechaExpiracion;
 
 
+
+    /**
+     * Get idClasificacionCama
+     *
+     * @return boolean 
+     */
+    public function getIdClasificacionCama()
+    {
+        return $this->idClasificacionCama;
+    }
 
     /**
      * Set clasificacionCama
@@ -232,29 +242,6 @@ class ClasificacionesCamas
     }
 
     /**
-     * Set fechaExpiracion
-     *
-     * @param \DateTime $fechaExpiracion
-     * @return ClasificacionesCamas
-     */
-    public function setFechaExpiracion($fechaExpiracion)
-    {
-        $this->fechaExpiracion = $fechaExpiracion;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaExpiracion
-     *
-     * @return \DateTime 
-     */
-    public function getFechaExpiracion()
-    {
-        return $this->fechaExpiracion;
-    }
-
-    /**
      * Set oxigeno
      *
      * @param boolean $oxigeno
@@ -324,12 +311,25 @@ class ClasificacionesCamas
     }
 
     /**
-     * Get idClasificacionCama
+     * Set fechaExpiracion
      *
-     * @return boolean 
+     * @param \DateTime $fechaExpiracion
+     * @return ClasificacionesCamas
      */
-    public function getIdClasificacionCama()
+    public function setFechaExpiracion($fechaExpiracion)
     {
-        return $this->idClasificacionCama;
+        $this->fechaExpiracion = $fechaExpiracion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaExpiracion
+     *
+     * @return \DateTime 
+     */
+    public function getFechaExpiracion()
+    {
+        return $this->fechaExpiracion;
     }
 }

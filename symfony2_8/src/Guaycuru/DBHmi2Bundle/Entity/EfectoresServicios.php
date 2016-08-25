@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EfectoresServicios
  *
- * @ORM\Table(name="efectores_servicios", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_claveestd_cod_servicio_sector_subsector", columns={"claveestd", "cod_servicio", "sector", "subsector", "fecha_apertura"})}, indexes={@ORM\Index(name="fk_id_efector", columns={"id_efector"}), @ORM\Index(name="fk_id_servicio_estadistica", columns={"id_servicio_estadistica"})})
+ * @ORM\Table(name="efectores_servicios", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_claveestd_cod_servicio_sector_subsector", columns={"claveestd", "cod_servicio", "sector", "subsector"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_id_servicio_estadistica", columns={"id_efector", "id_servicio_estadistica"})}, indexes={@ORM\Index(name="idx_fk_efectores_servicios_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_efectores_servicios_id_servicio_estadistica", columns={"id_servicio_estadistica"})})
  * @ORM\Entity
  */
 class EfectoresServicios
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_efector_servicio", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idEfectorServicio;
+
     /**
      * @var string
      *
@@ -48,18 +57,11 @@ class EfectoresServicios
     private $nomServicioEstadistica;
 
     /**
-     * @var \DateTime
+     * @var boolean
      *
-     * @ORM\Column(name="fecha_apertura", type="date", nullable=false)
+     * @ORM\Column(name="baja", type="boolean", nullable=false)
      */
-    private $fechaApertura;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_cierre", type="date", nullable=true)
-     */
-    private $fechaCierre;
+    private $baja;
 
     /**
      * @var \DateTime
@@ -69,35 +71,36 @@ class EfectoresServicios
     private $fechaModificacion;
 
     /**
-     * @var integer
+     * @var \Efectores
      *
-     * @ORM\Column(name="id_efector_servicio", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idEfectorServicio;
-
-    /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\ServiciosEstadistica
-     *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\ServiciosEstadistica")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_servicio_estadistica", referencedColumnName="id_servicio_estadistica")
-     * })
-     */
-    private $idServicioEstadistica;
-
-    /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Efectores
-     *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Efectores")
+     * @ORM\ManyToOne(targetEntity="Efectores")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
      * })
      */
     private $idEfector;
 
+    /**
+     * @var \ServiciosEstadistica
+     *
+     * @ORM\ManyToOne(targetEntity="ServiciosEstadistica")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_servicio_estadistica", referencedColumnName="id_servicio_estadistica")
+     * })
+     */
+    private $idServicioEstadistica;
 
+
+
+    /**
+     * Get idEfectorServicio
+     *
+     * @return integer 
+     */
+    public function getIdEfectorServicio()
+    {
+        return $this->idEfectorServicio;
+    }
 
     /**
      * Set claveestd
@@ -215,49 +218,26 @@ class EfectoresServicios
     }
 
     /**
-     * Set fechaApertura
+     * Set baja
      *
-     * @param \DateTime $fechaApertura
+     * @param boolean $baja
      * @return EfectoresServicios
      */
-    public function setFechaApertura($fechaApertura)
+    public function setBaja($baja)
     {
-        $this->fechaApertura = $fechaApertura;
+        $this->baja = $baja;
 
         return $this;
     }
 
     /**
-     * Get fechaApertura
+     * Get baja
      *
-     * @return \DateTime 
+     * @return boolean 
      */
-    public function getFechaApertura()
+    public function getBaja()
     {
-        return $this->fechaApertura;
-    }
-
-    /**
-     * Set fechaCierre
-     *
-     * @param \DateTime $fechaCierre
-     * @return EfectoresServicios
-     */
-    public function setFechaCierre($fechaCierre)
-    {
-        $this->fechaCierre = $fechaCierre;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaCierre
-     *
-     * @return \DateTime 
-     */
-    public function getFechaCierre()
-    {
-        return $this->fechaCierre;
+        return $this->baja;
     }
 
     /**
@@ -284,13 +264,26 @@ class EfectoresServicios
     }
 
     /**
-     * Get idEfectorServicio
+     * Set idEfector
      *
-     * @return integer 
+     * @param \Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector
+     * @return EfectoresServicios
      */
-    public function getIdEfectorServicio()
+    public function setIdEfector(\Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector = null)
     {
-        return $this->idEfectorServicio;
+        $this->idEfector = $idEfector;
+
+        return $this;
+    }
+
+    /**
+     * Get idEfector
+     *
+     * @return \Guaycuru\DBHmi2Bundle\Entity\Efectores 
+     */
+    public function getIdEfector()
+    {
+        return $this->idEfector;
     }
 
     /**
@@ -314,28 +307,5 @@ class EfectoresServicios
     public function getIdServicioEstadistica()
     {
         return $this->idServicioEstadistica;
-    }
-
-    /**
-     * Set idEfector
-     *
-     * @param \Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector
-     * @return EfectoresServicios
-     */
-    public function setIdEfector(\Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector = null)
-    {
-        $this->idEfector = $idEfector;
-
-        return $this;
-    }
-
-    /**
-     * Get idEfector
-     *
-     * @return \Guaycuru\DBHmi2Bundle\Entity\Efectores 
-     */
-    public function getIdEfector()
-    {
-        return $this->idEfector;
     }
 }

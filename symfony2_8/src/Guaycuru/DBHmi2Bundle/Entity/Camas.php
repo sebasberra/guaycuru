@@ -3,22 +3,35 @@
 namespace Guaycuru\DBHmi2Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use STG\DEIM\Themes\Bundles\AplicativoBundle\Annotation\Filter;
 
 /**
  * Camas
  *
- * @ORM\Table(name="camas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_habitacion", columns={"nombre", "id_habitacion"}), @ORM\UniqueConstraint(name="idx_unique_id_internacion", columns={"id_internacion"})}, indexes={@ORM\Index(name="fk_id_habitacion", columns={"id_habitacion"}), @ORM\Index(name="fk_camas_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_camas_id_clasificacion_cama", columns={"id_clasificacion_cama"})})
+ * @ORM\Table(name="camas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_habitacion", columns={"nombre", "id_habitacion"})}, indexes={@ORM\Index(name="idx_fk_camas_id_habitacion", columns={"id_habitacion"}), @ORM\Index(name="idx_fk_camas_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_camas_id_clasificacion_cama", columns={"id_clasificacion_cama"})})
  * @ORM\Entity
  */
 class Camas
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_cama", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCama;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_internacion", type="integer", nullable=true)
+     */
+    private $idInternacion;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
-     * 
-     * @Filter(type="text", label="Nombre de cama")
      */
     private $nombre;
 
@@ -26,9 +39,6 @@ class Camas
      * @var string
      *
      * @ORM\Column(name="estado", type="string", length=1, nullable=false)
-     * 
-     * * @Filter(type="text", label="Estado")
-     * 
      */
     private $estado;
 
@@ -54,51 +64,29 @@ class Camas
     private $fechaModificacion;
 
     /**
-     * @var integer
+     * @var \ClasificacionesCamas
      *
-     * @ORM\Column(name="id_cama", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idCama;
-
-    /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Efectores
-     *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Efectores")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
-     * })
-     *  
-     */
-    private $idEfector;
-
-    /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\ClasificacionesCamas
-     *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\ClasificacionesCamas")
+     * @ORM\ManyToOne(targetEntity="ClasificacionesCamas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_clasificacion_cama", referencedColumnName="id_clasificacion_cama")
      * })
-     * 
-     * 
      */
     private $idClasificacionCama;
 
     /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Internaciones
+     * @var \Efectores
      *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Internaciones")
+     * @ORM\ManyToOne(targetEntity="Efectores")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_internacion", referencedColumnName="id_internacion")
+     *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
      * })
      */
-    private $idInternacion;
+    private $idEfector;
 
     /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Habitaciones
+     * @var \Habitaciones
      *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Habitaciones")
+     * @ORM\ManyToOne(targetEntity="Habitaciones")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_habitacion", referencedColumnName="id_habitacion")
      * })
@@ -106,6 +94,39 @@ class Camas
     private $idHabitacion;
 
 
+
+    /**
+     * Get idCama
+     *
+     * @return integer 
+     */
+    public function getIdCama()
+    {
+        return $this->idCama;
+    }
+
+    /**
+     * Set idInternacion
+     *
+     * @param integer $idInternacion
+     * @return Camas
+     */
+    public function setIdInternacion($idInternacion)
+    {
+        $this->idInternacion = $idInternacion;
+
+        return $this;
+    }
+
+    /**
+     * Get idInternacion
+     *
+     * @return integer 
+     */
+    public function getIdInternacion()
+    {
+        return $this->idInternacion;
+    }
 
     /**
      * Set nombre
@@ -223,39 +244,6 @@ class Camas
     }
 
     /**
-     * Get idCama
-     *
-     * @return integer 
-     */
-    public function getIdCama()
-    {
-        return $this->idCama;
-    }
-
-    /**
-     * Set idEfector
-     *
-     * @param \Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector
-     * @return Camas
-     */
-    public function setIdEfector(\Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector = null)
-    {
-        $this->idEfector = $idEfector;
-
-        return $this;
-    }
-
-    /**
-     * Get idEfector
-     *
-     * @return \Guaycuru\DBHmi2Bundle\Entity\Efectores 
-     */
-    public function getIdEfector()
-    {
-        return $this->idEfector;
-    }
-
-    /**
      * Set idClasificacionCama
      *
      * @param \Guaycuru\DBHmi2Bundle\Entity\ClasificacionesCamas $idClasificacionCama
@@ -279,26 +267,26 @@ class Camas
     }
 
     /**
-     * Set idInternacion
+     * Set idEfector
      *
-     * @param \Guaycuru\DBHmi2Bundle\Entity\Internaciones $idInternacion
+     * @param \Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector
      * @return Camas
      */
-    public function setIdInternacion(\Guaycuru\DBHmi2Bundle\Entity\Internaciones $idInternacion = null)
+    public function setIdEfector(\Guaycuru\DBHmi2Bundle\Entity\Efectores $idEfector = null)
     {
-        $this->idInternacion = $idInternacion;
+        $this->idEfector = $idEfector;
 
         return $this;
     }
 
     /**
-     * Get idInternacion
+     * Get idEfector
      *
-     * @return \Guaycuru\DBHmi2Bundle\Entity\Internaciones 
+     * @return \Guaycuru\DBHmi2Bundle\Entity\Efectores 
      */
-    public function getIdInternacion()
+    public function getIdEfector()
     {
-        return $this->idInternacion;
+        return $this->idEfector;
     }
 
     /**

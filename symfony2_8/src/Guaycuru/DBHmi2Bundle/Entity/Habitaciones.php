@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Habitaciones
  *
- * @ORM\Table(name="habitaciones", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_sala", columns={"nombre", "id_sala"})}, indexes={@ORM\Index(name="fk_id_sala", columns={"id_sala"})})
+ * @ORM\Table(name="habitaciones", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_sala", columns={"nombre", "id_sala"})}, indexes={@ORM\Index(name="idx_fk_habitaciones_id_sala", columns={"id_sala"})})
  * @ORM\Entity
  */
 class Habitaciones
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_habitacion", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idHabitacion;
+
     /**
      * @var string
      *
@@ -69,18 +78,9 @@ class Habitaciones
     private $fechaModificacion;
 
     /**
-     * @var integer
+     * @var \Salas
      *
-     * @ORM\Column(name="id_habitacion", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idHabitacion;
-
-    /**
-     * @var \Guaycuru\DBHmi2Bundle\Entity\Salas
-     *
-     * @ORM\ManyToOne(targetEntity="Guaycuru\DBHmi2Bundle\Entity\Salas")
+     * @ORM\ManyToOne(targetEntity="Salas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_sala", referencedColumnName="id_sala")
      * })
@@ -88,6 +88,16 @@ class Habitaciones
     private $idSala;
 
 
+
+    /**
+     * Get idHabitacion
+     *
+     * @return integer 
+     */
+    public function getIdHabitacion()
+    {
+        return $this->idHabitacion;
+    }
 
     /**
      * Set nombre
@@ -271,16 +281,6 @@ class Habitaciones
     public function getFechaModificacion()
     {
         return $this->fechaModificacion;
-    }
-
-    /**
-     * Get idHabitacion
-     *
-     * @return integer 
-     */
-    public function getIdHabitacion()
-    {
-        return $this->idHabitacion;
     }
 
     /**
