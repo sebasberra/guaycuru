@@ -1,0 +1,14 @@
+receta import from db - mysql doctrine
+--------------------------------------
+
+# inspecciona la base de datos definida en parameters.yml y genera los archivos xml
+# detecta entre 70-80 % del base de datos. no recupera relaciones uno a muchos y por el estilo
+./app/console doctrine:mapping:convert xml ./src/Guaycuru/DBHmi2Bundle/Resources/config/doctrine/metadata/orm --from-database --force
+
+# genera los archivos php con las tablas de la DB, solo con los campos y tipo annotation
+# se coloca el nombre del bundle directamente, no el path porque symfony lo debe
+# debe tener inicializado y esas cosas
+./app/console doctrine:mapping:import DBHmi2Bundle annotation
+
+# genera los seters y getters
+./app/console doctrine:generate:entities DBHmi2Bundle
