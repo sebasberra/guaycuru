@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ encabezado_titulo }}</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <meta name="copyright" content="&copy;" />
+        <meta name="robot" content="all" />
+
+        {% include 'ThemeAplicativoBundle:Default:css-base.html.twig' %} 
+        {% include 'ThemeAplicativoBundle:Default:css-jquery-ui-theme.html.twig'%} 
+        {% include 'ThemeAplicativoBundle:Default:css.html.twig' %} 
+        {% include 'ThemeAplicativoBundle:Default:ie.html.twig' %} 
+        {% block styles %}
+
+        {% endblock %}
+
+        {% block javascriptsIncludes %} 
+            {% include 'ThemeAplicativoBundle:Default:jquery.html.twig' %} 	   
+        {% endblock %} 
+
+        {% block javascripts %} 
+        {% endblock %} 
+
+        {% block jquery %}
+        {% endblock %}
+
+
+    </head>
+
+    <body id="top">
+
+        <div role="navigation" class="navbar navbar-sf navbar-fixed-top">
+            <div class="container row-top">
+                <div class="navbar-header">
+                    <a href="//www.santafe.gov.ar" class="navbar-brand"><img alt="Gobierno de Santa Fe" src="//www.santafe.gov.ar/assets/standard/images/gob-santafe.png"></a>                    
+                </div>
+            </div>
+        </div>        
+
+        <div class="container">
+
+            <div class="row top-padding">  
+
+                {% include 'ThemeAplicativoBundle:Default:top.html.twig' %}
+
+                {% block barraHerramientas %}                
+                {% endblock %}
+
+                <div id='cssmenu'>
+                    <ul>
+                        {% block menu %} 
+                            {% block submenus %}
+                                <li class=''><a href='index.html'><span>Home</span></a></li>
+                                <li class='has-sub'><a href='#'><span>Products</span></a>
+                                    <ul>
+                                        <li class='has-sub'><a href='#'><span>Product 1</span></a>
+                                            <ul>
+                                                <li><a href='#'><span>Sub Item</span></a></li>
+                                                <li class='last'><a href='#'><span>Sub Item</span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li class='has-sub'><a href='#'><span>Product 2</span></a>
+                                            <ul>
+                                                <li><a href='#'><span>Sub Item</span></a></li>
+                                                <li class='last'><a href='#'><span>Sub Item</span></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href='#'><span>About</span></a></li>
+                                <li class='last'><a href='#'><span>Contact</span></a></li>
+                            {% endblock %}
+                        {% endblock %}
+                        </ul>
+                    </div>
+
+                    {# ruta de navegacion #} 
+
+                    {% block cuerpo %} 
+
+                    {% endblock %} 
+
+                    {% include 'ThemeAplicativoBundle:Default:footer.html.twig' %} 
+
+                    {% include 'ThemeAplicativoBundle:Default:modales.html.twig' %}
+
+                </div>
+            </div>
+
+            <div id="myProgressBar" style="visibility: hidden;"></div>
+            {% block javascriptsIncludesCustom %}
+                {% include 'ThemeAplicativoBundle:Default:javascript-standard-gobierno.html.twig' %} 
+            {% endblock %}
+        </body>
+        {% block postbody %}    
+        {% endblock %}
+        
+    </html>
+
