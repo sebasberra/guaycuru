@@ -1,10 +1,27 @@
 {# ejemplo.html.twig #}
 
 {# De esta manera podemos extender la vista base definida para nuestra vista. #}
-{% extends 'ThemeAplicativoBundle:Default:base.html.twig' %}
+{% extends 'ThemeAplicativoBundle:Default:baseGuaycuru.html.twig' %}
 
+{% block styles %}
+{% endblock %}
 
+{% block javascripts %} 
+    <script>
+        
+        function prueba(){
+            var pru="prueba";
+            
+            alert(pru);
+        }
+        
+    </script>
+{% endblock %} 
 
+{% block jquery %}
+    
+{% endblock %}
+        
 {% block barraHerramientas %}
 
 {% endblock %}
@@ -18,62 +35,53 @@
 {% endblock %}
 
 {% block cuerpo %}
+    
+    <label for="search">Search: </label>
+<input id="search">
+{% endblock %}
 
-    {# % embed 'ThemeAplicativoBundle:Componentes:filtros.html.twig' %}
-    
-        
-    
-    {% endembed % #}
-    
-    
-    {% embed 'ThemeAplicativoBundle:Componentes:tabla.html.twig' %}
-       
-        {% block TituloTabla %}Estado de las camas. Efector:{% endblock %}
 
-        {% block headerTabla %}
-        
-        <td class="columns-dest">Nombre</td>
-        <td class="columns-dest">Estado</td>
-        <td class="columns-dest">Efector</td>
-        
-        {% endblock %}
-            
-        {% block cuerpoTabla %}
+
+{% block postbody %}
+    <script>
+  $( function() {
+    $.widget( "custom.catcomplete", $.ui.autocomplete, {
+      _create: function() {
+        this._super();
+        this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+      },
+      _renderMenu: function( ul, items ) {
+        var that = this,
+          currentCategory = "";
+        $.each( items, function( index, item ) {
+          var li;
+          if ( item.category != currentCategory ) {
+            ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+            currentCategory = item.category;
+          }
+          li = that._renderItemData( ul, item );
+          if ( item.category ) {
+            li.attr( "aria-label", item.category + " : " + item.label );
+          }
+        });
+      }
+    });
+    var data = [
+      { label: "anders", category: "" },
+      { label: "andreas", category: "" },
+      { label: "antal", category: "" },
+      { label: "annhhx10", category: "Products" },
+      { label: "annk K12", category: "Products" },
+      { label: "annttop C13", category: "Products" },
+      { label: "anders andersson", category: "People" },
+      { label: "andreas andersson", category: "People" },
+      { label: "andreas johnson", category: "People" }
+    ];
  
-        
-            {% for cama in pagination %}
-                
-                <tr>    
-                    <td>{{ cama.nombre }}</td>
-                    <td>{{ cama.estado }}</td>
-                    <td>{{ cama.Efectores.nomEfector }}</td>
-                </tr>
-                
-            {% endfor %}
-
-            
-                
-        {% endblock %}
- 
-        {% block paginacion %}
-        
-        {{ knp_pagination_render(pagination) }}
-           
-        {% endblock %}
-        
-    {% endembed %}
-
-    
-{% endblock %}
-
-{% block javascriptsIncludes %}
-
-{% endblock %}
-
-{% block javascripts %}
-
-{% endblock %}
-
-{% block jquery %}
-
+    $( "#search" ).catcomplete({
+      delay: 0,
+      source: data
+    });
+  } );
+  </script>
 {% endblock %}
