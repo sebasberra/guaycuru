@@ -1,3 +1,4 @@
+# This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
@@ -22,4 +23,3 @@ parameters:
     datos_aplicativo_path_ayuda: 'ruta_ayuda'
     datos_aplicativo_path_logout: 'ruta_logout'
     datos_aplicativo_path_home: 'ruta_home'
-
