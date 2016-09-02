@@ -1,6 +1,9 @@
 receta import from db - mysql doctrine
 --------------------------------------
 
+# Generar el bundle antes
+./app/console generate:bundle --namespace=Guaycuru/DBHmi2Bundle --bundle-name=DBHmi2Bundle
+
 # inspecciona la base de datos definida en parameters.yml y genera los archivos xml
 # detecta entre 70-80 % del base de datos. no recupera relaciones uno a muchos y por el estilo
 ./app/console doctrine:mapping:convert xml ./src/Guaycuru/DBHmi2Bundle/Resources/config/doctrine/metadata/orm --from-database --force
