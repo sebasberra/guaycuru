@@ -110,16 +110,3 @@ doctrine:
         user: %database_user%
         password: %database_password%
         charset: UTF8
-        
-# besimple
-be_simple_soap:
-    cache:
-        type:     disk
-        lifetime: 86400
-        limit:    5
-    services:
-        AplicationService:
-            namespace:      http://localhost/myproject/web/app_dev.php/ws/AplicationService
-            binding:        rpc-literal
-            resource:       "@Guaycuru/YaaukanigaBundle/Controller/WebServiceController.php"
-            resource_type:  annotation

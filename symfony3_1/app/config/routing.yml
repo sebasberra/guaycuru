@@ -1,0 +1,13 @@
+l_rotherfield_notification2:
+    resource: "@LRotherfieldNotification2Bundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+l_rotherfield_notification:
+    resource: "@LRotherfieldNotificationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

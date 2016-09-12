@@ -1,4 +1,7 @@
-services:
 #    yaaukaniga.example:
 #        class: Guaycuru\YaaukanigaBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
+services:
+    hello_service:
+        class: Guaycuru\YaaukanigaBundle\Services\HelloService
+        arguments: ['@mailer']

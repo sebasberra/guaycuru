@@ -22,8 +22,3 @@ app:
 theme_aplicativo:
     resource: "@ThemeAplicativoBundle/Resources/config/routing.yml"
     prefix:   /
-    
-_besimple_soap:
-    resource: "@BeSimpleSoapBundle/Resources/config/routing/webservicecontroller.xml"
-    prefix:   /ws
-
