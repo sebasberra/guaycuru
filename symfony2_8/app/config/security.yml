@@ -1,24 +1,84 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
-security:
+#security:
+#
+#    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+#    providers:
+#        in_memory:
+#            memory: ~
+#
+#    firewalls:
+#        # disables authentication for assets and the profiler, adapt it according to your needs
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#
+#        main:
+#            anonymous: ~
+#            # activate different ways to authenticate
+#
+#            # http_basic: ~
+#            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+#
+#            # form_login: ~
+#            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            
+            
+## app/config/security.yml
+# 
+# configuracion por defecto de jms_security_extra
+#
+#jms_security_extra:
+#    # Whether you want to secure all services (true), or only secure specific
+#    # services (false); see also below
+#    secure_all_services: false
+#
+#    # Enabling this setting will add an additional special attribute "ROLE_IDDQD".
+#    # Anybody with this attribute will effectively bypass all security checks.
+#    enable_iddqd_attribute: false
+#
+#    # Enables expression language
+#    expressions: false
+#
+#    # Allows you to disable some, or all built-in voters
+#    voters:
+#        disable_authenticated: false
+#        disable_role:          false
+#        disable_acl:           false
+#
+#    # Allows you to specify access control rules for specific methods, such
+#    # as controller actions
+#    method_access_control: { }
+#
+#    util:
+#        secure_random:
+#            connection: # the doctrine connection name
+#            table_name: seed_table
+#            seed_provider: # service id of your own seed provider implementation
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+
+security:
+    firewalls:
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+#            http_basic:
+#                realm: "Secured Demo Area"
+            form_login:
+                login_path:  login
+                check_path:  login_check
+    access_control:
+        - { path: ^/guaycuru/qiluazus, roles: ROLE_ADMIN }
+        # Descomenta la siguiente línea para proteger también
+        # la propia URL /admin
+        # - { path: ^/admin$, roles: ROLE_ADMIN }
+
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    ryan:  { password: ryanpass, roles: 'ROLE_USER' }
+                    admin: { password: kitten, roles: 'ROLE_ADMIN' }
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext

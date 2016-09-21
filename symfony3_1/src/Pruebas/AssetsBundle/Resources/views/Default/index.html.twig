@@ -1,0 +1,13 @@
+{% stylesheets 'bundles/assets/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% javascripts '@AssetsBundle/Resources/public/js/*' output='js/compiled/main.js' %}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% image '@AssetsBundle/Resources/public/images/sebas.jpg' %}
+    <img src="{{ asset_url }}" alt="Example" />
+{% endimage %}
+
+Hello World!

@@ -1,3 +1,7 @@
+seguridad:
+    resource: "@SeguridadBundle/Resources/config/routing.yml"
+    prefix:   /
+
 db_hmi2:
     resource: "@DBHmi2Bundle/Controller/"
     type:     annotation

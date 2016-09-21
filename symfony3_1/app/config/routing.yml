@@ -1,12 +1,10 @@
-l_rotherfield_notification2:
-    resource: "@LRotherfieldNotification2Bundle/Controller/"
-    type:     annotation
+seguridad:
+    resource: "@SeguridadBundle/Resources/config/routing.yml"
     prefix:   /
 
-l_rotherfield_notification:
-    resource: "@LRotherfieldNotificationBundle/Controller/"
-    type:     annotation
-    prefix:   /
+assets:
+    resource: "@AssetsBundle/Resources/config/routing.yml"
+    prefix:   /pruebas
 
 app:
     resource: "@AppBundle/Controller/"

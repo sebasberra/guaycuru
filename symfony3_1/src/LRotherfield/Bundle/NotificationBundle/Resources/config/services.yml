@@ -1,8 +1,0 @@
-parameters:
-    lrotherfield.notification.class: LRotherfieldBundleNotificationBundleControllerNotificationController
-
-services:
-    lrotherfield.notify:
-        class: "%lrotherfield.notification.class%"
-        arguments:
-            session: @session

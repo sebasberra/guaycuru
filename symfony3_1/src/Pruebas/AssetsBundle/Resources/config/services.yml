@@ -1,0 +1,4 @@
+services:
+#    assets.example:
+#        class: Pruebas\AssetsBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

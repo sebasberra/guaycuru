@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new STG\DEIM\Themes\Bundles\AplicativoBundle\ThemeAplicativoBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Guaycuru\DBHmi2Bundle\DBHmi2Bundle(),
+            new Guaycuru\SeguridadBundle\SeguridadBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
