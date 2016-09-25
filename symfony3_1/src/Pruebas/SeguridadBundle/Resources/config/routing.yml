@@ -1,3 +1,7 @@
 seguridad_homepage:
     path:     /
     defaults: { _controller: SeguridadBundle:Default:index }
+
+registracion_usuarios:
+    path:     /registro
+    defaults: { _controller: SeguridadBundle:Registracion:registro }

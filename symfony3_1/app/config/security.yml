@@ -2,11 +2,34 @@
 # http://symfony.com/doc/current/book/security.html
 security:
 
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Pruebas\SeguridadBundle\Entity\User: plaintext
+            
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        
+        cadena_autenticacion:
+            chain:
+                providers: [hardcode, usuarios_db]
+                
+        hardcode:
+            memory:
+                users:
+                    sebas:
+                        password: sebas
+                        roles: 'ROLE_USER'
+                    admin:
+                        password: admin
+                        roles: 'ROLE_ADMIN'
 
+        usuarios_db:
+            entity:
+                class: Pruebas/SeguridadBundle:User
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
+                
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -22,7 +45,14 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+        
+            # ...
+            logout:
+                path:   /logout
+                target: /
 
+            provider: cadena_autenticacion
+                
     access_control:
         # require ROLE_ADMIN 
         - { path: ^/pruebas, roles: ROLE_ADMIN }

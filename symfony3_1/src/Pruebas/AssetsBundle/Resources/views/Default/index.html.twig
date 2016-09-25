@@ -1,13 +1,24 @@
-{% stylesheets 'bundles/assets/css/*' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
+{% extends '::base.html.twig' %}
 
-{% javascripts '@AssetsBundle/Resources/public/js/*' output='js/compiled/main.js' %}
-    <script src="{{ asset_url }}"></script>
-{% endjavascripts %}
+{% block stylesheets %}
+    
+   {{ parent() }}
 
-{% image '@AssetsBundle/Resources/public/images/sebas.jpg' %}
-    <img src="{{ asset_url }}" alt="Example" />
-{% endimage %}
+{% endblock %}
 
-Hello World!
+{% block javascripts %}
+
+    {{ parent() }}
+
+{% endblock %}
+    
+
+{% block body %}
+    
+    {% image '@AssetsBundle/Resources/public/images/sebas.jpg' %}
+        <img src="{{ asset_url }}" alt="Example" />
+    {% endimage %}
+    
+    Hello World!
+
+{% endblock %}

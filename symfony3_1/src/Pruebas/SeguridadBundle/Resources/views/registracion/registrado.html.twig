@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    
+   {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+{% endblock %}
+    
+
+{% block body %}
+    
+    {% image '@AssetsBundle/Resources/public/images/sebas.jpg' %}
+        <img src="{{ asset_url }}" alt="Example" />
+    {% endimage %}
+    
+    te registraste!
+
+{% endblock %}

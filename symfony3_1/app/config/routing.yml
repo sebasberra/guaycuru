@@ -2,6 +2,9 @@ seguridad:
     resource: "@SeguridadBundle/Resources/config/routing.yml"
     prefix:   /
 
+logout:
+    path: /logout
+    
 assets:
     resource: "@AssetsBundle/Resources/config/routing.yml"
     prefix:   /pruebas
