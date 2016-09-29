@@ -1,6 +1,6 @@
 <?php
 
-namespace LRotherfield\Bundle\Notification2Bundle\Tests\Controller;
+namespace Pruebas\WSBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

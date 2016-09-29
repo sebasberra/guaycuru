@@ -1,3 +1,7 @@
+ws:
+    resource: "@WSBundle/Resources/config/routing.yml"
+    prefix:   /
+
 servicios:
     resource: "@ServiciosBundle/Resources/config/routing.yml"
     prefix:   /
