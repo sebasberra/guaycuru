@@ -1,17 +1,121 @@
 receta import from db - mysql doctrine
 --------------------------------------
 
-# Generar el bundle antes
+pasos:
+
+1)
+
+# app/config/config.yml
+
+...
+
+doctrine:
+    dbal:
+        mapping_types:
+            enum: string
+        driver:   pdo_mysql
+...
+
+
+2)
+
+# Generar el bundle 
 ./app/console generate:bundle --namespace=Guaycuru/DBHmi2Bundle --bundle-name=DBHmi2Bundle
+
+o
+
+./bin/console generate:bundle --namespace=Guaycuru/DBHmi2Bundle --bundle-name=DBHmi2Bundle
+
+
+
+3)
 
 # inspecciona la base de datos definida en parameters.yml y genera los archivos xml
 # detecta entre 70-80 % del base de datos. no recupera relaciones uno a muchos y por el estilo
 ./app/console doctrine:mapping:convert xml ./src/Guaycuru/DBHmi2Bundle/Resources/config/doctrine/metadata/orm --from-database --force
+
+o
+
+./bin/console doctrine:mapping:convert xml ./src/Guaycuru/DBHmi2Bundle/Resources/config/doctrine/metadata/orm --from-database --force
+
+
+4)
 
 # genera los archivos php con las tablas de la DB, solo con los campos y tipo annotation
 # se coloca el nombre del bundle directamente, no el path porque symfony lo debe
 # debe tener inicializado y esas cosas
 ./app/console doctrine:mapping:import DBHmi2Bundle annotation
 
+o
+
+./bin/console doctrine:mapping:import DBHmi2Bundle annotation
+
+
+
+5)
+
 # genera los seters y getters
 ./app/console doctrine:generate:entities DBHmi2Bundle
+
+o
+
+./bin/console doctrine:generate:entities DBHmi2Bundle
+
+
+
+
+NOTAS:
+
+...
+
+si tira el error al ejecutar este comando:
+
+### ./app/console doctrine:generate:entities DBHmi2Bundle ###
+
+[RuntimeException]                                                   
+  Bundle "DBHmi2Bundle" does not contain any mapped entities.
+
+Entonces editar el archivo:
+
+vendor/doctrine/dbal/lib/Doctrine/DBAL/Platforms/MySqlPlatform.php
+
+ protected function initializeDoctrineTypeMappings()
+    {
+        $this->doctrineTypeMapping = array(
+            'tinyint'       => 'boolean',
+            'smallint'      => 'smallint',
+            'mediumint'     => 'integer',
+            'int'           => 'integer',
+            'integer'       => 'integer',
+            'bigint'        => 'bigint',
+            'tinytext'      => 'text',
+            'mediumtext'    => 'text',
+            'longtext'      => 'text',
+            'text'          => 'text',
+            'varchar'       => 'string',
+            'string'        => 'string',
+            'char'          => 'string',
+            'date'          => 'date',
+            'datetime'      => 'datetime',
+            'timestamp'     => 'datetime',
+            'time'          => 'time',
+            'float'         => 'float',
+            'double'        => 'float',
+            'real'          => 'float',
+            'decimal'       => 'decimal',
+            'numeric'       => 'decimal',
+            'year'          => 'date',
+            'longblob'      => 'blob',
+            'blob'          => 'blob',
+            'mediumblob'    => 'blob',
+            'tinyblob'      => 'blob',
+            'binary'        => 'binary',
+            'varbinary'     => 'binary',
+            'set'           => 'simple_array',
+            'enum'          => 'string',
+        );
+    }
+
+se agrega 'enum' => 'string'
+
+NOTA: quizas, si editas este archivo no sea necesario usar el mapping_types del config.yml
