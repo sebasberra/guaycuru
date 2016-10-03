@@ -11,7 +11,7 @@ logout:
     
 assets:
     resource: "@AssetsBundle/Resources/config/routing.yml"
-    prefix:   /pruebas
+    prefix:   /assets
 
 app:
     resource: "@AppBundle/Controller/"

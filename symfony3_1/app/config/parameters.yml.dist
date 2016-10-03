@@ -17,3 +17,15 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    encabezado_titulo: 'Camas de internación'
+    datos_aplicativo_encabezado_nombre_dependencia: 'Sectorial de Informática'
+    datos_aplicativo_encabezado_nombre_organismo: 'Ministerio de Salud'
+    datos_aplicativo_pie_pagina_titulo: 'GOBIERNO DE SANTA FE'
+    datos_aplicativo_pie_pagina_domicilio: '1° de Mayo 2064 PA (S3000DEE) Santa Fe'
+    datos_aplicativo_pie_pagina_telefono: '54 342 4571929'
+    datos_aplicativo_pie_pagina_copyright: '© 2016 - Todos los derechos reservados. Créditos | Términos y condiciones'
+    datos_aplicativo_webmaster_correo: sectorialsalud@santafe.gov.ar 
+    datos_aplicativo_path_ayuda: 'ruta_ayuda'
+    datos_aplicativo_path_logout: 'ruta_logout'
+    datos_aplicativo_path_home: 'ruta_home'
