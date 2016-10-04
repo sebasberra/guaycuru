@@ -1,0 +1,3 @@
+ws_homepage:
+    path:     /
+    defaults: { _controller: WSBundle:Default:index }
