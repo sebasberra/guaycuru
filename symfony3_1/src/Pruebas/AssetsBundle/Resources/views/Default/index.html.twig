@@ -61,9 +61,7 @@
 
 {% block cuerpo %}
     
-    {% image '@AssetsBundle/Resources/public/images/sebas.jpg' %}
-        <img src="{{ asset_url }}" alt="Example" />
-    {% endimage %}
+    <img src="{{ asset('bundles/assets/images/sebas.jpg') }}" alt="Example" />
     
     Hello World!
 

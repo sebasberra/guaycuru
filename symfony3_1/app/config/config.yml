@@ -73,9 +73,4 @@ swiftmailer:
 
 servicios:
     pepe: 1
-        
-assetic:
-    debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
+

@@ -17,6 +17,3 @@ assets:
     resource: "@AssetsBundle/Resources/config/routing.yml"
     prefix:   /assets
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
