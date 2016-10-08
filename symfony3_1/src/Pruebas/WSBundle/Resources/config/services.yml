@@ -1,4 +1,13 @@
 services:
-#    ws.example:
-#        class: Pruebas\WSBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    
+    configuracion_edilicia:
+        class: Pruebas\WSBundle\Utils\ConfiguracionEdilicia
+        arguments: ['@doctrine']
+
+    informe_sincronizacion:
+        class: Pruebas\WSBundle\Utils\InformeSincronizacion
+        arguments: ['@doctrine']
+        
+    internaciones_pases:
+        class: Pruebas\WSBundle\Utils\InternacionesPases
+        arguments: ['@doctrine']

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ServiciosSalas" table="servicios_salas">
+    <indexes>
+      <index name="idx_fk_servicios_salas_id_sala" columns="id_sala"/>
+      <index name="fk_servicios_salas_id_efector_idx" columns="id_efector"/>
+      <index name="IDX_D8861F428239A6E4" columns="id_efector_servicio"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="idx_unique_id_efector_servicio_id_sala" columns="id_efector_servicio,id_sala"/>
+      <unique-constraint name="idx_unique_id_efector_id_efector_servicio_id_sala" columns="id_efector,id_efector_servicio,id_sala"/>
+    </unique-constraints>
+    <id name="idServicioSala" type="integer" column="id_servicio_sala">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="agudoCronico" type="boolean" column="agudo_cronico" nullable="false">
+      <options>
+        <option name="comment">1=agudo; 2=cronico</option>
+      </options>
+    </field>
+    <field name="tipoServicioSala" type="boolean" column="tipo_servicio_sala" nullable="false">
+      <options>
+        <option name="comment">0=comun; 1=hospital de dia; 2=atencion domiciliaria</option>
+      </options>
+    </field>
+    <field name="baja" type="boolean" column="baja" nullable="false">
+      <options>
+        <option name="comment">Se puede dar de baja a un servicio de una sala y mantener los pases de este</option>
+      </options>
+    </field>
+    <field name="fechaModificacion" type="datetime" column="fecha_modificacion" nullable="false">
+      <options>
+        <option name="comment">fecha de modificacion del registro</option>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="idSala" target-entity="Salas" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_sala" referenced-column-name="id_sala"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEfectorServicio" target-entity="EfectoresServicios" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_efector_servicio" referenced-column-name="id_efector_servicio"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEfector" target-entity="Efectores" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_efector" referenced-column-name="id_efector"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

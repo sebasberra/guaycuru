@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="EfectoresServicios" table="efectores_servicios">
+    <indexes>
+      <index name="idx_fk_efectores_servicios_id_efector" columns="id_efector"/>
+      <index name="idx_fk_efectores_servicios_id_servicio_estadistica" columns="id_servicio_estadistica"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="idx_unique_claveestd_cod_servicio_sector_subsector" columns="claveestd,cod_servicio,sector,subsector"/>
+      <unique-constraint name="idx_unique_id_efector_id_servicio_estadistica" columns="id_efector,id_servicio_estadistica"/>
+    </unique-constraints>
+    <id name="idEfectorServicio" type="integer" column="id_efector_servicio">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="claveestd" type="string" column="claveestd" length="8" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">codigo de establecimiento de 8 digitos obtenido del mod_sims</option>
+      </options>
+    </field>
+    <field name="codServicio" type="string" column="cod_servicio" length="3" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">codigo nuclear de servicios de nacion vigente desde 2008</option>
+      </options>
+    </field>
+    <field name="sector" type="string" column="sector" length="1" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">1=varones; 2=mujeres; 3=mixto; 8=especificacion</option>
+      </options>
+    </field>
+    <field name="subsector" type="string" column="subsector" length="1" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">4=internacion; 5=CE; 6=atencion domiciliaria</option>
+      </options>
+    </field>
+    <field name="nomServicioEstadistica" type="string" column="nom_servicio_estadistica" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">Nombre del servicio de estadistica. Este campo se agrego para facilitar los select y reportes en programacion</option>
+      </options>
+    </field>
+    <field name="baja" type="boolean" column="baja" nullable="false">
+      <options>
+        <option name="comment">estado actual del servicio en el efector: 0=alta; 1=baja</option>
+      </options>
+    </field>
+    <field name="fechaModificacion" type="datetime" column="fecha_modificacion" nullable="false">
+      <options>
+        <option name="comment">fecha de actualizacion del registro</option>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="idServicioEstadistica" target-entity="ServiciosEstadistica" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_servicio_estadistica" referenced-column-name="id_servicio_estadistica"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEfector" target-entity="Efectores" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_efector" referenced-column-name="id_efector"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

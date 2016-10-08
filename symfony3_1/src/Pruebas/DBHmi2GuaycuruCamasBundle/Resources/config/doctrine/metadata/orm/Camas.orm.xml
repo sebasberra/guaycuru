@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Camas" table="camas">
+    <indexes>
+      <index name="idx_fk_camas_id_habitacion" columns="id_habitacion"/>
+      <index name="idx_fk_camas_id_efector" columns="id_efector"/>
+      <index name="idx_fk_camas_id_clasificacion_cama" columns="id_clasificacion_cama"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="idx_unique_nombre_id_habitacion" columns="nombre,id_habitacion"/>
+    </unique-constraints>
+    <id name="idCama" type="integer" column="id_cama">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="idInternacion" type="integer" column="id_internacion" nullable="true">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">Id de internacion de quien esta ocupando la cama. Si es NULL la cama esta vacia</option>
+      </options>
+    </field>
+    <field name="nombre" type="string" column="nombre" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="estado" type="string" column="estado" length="1" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada</option>
+      </options>
+    </field>
+    <field name="rotativa" type="boolean" column="rotativa" nullable="false">
+      <options>
+        <option name="comment">0=no es rotativa, 1=es rotativa; Las camas rotativas pueden cambiarse de habitacion o sala o no estar asignada a una habitacion en un momento dado</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="baja" type="boolean" column="baja" nullable="false">
+      <options>
+        <option name="comment">0 = habilitada; 1 = baja</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="fechaModificacion" type="datetime" column="fecha_modificacion" nullable="false">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="idHabitacion" target-entity="Habitaciones" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_habitacion" referenced-column-name="id_habitacion"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEfector" target-entity="Efectores" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_efector" referenced-column-name="id_efector"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idClasificacionCama" target-entity="ClasificacionesCamas" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_clasificacion_cama" referenced-column-name="id_clasificacion_cama"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

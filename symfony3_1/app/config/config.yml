@@ -6,6 +6,7 @@ imports:
     - { resource: "@SeguridadBundle/Resources/config/services.yml" }
     - { resource: "@ServiciosBundle/Resources/config/services.yml" }
     - { resource: "@WSBundle/Resources/config/services.yml" }
+    - { resource: "@DBHmi2GuaycuruCamasBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -44,6 +45,8 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
+        mapping_types:
+            enum: string
         driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"

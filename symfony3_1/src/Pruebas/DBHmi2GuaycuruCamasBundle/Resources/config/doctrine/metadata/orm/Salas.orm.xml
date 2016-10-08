@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Salas" table="salas">
+    <indexes>
+      <index name="idx_fk_salas_area_id_efector_servicio" columns="area_id_efector_servicio"/>
+      <index name="IDX_FEDB5403305FE2F" columns="id_efector"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="idx_unique_id_efector_nombre" columns="id_efector,nombre"/>
+      <unique-constraint name="idx_unique_id_efector_nro_sala" columns="id_efector,nro_sala"/>
+      <unique-constraint name="idx_unique_id_efector_area_id_efector_servicio" columns="area_id_efector_servicio"/>
+      <unique-constraint name="idx_unique_id_efector_cod_servicio_sector_subsector" columns="id_efector,area_cod_servicio,area_sector,area_subsector"/>
+    </unique-constraints>
+    <id name="idSala" type="integer" column="id_sala">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nroSala" type="smallint" column="nro_sala" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">nro de sala dentro del efector, se implementa como incremental por efector</option>
+      </options>
+    </field>
+    <field name="nombre" type="string" column="nombre" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">nombre de la sala dentro del efector</option>
+      </options>
+    </field>
+    <field name="cantCamas" type="smallint" column="cant_camas" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">cantidad total de camas de la sala</option>
+      </options>
+    </field>
+    <field name="moverCamas" type="boolean" column="mover_camas" nullable="false">
+      <options>
+        <option name="comment">bandera para el sistema que indica si se permite mover camas entre las habitaciones de la misma sala. por ejemplo: las incubadoras </option>
+      </options>
+    </field>
+    <field name="areaCodServicio" type="string" column="area_cod_servicio" length="3" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">codigo de 3 digitos del area SIPES</option>
+      </options>
+    </field>
+    <field name="areaSector" type="string" column="area_sector" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">campo sector correspondiente al area SIPES (1=varones; 2=mujeres; 3=mixto)</option>
+      </options>
+    </field>
+    <field name="areaSubsector" type="string" column="area_subsector" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">subsector correspondiente al area SIPES (4=internacion; 5=CE; 6=atencion domiciliaria;7=?internacion;8=?internacion)</option>
+      </options>
+    </field>
+    <field name="baja" type="boolean" column="baja" nullable="false">
+      <options>
+        <option name="comment">marca si la sala esta actualmente cerrada</option>
+      </options>
+    </field>
+    <field name="fechaModificacion" type="datetime" column="fecha_modificacion" nullable="false">
+      <options>
+        <option name="comment">fecha de modificacion del registro</option>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="areaEfectorServicio" target-entity="EfectoresServicios" fetch="LAZY">
+      <join-columns>
+        <join-column name="area_id_efector_servicio" referenced-column-name="id_efector_servicio"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEfector" target-entity="Efectores" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_efector" referenced-column-name="id_efector"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

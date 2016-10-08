@@ -53,6 +53,20 @@ o
 
 
 5)
+#
+# si da el siguiete error entonces borrar la cache
+#
+# Generating entities for bundle "DBHmi2GuaycuruCamasBundle"
+#
+#                                                                            
+#  [RuntimeException]                                                        
+#  Bundle "DBHmi2GuaycuruCamasBundle" does not contain any mapped entities.  
+#                                                                            
+#
+# doctrine:generate:entities [--path PATH] [--no-backup] [-h|--help] [-q|--quiet] [-v|vv|vvv|--verbose] [-V|--version] [--ansi] [--no-ansi] [-n|--no-interaction] [-e|--env ENV] [--no-debug] [--] <command> <name>                                                                                                                 
+#
+# sebas@linux-33oz:~/guaycuru/symfony3_1> ./bin/console cache:clear
+
 
 # genera los seters y getters
 ./app/console doctrine:generate:entities DBHmi2Bundle

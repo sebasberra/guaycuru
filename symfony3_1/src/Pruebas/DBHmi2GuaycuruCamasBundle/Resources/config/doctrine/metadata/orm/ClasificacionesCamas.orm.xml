@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ClasificacionesCamas" table="clasificaciones_camas">
+    <id name="idClasificacionCama" type="boolean" column="id_clasificacion_cama">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="clasificacionCama" type="string" column="clasificacion_cama" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">Descripcion de la clasificacion</option>
+      </options>
+    </field>
+    <field name="abreviatura" type="string" column="abreviatura" length="5" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">Abreviatura de la descripcion</option>
+      </options>
+    </field>
+    <field name="definicion" type="text" column="definicion" length="65535" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">Informacion extra</option>
+      </options>
+    </field>
+    <field name="tipoCuidadoProgresivo" type="boolean" column="tipo_cuidado_progresivo" nullable="false">
+      <options>
+        <option name="comment">0= cuidado moderado; 1= cuidado intermedio ; 2=cuidado critico</option>
+      </options>
+    </field>
+    <field name="critica" type="boolean" column="critica" nullable="false">
+      <options>
+        <option name="comment">0= NO critica; 1= critica</option>
+      </options>
+    </field>
+    <field name="categoriaEdad" type="string" column="categoria_edad" length="5" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+        <option name="comment">ADU= adulto (&gt;14 a); PED= pediatrica (&gt;28 d y &lt;14 a); NEO= neonatologica (&lt;28 d)</option>
+      </options>
+    </field>
+    <field name="oxigeno" type="boolean" column="oxigeno" nullable="false">
+      <options>
+        <option name="comment">0 = sin oxigeno ; 1 = con oxigeno</option>
+      </options>
+    </field>
+    <field name="respirador" type="boolean" column="respirador" nullable="false">
+      <options>
+        <option name="comment">0= sin respirador; 1= con respirador</option>
+      </options>
+    </field>
+    <field name="aislamiento" type="boolean" column="aislamiento" nullable="false">
+      <options>
+        <option name="comment">0= sin aislamiento; 1= con aislamiento (casos donde el paciente debe estar aislado de los otros por el tipo de efermedad)</option>
+      </options>
+    </field>
+    <field name="fechaExpiracion" type="date" column="fecha_expiracion" nullable="true">
+      <options>
+        <option name="comment">Fecha de baja de la clasificacion, NULL si la clasificacion esta activa</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
