@@ -1,3 +1,4 @@
-ws_homepage:
-    path:     /
-    defaults: { _controller: WSBundle:Default:index }
+configuracion_edilicia:
+    resource: "@WSBundle/Controller/ConfiguracionEdiliciaController.php"
+    prefix:   /configuracionedilicia
+    type:     annotation

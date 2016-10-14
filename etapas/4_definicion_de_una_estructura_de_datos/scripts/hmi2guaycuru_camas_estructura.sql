@@ -214,6 +214,7 @@ DEFAULT CHARACTER SET = latin1
 COMMENT = 'tipos de cama propuestos por Stettler y compatibles con sisa';
 
 
+
 -- -----------------------------------------------------
 -- Table camas
 -- -----------------------------------------------------
@@ -231,7 +232,7 @@ CREATE TABLE IF NOT EXISTS camas (
   baja TINYINT(1) NOT NULL DEFAULT FALSE COMMENT '0 = habilitada; 1 = baja',
   fecha_modificacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id_cama),
-  UNIQUE INDEX idx_unique_nombre_id_habitacion (nombre ASC, id_habitacion ASC),
+  UNIQUE INDEX idx_unique_nombre_id_efector (nombre ASC, id_efector ASC),
   INDEX idx_fk_camas_id_habitacion (id_habitacion ASC),
   INDEX idx_fk_camas_id_efector (id_efector ASC),
   INDEX idx_fk_camas_id_clasificacion_cama (id_clasificacion_cama ASC),
