@@ -35,11 +35,24 @@ class ConfiguracionEdiliciaController extends Controller
             'id_clasificacion_cama' => $id_clasificacion_cama
         ];
         
+        // ConfiguracionEdilicia
+        $ce=$this->get("configuracion_edilicia");
+        try{
+            
+            $ce->agregarCama($nueva_cama,$msg);
+            
+        } catch (\Exception $e) {
+
+            $msg = $e->getMessage();
+        }
+        
+        
         return $this->render(
                 'WSBundle:Default:msg.html.twig',
                 array(
                     'nueva_cama' => $nueva_cama,
-                    'msg' => $msg)
+                    'msg' => $msg,
+                    'error_debug' => $ce->error_debug)
                     );
         
     }

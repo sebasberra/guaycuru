@@ -3,6 +3,7 @@
 {% block cuerpo %}
     
     <p>{{ dump(nueva_cama) }}</p>
-    <p>{{ msg }}</p>
+    <p>{{ msg|raw }}</p>
+    <p>{{ error_debug|raw }}</p>
     
 {% endblock %}

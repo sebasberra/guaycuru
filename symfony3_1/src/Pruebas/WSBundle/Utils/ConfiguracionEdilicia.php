@@ -4,7 +4,17 @@ namespace Pruebas\WSBundle\Utils;
 
 use Pruebas\DBHmi2GuaycuruCamasBundle\Entity\Camas;
 
-
+/** Realiza el acceso a la DB hmi2guaycuru para actualizacion de
+ *  la configuracion edilicia.
+ *  NOTA: la sincronizacion entre efectores y base central no puede
+ *  ser completa en toda la estructura. Se inicia con la restriccion
+ *  a implementar en las bases de hospitales que es nombre unico de
+ *  cama por efector. La jararquia hacia arriba de camas, o sea, las
+ *  relaciones con tabla habitaciones y salas no se implementara. Se
+ *  sugiere nombres de habitaciones unicas por efector para que la 
+ *  informacion se refleje en la base central, pero de no ser posible
+ *  no se indicara la habitacion de la cama en base central
+ */
 class ConfiguracionEdilicia
 {
     
@@ -38,8 +48,7 @@ class ConfiguracionEdilicia
      * @return boolean
      */
     public function agregarCama(
-            $nueva_cama,
-            &$msg){
+            $nueva_cama){
         
 //        id_cama int(10) unsigned NOT NULL AUTO_INCREMENT,
 //        id_clasificacion_cama tinyint(3) unsigned NOT NULL 
@@ -63,15 +72,149 @@ class ConfiguracionEdilicia
         
         // ini
         $this->error_debug="";
-        $msg="";
-        
+            
        
         
         // clasificacion cama
         $clasificacion_cama = 
             $this->doctrine->getRepository
-                ('DBHmi2GuaycuruBundle:ClasificacionesCamas')
-                ->findOneById($nueva_cama["id_clasificacion_cama"]);
+                ('DBHmi2GuaycuruCamasBundle:ClasificacionesCamas')
+                ->findOneByIdClasificacionCama($nueva_cama["id_clasificacion_cama"]);
+        
+        if (!$clasificacion_cama){
+            
+            $msg = "El id de clasificación de cama: "
+                    .$nueva_cama["id_clasificacion_cama"]
+                    ." no existe en la base de datos";
+            $this->error_debug = $msg;
+            
+            throw new \Exception ($msg);
+            
+        }
+        
+        
+        // efector
+        $efector = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Efectores')
+                ->findOneByIdEfector($nueva_cama["id_efector"]);
+        
+        if (!$efector){
+            
+            $msg = "El id de efector: "
+                    .$nueva_cama["id_efector"]
+                    ." no existe en la base de datos";
+        
+            $this->error_debug = $msg;
+            
+            throw new \Exception ($msg);
+            
+        }
+        
+        // obtiene la habitacion doctrine, solo en caso de que exista
+        // una sola habitacion con el nombre en el efector
+        try{
+            
+            $habitacion = $this->obtenerHabitacion(
+                $nueva_cama["nombre_habitacion"],
+                $nueva_cama["id_efector"]);
+            
+        } catch (\Exception $e) {
+
+            $msg = $e->getMessage();
+            $habitacion=null;
+            
+        } catch (\ErrorException $ee){
+            
+            $msg = $ee->getMessage();
+            
+            throw $ee;
+            
+        }
+            
+                
+        // chequea que el nombre de cama este libre para usarse en el efector
+        if ($this->validarNombreCama(
+                $nueva_cama["nombre_cama"], 
+                $nueva_cama["id_efector"], 
+                $msg)==false){
+            
+            $this->error_debug = $msg;
+            
+            throw new \Exception ($msg);
+        }
+             
+        
+        
+        // objeto Camas doctrine
+        $cama = new Camas();
+        
+        // baja = false
+        $cama->setBaja(false);
+        
+        // estado libre
+        $cama->setEstado("L");
+        
+        // timestamp fecha modificacion
+        $cama->setFechaModificacion(null);
+        
+        // clasificacion cama
+        $cama->setIdClasificacionCama($clasificacion_cama);
+        
+        // efector
+        $cama->setIdEfector($efector);
+        
+        // habitacion
+        $cama->setIdHabitacion($habitacion);
+        
+        // internacion null
+        $cama->setIdInternacion(null);
+        
+        // nombre de cama
+        $cama->setNombre($nueva_cama["nombre_cama"]);
+        
+        // rotativa falso
+        $cama->setRotativa(false);
+        
+        // insert datos en la DB
+        $this->em->persist($cama);
+        $this->em->flush();
+
+        $msg = "La cama: ".$nueva_cama["nombre_cama"]
+                ." fue ingresada al efector: "
+                .$efector->getNomEfector();
+        if ($habitacion){        
+            $msg.=" y en la habitación: ".$habitacion->getNombre();
+        }
+        
+        return true;
+        
+    }
+    
+    public function modificarCama($modif_cama){
+    
+        // ini
+        $this->error_debug="";
+        $msg="";
+        
+       
+        // !!!!!!!!!!!
+        
+        if (!$cama){
+            
+            
+            //$msg="La cama: ".;
+            
+            $this->error_debug="";
+            
+            return false;
+            
+        }
+        // clasificacion cama
+        $clasificacion_cama = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:ClasificacionesCamas')
+                ->findOneByIdClasificacionCama($nueva_cama["id_clasificacion_cama"]);
         
         if (!$clasificacion_cama){
             
@@ -89,8 +232,8 @@ class ConfiguracionEdilicia
         // efector
         $efector = 
             $this->doctrine->getRepository
-                ('DBHmi2GuaycuruBundle:Efectores')
-                ->findOneById($nueva_cama["id_efector"]);
+                ('DBHmi2GuaycuruCamasBundle:Efectores')
+                ->findOneByIdEfector($nueva_cama["id_efector"]);
         
         if (!$efector){
             
@@ -105,7 +248,7 @@ class ConfiguracionEdilicia
         if ($this->obtenerIdHabitacion(
                 $nueva_cama["nombre_habitacion"],
                 $nueva_cama["id_efector"],
-                $id_habitacion,
+                $habitaciones,
                 $msg)==false){
             
             return false;
@@ -114,8 +257,8 @@ class ConfiguracionEdilicia
         
         $habitacion = 
             $this->doctrine->getRepository
-                ('DBHmi2GuaycuruBundle:Habitaciones')
-                ->findOneById($id_habitacion);
+                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                ->findOneByIdHabitacion($id_habitacion);
         
         
         // chequea que el nombre de cama este libre para usarse en el efector
@@ -174,10 +317,6 @@ class ConfiguracionEdilicia
         
     }
     
-    public function modificarCama($modif_cama){
-        
-    }
-    
     public function eliminarCama($elimina_cama){
         
     }
@@ -227,11 +366,9 @@ class ConfiguracionEdilicia
      * @param type $msg
      * @return boolean
      */
-    private function obtenerIdHabitacion(
+    private function obtenerHabitacion(
             $nombre_habitacion,
-            $id_efector,
-            &$id_habitacion,
-            &$msg){
+            $id_efector){
         
         
         // id_habitacion
@@ -240,50 +377,52 @@ class ConfiguracionEdilicia
         // si no encuentra registro de habitacion coloca NULL
         // No se puede definir si existe mas de una habitacion con el mismo nombre
         // en el efector
-        $sql_id_habitacion=
-            "SELECT "
-                ."h.id_habitacion"
-            ."FROM "
-                ."habitaciones h "
-            ."INNER JOIN "
-                ."salas s "
-            ."ON h.id_sala = s.id_sala "
-            ."WHERE "
-                ."h.nombre = '".$nombre_habitacion."' "
-            ."AND s.id_efector = ".$id_efector." ";
+        // busca nombre-id_efector en tabla camas
+        $habitacion = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                ->findOneByNombreIdEfector(
+                        $nombre_habitacion,
+                        $id_efector,
+                        $msg);
         
-        try{
+       
+        // check error (devuelve -1 cuando hay un error en la llamada al
+        // repositorio)
+        if ($habitacion==-1){
             
-            $result = $this->conn->fetchAll($sql_id_habitacion);
-            
-        } catch (Exception $e) {
-
-            $msg = "Error al buscar el id de habitación";
-            
-            $this->error_debug = $e->getMessage();
-            
-            return false;
+            // error
+            throw new \ErrorException($msg);
         }
         
+        // check habitacion encontrada en el efector
+        $count = count($habitacion);
+        if ($count == 0){
             
-        if ($result[0]["id_habitacion"]!=0 || count($result)>1){
+            // no existe habitacion
+            $msg = "No existe habitación: ".$nombre_habitacion
+                ." en el efector: ".$id_efector." ";
             
-            $msg = "No se puede establecer la habitación. La cantidad "
-                    ."de habitaciones encontradas con el nombre "
-                    .$nombre_habitacion." es: "
-                    .count($result);
-        
-            // id_habitacion = null
-            $id_habitacion = null;
+            throw new \Exception($msg);
             
-        }else{
+        }elseif ($count > 1){
             
-            // id_habitacion encontrado
-            $id_habitacion = $result[0]["id_habitacion"];
+            // mas de una habitacion encontrada, no se puede determinar
+            // cual es
+            $msg = "Existe más de una habitación con el nombre: "
+                    .$nombre_habitacion
+                    ." en el efector: "
+                    .$id_efector;
             
+            // reset habitaciones
+            throw new \Exception($msg);
+                        
         }
         
-        return true;
+        
+        // unica habitacion con el nombre pasado por parametro en el efector    
+        
+        return $habitacion;
         
     }
     
@@ -302,39 +441,35 @@ class ConfiguracionEdilicia
             &$msg){
         
         
+        // busca nombre-id_efector en tabla camas
+        $cama = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Camas')
+                ->findOneByNombreIdEfector(
+                        $nombre_cama,
+                        $id_efector,
+                        $msg);
         
-        // check si nombre de cama existe en el efector
-        $sql_nombre_cama=
-            "SELECT "
-                ."COUNT(*) AS cant"
-            ."FROM "
-                ."camas c "
-            ."WHERE "
-                ."c.nombre = '".$nombre_cama."' "
-            ."AND c.id_efector = ".$id_efector." ";
-        
-        try{
+        // check error (devuelve -1 cuando hay un error en la llamada al
+        // repositorio)
+        if ($cama==-1){
             
-            $result = $this->conn->fetchAll($sql_nombre_cama);
-            
-        } catch (Exception $e) {
-
-            $msg = "Error al chequear si el nombre de cama existe en el efector";
-            
-            $this->error_debug = $e->getMessage();
-            
+            // error
             return false;
         }
         
+        // check nombre de cama existe en el efector
+        if ($cama){
             
-        if ($result[0]["cant"]!=0){
-            
+            // existe cama
             $msg = "El nombre de cama: ".$nombre_cama
                 ." ya existe para el efector: ".$id_efector." ";
             
             return false;
             
         }
+        
+        // el nombre de cama esta libre para usarse
         
         return true;
         

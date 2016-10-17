@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Habitaciones
  *
  * @ORM\Table(name="habitaciones", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_sala", columns={"nombre", "id_sala"})}, indexes={@ORM\Index(name="idx_fk_habitaciones_id_sala", columns={"id_sala"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Pruebas\DBHmi2GuaycuruCamasBundle\Entity\HabitacionesRepository")
  */
 class Habitaciones
 {
