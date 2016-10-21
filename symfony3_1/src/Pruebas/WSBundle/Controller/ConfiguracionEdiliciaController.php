@@ -26,7 +26,6 @@ class ConfiguracionEdiliciaController extends Controller
             $nombre_cama,
             $id_clasificacion_cama){
         
-        $msg="";
         
         $nueva_cama = [
             'id_efector' => $id_efector,
@@ -39,21 +38,32 @@ class ConfiguracionEdiliciaController extends Controller
         $ce=$this->get("configuracion_edilicia");
         try{
             
-            $ce->agregarCama($nueva_cama,$msg);
+            $msg = $ce->agregarCama($nueva_cama);
             
-        } catch (\Exception $e) {
-
-            $msg = $e->getMessage();
-        }
-        
-        
-        return $this->render(
+            return $this->render(
                 'WSBundle:Default:msg.html.twig',
                 array(
                     'nueva_cama' => $nueva_cama,
                     'msg' => $msg,
                     'error_debug' => $ce->error_debug)
                     );
+            
+        } catch (\Exception $e) {
+
+            $msg = $e->getMessage();
+            
+            // error al generar el censo
+            return $this->render(
+                    'Exception/error.html.twig',
+                    array(
+                        'titulo' => 'Error al agregar la cama',
+                        'msg' => $msg,
+                        'debug' => $ce->error_debug)
+                    );
+        }
+        
+        
+        
         
     }
     

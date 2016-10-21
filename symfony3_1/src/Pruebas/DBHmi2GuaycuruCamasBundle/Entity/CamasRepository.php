@@ -18,24 +18,28 @@ class CamasRepository extends EntityRepository
      */
     public function findOneByNombreIdEfector(
             $nombre_cama,
-            $id_efector,
-            &$msg)
+            $id_efector)
     {
         
         
         // check si nombre de cama existe en el efector
-        $q =
+        $dql =
             "SELECT "
                 ."c "
             ."FROM "
                 ."DBHmi2GuaycuruCamasBundle:Camas c "
             ."WHERE "
-                ."c.nombre = '".$nombre_cama."' "
-            ."AND c.idEfector = ".$id_efector." ";
+                ."c.nombre = :nombre "
+            ."AND c.idEfector = :id_efector ";
         
         try{
             
-            $cama = $this->getEntityManager()->createQuery($q)->getResult();
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("nombre", $nombre_cama);
+            $query->setParameter("id_efector", $id_efector);
+            
+            $cama = $query->getResult();
             
         } catch (\Exception $e) {
 
@@ -44,7 +48,7 @@ class CamasRepository extends EntityRepository
                 ."<p>".$e->getMessage()."</p>";
             
             // error
-            return -1;
+            throw new \ErrorException($msg);
         }
         
         return $cama;

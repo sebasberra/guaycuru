@@ -19,14 +19,13 @@ class HabitacionesRepository extends EntityRepository
      */
     public function findOneByNombreIdEfector(
             $nombre_habitacion,
-            $id_efector,
-            &$msg)
+            $id_efector)
     {
         
         
         // trae habitacion o habitaciones con el nombre y id_efector
         // pasados por parametro 
-        $q =
+        $dql =
             "SELECT "
                 ."h "
             ."FROM "
@@ -34,14 +33,18 @@ class HabitacionesRepository extends EntityRepository
             ."INNER JOIN "
                 ."DBHmi2GuaycuruCamasBundle:Salas s "
             ."WHERE "
-                ."h.nombre = '".$nombre_habitacion."' "
-            ."AND s.idEfector = ".$id_efector." "
+                ."h.nombre = :nombre_habitacion "
+            ."AND s.idEfector = :id_efector"
             ."AND h.idSala = s.idSala";
         
         try{
             
-            $habitaciones = 
-                    $this->getEntityManager()->createQuery($q)->getResult();
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("nombre_habitacion",$nombre_habitacion);
+            $query->setParameter("id_efector",$id_efector);
+            
+            $habitaciones = $query->getResult();
             
         } catch (\Exception $e) {
 
@@ -49,8 +52,8 @@ class HabitacionesRepository extends EntityRepository
                 "Error al buscar el nombre de habitación en el efector"
                 ."<p>".$e->getMessage()."</p>";
             
-            // error
-            return -1;
+            throw new \ErrorException($msg);
+            
         }
         
         return $habitaciones;
