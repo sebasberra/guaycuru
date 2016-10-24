@@ -9,14 +9,20 @@
 
     <div>
 	<div class="ui-widget">
-		<div style="padding: 10px; margin-top: 20px; margin-bottom: 20px" class="ui-state-error ui-corner-all">
-			<p>
-				<span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"> </span> 
-                                <strong> {{ titulo }}  </strong> 
-                                {{ msg }} 
-			</p>
-                        <strong>Debug</strong>
-                        <p> {{ debug|raw }} </p>
+		<div 
+                    style="padding: 10px; margin-top: 20px; margin-bottom: 20px" 
+                    class="ui-state-error ui-corner-all">
+                    
+                    <p><strong>{{ titulo }}</strong></p>
+                    
+                    <p>Detalle: {{ msg }}</p>
+
+                    {% if app.environment == 'dev' %}
+                        
+                    <p><strong>Debug: </strong>{{ debug|raw }}</p>
+                    
+                    {% endif %}
+                    
 		</div>
 	</div>
 </div>

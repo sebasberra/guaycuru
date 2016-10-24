@@ -2,7 +2,7 @@ services:
     
     configuracion_edilicia:
         class: Pruebas\WSBundle\Utils\ConfiguracionEdilicia
-        arguments: ['@doctrine']
+        arguments: ['@doctrine','@validator']
 
     informe_sincronizacion:
         class: Pruebas\WSBundle\Utils\InformeSincronizacion

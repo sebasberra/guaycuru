@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+    
+{% block cuerpo %} 
+
+    <form id="myform" method="post" action="{{ url }}">
+        <input type="hidden" name="name" value="value" /> 
+        <a href="" onclick="document.getElementById('myform').submit();">Entrar [POST]</a>
+    </form>
+    
+    <a href="{{ url }}">Entrar [GET]</a>
+    
+    <a href="#">Cardinal</a>
+{% endblock %}

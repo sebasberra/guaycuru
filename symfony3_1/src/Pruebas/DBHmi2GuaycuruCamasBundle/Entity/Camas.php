@@ -2,6 +2,7 @@
 
 namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="camas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_habitacion", columns={"nombre", "id_habitacion"})}, indexes={@ORM\Index(name="idx_fk_camas_id_habitacion", columns={"id_habitacion"}), @ORM\Index(name="idx_fk_camas_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_camas_id_clasificacion_cama", columns={"id_clasificacion_cama"})})
  * @ORM\Entity(repositoryClass="Pruebas\DBHmi2GuaycuruCamasBundle\Entity\CamasRepository")
+ * @UniqueEntity(
+ *     fields={"nombre", "idEfector"},
+ *     message="El nombre de cama ya existe en el efector."
+ * )
+ * 
  */
 class Camas
 {

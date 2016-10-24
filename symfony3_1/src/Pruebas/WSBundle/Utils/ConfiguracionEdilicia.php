@@ -22,12 +22,14 @@ class ConfiguracionEdilicia
     private $doctrine;
     private $em;
     private $conn;
+    private $validator;
     
-    public function __construct($doctrine) {
+    public function __construct($doctrine,$validator) {
     
         $this->doctrine = $doctrine;
         $this->em = $doctrine->getManager('default');
         $this->conn = $doctrine->getManager('default')->getConnection();
+        $this->validator = $validator;
         
     }
     
@@ -160,22 +162,22 @@ class ConfiguracionEdilicia
             
                 
         // chequea que el nombre de cama este libre para usarse en el efector
-        try {
-            
-            $this->validarNombreCama(
-                $nueva_cama["nombre_cama"], 
-                $nueva_cama["id_efector"]);
-            
-        } catch (\Exception $e){
-            
-            // nombre de cama existe
-            throw $e;
-                    
-        } catch (\ErrorException $ee) {
-
-            // error en consulta
-            throw $ee;
-        }
+//        try {
+//            
+//            $this->validarNombreCama(
+//                $nueva_cama["nombre_cama"], 
+//                $nueva_cama["id_efector"]);
+//            
+//        } catch (\Exception $e){
+//            
+//            // nombre de cama existe
+//            throw $e;
+//                    
+//        } catch (\ErrorException $ee) {
+//
+//            // error en consulta
+//            throw $ee;
+//        }
                      
         // objeto Camas doctrine
         $cama = new Camas();
@@ -207,6 +209,20 @@ class ConfiguracionEdilicia
         // rotativa falso
         $cama->setRotativa(false);
         
+        
+        $errors = $this->validator->validate($cama);
+    
+        if (count($errors) > 0) {
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging.
+             */
+            $errorsString = (string) $errors;
+
+            return new \Exception($errorsString);
+        }
+    
         // insert datos en la DB
         $this->em->persist($cama);
         $this->em->flush();
@@ -222,30 +238,58 @@ class ConfiguracionEdilicia
         
     }
     
+    /** La modificacion de cama se aplica a
+     * 
+     *  id_clasificacion_cama
+     *  id_habitacion
+     *  baja
+     *  estado
+     * 
+     * 
+     * !!!!!!! rever ingreso nueva cama, campos baja estado etc
+     * 
+     * 
+     *  La cambio de nombre es un caso especial y se trata 
+     *  independiente porque es clave unica (nombre,id_efector)
+     *  
+     * @param type $modif_cama
+     * @return boolean
+     */
     public function modificarCama($modif_cama){
     
-        // ini
-        $this->error_debug="";
-        $msg="";
         
-       
-        // !!!!!!!!!!!
+        // cama
+        try {
+            $cama = 
+                $this->doctrine->getRepository
+                        ('DBHmi2GuaycuruCamasBundle:Camas')
+                        ->findOneByNombreIdEfector(
+                                $modif_cama['nombre_cama'],
+                                $modif_cama['id_efector']);
+            
+        } catch (\ErrorException $ee) {
+            
+            throw $ee;
+
+        }
         
         if (!$cama){
             
+            $msg = "La cama: "
+                    .$modif_cama
+                    ." no existe en el efector: "
+                    .$modif_cama['id_efector'];
             
-            //$msg="La cama: ".;
-            
-            $this->error_debug="";
-            
-            return false;
+            throw new \Exception($msg);
             
         }
+        
+        
         // clasificacion cama
         $clasificacion_cama = 
             $this->doctrine->getRepository
                 ('DBHmi2GuaycuruCamasBundle:ClasificacionesCamas')
-                ->findOneByIdClasificacionCama($nueva_cama["id_clasificacion_cama"]);
+                ->findOneByIdClasificacionCama($modif_cama["id_clasificacion_cama"]);
         
         if (!$clasificacion_cama){
             
@@ -264,47 +308,39 @@ class ConfiguracionEdilicia
         $efector = 
             $this->doctrine->getRepository
                 ('DBHmi2GuaycuruCamasBundle:Efectores')
-                ->findOneByIdEfector($nueva_cama["id_efector"]);
+                ->findOneByIdEfector($modif_cama["id_efector"]);
         
         if (!$efector){
             
             $msg = "El id de efector: "
-                    .$nueva_cama["id_efector"]
+                    .$modif_cama["id_efector"]
                     ." no existe en la base de datos";
         
             $this->error_debug = $msg;
         }
         
-        // busca id_habitacion, trae null si no encuentra
-        if ($this->obtenerIdHabitacion(
-                $nueva_cama["nombre_habitacion"],
-                $nueva_cama["id_efector"],
-                $habitaciones,
-                $msg)==false){
+        // obtiene la habitacion doctrine, solo en caso de que exista
+        // una sola habitacion con el nombre en el efector
+        try{
             
-            return false;
+            $habitacion = $this->obtenerHabitacion(
+                $modif_cama["nombre_habitacion"],
+                $modif_cama["id_efector"]);
             
-        }
-        
-        $habitacion = 
-            $this->doctrine->getRepository
-                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
-                ->findOneByIdHabitacion($id_habitacion);
-        
-        
-        // chequea que el nombre de cama este libre para usarse en el efector
-        if ($this->validarNombreCama(
-                $nueva_cama["nombre_cama"], 
-                $nueva_cama["id_efector"], 
-                $msg)==false){
+        } catch (\Exception $e) {
+
+            $msg = $e->getMessage();
+            $habitacion=null;
             
-            return false;
+        } catch (\ErrorException $ee){
+            
+            $msg = $ee->getMessage();
+            
+            throw $ee;
+            
         }
              
         
-        
-        // objeto Camas doctrine
-        $cama = new Camas();
         
         // baja = false
         $cama->setBaja(false);

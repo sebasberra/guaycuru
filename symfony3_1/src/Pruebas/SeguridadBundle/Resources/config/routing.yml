@@ -1,7 +1,17 @@
 seguridad_homepage:
-    path:     /
-    defaults: { _controller: SeguridadBundle:Default:index }
-
+    resource: "@SeguridadBundle/Controller/DefaultController.php"
+    prefix:   /seguridad
+    type:     annotation
+    
 registracion_usuarios:
     path:     /registro
     defaults: { _controller: SeguridadBundle:Registracion:registro }
+
+# ruteo solo para testing, no deberia estar en el sicap
+login:
+    path:     /login
+    defaults: { _controller: SeguridadBundle:Default:login }
+    
+#no se implementa el logout automatico para este caso
+#logout:
+#    path:   /logout
