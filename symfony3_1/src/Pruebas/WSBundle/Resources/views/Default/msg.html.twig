@@ -2,8 +2,17 @@
 
 {% block cuerpo %}
     
-    <p>{{ dump(nueva_cama) }}</p>
-    <p>{{ msg|raw }}</p>
-    <p>{{ error_debug|raw }}</p>
+    <p>datos:
+        {{ dump(datos) }}
+    </p>
+    <p>mensaje:
+        {{ msg|raw }}
+    </p>
+    
+    {% if app.environment=='dev' %}
+        <p>debug:
+            {{ error_debug|raw }}
+        </p>
+    {% endif %}
     
 {% endblock %}

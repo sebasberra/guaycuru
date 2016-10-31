@@ -34,7 +34,7 @@ class HabitacionesRepository extends EntityRepository
                 ."DBHmi2GuaycuruCamasBundle:Salas s "
             ."WHERE "
                 ."h.nombre = :nombre_habitacion "
-            ."AND s.idEfector = :id_efector"
+            ."AND s.idEfector = :id_efector "
             ."AND h.idSala = s.idSala";
         
         try{
@@ -44,16 +44,11 @@ class HabitacionesRepository extends EntityRepository
             $query->setParameter("nombre_habitacion",$nombre_habitacion);
             $query->setParameter("id_efector",$id_efector);
             
-            $habitaciones = $query->getResult();
+            $habitaciones = $query->getSingleResult();
             
         } catch (\Exception $e) {
 
-            $msg =
-                "Error al buscar el nombre de habitación en el efector"
-                ."<p>".$e->getMessage()."</p>";
-            
-            throw new \ErrorException($msg);
-            
+            throw $e;            
         }
         
         return $habitaciones;

@@ -9,7 +9,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @author sberra
  */
-class RITwigExtension extends \Twig_Extension
+class RITwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+
 {
     protected $container;
  

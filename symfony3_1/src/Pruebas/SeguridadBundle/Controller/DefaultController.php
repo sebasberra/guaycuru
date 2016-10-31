@@ -5,6 +5,7 @@ namespace Pruebas\SeguridadBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -56,12 +57,28 @@ class DefaultController extends Controller
         $request = $this->get('request_stack')->getCurrentRequest();
         
         // session
-        $request->getSession()->set('usuario',$usuario);
+        $session= $request->getSession();
+        $user = $this->getUser();
+        $tok=$this->get('security.token_storage')->getToken();
+        $security=$this->get('security.token_storage');
+        dump($security);
+        dump($tok);
+        dump($user);
+        
+        $usuario=  array( 'username'=>'sebas');
         
         // nuevo user token symfony
         $token = new UsernamePasswordToken($usuario, null, 'main', array("ROLE_USER"));
 	$this->get('security.token_storage')->setToken($token);
-         
+        
+        $tok2=$this->get('security.token_storage')->getToken();
+        dump($tok2);
+        die();
+        $session->set('_security_main', serialize($token));
+        $session->save();
+        
+//        $user=$token->getUser();
+//        dump($user);die(); 
         // response
         return $this->redirectToRoute('user');
         

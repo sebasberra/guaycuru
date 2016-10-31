@@ -3,6 +3,8 @@
 namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,20 +39,34 @@ class Camas
     /**
      * @var string
      *
+     * @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "El nombre de cama no puede superar los 50 caracteres"
+     * )
+     * 
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
+     * 
      */
     private $nombre;
 
     /**
      * @var string
-     *
+     * 
+     * @Assert\Choice({"L", "O", "F", "R", "V"},
+     *      message = "Estado de cama no válido. Estados posibles:L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada"
+     * )
+     * 
      * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado;
 
     /**
      * @var boolean
-     *
+     * 
+     * @Assert\Choice({"0", "1"},
+     *      message = "El valor de rotativa debe ser 0 o 1"
+     * )
+     * 
      * @ORM\Column(name="rotativa", type="boolean", nullable=false)
      */
     private $rotativa = '0';
@@ -58,6 +74,10 @@ class Camas
     /**
      * @var boolean
      *
+     * @Assert\Choice({"0", "1"},
+     *      message = "El valor de baja debe ser 0 o 1"
+     * )
+     * 
      * @ORM\Column(name="baja", type="boolean", nullable=false)
      */
     private $baja = '0';

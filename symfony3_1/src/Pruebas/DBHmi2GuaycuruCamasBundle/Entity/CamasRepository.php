@@ -39,16 +39,11 @@ class CamasRepository extends EntityRepository
             $query->setParameter("nombre", $nombre_cama);
             $query->setParameter("id_efector", $id_efector);
             
-            $cama = $query->getResult();
+            $cama = $query->getSingleResult();
             
         } catch (\Exception $e) {
 
-            $msg =
-                "Error al buscar el nombre de cama en el efector"
-                ."<p>".$e->getMessage()."</p>";
-            
-            // error
-            throw new \ErrorException($msg);
+            throw $e;
         }
         
         return $cama;
