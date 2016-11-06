@@ -57,9 +57,9 @@ class EfectoresServicios
     private $nomServicioEstadistica;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     * @ORM\Column(name="baja", type="integer", nullable=false)
      */
     private $baja;
 
@@ -220,7 +220,7 @@ class EfectoresServicios
     /**
      * Set baja
      *
-     * @param boolean $baja
+     * @param integer $baja
      * @return EfectoresServicios
      */
     public function setBaja($baja)
@@ -233,7 +233,7 @@ class EfectoresServicios
     /**
      * Get baja
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getBaja()
     {

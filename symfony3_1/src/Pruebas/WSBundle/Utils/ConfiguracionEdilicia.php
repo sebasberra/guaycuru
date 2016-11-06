@@ -3,6 +3,9 @@
 namespace Pruebas\WSBundle\Utils;
 
 use Pruebas\DBHmi2GuaycuruCamasBundle\Entity\Camas;
+use Pruebas\DBHmi2GuaycuruCamasBundle\Entity\Habitaciones;
+
+use Pruebas\WSBundle\Utils\ConfiguracionEdiliciaUtiles;
 
 /** Realiza el acceso a la DB hmi2guaycuru para actualizacion de
  *  la configuracion edilicia.
@@ -18,20 +21,27 @@ use Pruebas\DBHmi2GuaycuruCamasBundle\Entity\Camas;
 class ConfiguracionEdilicia
 {
     
-    public $error_debug;
+    public static $ERROR_DEBUG;
+    
     private $doctrine;
     private $em;
     private $conn;
     private $validator;
     
+    private $utiles;
+    
     public function __construct($doctrine,$validator) {
     
         
-        $this->error_debug="";
+        self::$ERROR_DEBUG="";
         $this->doctrine = $doctrine;
         $this->em = $doctrine->getManager('default');
         $this->conn = $doctrine->getManager('default')->getConnection();
         $this->validator = $validator;
+        
+        $this->utiles = new ConfiguracionEdiliciaUtiles(
+                $this->doctrine,
+                self::$ERROR_DEBUG);
         
     }
     
@@ -83,7 +93,7 @@ class ConfiguracionEdilicia
         try {
         
             $clasificacion_cama =
-                    $this->getClasificacionCama(
+                    $this->utiles->getClasificacionCama(
                             $nueva_cama["id_clasificacion_cama"]
                             );
         
@@ -97,37 +107,53 @@ class ConfiguracionEdilicia
         // efector
         try{
             
-            $efector = $this->getEfector($nueva_cama["id_efector"]);
+            $efector = $this->utiles->getEfector($nueva_cama["id_efector"]);
             
         } catch (\Exception $e) {
 
             throw $e;
         }
         
-        // obtiene la habitacion doctrine, solo en caso de que exista
-        // una sola habitacion con el nombre en el efector
-        try{
+        // rotativa
+        $rotativa = $this->utiles->wrapBoolean($nueva_cama["rotativa"]);
+        
+        // cama rotativa entonces puede tener la habitacion null, en otro caso
+        // controla que exista la habitacion
+        if ($rotativa==true &&                
+                $nueva_cama["nombre_sala"]="" &&
+                $$nueva_cama["nombre_habitacion"] = ""){
             
-            $habitacion = $this->getHabitacion(
-                $nueva_cama["nombre_habitacion"],
-                $nueva_cama["id_efector"]);
+            // cama rotativa sin habitacion asignada
+            $habitacion = null;
             
-        } catch (\ErrorException $ee){
+        }else{
             
-            $msg = $ee->getMessage();
-            
-            throw $ee;
+            // habitacion
+            try{
+
+                $habitacion = $this->utiles->getHabitacion(
+                        $nueva_cama["id_efector"],
+                        $nueva_cama["nombre_sala"],
+                        $nueva_cama["nombre_habitacion"]);
+
+            } catch (\ErrorException $ee){
+
+                $msg = $ee->getMessage();
+
+                throw $ee;
+
+            }
             
         }
         
+         
                      
         // objeto Camas doctrine
         $cama = new Camas();
         
         
-        // baja = false
-        $baja = ($nueva_cama["baja"]=='true'?'1':'0');
-        $cama->setBaja($baja);
+        // baja
+        $cama->setBaja($this->utiles->wrapBoolean($nueva_cama["baja"]));
         
         // estado libre
         $cama->setEstado($nueva_cama["estado"]);
@@ -152,23 +178,62 @@ class ConfiguracionEdilicia
         $cama->setNombre($nueva_cama["nombre_cama"]);
         
         // rotativa
-        $rotativa = ($nueva_cama["rotativa"]=='true'?'1':'0');
         $cama->setRotativa($rotativa);
         
         
         // validacion assert
         $this->validacionAssert($cama);
     
-        //
-        // insert datos en la DB
-        $this->em->persist($cama);
-        $this->em->flush();
+        
 
+        // TODO transaction
+        // 
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+        
+            //
+            // insert datos en la DB
+            $this->em->persist($cama);
+            $this->em->flush();
+
+            // check actualiza cant camas de habitacion y sala
+            if ($habitacion){
+
+                // cant_camas habitacion
+                $this->setCantCamasHab($habitacion);
+
+                // cant_camas sala
+                $this->setCantCamasSala($habitacion->getIdSala());
+
+            }
+        
+            // commit
+            $this->conn->commit();
+            
+        }catch(\Exception $e){
+            
+            self::$ERROR_DEBUG .=
+                    "Error al agregar la cama: "
+                    .$nueva_cama["nombre_cama"];
+            
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
         $msg = "La cama: ".$nueva_cama["nombre_cama"]
                 ." fue ingresada al efector: "
                 .$efector->getNomEfector();
         if ($habitacion){        
-            $msg.=" y en la habitación: ".$habitacion->getNombre();
+            $msg.=" en la sala: "
+                    .$nueva_cama["nombre_sala"]
+                    ." y la habitación: "
+                    .$nueva_cama["nombre_habitacion"];
         }
         
         return $msg;
@@ -198,7 +263,7 @@ class ConfiguracionEdilicia
         try {
             
             $cama = 
-                    $this->getCama(
+                    $this->utiles->getCama(
                             $modif_cama['nombre_cama'], 
                             $modif_cama['id_efector']
                             );
@@ -214,7 +279,7 @@ class ConfiguracionEdilicia
         try {
         
             $clasificacion_cama =
-                    $this->getClasificacionCama(
+                    $this->utiles->getClasificacionCama(
                             $modif_cama["id_clasificacion_cama"]
                             );
         
@@ -229,7 +294,7 @@ class ConfiguracionEdilicia
         try{
             
             $efector = 
-                    $this->getEfector(
+                    $this->utiles->getEfector(
                             $modif_cama["id_efector"]
                             );
             
@@ -240,28 +305,42 @@ class ConfiguracionEdilicia
         
         
         
+        // rotativa
+        $rotativa = $this->utiles->wrapBoolean($modif_cama["rotativa"]);
         
-        // obtiene la habitacion doctrine, solo en caso de que exista
-        // una sola habitacion con el nombre en el efector
-        try{
+        // cama rotativa entonces puede tener la habitacion null, en otro caso
+        // controla que exista la habitacion
+        if ($rotativa==true &&                
+                $nueva_cama["nombre_sala"]="" &&
+                $$nueva_cama["nombre_habitacion"] = ""){
             
-            $habitacion = $this->getHabitacion(
-                $modif_cama["nombre_habitacion"],
-                $modif_cama["id_efector"]);
+            // cama rotativa sin habitacion asignada
+            $habitacion = null;
             
-        } catch (\ErrorException $ee){
+        }else{
             
-            $msg = $ee->getMessage();
-            
-            throw $ee;
+            // habitacion
+            try{
+
+                $habitacion = $this->utiles->getHabitacion(
+                        $nueva_cama["id_efector"],
+                        $nueva_cama["nombre_sala"],
+                        $nueva_cama["nombre_habitacion"]);
+
+            } catch (\ErrorException $ee){
+
+                $msg = $ee->getMessage();
+
+                throw $ee;
+
+            }
             
         }
-             
+        
         
         
         // baja
-        $baja = ($modif_cama["baja"]=='true'?'1':'0');
-        $cama->setBaja($baja);
+        $cama->setBaja($this->utiles->wrapBoolean($modif_cama["baja"]));
         
         // estado libre
         $cama->setEstado($modif_cama["estado"]);
@@ -279,7 +358,6 @@ class ConfiguracionEdilicia
         $cama->setIdInternacion(null);
         
         // rotativa
-        $rotativa = ($modif_cama["rotativa"]=='true'?'1':'0');
         $cama->setRotativa($rotativa);
         
         
@@ -294,7 +372,10 @@ class ConfiguracionEdilicia
                 ." fue modificada en el efector: "
                 .$efector->getNomEfector();
         if ($habitacion){        
-            $msg.=", en la habitación: ".$habitacion->getNombre();
+            $msg.=" en la sala: "
+                    .$modif_cama["nombre_sala"]
+                    ." y la habitación: "
+                    .$modif_cama["nombre_habitacion"];
         }
         
         return $msg;
@@ -314,7 +395,7 @@ class ConfiguracionEdilicia
         try {
             
             $cama = 
-                    $this->getCama(
+                    $this->utiles->getCama(
                             $elimina_cama['nombre_cama'], 
                             $elimina_cama['id_efector']
                             );
@@ -325,10 +406,46 @@ class ConfiguracionEdilicia
 
         }
         
+        // habitacion
+        $habitacion=$cama->getIdHabitacion();
         
-        // elimina la cama
-        $this->em->remove($cama);
-        $this->em->flush();
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+            
+        
+            // elimina la cama
+            $this->em->remove($cama);
+            $this->em->flush();
+
+            // check actualiza cant camas de habitacion y sala
+            if ($habitacion){
+
+                // cant_camas habitacion
+                $this->setCantCamasHab($habitacion);
+
+                // cant_camas sala
+                $this->setCantCamasSala($habitacion->getIdSala());
+
+            }
+            
+            // commit
+            $this->conn->commit();
+            
+        }catch(\Exception $e){
+            
+            self::$ERROR_DEBUG .=
+                    "Error al eliminar la cama: "
+                    .$elimina_cama["nombre_cama"];
+            
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
         
         $msg = "La cama: ".$elimina_cama["nombre_cama"]
                 ." fue eliminada del efector: "
@@ -346,7 +463,7 @@ class ConfiguracionEdilicia
         try {
             
             $cama = 
-                    $this->getCama(
+                    $this->utiles->getCama(
                             $ocupa_cama['nombre_cama'], 
                             $ocupa_cama['id_efector']
                             );
@@ -371,9 +488,23 @@ class ConfiguracionEdilicia
         // estado
         $cama->setEstado('O');
         
-        // ocupa la cama
-        $this->em->persist($cama);
-        $this->em->flush();
+        try{
+        
+            // ocupa la cama
+            $this->em->persist($cama);
+            $this->em->flush();
+        
+            // commit
+            $this->conn->commit();
+            
+        } catch (\Exception $e) {
+
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
         
         $msg = "La cama: ".$ocupa_cama["nombre_cama"]
                 ." fue ocupada en el efector: "
@@ -388,7 +519,7 @@ class ConfiguracionEdilicia
         try {
             
             $cama = 
-                    $this->getCama(
+                    $this->utiles->getCama(
                             $libera_cama['nombre_cama'], 
                             $libera_cama['id_efector']
                             );
@@ -412,9 +543,27 @@ class ConfiguracionEdilicia
         // estado
         $cama->setEstado('L');
         
-        // ocupa la cama
-        $this->em->persist($cama);
-        $this->em->flush();
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+        
+            // ocupa la cama
+            $this->em->persist($cama);
+            $this->em->flush();
+        
+            // commit
+            $this->conn->commit();
+            
+        } catch (\Exception $e) {
+
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
         
         $msg = "La cama: ".$libera_cama["nombre_cama"]
                 ." fue liberada en el efector: "
@@ -426,18 +575,275 @@ class ConfiguracionEdilicia
     
     public function agregarHabitacion($nueva_hab){
         
+        
+        // sala
+        try {
+        
+            $sala =
+                    $this->utiles->getSala(
+                            $nueva_hab["nombre_sala"],
+                            $nueva_hab["id_efector"]
+                            );
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+            
+        }
+        
+                
+        // objeto Habitaciones doctrine
+        $habitacion = new Habitaciones();
+        
+        
+        // baja
+        $habitacion->setBaja($this->utiles->wrapBoolean($nueva_hab["baja"]));
+        
+        // sexo
+        $habitacion->setSexo($nueva_hab["sexo"]);
+        
+        // edad_desde
+        $habitacion->setEdadDesde($nueva_hab["edad_desde"]);
+        
+        // edad_hasta
+        $habitacion->setEdadHasta($nueva_hab["edad_hasta"]);
+        
+        // tipo_edad
+        $habitacion->setTipoEdad($nueva_hab["tipo_edad"]);
+
+        // cant_camas
+        $habitacion->setCantCamas(0);
+        
+        // timestamp fecha modificacion
+        $habitacion->setFechaModificacion(null);
+        
+        // sala
+        $habitacion->setIdSala($sala);
+        
+        // nombre de habitacion
+        $habitacion->setNombre($nueva_hab["nombre_habitacion"]);
+        
+        
+        
+        // validacion assert
+        $this->validacionAssert($habitacion);
+    
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+        
+            // insert datos en la DB
+            $this->em->persist($habitacion);
+            $this->em->flush();
+
+            // commit
+            $this->conn->commit();
+            
+        } catch (\Exception $e) {
+
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
+        
+        $msg = "La habitación: ".$nueva_hab["nombre_habitacion"]
+                ." fue ingresada en la sala: "
+                .$sala->getNombre()
+                ." del efector: "
+                .$sala->getIdEfector()->getNomEfector();
+        
+        
+        return $msg;
+        
     }
     
     public function modificarHabitacion($modif_hab){
+        
+        // habitacion
+        try {
+        
+            $habitacion =
+                    $this->utiles->getHabitacion(
+                            $modif_hab["nombre_habitacion"],
+                            $modif_hab["nombre_sala"],
+                            $modif_hab["id_efector"]
+                            );
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+            
+        }
+        
+        
+        
+        // baja
+        $habitacion->setBaja($this->utiles->wrapBoolean($modif_hab["baja"]));
+        
+        // sexo
+        $habitacion->setSexo($modif_hab["sexo"]);
+        
+        // edad_desde
+        $habitacion->setEdadDesde($modif_hab["edad_desde"]);
+        
+        // edad_hasta
+        $habitacion->setEdadHasta($modif_hab["edad_hasta"]);
+        
+        // tipo_edad
+        $habitacion->setTipoEdad($modif_hab["tipo_edad"]);
+        
+        // timestamp fecha modificacion
+        $habitacion->setFechaModificacion(null);
+        
+        
+        // validacion assert
+        $this->validacionAssert($habitacion);
+    
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+        
+            // update datos en la DB
+            $this->em->persist($habitacion);
+            $this->em->flush();
+
+            // check actualiza cant camas de habitacion y sala
+            if ($habitacion){
+
+                // cant_camas habitacion
+                $this->setCantCamasHab($habitacion);
+
+                // cant_camas sala
+                $this->setCantCamasSala($habitacion->getIdSala());
+
+            }
+            
+            // commit
+            $this->conn->commit();
+            
+        } catch (\Exception $e) {
+
+            self::$ERROR_DEBUG .=
+                    "Error al modificar la habitación: "
+                    .$modif_hab["nombre_habitacion"];
+            
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
+        
+        $msg = "La habitación: "
+                .$modif_hab["nombre_habitacion"]
+                ." de la sala: "
+                .$modif_hab["nombre_sala"]
+                ." fue modificada en el efector: "
+                .$habitacion->getIdSala()->getIdEfector()->getNomEfector();
+        
+        
+        return $msg;
         
     }
     
     public function eliminarHabitacion($elimina_hab){
         
+        // habitacion
+        try {
+            
+            $habitacion = 
+                    $this->utiles->getHabitacion(
+                            $elimina_hab["nombre_habitacion"],
+                            $elimina_hab["nombre_sala"], 
+                            $elimina_hab["id_efector"]
+                            );
+            
+        } catch (\Exception $e) {
+            
+            throw $e;
+
+        }
+        
+        
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+            
+        
+            // count camas habitacion
+            $count = 
+                $this->doctrine->getRepository
+                    ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                    ->countCamas(
+                            $habitacion->getIdHabitacion());
+            
+            if ($count==0){
+            
+                // elimina la habitacion
+                $this->em->remove($habitacion);
+                                    
+            }else{
+                
+                // set baja = true
+                $habitacion->setBaja(true);
+                
+                // baja camas de la habitacion
+                $this->setBajaCamasHabitacion($habitacion->getIdHabitacion());
+                
+                // cant_camas habitacion
+                $this->setCantCamasHab($habitacion);
+
+                // cant_camas sala
+                $this->setCantCamasSala($habitacion->getIdSala());
+                
+            }
+
+            // flush habitacion
+            $this->em->flush();            
+            
+            // commit
+            $this->conn->commit();
+            
+        }catch(\Exception $e){
+            
+            self::$ERROR_DEBUG .=
+                    "Error al eliminar/baja la habitación: "
+                    .$elimina_hab["nombre_habitacion"];
+            
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
+        $msg = "La habitación: "
+                .$elimina_hab["nombre_habitacion"]
+                ." fue eliminada/baja de la sala: "
+                .$habitacion->getIdSala()->getNombre()
+                ." del efector: "
+                .$habitacion->getIdSala()->getIdEfector()->getNombre();
+                
+        return $msg;
+        
     }
     
     public function agregarSala($nueva_sala){
         
+        
+        // !!!TODO probar funciones de habitacion y modificaciones de
+        // repositorio habitaciones countCamas !! ver en salas repositorio misma
+        // modificacion
     }
     
     public function modificarSala($modif_sala){
@@ -449,198 +855,7 @@ class ConfiguracionEdilicia
     }
     
     
-    /** busca el id_habitacion segun el nombre de habitacion y id_efector
-     *  pasado por parametro. si no encuentra registro de habitacion 
-     *  devuelve NULL en $id_habitacion. No se puede definir si existe mas 
-     *  de una habitacion con el mismo nombre en el efector y tambien
-     *  devuelve NULL en tal caso
-     * 
-     * @param type $nombre_habitacion
-     * @param type $id_efector
-     * @param type $id_habitacion
-     * @param type $msg
-     * @return boolean
-     */
-    private function getHabitacion(
-            $nombre_habitacion,
-            $id_efector){
-        
-        
-        // id_habitacion
-        //
-        // busca el id_habitacion segun el nombre pasado por parametro
-        // si no encuentra registro de habitacion coloca NULL
-        // No se puede definir si existe mas de una habitacion con el mismo nombre
-        // en el efector
-        // busca nombre-id_efector en tabla camas
-        try{
-        
-            $habitacion = 
-                $this->doctrine->getRepository
-                    ('DBHmi2GuaycuruCamasBundle:Habitaciones')
-                    ->findOneByNombreIdEfector(
-                            $nombre_habitacion,
-                            $id_efector);
-            
-        } catch (\Doctrine\ORM\NonUniqueResultException $nure){
-            
-            // mas de una habitacion encontrada, no se puede determinar
-            // cual es
-            $this->error_debug .= " Función getHabitacion: "
-                    .$nure->getMessage();
-            
-            return null;
-            
-        } catch (\Doctrine\ORM\NoResultException $nre){
-            
-            // no existe habitacion
-            $this->error_debug .= " Función getHabitacion: "
-                    .$nre->getMessage();
-            
-            return null;
-            
-        
-        } catch (\Exception $e) {
-
-            $msg = "Error al buscar la habitación: "
-                    .$nombre_habitacion
-                    ." en el efector con id: "
-                    .$id_efector;
-            
-            $this->error_debug .= " Función getHabitacion: "
-                    .$e->getMessage();
-            
-            throw new \ErrorException($msg);
-        }
-        
-        
-        // unica habitacion con el nombre pasado por parametro en el efector    
-        
-        return $habitacion;
-        
-    }
     
-    private function getClasificacionCama($id_clasificacion_cama){
-        
-        
-        try {
-        
-            // clasificacion cama
-            $clasificacion_cama = 
-                $this->doctrine->getRepository
-                    ('DBHmi2GuaycuruCamasBundle:ClasificacionesCamas')
-                    ->findOneByIdClasificacionCama($id_clasificacion_cama);
-                
-        } catch (\Exception $e) {
-
-            $msg = 'Error al buscar la clasificación de cama con id: '
-                    .$id_clasificacion_cama;
-            
-            $this->error_debug .= " Función getClasificacionCama: "
-                    .$e->getMessage();
-            
-            throw new \ErrorException($msg);
-        }
-        
-        // check clasificacion cama encontrada
-        if (!$clasificacion_cama){
-            
-            $msg = "El id de clasificación de cama: "
-                    .$id_clasificacion_cama
-                    ." no existe en la base de datos";
-        
-            $this->error_debug .= " Función getClasificacionCama: "
-                    .$msg;
-        
-            throw new \Exception($msg);
-            
-        }
-        
-        return $clasificacion_cama;
-        
-    }
-    
-    
-    private function getEfector($id_efector){
-        
-        // efector
-        try {
-        
-            $efector = 
-                $this->doctrine->getRepository
-                    ('DBHmi2GuaycuruCamasBundle:Efectores')
-                    ->findOneByIdEfector($id_efector);
-            
-        } catch (\Exception $e) {
-
-            $msg = 'Error al buscar el efector con id: '
-                    .$id_efector;
-            
-            $this->error_debug .= " Función getEfector: "
-                    .$e->getMessage();
-            
-            throw new \ErrorException($msg);
-            
-        }
-        
-        if (!$efector){
-            
-            $msg = "El id de efector: "
-                    .$id_efector
-                    ." no existe en la base de datos";
-        
-            $this->error_debug .= " Función getEfector: "
-                    .$msg;
-            
-            throw new \Exception ($msg);
-            
-        }
-        
-        return $efector;
-        
-    }
- 
-    private function getCama(
-            $nombre,
-            $id_efector){
-        
-        // cama
-        try {
-            $cama = 
-                $this->doctrine->getRepository
-                        ('DBHmi2GuaycuruCamasBundle:Camas')
-                        ->findOneByNombreIdEfector(
-                                $nombre,
-                                $id_efector);
-            
-        } catch (\Doctrine\ORM\NoResultException $nre){
-            
-            $msg = "La cama: "
-                    .$nombre
-                    ." no existe en el efector: "
-                    .$id_efector;
-            
-            $this->error_debug .= " Función getCama: "
-                    .$nre->getMessage();
-            
-            throw new \Exception($msg);
-            
-        } catch (\Exception $e) {
-            
-            $msg = "Error al buscar la cama: "
-                    .$nombre
-                    ." en el efector con id: "
-                    .$id_efector;
-            
-            $this->error_debug .= " Función cama: "
-                    .$e->getMessage();
-            
-            throw new \Exception($msg);
-        }
-            
-        return $cama;
-        
-    }
             
     private function validacionAssert($entidad){
         
@@ -655,13 +870,14 @@ class ConfiguracionEdilicia
              * ConstraintViolationList object. This gives us a nice string
              * for debugging.
              */
-            $this->error_debug .= (string) $errors;
+            self::$ERROR_DEBUG .= (string) $errors;
 
             // concatena los errores
             $msg="(1) ".$errors[0]->getMessage();
             for ($i=1;$i<count($errors);$i++){
                 
-                $msg.=" (".($i+1).") ".$errors[$i]->getMessage();
+                //$msg.=" (".($i+1).") ".$errors[$i]->getMessage();
+                $msg.="<p> (".($i+1).") ".$errors[$i]->getMessage()."</p>";
                 
             }
             
@@ -669,5 +885,74 @@ class ConfiguracionEdilicia
         }
         
     }
+    
+        
+    private function setCantCamasHab($habitacion){
+        
+        
+        // count camas habitacion
+        $count = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                ->countCamas($habitacion->getIdHabitacion());
+        
+        // cant camas
+        $habitacion->setCantCamas($count);
+        
+        // validacion assert
+        $this->validacionAssert($habitacion);
+        
+        $this->em->persist($habitacion);
+        $this->em->flush();
+        
+    }
+    
+    private function setCantCamasSala($sala){
+        
+        // count camas salas
+        $count = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Salas')
+                ->countCamas($sala->getIdSala());
+        
+        // cant camas
+        $sala->setCantCamas($count);
+        
+        
+        // validacion assert
+        $this->validacionAssert($sala);
+        
+        $this->em->persist($sala);
+        $this->em->flush();
+        
+    }
+    
+    private function setBajaCamasHabitacion($id_habitacion){
+        
+        // baja cama de la habitacion
+        $camas = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Camas')
+                ->findByIdHabitacion($id_habitacion);
+
+        foreach($camas as $cama) {
+
+            // cama baja = true
+            $cama->setBaja(true);
+
+            // estado = 'F' (fuera de servicio)
+            $cama->setEstado('F');
+
+            // validacion assert
+            $this->validacionAssert($cama);
+            
+            $this->em->persist($cama);
+
+        }
+        
+        $this->em->flush();
+        
+    }
+            
 }
 

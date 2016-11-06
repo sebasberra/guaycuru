@@ -22,23 +22,23 @@ class ServiciosSalas
     private $idServicioSala;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="agudo_cronico", type="boolean", nullable=false)
+     * @ORM\Column(name="agudo_cronico", type="integer", nullable=false)
      */
     private $agudoCronico;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="tipo_servicio_sala", type="boolean", nullable=false)
+     * @ORM\Column(name="tipo_servicio_sala", type="integer", nullable=false)
      */
     private $tipoServicioSala;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     * @ORM\Column(name="baja", type="integer", nullable=false)
      */
     private $baja;
 
@@ -94,7 +94,7 @@ class ServiciosSalas
     /**
      * Set agudoCronico
      *
-     * @param boolean $agudoCronico
+     * @param integer $agudoCronico
      * @return ServiciosSalas
      */
     public function setAgudoCronico($agudoCronico)
@@ -107,7 +107,7 @@ class ServiciosSalas
     /**
      * Get agudoCronico
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getAgudoCronico()
     {
@@ -117,7 +117,7 @@ class ServiciosSalas
     /**
      * Set tipoServicioSala
      *
-     * @param boolean $tipoServicioSala
+     * @param integer $tipoServicioSala
      * @return ServiciosSalas
      */
     public function setTipoServicioSala($tipoServicioSala)
@@ -130,7 +130,7 @@ class ServiciosSalas
     /**
      * Get tipoServicioSala
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getTipoServicioSala()
     {
@@ -140,7 +140,7 @@ class ServiciosSalas
     /**
      * Set baja
      *
-     * @param boolean $baja
+     * @param integer $baja
      * @return ServiciosSalas
      */
     public function setBaja($baja)
@@ -153,7 +153,7 @@ class ServiciosSalas
     /**
      * Get baja
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getBaja()
     {

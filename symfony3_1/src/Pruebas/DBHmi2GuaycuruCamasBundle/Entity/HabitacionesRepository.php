@@ -12,16 +12,42 @@ class HabitacionesRepository extends EntityRepository
      *  NOTA: se recomienda utilizar nombres unicos de habitaciones
      *  por efector, pero no se implementara restriccion de indice unico
      * 
-     * @param type $nombre_habitacion
      * @param type $id_efector
-     * @param string $msg
+     * @param type $nombre_sala
+     * @param type $nombre_habitacion
+     * 
      * @return type
      */
-    public function findOneByNombreIdEfector(
-            $nombre_habitacion,
-            $id_efector)
+    public function findOneByNombreSalaIdEfector(
+            $id_efector,
+            $nombre_sala,
+            $nombre_habitacion)
     {
         
+        // check sala existe
+        $dql =
+            "SELECT "
+                ."s "
+            ."FROM "
+                ."DBHmi2GuaycuruCamasBundle:Salas s "
+            ."WHERE "
+                ."s.idEfector = :id_efector "
+            ."AND s.nombre = :nombre_sala ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_efector",$id_efector);
+            $query->setParameter("nombre_sala",$nombre_sala);
+            
+            // exec query para chequear que exista la sala
+            $query->getSingleResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;            
+        }
         
         // trae habitacion o habitaciones con el nombre y id_efector
         // pasados por parametro 
@@ -35,14 +61,17 @@ class HabitacionesRepository extends EntityRepository
             ."WHERE "
                 ."h.nombre = :nombre_habitacion "
             ."AND s.idEfector = :id_efector "
+            ."AND s.nombre = :nombre_sala "
             ."AND h.idSala = s.idSala";
         
         try{
             
             $query = $this->getEntityManager()->createQuery($dql);
             
-            $query->setParameter("nombre_habitacion",$nombre_habitacion);
             $query->setParameter("id_efector",$id_efector);
+            $query->setParameter("nombre_sala",$nombre_sala);
+            $query->setParameter("nombre_habitacion",$nombre_habitacion);
+            
             
             $habitaciones = $query->getSingleResult();
             
@@ -52,6 +81,68 @@ class HabitacionesRepository extends EntityRepository
         }
         
         return $habitaciones;
+    }
+    
+    
+    public function countCamas(
+            $id_habitacion,
+            $baja){
+        
+        $dql = 
+                "SELECT "
+                    ."COUNT(c.idCama) "
+                ."FROM "
+                    ."DBHmi2GuaycuruCamasBundle:Camas c "
+                ."WHERE "
+                   ." c.idHabitacion = :id_habitacion "
+                ."AND c.baja = :baja";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_habitacion", $id_habitacion);
+            $query->setParameter("baja", $baja);
+
+            $count = $query->getSingleScalarResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;            
+            
+        }
+        
+        return $count;
+        
+    }
+    
+    public function countCamasTodas(
+            $id_habitacion){
+        
+        $dql = 
+                "SELECT "
+                    ."COUNT(c.idCama) "
+                ."FROM "
+                    ."DBHmi2GuaycuruCamasBundle:Camas c "
+                ."WHERE "
+                   ." c.idHabitacion = :id_habitacion ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_habitacion", $id_habitacion);
+            
+            $count = $query->getSingleScalarResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;            
+            
+        }
+        
+        return $count;
+        
     }
 }
 

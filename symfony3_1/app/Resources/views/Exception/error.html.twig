@@ -15,8 +15,10 @@
                     
                     <p><strong>{{ titulo }}</strong></p>
                     
-                    <p>Detalle: {{ msg }}</p>
-
+                    <p>Detalle:</p>
+                    {# msg #}
+                    {{ msg|raw }}
+                    
                     {% if app.environment == 'dev' %}
                         
                     <p><strong>Debug: </strong>{{ debug|raw }}</p>

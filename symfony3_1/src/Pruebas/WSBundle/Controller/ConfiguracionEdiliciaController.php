@@ -18,10 +18,11 @@ class ConfiguracionEdiliciaController extends Controller
     }
     
     /**
-    * @Route("/agregarcama/{id_efector}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}")
+    * @Route("/agregarcama/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}")
     */
     public function agregarCamaAction(
             $id_efector,
+            $nombre_sala,
             $nombre_habitacion,
             $nombre_cama,
             $id_clasificacion_cama,
@@ -32,6 +33,7 @@ class ConfiguracionEdiliciaController extends Controller
         
         $nueva_cama = [
             'id_efector' => $id_efector,
+            'nombre_sala' => $nombre_sala,
             'nombre_habitacion' => $nombre_habitacion,
             'nombre_cama' => $nombre_cama,
             'id_clasificacion_cama' => $id_clasificacion_cama,
@@ -43,17 +45,18 @@ class ConfiguracionEdiliciaController extends Controller
         return 
             $this->execConfiguracionEdilicia(
                 $nueva_cama, 
-                "a");
+                "agregar_cama");
         
     }    
     
     
     
     /**
-    * @Route("/modificarcama/{id_efector}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}")
+    * @Route("/modificarcama/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}")
     */
     public function modificarCamaAction(
             $id_efector,
+            $nombre_sala,
             $nombre_habitacion,
             $nombre_cama,
             $id_clasificacion_cama,
@@ -64,6 +67,7 @@ class ConfiguracionEdiliciaController extends Controller
         
         $modif_cama = [
             'id_efector' => $id_efector,
+            'nombre_sala' => $nombre_sala,
             'nombre_habitacion' => $nombre_habitacion,
             'nombre_cama' => $nombre_cama,
             'id_clasificacion_cama' => $id_clasificacion_cama,
@@ -75,7 +79,7 @@ class ConfiguracionEdiliciaController extends Controller
         return 
             $this->execConfiguracionEdilicia(
                 $modif_cama, 
-                "m");
+                "modificar_cama");
         
     }
     
@@ -96,7 +100,7 @@ class ConfiguracionEdiliciaController extends Controller
         return 
             $this->execConfiguracionEdilicia(
                 $elimina_cama,
-                "e");
+                "eliminar_cama");
         
     }
     
@@ -116,7 +120,7 @@ class ConfiguracionEdiliciaController extends Controller
         return 
             $this->execConfiguracionEdilicia(
                 $ocupa_cama,
-                "o");
+                "ocupar_cama");
         
     }
     
@@ -136,7 +140,74 @@ class ConfiguracionEdiliciaController extends Controller
         return 
             $this->execConfiguracionEdilicia(
                 $libera_cama,
-                "l");
+                "liberar_cama");
+        
+    }
+    
+    
+    /**
+    * @Route("/agregarhabitacion/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
+    */
+    public function agregarHabitacionAction(
+            $id_efector,
+            $nombre_sala,
+            $nombre_habitacion,
+            $sexo,
+            $edad_desde,
+            $edad_hasta,
+            $tipo_edad,
+            $baja){
+        
+        
+        $nueva_hab = [
+            'id_efector' => $id_efector,
+            'nombre_sala' => $nombre_sala,
+            'nombre_habitacion' => $nombre_habitacion,
+            'sexo' => $sexo,
+            'edad_desde' => $edad_desde,
+            'edad_hasta' => $edad_hasta,
+            'tipo_edad' => $tipo_edad,
+            'baja' => $baja
+        ];
+        
+        return 
+            $this->execConfiguracionEdilicia(
+                $nueva_hab, 
+                "agregar_habitacion");
+        
+    }
+    
+    /**
+    * @Route("/modificarhabitacion/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{cant_camas}/{baja}")
+    */
+    public function modificarHabitacionAction(
+            $id_efector,
+            $nombre_sala,
+            $nombre_habitacion,
+            $sexo,
+            $edad_desde,
+            $edad_hasta,
+            $tipo_edad,
+            $cant_camas,
+            $baja){
+        
+        
+        $modif_hab = [
+            'id_efector' => $id_efector,
+            'nombre_sala' => $nombre_sala,
+            'nombre_habitacion' => $nombre_habitacion,
+            'sexo' => $sexo,
+            'edad_desde' => $edad_desde,
+            'edad_hasta' => $edad_hasta,
+            'tipo_edad' => $tipo_edad,
+            'cant_camas' => $cant_camas,
+            'baja' => $baja
+        ];
+        
+        return 
+            $this->execConfiguracionEdilicia(
+                $modif_hab, 
+                "modificar_habitacion");
         
     }
     
@@ -152,29 +223,39 @@ class ConfiguracionEdiliciaController extends Controller
                     
             switch ($accion){
 
-                case 'a':
+                case 'agregar_cama':
                     
                     $msg = $ce->agregarCama($datos);
                     break;
                 
-                case 'm':
+                case 'modificar_cama':
 
                     $msg = $ce->modificarCama($datos);
                     break;
                 
-                case 'e':
+                case 'eliminar_cama':
 
                     $msg = $ce->eliminarCama($datos);
                     break;
                 
-                case 'o':
+                case 'ocupar_cama':
                     
                     $msg = $ce->ocuparCama($datos);
                     break;
                 
-                case 'l':
+                case 'liberar_cama':
                     
                     $msg = $ce->liberarCama($datos);
+                    break;
+                
+                case 'agregar_habitacion':
+                    
+                    $msg = $ce->agregarHabitacion($datos);
+                    break;
+                
+                case 'modificar_habitacion':
+                    
+                    $msg = $ce->modificarHabitacion($datos);
                     break;
 
             }
@@ -184,7 +265,7 @@ class ConfiguracionEdiliciaController extends Controller
                 array(
                     'datos' => $datos,
                     'msg' => $msg,
-                    'error_debug' => $ce->error_debug)
+                    'error_debug' => $ce::$ERROR_DEBUG)
                     );
             
         } catch (\Exception $e) {
@@ -193,29 +274,34 @@ class ConfiguracionEdiliciaController extends Controller
             
             switch ($accion){
 
-                case 'a':
+                case 'agregar_cama':
                     
                     $titulo = "Error al agregar la cama";
                     break;
                 
-                case 'm':
+                case 'modificar_cama':
                     
                     $titulo = "Error al modificar la cama";
                     break;
 
-                case 'e':
+                case 'eliminar_cama':
 
                    $titulo = "Error al eliminar la cama";
                    break;
                
-                case 'o':
+                case 'ocupar_cama':
                    
                    $titulo = "Error al ocupar la cama";
                    break;
                
-                case 'l':
+                case 'liberar_cama':
                     
                    $titulo = "Error al liberar la cama";
+                   break;
+               
+                case 'agregar_habitacion':
+                    
+                   $titulo = "Error al agregar la habitación";
                    break;
                
 
@@ -227,7 +313,7 @@ class ConfiguracionEdiliciaController extends Controller
                     array(
                         'titulo' => $titulo,
                         'msg' => $msg,
-                        'debug' => $ce->error_debug)
+                        'debug' => $ce::$ERROR_DEBUG)
                     );
         }
     }

@@ -29,23 +29,23 @@ class Habitaciones
     private $nombre;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="sexo", type="boolean", nullable=false)
+     * @ORM\Column(name="sexo", type="integer", nullable=false)
      */
     private $sexo;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="edad_desde", type="boolean", nullable=false)
+     * @ORM\Column(name="edad_desde", type="integer", nullable=false)
      */
     private $edadDesde;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="edad_hasta", type="boolean", nullable=false)
+     * @ORM\Column(name="edad_hasta", type="integer", nullable=false)
      */
     private $edadHasta;
 
@@ -64,9 +64,9 @@ class Habitaciones
     private $cantCamas;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     * @ORM\Column(name="baja", type="integer", nullable=false)
      */
     private $baja;
 
@@ -125,7 +125,7 @@ class Habitaciones
     /**
      * Set sexo
      *
-     * @param boolean $sexo
+     * @param integer $sexo
      * @return Habitaciones
      */
     public function setSexo($sexo)
@@ -138,7 +138,7 @@ class Habitaciones
     /**
      * Get sexo
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getSexo()
     {
@@ -148,7 +148,7 @@ class Habitaciones
     /**
      * Set edadDesde
      *
-     * @param boolean $edadDesde
+     * @param integer $edadDesde
      * @return Habitaciones
      */
     public function setEdadDesde($edadDesde)
@@ -161,7 +161,7 @@ class Habitaciones
     /**
      * Get edadDesde
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getEdadDesde()
     {
@@ -171,7 +171,7 @@ class Habitaciones
     /**
      * Set edadHasta
      *
-     * @param boolean $edadHasta
+     * @param integer $edadHasta
      * @return Habitaciones
      */
     public function setEdadHasta($edadHasta)
@@ -184,7 +184,7 @@ class Habitaciones
     /**
      * Get edadHasta
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getEdadHasta()
     {
@@ -240,7 +240,7 @@ class Habitaciones
     /**
      * Set baja
      *
-     * @param boolean $baja
+     * @param integer $baja
      * @return Habitaciones
      */
     public function setBaja($baja)
@@ -253,7 +253,7 @@ class Habitaciones
     /**
      * Get baja
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getBaja()
     {

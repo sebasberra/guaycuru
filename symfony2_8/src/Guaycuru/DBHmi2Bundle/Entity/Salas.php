@@ -43,9 +43,9 @@ class Salas
     private $cantCamas;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="mover_camas", type="boolean", nullable=false)
+     * @ORM\Column(name="mover_camas", type="integer", nullable=false)
      */
     private $moverCamas;
 
@@ -71,9 +71,9 @@ class Salas
     private $areaSubsector;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     * @ORM\Column(name="baja", type="integer", nullable=false)
      */
     private $baja;
 
@@ -188,7 +188,7 @@ class Salas
     /**
      * Set moverCamas
      *
-     * @param boolean $moverCamas
+     * @param integer $moverCamas
      * @return Salas
      */
     public function setMoverCamas($moverCamas)
@@ -201,7 +201,7 @@ class Salas
     /**
      * Get moverCamas
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getMoverCamas()
     {
@@ -280,7 +280,7 @@ class Salas
     /**
      * Set baja
      *
-     * @param boolean $baja
+     * @param integer $baja
      * @return Salas
      */
     public function setBaja($baja)
@@ -293,7 +293,7 @@ class Salas
     /**
      * Get baja
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getBaja()
     {

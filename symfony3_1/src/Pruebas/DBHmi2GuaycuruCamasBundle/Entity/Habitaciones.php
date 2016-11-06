@@ -2,6 +2,9 @@
 
 namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="habitaciones", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_sala", columns={"nombre", "id_sala"})}, indexes={@ORM\Index(name="idx_fk_habitaciones_id_sala", columns={"id_sala"})})
  * @ORM\Entity(repositoryClass="Pruebas\DBHmi2GuaycuruCamasBundle\Entity\HabitacionesRepository")
+ * @UniqueEntity(
+ *     fields={"nombre", "idSala"},
+ *     message="El nombre de habitación: {{ value }}, ya existe en la sala."
+ * )
  */
 class Habitaciones
 {
@@ -25,33 +32,61 @@ class Habitaciones
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
+     * 
+     * @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "El nombre de habitación no puede superar los 50 caracteres"
+     * )
+     * 
      */
     private $nombre;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="sexo", type="boolean", nullable=false)
+     * @Assert\Choice({1, 2, 3},
+     *      message = "El valor de sexo: {{ value }} no es válido. Valores posibles 1=masculino, 2=femenino, 3=mixto"
+     * )
+     * 
+     * @ORM\Column(name="sexo", type="integer", nullable=false)
      */
     private $sexo;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="edad_desde", type="boolean", nullable=false)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "Edad desde: {{ value }} no válida. La edad mínima no puede ser un valor negativo",
+     *      maxMessage = "Edad desde: {{ value }} no válida. La edad máxima no puede ser mayor a 255"
+     * )
+     * 
+     * @ORM\Column(name="edad_desde", type="integer", nullable=false)
      */
-    private $edadDesde = '0';
+    private $edadDesde = 0;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="edad_hasta", type="boolean", nullable=false)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "Edad hasta: {{ value }} no válida. La edad mínima no puede ser un valor negativo",
+     *      maxMessage = "Edad hasta: {{ value }} no válida. La edad máxima no puede ser mayor a 255"
+     * )
+     * 
+     * @ORM\Column(name="edad_hasta", type="integer", nullable=false)
      */
-    private $edadHasta = '255';
+    private $edadHasta = 255;
 
     /**
      * @var string
      *
+     * @Assert\Choice({"1", "2", "3", "4", "5"},
+     *      message = "El valor de tipo edad: {{ value }} no es válido. Valores posibles 1=años, 2=meses, 3=días, 4=horas, 5=minutos"
+     * )
+     * 
      * @ORM\Column(name="tipo_edad", type="string", length=1, nullable=false)
      */
     private $tipoEdad;
@@ -59,6 +94,11 @@ class Habitaciones
     /**
      * @var integer
      *
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Cantidad de camas: {{ value }} no válido. La habitación no puede tener un valor negativo de camas"
+     * )
+     * 
      * @ORM\Column(name="cant_camas", type="smallint", nullable=false)
      */
     private $cantCamas;
@@ -66,9 +106,14 @@ class Habitaciones
     /**
      * @var boolean
      *
+     * @Assert\Type(
+     *     type="bool",
+     *     message="EL valor de baja: {{ value }} debe ser true o false."
+     * )
+     * 
      * @ORM\Column(name="baja", type="boolean", nullable=false)
      */
-    private $baja = '0';
+    private $baja = false;
 
     /**
      * @var \DateTime
@@ -126,7 +171,7 @@ class Habitaciones
     /**
      * Set sexo
      *
-     * @param boolean $sexo
+     * @param integer $sexo
      *
      * @return Habitaciones
      */
@@ -140,7 +185,7 @@ class Habitaciones
     /**
      * Get sexo
      *
-     * @return boolean
+     * @return integer
      */
     public function getSexo()
     {
@@ -150,7 +195,7 @@ class Habitaciones
     /**
      * Set edadDesde
      *
-     * @param boolean $edadDesde
+     * @param integer $edadDesde
      *
      * @return Habitaciones
      */
@@ -164,7 +209,7 @@ class Habitaciones
     /**
      * Get edadDesde
      *
-     * @return boolean
+     * @return integer
      */
     public function getEdadDesde()
     {
@@ -174,7 +219,7 @@ class Habitaciones
     /**
      * Set edadHasta
      *
-     * @param boolean $edadHasta
+     * @param integer $edadHasta
      *
      * @return Habitaciones
      */
@@ -188,7 +233,7 @@ class Habitaciones
     /**
      * Get edadHasta
      *
-     * @return boolean
+     * @return integer
      */
     public function getEdadHasta()
     {

@@ -63,24 +63,26 @@ class Camas
     /**
      * @var boolean
      * 
-     * @Assert\Choice({"0", "1"},
-     *      message = "El valor de rotativa debe ser 0 o 1"
+     * @Assert\Type(
+     *     type="bool",
+     *     message="El valor de rotativa: {{ value }} debe ser true o false."
      * )
      * 
      * @ORM\Column(name="rotativa", type="boolean", nullable=false)
      */
-    private $rotativa = '0';
+    private $rotativa = false;
 
     /**
      * @var boolean
      *
-     * @Assert\Choice({"0", "1"},
-     *      message = "El valor de baja debe ser 0 o 1"
+     * @Assert\Type(
+     *     type="bool",
+     *     message="EL valor de baja: {{ value }} debe ser true o false."
      * )
      * 
      * @ORM\Column(name="baja", type="boolean", nullable=false)
      */
-    private $baja = '0';
+    private $baja = false;
 
     /**
      * @var \DateTime

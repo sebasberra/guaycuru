@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Camas
  *
- * @ORM\Table(name="camas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_habitacion", columns={"nombre", "id_habitacion"})}, indexes={@ORM\Index(name="idx_fk_camas_id_habitacion", columns={"id_habitacion"}), @ORM\Index(name="idx_fk_camas_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_camas_id_clasificacion_cama", columns={"id_clasificacion_cama"})})
+ * @ORM\Table(name="camas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_efector", columns={"nombre", "id_efector"})}, indexes={@ORM\Index(name="idx_fk_camas_id_habitacion", columns={"id_habitacion"}), @ORM\Index(name="idx_fk_camas_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_camas_id_clasificacion_cama", columns={"id_clasificacion_cama"})})
  * @ORM\Entity
  */
 class Camas
@@ -43,16 +43,16 @@ class Camas
     private $estado;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="rotativa", type="boolean", nullable=false)
+     * @ORM\Column(name="rotativa", type="integer", nullable=false)
      */
     private $rotativa;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     * @ORM\Column(name="baja", type="integer", nullable=false)
      */
     private $baja;
 
@@ -177,7 +177,7 @@ class Camas
     /**
      * Set rotativa
      *
-     * @param boolean $rotativa
+     * @param integer $rotativa
      * @return Camas
      */
     public function setRotativa($rotativa)
@@ -190,7 +190,7 @@ class Camas
     /**
      * Get rotativa
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getRotativa()
     {
@@ -200,7 +200,7 @@ class Camas
     /**
      * Set baja
      *
-     * @param boolean $baja
+     * @param integer $baja
      * @return Camas
      */
     public function setBaja($baja)
@@ -213,7 +213,7 @@ class Camas
     /**
      * Get baja
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getBaja()
     {

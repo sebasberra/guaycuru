@@ -36,23 +36,23 @@ class Efectores
     private $idSubnodo;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="id_dependencia_adm", type="boolean", nullable=true)
+     * @ORM\Column(name="id_dependencia_adm", type="integer", nullable=true)
      */
     private $idDependenciaAdm;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="id_regimen_juridico", type="boolean", nullable=false)
+     * @ORM\Column(name="id_regimen_juridico", type="integer", nullable=false)
      */
     private $idRegimenJuridico;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="id_nivel_complejidad", type="boolean", nullable=false)
+     * @ORM\Column(name="id_nivel_complejidad", type="integer", nullable=false)
      */
     private $idNivelComplejidad;
 
@@ -92,9 +92,9 @@ class Efectores
     private $nomRedEfector;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="nodo", type="boolean", nullable=false)
+     * @ORM\Column(name="nodo", type="integer", nullable=false)
      */
     private $nodo;
 
@@ -106,16 +106,16 @@ class Efectores
     private $subnodo;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="internacion", type="boolean", nullable=false)
+     * @ORM\Column(name="internacion", type="integer", nullable=false)
      */
     private $internacion;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     * @ORM\Column(name="baja", type="integer", nullable=false)
      */
     private $baja;
 
@@ -190,7 +190,7 @@ class Efectores
     /**
      * Set idDependenciaAdm
      *
-     * @param boolean $idDependenciaAdm
+     * @param integer $idDependenciaAdm
      * @return Efectores
      */
     public function setIdDependenciaAdm($idDependenciaAdm)
@@ -203,7 +203,7 @@ class Efectores
     /**
      * Get idDependenciaAdm
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getIdDependenciaAdm()
     {
@@ -213,7 +213,7 @@ class Efectores
     /**
      * Set idRegimenJuridico
      *
-     * @param boolean $idRegimenJuridico
+     * @param integer $idRegimenJuridico
      * @return Efectores
      */
     public function setIdRegimenJuridico($idRegimenJuridico)
@@ -226,7 +226,7 @@ class Efectores
     /**
      * Get idRegimenJuridico
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getIdRegimenJuridico()
     {
@@ -236,7 +236,7 @@ class Efectores
     /**
      * Set idNivelComplejidad
      *
-     * @param boolean $idNivelComplejidad
+     * @param integer $idNivelComplejidad
      * @return Efectores
      */
     public function setIdNivelComplejidad($idNivelComplejidad)
@@ -249,7 +249,7 @@ class Efectores
     /**
      * Get idNivelComplejidad
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getIdNivelComplejidad()
     {
@@ -374,7 +374,7 @@ class Efectores
     /**
      * Set nodo
      *
-     * @param boolean $nodo
+     * @param integer $nodo
      * @return Efectores
      */
     public function setNodo($nodo)
@@ -387,7 +387,7 @@ class Efectores
     /**
      * Get nodo
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getNodo()
     {
@@ -420,7 +420,7 @@ class Efectores
     /**
      * Set internacion
      *
-     * @param boolean $internacion
+     * @param integer $internacion
      * @return Efectores
      */
     public function setInternacion($internacion)
@@ -433,7 +433,7 @@ class Efectores
     /**
      * Get internacion
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getInternacion()
     {
@@ -443,7 +443,7 @@ class Efectores
     /**
      * Set baja
      *
-     * @param boolean $baja
+     * @param integer $baja
      * @return Efectores
      */
     public function setBaja($baja)
@@ -456,7 +456,7 @@ class Efectores
     /**
      * Get baja
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getBaja()
     {

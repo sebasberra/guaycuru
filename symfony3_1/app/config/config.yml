@@ -47,6 +47,8 @@ doctrine:
     dbal:
         mapping_types:
             enum: string
+            # Mysql trabaja los boolean como tinyint(1), despues editar a mano
+            tinyint: integer
         driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"

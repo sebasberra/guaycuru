@@ -4,11 +4,21 @@ namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
  * Salas
  *
  * @ORM\Table(name="salas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_id_efector_nombre", columns={"id_efector", "nombre"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_nro_sala", columns={"id_efector", "nro_sala"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_area_id_efector_servicio", columns={"area_id_efector_servicio"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_cod_servicio_sector_subsector", columns={"id_efector", "area_cod_servicio", "area_sector", "area_subsector"})}, indexes={@ORM\Index(name="idx_fk_salas_area_id_efector_servicio", columns={"area_id_efector_servicio"}), @ORM\Index(name="IDX_FEDB5403305FE2F", columns={"id_efector"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Pruebas\DBHmi2GuaycuruCamasBundle\Entity\SalasRepository")
+ * 
+ * @UniqueEntity(
+ *     fields={"nombre", "idEfector"},
+ *     message="El nombre de sala ya existe en el efector."
+ * )
+ * 
  */
 class Salas
 {
@@ -32,6 +42,12 @@ class Salas
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     * 
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "El nombre de sala no puede superar los 255 caracteres"
+     * )
+     * 
      */
     private $nombre;
 
@@ -39,6 +55,12 @@ class Salas
      * @var integer
      *
      * @ORM\Column(name="cant_camas", type="smallint", nullable=false)
+     * 
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Cantidad de camas: {{ value }} no válido. La sala no puede tener un valor negativo de camas"
+     * )
+     * 
      */
     private $cantCamas;
 
@@ -46,6 +68,12 @@ class Salas
      * @var boolean
      *
      * @ORM\Column(name="mover_camas", type="boolean", nullable=false)
+     * 
+     * @Assert\Type(
+     *     type="bool",
+     *     message="EL valor de permite mover camas: {{ value }} debe ser true o false."
+     * )
+     * 
      */
     private $moverCamas;
 
@@ -74,6 +102,12 @@ class Salas
      * @var boolean
      *
      * @ORM\Column(name="baja", type="boolean", nullable=false)
+     * 
+     * @Assert\Type(
+     *     type="bool",
+     *     message="EL valor de baja: {{ value }} debe ser true o false."
+     * )
+     * 
      */
     private $baja;
 

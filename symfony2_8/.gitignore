@@ -13,3 +13,4 @@ composer.json
 !app/logs/.gitkeep
 !/vendor/stg/
 !/vendor/doctrine/dbal/lib/Doctrine/DBAL/Platforms/MySqlPlatform.php
+/src/Guaycuru/DBHmi2Bundle/Entity/*.php~
