@@ -224,7 +224,7 @@ class Camas
      *
      * @return boolean
      */
-    public function getRotativa()
+    public function isRotativa()
     {
         return $this->rotativa;
     }
@@ -248,7 +248,7 @@ class Camas
      *
      * @return boolean
      */
-    public function getBaja()
+    public function isBaja()
     {
         return $this->baja;
     }

@@ -42,7 +42,7 @@ class SalasRepository extends EntityRepository
     }
     
     
-    public function countCamas(
+    public function countCamasTodas(
             $id_sala){
         
         $dql = 
@@ -61,6 +61,41 @@ class SalasRepository extends EntityRepository
             
             $query = $this->getEntityManager()->createQuery($dql);
             $query->setParameter("id_sala", $id_sala);
+
+            $count = $query->getSingleScalarResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;            
+            
+        }
+        
+        return $count;
+        
+    }
+    
+    public function countCamas(
+            $id_sala,
+            $baja){
+        
+        $dql = 
+                "SELECT "
+                    ."COUNT(c.idCama) "
+                ."FROM "
+                    ."DBHmi2GuaycuruCamasBundle:Camas c "
+                ."INNER JOIN "
+                    ."DBHmi2GuaycuruCamasBundle:Habitaciones h "
+                ."WHERE "
+                    ."c.idSala = :id_sala "
+                ."AND c.baja = :baja "
+                ."AND h.idHabitacion = c.idHabitacion";
+                   
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            $query->setParameter("id_sala", $id_sala);
+            $query->setParameter("baja", $baja);
 
             $count = $query->getSingleScalarResult();
             

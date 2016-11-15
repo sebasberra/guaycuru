@@ -10,7 +10,6 @@ use Pruebas\WSBundle\Utils\ConfiguracionEdilicia;
 class ConfiguracionEdiliciaUtiles
 {
     
-    public $error_debug;
     private $doctrine;
     
     
@@ -52,6 +51,15 @@ class ConfiguracionEdiliciaUtiles
         // busca nombre-id_efector en tabla camas
         try{
         
+            $msg = 
+                    "Error al buscar la habitación: "
+                    .$nombre_habitacion
+                    .", en la sala: "
+                    .$nombre_sala
+                    .", del efector con id: "
+                    .$id_efector
+                    .". ";
+            
             $habitacion = 
                 $this->doctrine->getRepository
                     ('DBHmi2GuaycuruCamasBundle:Habitaciones')
@@ -60,6 +68,8 @@ class ConfiguracionEdiliciaUtiles
                             $nombre_sala,
                             $nombre_habitacion);
             
+            
+            
         } catch (\Doctrine\ORM\NonUniqueResultException $nure){
             
             // mas de una habitacion encontrada, no se puede determinar
@@ -67,7 +77,10 @@ class ConfiguracionEdiliciaUtiles
             ConfiguracionEdilicia::$ERROR_DEBUG .= " Función getHabitacion: "
                     .$nure->getMessage();
             
-            return null;
+            $msg .=
+                    "<p>Existe más de una habitación con el nombre especificado<p>";
+            
+            throw new \Exception($msg);
             
         } catch (\Doctrine\ORM\NoResultException $nre){
             
@@ -75,18 +88,15 @@ class ConfiguracionEdiliciaUtiles
             ConfiguracionEdilicia::$ERROR_DEBUG .= " Función getHabitacion: "
                     .$nre->getMessage();
             
-            return null;
+            $msg .=
+                    "<p>No existe una habitación con el nombre especificado<p>";
+            //dump($msg);die();
+            throw new \Exception($msg);
             
         
         } catch (\Exception $e) {
 
-            $msg = "Error al buscar la habitación: "
-                    .$nombre_habitacion
-                    ." en la sala: "
-                    .$nombre_sala
-                    ." en el efector con id: "
-                    .$id_efector;
-            
+          
             ConfiguracionEdilicia::$ERROR_DEBUG .= " Función getHabitacion: "
                     .$e->getMessage();
             

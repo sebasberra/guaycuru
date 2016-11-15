@@ -39,9 +39,7 @@ class ConfiguracionEdilicia
         $this->conn = $doctrine->getManager('default')->getConnection();
         $this->validator = $validator;
         
-        $this->utiles = new ConfiguracionEdiliciaUtiles(
-                $this->doctrine,
-                self::$ERROR_DEBUG);
+        $this->utiles = new ConfiguracionEdiliciaUtiles($doctrine);
         
     }
     
@@ -132,13 +130,11 @@ class ConfiguracionEdilicia
             try{
 
                 $habitacion = $this->utiles->getHabitacion(
-                        $nueva_cama["id_efector"],
+                        $nueva_cama["nombre_habitacion"],
                         $nueva_cama["nombre_sala"],
-                        $nueva_cama["nombre_habitacion"]);
+                        $nueva_cama["id_efector"]);
 
             } catch (\ErrorException $ee){
-
-                $msg = $ee->getMessage();
 
                 throw $ee;
 
@@ -184,10 +180,6 @@ class ConfiguracionEdilicia
         // validacion assert
         $this->validacionAssert($cama);
     
-        
-
-        // TODO transaction
-        // 
         
         // begintrans
         $this->conn->beginTransaction();
@@ -311,8 +303,8 @@ class ConfiguracionEdilicia
         // cama rotativa entonces puede tener la habitacion null, en otro caso
         // controla que exista la habitacion
         if ($rotativa==true &&                
-                $nueva_cama["nombre_sala"]="" &&
-                $$nueva_cama["nombre_habitacion"] = ""){
+                $modif_cama["nombre_sala"]="" &&
+                $modif_cama["nombre_habitacion"] = ""){
             
             // cama rotativa sin habitacion asignada
             $habitacion = null;
@@ -323,13 +315,11 @@ class ConfiguracionEdilicia
             try{
 
                 $habitacion = $this->utiles->getHabitacion(
-                        $nueva_cama["id_efector"],
-                        $nueva_cama["nombre_sala"],
-                        $nueva_cama["nombre_habitacion"]);
+                        $modif_cama["nombre_habitacion"],
+                        $modif_cama["nombre_sala"],
+                        $modif_cama["id_efector"]);
 
             } catch (\ErrorException $ee){
-
-                $msg = $ee->getMessage();
 
                 throw $ee;
 
@@ -337,10 +327,13 @@ class ConfiguracionEdilicia
             
         }
         
+        // baja actual
+        $baja_actual = $cama->getBaja();
         
+        // baja_nueva
+        $baja_nueva = $this->utiles->wrapBoolean($modif_cama["baja"]);
         
-        // baja
-        $cama->setBaja($this->utiles->wrapBoolean($modif_cama["baja"]));
+        $cama->setBaja($baja_nueva);
         
         // estado libre
         $cama->setEstado($modif_cama["estado"]);
@@ -364,9 +357,47 @@ class ConfiguracionEdilicia
         // validacion assert
         $this->validacionAssert($cama);
         
-        // update datos en la DB
-        $this->em->persist($cama);
-        $this->em->flush();
+        // transaccion
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+        
+            //
+            // update datos en la DB
+            $this->em->persist($cama);
+            $this->em->flush();
+
+            // check actualiza cant camas de habitacion y sala
+            if (($baja_nueva != $baja_actual) && 
+                    $habitacion != null){
+            
+                // baja cambia, entonces cambia stock de camas habitacion y sala
+            
+                // cant_camas habitacion
+                $this->setCantCamasHab($habitacion);
+
+                // cant_camas sala
+                $this->setCantCamasSala($habitacion->getIdSala());
+
+            }
+        
+            // commit
+            $this->conn->commit();
+            
+        }catch(\Exception $e){
+            
+            self::$ERROR_DEBUG .=
+                    "Error al modificar la cama: "
+                    .$modif_cama["nombre_cama"];
+            
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
 
         $msg = "La cama: ".$modif_cama["nombre_cama"]
                 ." fue modificada en el efector: "
@@ -383,7 +414,7 @@ class ConfiguracionEdilicia
     }
     
     
-    /** Elimina la cama si no tiene usando DELETE, la baja se hace
+    /** Elimina la cama usando DELETE, la baja se hace
      *  a traves de la modificacion de cama
      *  
      * @param type $elimina_cama
@@ -488,6 +519,13 @@ class ConfiguracionEdilicia
         // estado
         $cama->setEstado('O');
         
+        // validacion assert
+        $this->validacionAssert($cama);
+        
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
         try{
         
             // ocupa la cama
@@ -542,6 +580,9 @@ class ConfiguracionEdilicia
         
         // estado
         $cama->setEstado('L');
+        
+        // validacion assert
+        $this->validacionAssert($cama);
         
         // begintrans
         $this->conn->beginTransaction();
@@ -681,10 +722,14 @@ class ConfiguracionEdilicia
         }
         
         
+        // baja actual
+        $baja_actual = $habitacion->getBaja();
         
-        // baja
-        $habitacion->setBaja($this->utiles->wrapBoolean($modif_hab["baja"]));
+        // baja_nueva
+        $baja_nueva = $this->utiles->wrapBoolean($modif_hab["baja"]);
         
+        $habitacion->setBaja($baja_nueva);
+                
         // sexo
         $habitacion->setSexo($modif_hab["sexo"]);
         
@@ -713,10 +758,23 @@ class ConfiguracionEdilicia
             // update datos en la DB
             $this->em->persist($habitacion);
             $this->em->flush();
-
+            
+            
             // check actualiza cant camas de habitacion y sala
-            if ($habitacion){
+            if ($baja_nueva != $baja_actual){
 
+                // baja o alta a las camas de la habitacion
+                if ($baja_nueva){
+                
+                    // baja camas
+                    $this->setBajaCamasHabitacion($habitacion->getIdHabitacion());
+                    
+                }else{
+                    
+                    // alta camas
+                    $this->setAltaCamasHabitacion($habitacion->getIdHabitacion());
+                } 
+             
                 // cant_camas habitacion
                 $this->setCantCamasHab($habitacion);
 
@@ -754,6 +812,14 @@ class ConfiguracionEdilicia
         
     }
     
+    
+    /** Elimina la habitacion de base de datos, la
+     *  baja se implementa como modificacion
+     * 
+     * @param type $elimina_hab
+     * @return string
+     * @throws \Exception
+     */
     public function eliminarHabitacion($elimina_hab){
         
         // habitacion
@@ -943,6 +1009,31 @@ class ConfiguracionEdilicia
             // estado = 'F' (fuera de servicio)
             $cama->setEstado('F');
 
+            // validacion assert
+            $this->validacionAssert($cama);
+            
+            $this->em->persist($cama);
+
+        }
+        
+        $this->em->flush();
+        
+    }
+    
+    private function setAltaCamasHabitacion($id_habitacion){
+        
+        // baja cama de la habitacion
+        $camas = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Camas')
+                ->findByIdHabitacion($id_habitacion);
+
+        foreach($camas as $cama) {
+
+            // cama baja = false
+            $cama->setBaja(false);
+
+            
             // validacion assert
             $this->validacionAssert($cama);
             

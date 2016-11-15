@@ -304,6 +304,11 @@ class ConfiguracionEdiliciaController extends Controller
                    $titulo = "Error al agregar la habitación";
                    break;
                
+               case 'modificar_habitacion':
+                    
+                   $titulo = "Error al modificar la habitación";
+                   break;
+               
 
             }
             
