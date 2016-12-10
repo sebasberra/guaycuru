@@ -767,12 +767,16 @@ class ConfiguracionEdilicia
                 if ($baja_nueva){
                 
                     // baja camas
-                    $this->setBajaCamasHabitacion($habitacion->getIdHabitacion());
+                    $this->setBajaCamasHabitacion(
+                            $habitacion->getIdHabitacion(),
+                            true);
                     
                 }else{
                     
                     // alta camas
-                    $this->setAltaCamasHabitacion($habitacion->getIdHabitacion());
+                    $this->setBajaCamasHabitacion(
+                            $habitacion->getIdHabitacion(),
+                            false);
                 } 
              
                 // cant_camas habitacion
@@ -864,7 +868,9 @@ class ConfiguracionEdilicia
                 $habitacion->setBaja(true);
                 
                 // baja camas de la habitacion
-                $this->setBajaCamasHabitacion($habitacion->getIdHabitacion());
+                $this->setBajaCamasHabitacion(
+                        $habitacion->getIdHabitacion(),
+                        true);
                 
                 // cant_camas habitacion
                 $this->setCantCamasHab($habitacion);
@@ -907,16 +913,348 @@ class ConfiguracionEdilicia
     public function agregarSala($nueva_sala){
         
         
-        // !!!TODO probar funciones de habitacion y modificaciones de
-        // repositorio habitaciones countCamas !! ver en salas repositorio misma
-        // modificacion
+                        
+        // objeto Habitaciones doctrine
+        $sala = new Salas();
+        
+        
+        // area_cod_servicio
+        $sala->setAreaCodServicio($nueva_sala["area_cod_servicio"]);
+        
+        // areaEfectorServicio
+        $sala->setAreaEfectorServicio($nueva_sala["area_id_efector_servicio"]);
+        
+        // area_sector
+        $sala->setSector($nueva_sala["area_sector"]);
+        
+        // area_subsector
+        $sala->setSubsector($nueva_sala["area_subsector"]);
+        
+        // cant_camas
+        $sala->setCantCamas(0);
+        
+        // fecha modificacion [timestamp]
+        $sala->setFechaModificacion(null);
+        
+        // id_efector
+        $sala->setIdEfector($nueva_sala["id_efector"]);
+         
+        // mover_camas
+        $sala->setMoverCamas($nueva_sala["mover_camas"]);
+        
+        // nombre sala
+        $sala->setNombre($nueva_sala["nombre_sala"]);
+        
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        
+        try{
+            
+            
+            // nro_sala
+            $nro_sala = 
+                $this->doctrine->getRepository
+                    ('DBHmi2GuaycuruCamasBundle:Salas')
+                    ->getProximoNroSala($nueva_sala["id_efector"]);
+            
+            if ($nro_sala<=0){
+            
+                self::$ERROR_DEBUG .=
+                    "No se pudo recuperar el próximo nro de sala en el "
+                    ." efector. La función servicios_get_proximo_nro_sala "
+                    ." ("
+                    .$nueva_sala["id_efector"]
+                    .") devolvió: "
+                    .$nro_sala;
+            
+                $msg = "Error al recupar el próximo nro de sala del efector: "
+                        .$nueva_sala["id_efector"];
+                
+                // rollback
+                $this->conn->rollBack();
+
+                throw new \Exception($msg);
+            
+            }
+            
+            $sala->setNroSala($nro_sala);
+            
+            
+            // id_sala
+            $id_sala = 
+                $this->doctrine->getRepository
+                    ('DBHmi2GuaycuruCamasBundle:Salas')
+                    ->getProximoIdSala($nueva_sala["id_efector"]);
+            
+            if ($nro_sala<=0){
+            
+                self::$ERROR_DEBUG .=
+                    "No se pudo recuperar el próximo id de sala en el "
+                    ." efector. La función servicios_get_proximo_id_sala "
+                    ." ("
+                    .$nueva_sala["id_efector"]
+                    .") devolvió: "
+                    .$id_sala;
+            
+                $msg = "Error al recupar el próximo id de sala del efector: "
+                        .$nueva_sala["id_efector"];
+                
+                // rollback
+                $this->conn->rollBack();
+
+                throw new \Exception($msg);
+            
+            }
+            
+            $sala->setIdSala($id_sala);
+        
+        
+            // validacion assert
+            $this->validacionAssert($sala);
+    
+        
+            // insert datos en la DB
+            $this->em->persist($sala);
+            $this->em->flush();
+
+            // commit
+            $this->conn->commit();
+            
+            
+        } catch (\Exception $e) {
+
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
+        
+        $msg = "La sala: ".$nueva_sala["nombre_sala"]
+                ." fue ingresada al efector: "
+                .$nueva_sala["id_efector"];
+        
+        
+        return $msg;
+        
     }
     
+    
     public function modificarSala($modif_sala){
+    
+        // sala
+        try {
+        
+            $sala =
+                    $this->utiles->geSala(
+                            $modif_sala["nombre_sala"],
+                            $modif_sala["id_efector"]
+                            );
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+            
+        }
+        
+        
+        // baja actual
+        $baja_actual = $sala->getBaja();
+        
+        // baja_nueva
+        $baja_nueva = $this->utiles->wrapBoolean($modif_sala["baja"]);
+        
+        $sala->setBaja($baja_nueva);
+                
+        // area_cod_servicio
+        $sala->setAreaCodServicio($modif_sala["area_cod_servicio"]);
+        
+        // areaEfectorServicio
+        $sala->setAreaEfectorServicio($modif_sala["area_id_efector_servicio"]);
+        
+        // area_sector
+        $sala->setSector($modif_sala["area_sector"]);
+        
+        // area_subsector
+        $sala->setSubsector($modif_sala["area_subsector"]);
+        
+        // timestamp fecha modificacion
+        $sala->setFechaModificacion(null);
+        
+        // mover_camas
+        $sala->setMoverCamas($modif_sala["mover_camas"]);
+        
+        // validacion assert
+        $this->validacionAssert($sala);
+    
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+        
+            // update datos en la DB
+            $this->em->persist($sala);
+            $this->em->flush();
+            
+            
+            // check actualiza cant camas de habitacion y sala
+            if ($baja_nueva != $baja_actual){
+
+                // baja o alta a las camas de la habitacion
+                if ($baja_nueva){
+                
+                    // baja habitaciones
+                    $this->setBajaHabitacionesSala(
+                            $sala->getIdSala(), 
+                            true);
+                    
+                    // baja camas
+                    $this->setBajaCamasSala(
+                            $sala->getIdSala(),
+                            true);
+                    
+                }else{
+                    
+                    // alta habitaciones
+                    $this->setBajaHabitacionesSala(
+                            $sala->getIdSala(), 
+                            false);
+                    
+                    // alta camas
+                    $this->setBajaCamasSala(
+                            $sala->getIdSala(),
+                            false);
+                    
+                } 
+             
+                // cant_camas habitaciones de la sala
+                $this->setCantCamasHabSala($sala->getIdSala());
+                
+                // cant_camas sala
+                $this->setCantCamasSala($sala->getIdSala());
+
+            }
+            
+            // commit
+            $this->conn->commit();
+            
+        } catch (\Exception $e) {
+
+            self::$ERROR_DEBUG .=
+                    "Error al modificar la sala: "
+                    .$modif_sala["nombre_sala"]
+                    ." En el efector: "
+                    .$modif_sala["id_efector"];
+            
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
+        
+        $msg = "La sala: "
+                .$modif_sala["nombre_sala"]
+                ." fue modificada en el efector: "
+                .$sala->getIdEfector()->getNomEfector();
+        
+        
+        return $msg;
         
     }
     
     public function eliminarSala($elimina_sala){
+        
+        // sala
+        try {
+        
+            $sala =
+                    $this->utiles->geSala(
+                            $elimina_sala["nombre_sala"],
+                            $elimina_sala["id_efector"]
+                            );
+            
+        } catch (\Exception $e) {
+            
+            throw $e;
+
+        }
+        
+        
+        
+        // begintrans
+        $this->conn->beginTransaction();
+        
+        try{
+            
+        
+            // count camas habitacion
+            $count = 
+                $this->doctrine->getRepository
+                    ('DBHmi2GuaycuruCamasBundle:Salas')
+                    ->countCamasTodas(
+                            $sala->getIdSala());
+            
+            if ($count==0){
+            
+                // elimina la sala
+                $this->em->remove($sala);
+                                    
+            }else{
+                
+                // set baja = true
+                $sala->setBaja(true);
+                
+                // baja habitaciones de la sala
+                $this->setBajaHabitacionesSala(
+                        $sala->getIdSala(),
+                        true);
+                
+                // baja camas de la sala
+                $this->setBajaCamasSala(
+                        $sala->getIdSala(),
+                        true);
+                
+                // cant_camas de las habitaciones de la sala
+                $this->setCantCamasHabSala($sala->getIdSala());
+                
+                // cant_camas sala
+                $this->setCantCamasSala($sala->getIdSala());
+                
+            }
+
+            // flush habitacion
+            $this->em->flush();            
+            
+            // commit
+            $this->conn->commit();
+            
+        }catch(\Exception $e){
+            
+            self::$ERROR_DEBUG .=
+                    "Error al eliminar/baja la sala: "
+                    .$elimina_sala["nombre_sala"]
+                    ." del efector: "
+                    .$elimina_sala["id_efector"];
+            
+            // rollback
+            $this->conn->rollBack();
+            
+            throw $e;
+            
+        }
+        
+        $msg = "La sala: "
+                .$elimina_sala["nombre_sala"]
+                ." fue eliminada/baja del efector: "
+                .$sala->getIdEfector()->getNombre();
+                
+        return $msg;
         
     }
     
@@ -993,7 +1331,28 @@ class ConfiguracionEdilicia
         
     }
     
-    private function setBajaCamasHabitacion($id_habitacion){
+    
+    private function setCantCamasHabSala($id_sala){
+        
+        
+        // habitaciones de la sala
+        $habitaciones = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                ->findByIdSala($id_sala);
+
+        foreach($habitaciones as $habitacion) {
+
+            $this->setCantCamasHab($habitacion->getIdHabitacion());
+
+        }
+                
+    }
+    
+    
+    private function setBajaCamasHabitacion(
+            $id_habitacion,
+            $baja){
         
         // baja cama de la habitacion
         $camas = 
@@ -1003,12 +1362,21 @@ class ConfiguracionEdilicia
 
         foreach($camas as $cama) {
 
-            // cama baja = true
-            $cama->setBaja(true);
+            // cama baja
+            $cama->setBaja($baja);
 
-            // estado = 'F' (fuera de servicio)
-            $cama->setEstado('F');
+            if ($baja){
+                
+                // estado = 'F' (fuera de servicio)
+                $cama->setEstado('F');
 
+            }else{
+                
+                // estado = 'L' (libre)
+                $cama->setEstado('L');
+                
+            }
+            
             // validacion assert
             $this->validacionAssert($cama);
             
@@ -1020,24 +1388,65 @@ class ConfiguracionEdilicia
         
     }
     
-    private function setAltaCamasHabitacion($id_habitacion){
+    
+    private function setBajaCamasSala(
+            $id_sala,
+            $baja){
         
-        // baja cama de la habitacion
+        // baja cama de la sala
         $camas = 
             $this->doctrine->getRepository
                 ('DBHmi2GuaycuruCamasBundle:Camas')
-                ->findByIdHabitacion($id_habitacion);
+                ->findByIdSala($id_sala);
 
         foreach($camas as $cama) {
 
-            // cama baja = false
-            $cama->setBaja(false);
+            // cama baja 
+            $cama->setBaja($baja);
 
+            if ($baja){
+                
+                // estado = 'F' (fuera de servicio)
+                $cama->setEstado('F');
+
+            }else{
+                
+                // estado = 'L' (libre)
+                $cama->setEstado('L');
+                
+            }
             
             // validacion assert
             $this->validacionAssert($cama);
             
             $this->em->persist($cama);
+
+        }
+        
+        $this->em->flush();
+        
+    }
+        
+    
+    private function setBajaHabitacionesSala(
+            $id_sala,
+            $baja){
+        
+        // habitaciones de la sala
+        $habitaciones = 
+            $this->doctrine->getRepository
+                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                ->findByIdSala($id_sala);
+
+        foreach($habitaciones as $habitacion) {
+
+            // habitacion baja 
+            $habitacion->setBaja($baja);
+
+            // validacion assert
+            $this->validacionAssert($habitacion);
+            
+            $this->em->persist($habitacion);
 
         }
         

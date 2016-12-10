@@ -211,6 +211,70 @@ class ConfiguracionEdiliciaController extends Controller
         
     }
     
+    
+    /**
+    * @Route("/agregarsala/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}")
+    */
+    public function agregarSalaAction(
+            $id_efector,
+            $nombre_sala,
+            $area_cod_servicio,
+            $area_sector,
+            $area_subsector,
+            $mover_camas,
+            $baja){
+        
+        
+        $nueva_sala = [
+            'id_efector' => $id_efector,
+            'nombre_sala' => $nombre_sala,
+            'area_cod_servicio' => $area_cod_servicio,
+            'area_sector' => $area_sector,
+            'area_subsector' => $area_subsector,
+            'mover_camas' => $mover_camas,
+            'baja' => $baja
+        ];
+        
+        return 
+            $this->execConfiguracionEdilicia(
+                $nueva_sala, 
+                "agregar_sala");
+        
+    }
+    
+    
+    /**
+    * @Route("/modificarsala/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}")
+    */
+    public function modificarSalaAction(
+            $id_efector,
+            $nombre_sala,
+            $area_cod_servicio,
+            $area_sector,
+            $area_subsector,
+            $mover_camas,
+            $baja){
+        
+        
+        $nueva_sala = [
+            'id_efector' => $id_efector,
+            'nombre_sala' => $nombre_sala,
+            'area_cod_servicio' => $area_cod_servicio,
+            'area_sector' => $area_sector,
+            'area_subsector' => $area_subsector,
+            'mover_camas' => $mover_camas,
+            'baja' => $baja
+        ];
+        
+        return 
+            $this->execConfiguracionEdilicia(
+                $nueva_sala, 
+                "modificar_sala");
+        
+    }
+    
+    
+    
     private function execConfiguracionEdilicia(
             $datos,
             $accion){
@@ -256,6 +320,16 @@ class ConfiguracionEdiliciaController extends Controller
                 case 'modificar_habitacion':
                     
                     $msg = $ce->modificarHabitacion($datos);
+                    break;
+                
+                case 'agregar_sala':
+                    
+                    $msg = $ce->agregarSala($datos);
+                    break;
+                
+                case 'modificar_sala':
+                    
+                    $msg = $ce->modificarSala($datos);
                     break;
 
             }

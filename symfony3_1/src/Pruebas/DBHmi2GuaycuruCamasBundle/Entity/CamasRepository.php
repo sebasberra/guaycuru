@@ -48,5 +48,38 @@ class CamasRepository extends EntityRepository
         
         return $cama;
     }
+    
+    public function findByIdSala(
+            $id_sala)
+    {
+        
+        
+        // camas por sala
+        $dql =
+            "SELECT "
+                ."c "
+            ."FROM "
+                ."DBHmi2GuaycuruCamasBundle:Camas c "
+            ."INNER JOIN "
+                ."DBHmi2GuaycuruCamasBundle:Habitaciones h "
+            ."WHERE "
+                ."h.id_sala = :id_sala "
+            ."AND c.id_habitacion = h.id_habitacion ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_sala", $id_sala);
+            
+            $camas = $query->getResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
+        
+        return $camas;
+    }
 }
 

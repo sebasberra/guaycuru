@@ -108,5 +108,67 @@ class SalasRepository extends EntityRepository
         return $count;
         
     }
+    
+    public function getProximoIdSala(
+            $id_efector){
+        
+        $sql = 
+                "SELECT "
+                    ."servicios_get_proximo_id_sala(:id_efector) ";
+                
+        // prepare sql
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindValue("id_efector", $id_efector);
+        
+        try {
+        
+            // ejecuta consulta
+            $stmt->execute();
+            $id_sala = $stmt->fetchAll();
+                        
+        } catch (\Exception $e) {
+
+            $msg = "Error calcular el proximo id_sala libre del efector: "
+                    .$id_efector;
+                    
+            throw new \Exception($msg);
+            
+        }
+        
+                
+        return $id_sala[0];
+        
+    }
+    
+    public function getProximoNroSala(
+            $id_efector){
+        
+        $sql = 
+                "SELECT "
+                    ."servicios_get_proximo_nro_sala(:id_efector) ";
+                
+        // prepare sql
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindValue("id_efector", $id_efector);
+        
+        try {
+        
+            // ejecuta consulta
+            $stmt->execute();
+            $nro_sala = $stmt->fetchAll();
+                        
+        } catch (\Exception $e) {
+
+            $msg = "Error calcular el proximo nro de sala libre del efector: "
+                    .$id_efector;
+                    
+            throw new \Exception($msg);
+            
+        }
+        
+                
+        return $nro_sala[0];
+        
+    }
 }
 
