@@ -1,0 +1,49 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    #encabezado_titulo: 'Red de Internación'
+    encabezado_titulo: 'Red de Internación - Desarrollo'
+    encabezado_nombre_dependencia: 'Sectorial de Informática'
+    encabezado_nombre_organismo: 'Ministerio de Salud'
+    pie_pagina_titulo: 'GOBIERNO DE SANTA FE'
+    pie_pagina_domicilio: '1° de Mayo 2064 PA (S3000DEE) Santa Fe'
+    pie_pagina_telefono: '54 342 4571929'
+    pie_pagina_copyright: '© 2017 - Todos los derechos reservados. Créditos | Términos y condiciones'
+    webmaster_correo: sectorialsalud@santafe.gov.ar
+    
+    ri_major: '0'
+    ri_minor: '0'
+    ri_revision: '1'
+
+    path_root_menu: 'http://localhost:8001'
+    #path_root_menu: '/redinternacion'
+    
+    path_home: '%path_root_menu%/'
+    path_ayuda: '%path_root_menu%/ayuda'
+    path_acercade: '%path_root_menu%/acercade'
+    path_contacto: '%path_root_menu%/contacto'
+    path_login: '%path_root_menu%/autenticar/logout'
+    path_logout: '%path_root_menu%/autenticar/logout'
+        
+    path_sicap_alta_internacion: 'https://dwww.santafe.gob.ar/sicap/cap/index.php?section=redinternacion&sub=alta'
+    path_sicap_ver_internacion: 'https://dwww.santafe.gob.ar/sicap/cap/index.php?section=redinternacion_consultas&sub=consulta_internacion'
+    path_sicap_editar_internacion: 'https://dwww.santafe.gob.ar/sicap/cap/index.php?section=redinternacion&sub=modificar&depurar=si&id_internacion='
+    path_sicap_login: 'https://dwww.santafe.gob.ar/sicap/login.php'
+    path_sicap_home: 'https://dwww.santafe.gob.ar/sicap/index2.php'

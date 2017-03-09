@@ -1,0 +1,73 @@
+
+.ri-tabla-titulo1 {
+
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: transparent;
+    color: black;
+    font-size: 100%;    
+}
+
+.ri-tabla-titulo2 {
+
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    text-align: center;
+    background-color: transparent;
+    color: black;
+    font-size: 90%;    
+}
+
+.ri-tabla-titulo3 {
+
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: none;
+    text-align: center;
+    background-color: transparent;
+    color: black;
+    font-size: 90%;    
+}
+
+.ri-tabla-lista {
+
+    text-align: center;
+    font-size: 80%;    
+}
+
+.ri-tabla-resumen {
+
+    border: 1px solid black;
+    text-align: center;
+    font-size: 80%;    
+}
+
+.ri-td-resumen {
+
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+
+.ri-th-left-lista {
+
+    border-left: 1px solid black;
+    text-align: center;
+
+}
+
+.ri-th-bottom-lista {
+
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+
+}

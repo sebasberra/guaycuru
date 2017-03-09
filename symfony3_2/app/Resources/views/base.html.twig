@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Red de Internación</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <meta name="copyright" content="&copy;" />
+        <meta name="robot" content="all" />
+        
+        {% block stylesheets %}
+            
+            {# 
+            
+                ------------------
+                estilos datatables           
+                ------------------
+            
+            #}
+            
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/datatable/jquery.dataTables.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/datatable/buttons/buttons.dataTables.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/datatable/Responsive/responsive.dataTables.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/datatable/Responsive/fixedColumns.dataTables.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/datatable/Responsive/fixedHeader.dataTables.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/datatable/Responsive/scroller.dataTables.min.css') }}" />
+            
+            {# 
+            
+                -----------
+                estilos stg
+                -----------
+            
+            #}
+            
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/stg/bootstrap.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/stg/normalize.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/stg/1140.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/stg/jquery-ui-1.10.3.custom.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/stg/menu.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/stg/html5-pagination.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/stg/styles-1.0.css') }}" />
+            
+            {#
+                --
+                RI
+                --
+            #}
+            
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/RI/ri.css') }}" />
+            
+            <!--[if lte IE 9]>
+                <link rel="Shortcut icon" href="//www.santafe.gov.ar/assets/standard/images/favicon.ico" type="image/x-icon" />
+                <link rel = "stylesheet" type = "text/css" href ="//www.santafe.gov.ar/assets/standard/css/ie.css" />
+                <script src="//www.santafe.gov.ar/assets/standard/js/html5shiv.js"></script>
+                <script src="//www.santafe.gov.ar/assets/standard/js/respond.min.js"></script>
+            <![endif]-->
+            
+            {# 
+            
+                --------------------
+                estilos font-awesome
+                --------------------
+            
+            #}
+            
+            <link rel="stylesheet" href="{{ asset('bundles/ri/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}" />
+           
+        {% endblock %}
+        
+        {% block javascripts %}
+            
+            {# 
+                ---------------------
+                javascripts de la STG
+                ---------------------
+            #}
+            <script src="{{ asset('bundles/ri/js/stg/jquery-1.10.2.min.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/stg/jquery-ui.min.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/stg/jquery.ui.datepicker-es.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/stg/jquery.ui.touch-punch.min.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/stg/match-media.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/stg/interface.js') }}"></script>
+                        
+            {# 
+            
+                ----------------------
+                javascripts datatables           
+                ----------------------
+            
+            #}
+            
+{#            <script src="{{ asset('bundles/ri/js/datatable/jquery.js') }}"></script>#}
+{#            <script src="//code.jquery.com/jquery-1.12.4.js"></script>#}
+            <script src="{{ asset('bundles/ri/js/datatable/jquery.dataTables.min.js') }}"></script>
+            
+            <script src="{{ asset('bundles/ri/js/datatable/buttons/dataTables.buttons.min.js') }}"></script> 
+            <script src="{{ asset('bundles/ri/js/datatable/buttons/buttons.flash.min.js') }}"></script>
+            
+            <script src="{{ asset('bundles/ri/js/pdfmake/pdfmake.min.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/pdfmake/vfs_fonts.js') }}"></script>
+            
+            <script src="{{ asset('bundles/ri/js/datatable/buttons/buttons.html5.min.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/datatable/buttons/buttons.print.min.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/datatable/buttons/buttons.colVis.min.js') }}"></script>
+            
+            <script src="{{ asset('bundles/ri/js/datatable/FixedColumns/dataTables.fixedColumns.min.js') }}"></script>
+            
+            <script src="{{ asset('bundles/ri/js/datatable/FixedColumns/dataTables.fixedHeader.min.js') }}"></script>
+            
+            <script src="{{ asset('bundles/ri/js/datatable/Responsive/dataTables.responsive.min.js') }}"></script>
+                        
+            <script src="{{ asset('bundles/ri/js/datatable/Responsive/dataTables.scroller.min.js') }}"></script>
+            
+            
+            {# 
+            
+                -----------------
+                javascripts jszip           
+                -----------------
+            
+            #}
+            
+            <script src="{{ asset('bundles/ri/Stuk-jszip-5250332/dist/jszip.min.js') }}"></script>
+            
+            
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/ri/images/red-internacion.ico') }}" />
+    </head>
+    
+    <body id="top">
+
+        <div role="navigation" class="navbar navbar-sf navbar-fixed-top">
+            <div class="container row-top">
+                <div class="navbar-header">
+                    <a href="//www.santafe.gov.ar" class="navbar-brand">
+                        <img alt="Gobierno de Santa Fe" src="{{ asset('bundles/ri/images/stg/gob-santafe.png') }}">
+                    </a> 
+                </div>
+            </div>
+        </div>        
+
+        <div class="container">
+
+            <div class="row top-padding">  
+
+                {% include 'top.html.twig' %}
+
+                {% block barraHerramientas %}                
+                {% endblock %}
+
+                <div id='cssmenu'>
+                    <ul>
+                        {% block menu %} 
+                            {% block submenus %}
+                                <li class='has-sub'><a href='#'><span>Internación</span></a>
+                                    <ul>
+                                        <li><a href='{{ path_sicap_alta_internacion }}'><span>Alta Internación</span></a></li>
+                                        <li><a href='{{ path_sicap_ver_internacion }}'><span>Ver Internación</span></a></li>
+                                    </ul>
+                                </li>
+                                
+                                <li class='has-sub'><a href='#'><span>Censos</span></a>
+                                    <ul>
+                                        <li class='has-sub'><a href='#'><span>Diarios</span></a>
+                                            <ul>
+                                                <li>
+                                                    <a href='{{ path_root_menu }}/censosdiarios/salas/'>
+                                                        <span>Salas</span>
+                                                    </a>
+                                                </li>
+                                                
+                                                <li class='last'>
+                                                    <a href='{{ path_root_menu }}/censosdiarios/servicios/'>
+                                                        <span>Servicios</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        
+                                        <li class='has-sub'><a href='#'><span>Resumen</span></a>
+                                            <ul>
+                                                <li>
+                                                    <a href='{{ path_root_menu }}/censosresumen/salas/'>
+                                                        <span>Salas</span>
+                                                    </a>
+                                                </li>
+                                                
+                                                <li class='last'>
+                                                    <a href='{{ path_root_menu }}/censosresumen/servicios/'>
+                                                        <span>Servicios</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                                
+                                <li class='has-sub'><a href='#'><span>Estadística Central</span></a>
+                                    <ul>
+                                        <li><a href="{{ path_root_menu }}/estadistica/archivos"><span>Generar Archivos</span></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href='{{ path_sicap_home }}'><span>Volver</span></a></li>
+                                <li><a href='{{ path_ayuda }}'><span>Ayuda</span></a></li>
+                                <li><a href='{{ path_acercade }}'><span>Acerca De</span></a></li>
+                                <li class='last'><a href='{{ path_contacto }}'><span>Contacto</span></a></li>
+                            {% endblock %}
+                        {% endblock %}
+                        </ul>
+                    </div>
+
+                    {# ruta de navegacion #} 
+
+                    {% block cuerpo %}{% endblock %} 
+
+                    {% include 'footer.html.twig' %} 
+
+                    {% include 'modales.html.twig' %}
+
+                </div>
+            </div>
+
+            <div id="myProgressBar" style="visibility: hidden;"></div>
+            
+        </body>
+</html>

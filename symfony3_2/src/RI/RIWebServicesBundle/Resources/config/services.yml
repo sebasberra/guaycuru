@@ -1,0 +1,17 @@
+services:
+    
+    app.ri:
+        class: RI\RIWebServicesBundle\Utils\RI\RI
+        abstract: true
+        arguments: ['@doctrine','@form.factory','@security.token_storage','@validator']
+        
+    app.ri_utiles:
+        class: RI\RIWebServicesBundle\Utils\RI\RIUtiles
+        parent: app.ri
+        
+    app.ri_formularios:
+        class: RI\RIWebServicesBundle\Utils\RI\RIFormularios
+        parent: app.ri
+
+    app.configuracion_edilicia:
+        class: RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia\ConfiguracionEdilicia

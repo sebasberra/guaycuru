@@ -1,0 +1,68 @@
+<?php
+
+namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ServiciosEstadistica
+ *
+ * @ORM\Table(name="servicios_estadistica", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_cod_servicio_sector_subsector", columns={"cod_servicio", "sector", "subsector"})}, indexes={@ORM\Index(name="idx_fk_servicios_estadistica_id_servicio", columns={"id_servicio"})})
+ * @ORM\Entity
+ */
+class ServiciosEstadistica
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_servicio_estadistica", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idServicioEstadistica;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_servicio", type="integer", nullable=false)
+     */
+    private $idServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_servicio", type="string", length=3, nullable=false)
+     */
+    private $codServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sector", type="string", length=1, nullable=false)
+     */
+    private $sector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subsector", type="string", length=1, nullable=false)
+     */
+    private $subsector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_servicio_estadistica", type="string", length=255, nullable=false)
+     */
+    private $nomServicioEstadistica;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_red_servicio_estadistica", type="string", length=30, nullable=false)
+     */
+    private $nomRedServicioEstadistica;
+
+
+}
+

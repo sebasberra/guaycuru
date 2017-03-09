@@ -1,0 +1,95 @@
+<?php
+
+namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EfectoresServicios
+ *
+ * @ORM\Table(name="efectores_servicios", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_claveestd_cod_servicio_sector_subsector", columns={"claveestd", "cod_servicio", "sector", "subsector"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_id_servicio_estadistica", columns={"id_efector", "id_servicio_estadistica"})}, indexes={@ORM\Index(name="idx_fk_efectores_servicios_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_efectores_servicios_id_servicio_estadistica", columns={"id_servicio_estadistica"})})
+ * @ORM\Entity
+ */
+class EfectoresServicios
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_efector_servicio", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idEfectorServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="claveestd", type="string", length=8, nullable=false)
+     */
+    private $claveestd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_servicio", type="string", length=3, nullable=false)
+     */
+    private $codServicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sector", type="string", length=1, nullable=false)
+     */
+    private $sector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subsector", type="string", length=1, nullable=false)
+     */
+    private $subsector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_servicio_estadistica", type="string", length=255, nullable=false)
+     */
+    private $nomServicioEstadistica;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     */
+    private $baja;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=false)
+     */
+    private $fechaModificacion = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \Efectores
+     *
+     * @ORM\ManyToOne(targetEntity="Efectores")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_efector", referencedColumnName="id_efector")
+     * })
+     */
+    private $idEfector;
+
+    /**
+     * @var \ServiciosEstadistica
+     *
+     * @ORM\ManyToOne(targetEntity="ServiciosEstadistica")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_servicio_estadistica", referencedColumnName="id_servicio_estadistica")
+     * })
+     */
+    private $idServicioEstadistica;
+
+
+}
+

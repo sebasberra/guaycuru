@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block cuerpo %}
+    
+    <p>datos:
+        {{ dump(datos) }}
+    </p>
+    <p>mensaje:
+        {{ msg|raw }}
+    </p>
+    
+    {% if app.environment=='dev' %}
+        <p>debug:
+            {{ error_debug|raw }}
+        </p>
+    {% endif %}
+    
+{% endblock %}
