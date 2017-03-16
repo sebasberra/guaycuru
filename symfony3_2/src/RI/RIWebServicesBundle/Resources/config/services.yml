@@ -15,3 +15,4 @@ services:
 
     app.configuracion_edilicia:
         class: RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia\ConfiguracionEdilicia
+        parent: app.ri

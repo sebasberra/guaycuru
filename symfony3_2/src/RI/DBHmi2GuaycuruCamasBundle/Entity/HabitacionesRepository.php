@@ -4,8 +4,43 @@ namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
+
+
 class HabitacionesRepository extends EntityRepository
 {
+    
+    public function findByIdEfector(
+            $id_efector)
+    {
+                        
+        $dql =
+            "SELECT "
+                ."h "
+            ."FROM "
+                .RIUtiles::DB_BUNDLE.":Habitaciones h "
+            ."INNER JOIN "
+                .RIUtiles::DB_BUNDLE.":Salas s "
+            ."WHERE "
+                ."s.idEfector = :id_efector "
+            ."AND s.idSala = h.idSala ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_efector", $id_efector);
+            
+            $habitaciones = $query->getResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
+        
+        return $habitaciones;
+    }
+    
     
     /** Obtiene la habitacion o habitaciones que coincidan con el
      *  nombre y id_efector pasados por parametro

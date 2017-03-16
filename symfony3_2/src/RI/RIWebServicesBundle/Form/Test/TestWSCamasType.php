@@ -8,6 +8,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+use RI\RIWebServicesBundle\Utils\RI\RI;
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
+
+
 /** 
  * WebServices testing
  * 
@@ -38,23 +44,80 @@ class TestWSCamasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
+        $habitaciones = 
+                RI::$em
+                ->getRepository(RIUtiles::DB_BUNDLE.':Habitaciones')
+                ->findByIdEfector(72);
         
+        $hab_choices=array();
+        foreach($habitaciones as $habitacion){
         
+            $sala = $habitacion->getIdSala()->getNombre();
+            
+            if (!array_key_exists($sala,$hab_choices)){
+                
+                $hab_choices[$sala] = array(
+                    
+                    $habitacion->getNombre()
+                        =>$habitacion->getIdHabitacion()
+                );
+            }else{
+                
+                $hab_choices[$sala] += array(
+                    
+                    $habitacion->getNombre()
+                        =>$habitacion->getIdHabitacion()
+                );
+                
+            }
+        }
+        
+        //dump($hab_choices);die();
+//        dump($salas_group);die();
+//        $pp = array(
+//            
+//            array('hab1'=>'cerebro1','idSala1'=>'nombre1'),
+//            array('hab2'=>'cerebro2','idSala2'=>'nombre2'),
+//            array('hab3'=>'cerebro3','idSala3'=>'nombre3'),
+//            array('hab4'=>'cerebro4','idSala1'=>'nombre1'),
+//            array('hab5'=>'cerebro5','idSala2'=>'nombre2'),
+//            array('hab6'=>'cerebro6','idSala3'=>'nombre3'),
+//        );
+//        dump($pp);die();
         $builder
             ->add(
                     'clasificaciones_camas', 
                     'Symfony\Bridge\Doctrine\Form\Type\EntityType',
                     array(
                         'label' => 'Clasificación',
-                        'class' => 'DBHmi2GuaycuruCamasBundle:ClasificacionesCamas',
+                        'class' => RIUtiles::DB_BUNDLE.':ClasificacionesCamas',
                         'query_builder' => function (EntityRepository $er) {
                             
                             $qb = $er
-                                    ->createQueryBuilder('cc');    
+                                    ->createQueryBuilder('cc')
+                                    ->orderBy('cc.tipoCuidadoProgresivo', 'ASC');
                             
                             return $qb;
                         },
-                        'choice_label' => 'ClasificacionCama'
+                        'choice_label' => 'clasificacionCama',
+                        'group_by' => function($clasificacion_cama, $key, $index) {
+                            
+                            switch ($clasificacion_cama->getTipoCuidadoProgresivo()){
+                                
+                                case 0:
+                                    
+                                    return('Cuidado Moderado');
+                                    
+                                case 1:
+                                    
+                                    return('Cuidado Intermedio');
+                                    
+                                case 2:
+                                    
+                                    return('Cuidado Intensivo');
+                                    
+                            }
+                        },
                     )
             )
             ->add(
@@ -62,7 +125,7 @@ class TestWSCamasType extends AbstractType
                     'Symfony\Bridge\Doctrine\Form\Type\EntityType',
                     array(
                         'label' => 'Efector',
-                        'class' => 'DBHmi2GuaycuruCamasBundle:Efectores',
+                        'class' => RIUtiles::DB_BUNDLE.':Efectores',
                         'query_builder' => function (EntityRepository $er) {
                             
                             $qb = $er
@@ -71,34 +134,25 @@ class TestWSCamasType extends AbstractType
                             
                             return $qb;
                         },
-                        'choice_label' => 'NomEfector'
+                        'choice_label' => 'nomEfector'
                     )
             )
             ->add(
-                    'habitaciones', 
-                    'Symfony\Bridge\Doctrine\Form\Type\EntityType',
+                    'habitaciones',
+                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     array(
-                        'label' => 'Habitacion',
-                        'class' => 'DBHmi2GuaycuruCamasBundle:Habitaciones',
-                        'query_builder' => function (EntityRepository $er) {
-                            
-                            $qb = $er
-                                    ->createQueryBuilder('h')
-                                    ->where('h.idSala = 72001');    
-                            
-                            return $qb;
-                        },
-                        'choice_label' => 'Nombre'
+                        'choices' => $hab_choices,
+                        'placeholder' => 'Seleccione una habitación',
+                        'label' => 'Sala/Habitación',
                     )
             )
             ->add(
                     'nombre', 
                     'Symfony\Component\Form\Extension\Core\Type\TextType',
                     array(
-                        'attr' => 
-                            array(
-                                'placeholder' => 'Nombre de la cama'
-                                )
+                        'attr' => array(
+                            'placeholder' => 'Nombre de la cama'
+                            )
                         )
                     )
             // Estado: L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada
@@ -106,16 +160,27 @@ class TestWSCamasType extends AbstractType
                     'estado', 
                     'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     array(
+                        
                         'choices' => array(
+                            'Seleccione el estado de la cama' => '',
                             'Libre' => 'L',
                             'Ocupada' => 'O',
                             'Fuera de servicio' => 'F',
                             'En Reparación' => 'R',
                             'Reservada' => 'V'
                         ),
-                        'attr' => array(
-                            'placeholder' => 'Estado'
-                        )
+                        'constraints' => array(
+                            new NotBlank(),
+                        ),                        
+                        'choice_attr' => function($val, $key, $index) {
+                            
+                            if ($val==''){
+                                return array(
+                                    'class' => 'ri-placeholder'
+                                    );
+                            }
+                            return array();
+                        },
                     )
                 )
             ->add(

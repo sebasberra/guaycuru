@@ -4,10 +4,13 @@ namespace RI\RIWebServicesBundle\Utils\Formularios;
 
 
 use RI\RIWebServicesBundle\Utils\RI\RIFormularios;
+use RI\RIWebServicesBundle\Utils\Render\RenderTest;
 
 
 trait FormulariosTestWS
 {
+
+    use RenderTest;
     
     private function crearFormularioTestWS(
             $request,

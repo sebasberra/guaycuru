@@ -12,16 +12,13 @@ use RI\RIWebServicesBundle\Utils\RI\RIFormularios;
 use RI\RIWebServicesBundle\Utils\Test\WSTest;
 
 use RI\RIWebServicesBundle\Utils\Formularios\FormulariosTestWS;
-use RI\RIWebServicesBundle\Utils\Render\Render;
-use RI\RIWebServicesBundle\Utils\Render\RenderTest;
 
 
 class TestController extends Controller
 {
     
-    use FormulariosTestWS,
-        Render,
-        RenderTest;
+    use FormulariosTestWS;
+    
     
     /** 
     * @Route("/")
@@ -51,7 +48,9 @@ class TestController extends Controller
             if ($form->isSubmitted() && 
                     $form->isValid()) {
 
-                return $this->renderRedireccionarTestWS($form);
+                return $this->renderRedireccionarTestWS(
+                        $form,
+                        RIFormularios::TEST_WS_FORM_CAMAS);
 
             }
 
@@ -95,7 +94,9 @@ class TestController extends Controller
             if ($form->isSubmitted() && 
                     $form->isValid()) {
 
-                return $this->renderRedireccionarTestWS($form);
+                return $this->renderRedireccionarTestWS(
+                        $form,
+                        RIFormularios::TEST_WS_FORM_HABITACIONES);
 
             }
 
@@ -139,7 +140,9 @@ class TestController extends Controller
             if ($form->isSubmitted() && 
                     $form->isValid()) {
 
-                return $this->renderRedireccionarTestWS($form);
+                return $this->renderRedireccionarTestWS(
+                        $form,
+                        RIFormularios::TEST_WS_FORM_SALAS);
 
             }
 

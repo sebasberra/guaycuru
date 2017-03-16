@@ -5,6 +5,9 @@ namespace RI\RIWebServicesBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use RI\RIWebServicesBundle\Utils\RI\RI;
+
+
 class ConfiguracionEdiliciaController extends Controller
 {
     
@@ -284,9 +287,9 @@ class ConfiguracionEdiliciaController extends Controller
             $datos,
             $accion){
         
-        
+                
         // ConfiguracionEdilicia
-        $ce=$this->get("app.configuracion_edilicia");
+        $ce = $this->get("app.configuracion_edilicia");
         
         try{
                     
@@ -344,7 +347,7 @@ class ConfiguracionEdiliciaController extends Controller
                 array(
                     'datos' => $datos,
                     'msg' => $msg,
-                    'error_debug' => $ce::$error_debug)
+                    'error_debug' => RI::$error_debug)
                     );
             
         } catch (\Exception $e) {
@@ -397,7 +400,7 @@ class ConfiguracionEdiliciaController extends Controller
                     array(
                         'titulo' => $titulo,
                         'msg' => $msg,
-                        'debug' => $ce::$error_debug)
+                        'debug' => RI::$error_debug)
                     );
         }
     }

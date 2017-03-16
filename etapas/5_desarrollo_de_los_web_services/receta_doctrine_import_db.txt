@@ -93,6 +93,10 @@ Entonces editar el archivo:
 
 vendor/doctrine/dbal/lib/Doctrine/DBAL/Platforms/MySqlPlatform.php
 
+##
+## tambien controlar los mapeos de tipo tinyint a boolean !
+##
+
  protected function initializeDoctrineTypeMappings()
     {
         $this->doctrineTypeMapping = array(

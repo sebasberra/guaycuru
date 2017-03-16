@@ -9,6 +9,8 @@ namespace RI\RIWebServicesBundle\Utils\RI;
 class RIUtiles extends RI
 {
     
+    const DB_BUNDLE = 'DBHmi2GuaycuruCamasBundle';
+    
     public static function getEfector(
             $id_efector,
             $con_asociaciones=false){
@@ -18,17 +20,16 @@ class RIUtiles extends RI
         try {
         
             if ($con_asociaciones){
-            
                 $efector = 
                     self::$doctrine->getRepository
-                        ('DBHmi2GuaycuruBundle:Efectores')
+                        (self::DB_BUNDLE.':Efectores')
                         ->findOneByIdEfectorConAsociaciones($id_efector);
 
             }else{
                
                 $efector = 
                     self::$doctrine->getRepository
-                        ('DBHmi2GuaycuruBundle:Efectores')
+                        (self::DB_BUNDLE.':Efectores')
                         ->findOneByIdEfector($id_efector);
                                 
             }
@@ -117,14 +118,14 @@ class RIUtiles extends RI
             
                 $sala = 
                     self::$doctrine->getRepository
-                        ('DBHmi2GuaycuruBundle:Salas')
+                        (self::DB_BUNDLE.':Salas')
                         ->findOneByIdSalaConAsociaciones($id_sala);
 
             }else{
                
                 $sala = 
                     self::$doctrine->getRepository
-                        ('DBHmi2GuaycuruBundle:Salas')
+                        (self::DB_BUNDLE.':Salas')
                         ->findOneByIdSala($id_sala);
             }
         
@@ -215,14 +216,14 @@ class RIUtiles extends RI
             
                 $efector_servicio = 
                     self::$doctrine->getRepository
-                        ('DBHmi2GuaycuruBundle:EfectoresServicios')
+                        (self::DB_BUNDLE.':EfectoresServicios')
                         ->findOneByIdEfectorServicioConAsociaciones($id_efector_servicio);
 
             }else{
                
                 $efector_servicio = 
                     self::$doctrine->getRepository
-                        ('DBHmi2GuaycuruBundle:EfectoresServicios')
+                        (self::DB_BUNDLE.':EfectoresServicios')
                         ->findOneByIdEfectorServicio($id_efector_servicio);
             }
         
@@ -378,7 +379,7 @@ class RIUtiles extends RI
                     . ". ";
 
             $habitacion = self::$doctrine->getRepository
-                            ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                            (self::DB_BUNDLE.':Habitaciones')
                     ->findOneByNombreSalaIdEfector(
                     $id_efector, $nombre_sala, $nombre_habitacion);
         } catch (\Doctrine\ORM\NonUniqueResultException $nure) {
@@ -388,7 +389,7 @@ class RIUtiles extends RI
             self::$error_debug .= " Función getHabitacion: "
                     . $nure->getMessage();
 
-            $msg .= "<p>Existe más de una habitación con el nombre especificado<p>";
+            $msg .= "Existe más de una habitación con el nombre especificado";
 
             throw new \Exception($msg);
         } catch (\Doctrine\ORM\NoResultException $nre) {
@@ -397,7 +398,7 @@ class RIUtiles extends RI
             self::$error_debug .= " Función getHabitacion: "
                     . $nre->getMessage();
 
-            $msg .= "<p>No existe una habitación con el nombre especificado<p>";
+            $msg .= "No existe una habitación con el nombre especificado";
             //dump($msg);die();
             throw new \Exception($msg);
         } catch (\Exception $e) {
@@ -422,7 +423,7 @@ class RIUtiles extends RI
 
             // clasificacion cama
             $clasificacion_cama = self::$doctrine->getRepository
-                            ('DBHmi2GuaycuruCamasBundle:ClasificacionesCamas')
+                            (self::DB_BUNDLE.':ClasificacionesCamas')
                     ->findOneByIdClasificacionCama($id_clasificacion_cama);
         } catch (\Exception $e) {
 
@@ -458,7 +459,7 @@ class RIUtiles extends RI
         // cama
         try {
             $cama = self::$doctrine->getRepository
-                            ('DBHmi2GuaycuruCamasBundle:Camas')
+                            (self::DB_BUNDLE.':Camas')
                     ->findOneByNombreIdEfector(
                     $nombre, $id_efector);
         } catch (\Doctrine\ORM\NoResultException $nre) {
@@ -519,6 +520,37 @@ class RIUtiles extends RI
         $token = md5($fecha1.$usuario.$id_efector.$fecha2);
         
         return $token;
+    }
+    
+    
+    
+    public static function validacionAssert($entidad){
+        
+        //
+        // validator assert
+        //
+        $errors = RI::$validator->validate($entidad);
+    
+        if (count($errors) > 0) {
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging.
+             */
+            RI::$error_debug .= (string) $errors;
+
+            // concatena los errores
+            $msg="(1) ".$errors[0]->getMessage();
+            for ($i=1;$i<count($errors);$i++){
+                
+                //$msg.=" (".($i+1).") ".$errors[$i]->getMessage();
+                $msg.="<p> (".($i+1).") ".$errors[$i]->getMessage()."</p>";
+                
+            }
+            
+            throw new \Exception($msg);
+        }
+        
     }
     
 }

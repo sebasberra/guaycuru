@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class ClasificacionesCamas
 {
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="id_clasificacion_cama", type="boolean", nullable=false)
+     * @ORM\Column(name="id_clasificacion_cama", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -43,16 +43,16 @@ class ClasificacionesCamas
     private $definicion;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="tipo_cuidado_progresivo", type="boolean", nullable=false)
+     * @ORM\Column(name="tipo_cuidado_progresivo", type="integer", nullable=false)
      */
     private $tipoCuidadoProgresivo;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="critica", type="boolean", nullable=false)
+     * @ORM\Column(name="critica", type="integer", nullable=false)
      */
     private $critica;
 
@@ -64,23 +64,23 @@ class ClasificacionesCamas
     private $categoriaEdad;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="oxigeno", type="boolean", nullable=false)
+     * @ORM\Column(name="oxigeno", type="integer", nullable=false)
      */
     private $oxigeno;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="respirador", type="boolean", nullable=false)
+     * @ORM\Column(name="respirador", type="integer", nullable=false)
      */
     private $respirador;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="aislamiento", type="boolean", nullable=false)
+     * @ORM\Column(name="aislamiento", type="integer", nullable=false)
      */
     private $aislamiento;
 
@@ -96,7 +96,7 @@ class ClasificacionesCamas
     /**
      * Get idClasificacionCama
      *
-     * @return boolean
+     * @return integer
      */
     public function getIdClasificacionCama()
     {
@@ -178,7 +178,7 @@ class ClasificacionesCamas
     /**
      * Set tipoCuidadoProgresivo
      *
-     * @param boolean $tipoCuidadoProgresivo
+     * @param integer $tipoCuidadoProgresivo
      *
      * @return ClasificacionesCamas
      */
@@ -192,7 +192,7 @@ class ClasificacionesCamas
     /**
      * Get tipoCuidadoProgresivo
      *
-     * @return boolean
+     * @return integer
      */
     public function getTipoCuidadoProgresivo()
     {
@@ -202,7 +202,7 @@ class ClasificacionesCamas
     /**
      * Set critica
      *
-     * @param boolean $critica
+     * @param integer $critica
      *
      * @return ClasificacionesCamas
      */
@@ -216,7 +216,7 @@ class ClasificacionesCamas
     /**
      * Get critica
      *
-     * @return boolean
+     * @return integer
      */
     public function getCritica()
     {
@@ -250,7 +250,7 @@ class ClasificacionesCamas
     /**
      * Set oxigeno
      *
-     * @param boolean $oxigeno
+     * @param integer $oxigeno
      *
      * @return ClasificacionesCamas
      */
@@ -264,7 +264,7 @@ class ClasificacionesCamas
     /**
      * Get oxigeno
      *
-     * @return boolean
+     * @return integer
      */
     public function getOxigeno()
     {
@@ -274,7 +274,7 @@ class ClasificacionesCamas
     /**
      * Set respirador
      *
-     * @param boolean $respirador
+     * @param integer $respirador
      *
      * @return ClasificacionesCamas
      */
@@ -288,7 +288,7 @@ class ClasificacionesCamas
     /**
      * Get respirador
      *
-     * @return boolean
+     * @return integer
      */
     public function getRespirador()
     {
@@ -298,7 +298,7 @@ class ClasificacionesCamas
     /**
      * Set aislamiento
      *
-     * @param boolean $aislamiento
+     * @param integer $aislamiento
      *
      * @return ClasificacionesCamas
      */
@@ -312,7 +312,7 @@ class ClasificacionesCamas
     /**
      * Get aislamiento
      *
-     * @return boolean
+     * @return integer
      */
     public function getAislamiento()
     {

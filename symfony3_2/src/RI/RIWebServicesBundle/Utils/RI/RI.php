@@ -14,6 +14,7 @@ abstract class RI
     
     public static $doctrine;
     public static $conn;
+    public static $em;
     
     public static $form_factory;
     
@@ -29,6 +30,7 @@ abstract class RI
     
         self::$doctrine = $doctrine;
         self::$conn = $doctrine->getManager('default')->getConnection();
+        self::$em = $doctrine->getManager('default');
         self::$error_debug = '';
         self::$form_factory = $form_factory;
         self::$user = $security_token->getToken()->getUser();
