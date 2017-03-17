@@ -44,46 +44,15 @@ class TestWSCamasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $habitaciones = 
-                RI::$em
-                ->getRepository(RIUtiles::DB_BUNDLE.':Habitaciones')
-                ->findByIdEfector(72);
+
+        // choices habitaciones
+        $hab_choices = RIUtiles::getSalasHabitacionesChoices(72);
         
-        $hab_choices=array();
-        foreach($habitaciones as $habitacion){
+        // choices camas
+        $camas_choices = RIUtiles::getSalasHabCamasChoices(72);
         
-            $sala = $habitacion->getIdSala()->getNombre();
-            
-            if (!array_key_exists($sala,$hab_choices)){
-                
-                $hab_choices[$sala] = array(
-                    
-                    $habitacion->getNombre()
-                        =>$habitacion->getIdHabitacion()
-                );
-            }else{
-                
-                $hab_choices[$sala] += array(
-                    
-                    $habitacion->getNombre()
-                        =>$habitacion->getIdHabitacion()
-                );
-                
-            }
-        }
+//        dump($camas_choices);die();
         
-        //dump($hab_choices);die();
-//        dump($salas_group);die();
-//        $pp = array(
-//            
-//            array('hab1'=>'cerebro1','idSala1'=>'nombre1'),
-//            array('hab2'=>'cerebro2','idSala2'=>'nombre2'),
-//            array('hab3'=>'cerebro3','idSala3'=>'nombre3'),
-//            array('hab4'=>'cerebro4','idSala1'=>'nombre1'),
-//            array('hab5'=>'cerebro5','idSala2'=>'nombre2'),
-//            array('hab6'=>'cerebro6','idSala3'=>'nombre3'),
-//        );
-//        dump($pp);die();
         $builder
             ->add(
                     'clasificaciones_camas', 
@@ -141,7 +110,7 @@ class TestWSCamasType extends AbstractType
                     'habitaciones',
                     'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     array(
-                        'choices' => $hab_choices,
+                        'choices' => $camas_choices,
                         'placeholder' => 'Seleccione una habitación',
                         'label' => 'Sala/Habitación',
                     )

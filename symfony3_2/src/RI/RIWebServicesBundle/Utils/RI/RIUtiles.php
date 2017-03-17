@@ -2,12 +2,16 @@
 
 namespace RI\RIWebServicesBundle\Utils\RI;
 
+use RI\RIWebServicesBundle\Utils\RI\RIUtilesOptions;
 
 /** Funciones utiles de la configuracion edilicia
  * 
  */
 class RIUtiles extends RI
 {
+
+    use RIUtilesOptions;
+    
     
     const DB_BUNDLE = 'DBHmi2GuaycuruCamasBundle';
     
