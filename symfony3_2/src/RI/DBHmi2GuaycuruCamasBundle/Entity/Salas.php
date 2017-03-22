@@ -413,4 +413,10 @@ class Salas
     {
         return $this->areaEfectorServicio;
     }
+    
+    public function __toString()
+    {
+      return $this->nombre;
+      
+    }
 }

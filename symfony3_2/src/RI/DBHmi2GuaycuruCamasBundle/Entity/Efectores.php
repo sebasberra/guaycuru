@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Efectores
  *
  * @ORM\Table(name="efectores", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_claveestd", columns={"claveestd"})}, indexes={@ORM\Index(name="idx_fk_efectores_id_localidad", columns={"id_localidad"}), @ORM\Index(name="idx_fk_efectores_id_dependencia_adm", columns={"id_dependencia_adm"}), @ORM\Index(name="idx_fk_efectores_id_regimen_juridico", columns={"id_regimen_juridico"}), @ORM\Index(name="idx_fk_efectores_id_nodo", columns={"id_nodo"}), @ORM\Index(name="idx_fk_efectores_id_subnodo", columns={"id_subnodo"}), @ORM\Index(name="idx_fk_efectores_id_nivel_complejidad", columns={"id_nivel_complejidad"}), @ORM\Index(name="idx_clavesisa", columns={"clavesisa"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="RI\DBHmi2GuaycuruCamasBundle\Entity\EfectoresRepository")
  */
 class Efectores
 {
@@ -499,5 +499,11 @@ class Efectores
     public function getIdLocalidad()
     {
         return $this->idLocalidad;
+    }
+    
+    public function __toString()
+    {
+      return $this->nomEfector;
+      
     }
 }

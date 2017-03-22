@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    
+
+{% endblock %}
+
+
+{% block cuerpo %} 
+
+    <h2>Dynamic Generation for Submitted Forms Test</h2>
+
+    {{ form_start(form) }}
+    
+        {{ form_row(form.efectores) }}    
+        {{ form_row(form.salas) }} 
+        {# ... #}
+    {{ form_end(form) }}
+    
+    <script>
+        
+        var $efectores = $('#test_combos_efectores');
+        
+        $efectores.change(function() {
+            
+            // form
+            var $form = $(this).closest('form');
+          
+            // data
+            var data = {};
+            data[$efectores.attr('name')] = $efectores.val();
+            
+            // Submit data via AJAX to the form's action path.
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                    
+                    $('#test_combos_salas').replaceWith(
+                        
+                        $(html).find('#test_combos_salas')
+                    );
+                  
+                }
+            });
+        });
+        
+    </script>
+    
+    
+{% endblock %}
+
+
+

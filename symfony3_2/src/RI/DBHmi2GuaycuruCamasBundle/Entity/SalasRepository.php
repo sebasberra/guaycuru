@@ -201,5 +201,6 @@ class SalasRepository extends EntityRepository
         return $nro_sala[0];
         
     }
+    
 }
 

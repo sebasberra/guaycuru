@@ -5,6 +5,40 @@ namespace RI\RIWebServicesBundle\Utils\RI;
 
 trait RIUtilesOptions{
     
+    
+    /** Un nivel Habitaciones
+     * 
+     * @param type $id_efector
+     * @return type
+     */
+    public static function getHabitacionesChoices($id_efector){
+        
+        $habitaciones = 
+                parent::$em
+                ->getRepository(self::DB_BUNDLE.':Habitaciones')
+                ->findByIdEfector($id_efector);
+        
+        $hab_choices=array();
+        
+        foreach($habitaciones as $habitacion){
+        
+            $hab_choices += array(
+                
+                $habitacion->getIdSala()->getNombre() 
+                =>$habitacion->getIdHabitacion()
+                    );
+            
+        }
+        
+        return $hab_choices;
+        
+    }
+    
+    /** Dos niveles Salas/Habitaciones
+     * 
+     * @param type $id_efector
+     * @return type
+     */
     public static function getSalasHabitacionesChoices($id_efector){
         
         $habitaciones = 
@@ -40,6 +74,11 @@ trait RIUtilesOptions{
         
     }
     
+    /** Tres niveles Salas/Habitaciones/Camas
+     * 
+     * @param type $id_efector
+     * @return type
+     */
     public static function getSalasHabCamasChoices($id_efector){
         
                 

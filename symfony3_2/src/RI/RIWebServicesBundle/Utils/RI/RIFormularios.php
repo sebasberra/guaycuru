@@ -145,9 +145,12 @@ class RIFormularios extends RI
     
     public static function crearFormularioTestWSHabitaciones(){
     
+        $camas = new \RI\DBHmi2GuaycuruCamasBundle\Entity\Camas;
+        
         // form
         $form = RI::$form_factory->create(
-                    'RI\RIWebServicesBundle\Form\Test\TestWSHabitacionesType');
+                    'RI\RIWebServicesBundle\Form\Test\TestWSHabitacionesType',
+                $camas);
     
         
     

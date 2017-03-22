@@ -6,12 +6,18 @@ use Doctrine\ORM\EntityRepository;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
+
+use RI\DBHmi2GuaycuruCamasBundle\Entity\Efectores;
+
 
 
 /** 
@@ -55,7 +61,7 @@ class TestWSCamasType extends AbstractType
         
         $builder
             ->add(
-                    'clasificaciones_camas', 
+                    'id_clasificacion_cama', 
                     'Symfony\Bridge\Doctrine\Form\Type\EntityType',
                     array(
                         'label' => 'Clasificación',
@@ -90,7 +96,7 @@ class TestWSCamasType extends AbstractType
                     )
             )
             ->add(
-                    'efectores', 
+                    'id_efector', 
                     'Symfony\Bridge\Doctrine\Form\Type\EntityType',
                     array(
                         'label' => 'Efector',
@@ -99,22 +105,50 @@ class TestWSCamasType extends AbstractType
                             
                             $qb = $er
                                     ->createQueryBuilder('e')
-                                    ->where('e.idEfector = 72');    
+                                    ->where('e.idEfector = 72 or e.idEfector=121');    
                             
                             return $qb;
                         },
                         'choice_label' => 'nomEfector'
                     )
             )
-            ->add(
-                    'habitaciones',
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                    array(
-                        'choices' => $camas_choices,
-                        'placeholder' => 'Seleccione una habitación',
-                        'label' => 'Sala/Habitación',
-                    )
-            )
+//            ->addEventListener(
+//                FormEvents::PRE_SET_DATA,
+//                function (FormEvent $event) {
+//                
+//                    $form = $event->getForm();
+//
+//                    // 
+//                    $data = $event->getData();
+//
+//                    if ($data == null){
+//                        
+//                        return array(); 
+//                    }
+//                                        
+//                    $efector = $data->getIdEfector();
+//                    
+//                    $id_efector = $efector->getIdEfector();
+//                    
+//                    $habitaciones = 
+//                        RI::$em
+//                        ->getRepository(RIUtiles::DB_BUNDLE.':Habitaciones')
+//                        ->findByIdEfector($id_efector);
+//                    
+//                    $form->add('id_habitacion', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', array(
+//                        'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
+//                        'placeholder' => '',
+//                        'choices'     => $habitaciones,
+//                        'choice_label' => 'nombre',
+//                        'group_by' => function($habitaciones, $key, $index) {
+//                            
+//                            return $habitaciones->getIdSala()->getNombre();
+//                        }
+//                        
+//                    ));
+//                }
+//                
+//            )
             ->add(
                     'nombre', 
                     'Symfony\Component\Form\Extension\Core\Type\TextType',
@@ -140,16 +174,7 @@ class TestWSCamasType extends AbstractType
                         ),
                         'constraints' => array(
                             new NotBlank(),
-                        ),                        
-                        'choice_attr' => function($val, $key, $index) {
-                            
-                            if ($val==''){
-                                return array(
-                                    'class' => 'ri-placeholder'
-                                    );
-                            }
-                            return array();
-                        },
+                        )
                     )
                 )
             ->add(
@@ -220,12 +245,70 @@ class TestWSCamasType extends AbstractType
                         'label' => 'Baja'
                     )
             );
+            
+        
+            
+        $formModifier = function (FormInterface $form, Efectores $efector = null) {
+            
+            
+
+            $id_efector = $efector->getIdEfector();
+
+            $habitaciones = 
+                RI::$em
+                ->getRepository(RIUtiles::DB_BUNDLE.':Habitaciones')
+                ->findByIdEfector($id_efector);
+
+            $form->add('id_habitacion', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', array(
+                'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
+                'placeholder' => '',
+                'choices'     => $habitaciones,
+                'choice_label' => 'nombre',
+                'group_by' => function($habitaciones, $key, $index) {
+
+                    return $habitaciones->getIdSala()->getNombre();
+                }
+
+            ));
+            
+        };
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($formModifier) {
+                // this would be your entity, i.e. SportMeetup
+                $data = $event->getData();
+                
+                if ($data == null){
+
+                    return array(); 
+                }
+
+                $formModifier($event->getForm(), $data->getIdEfector());
+            }
+        );
+
+        $builder->get('id_efector')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (that is, the ID)
+                $efector = $event->getForm()->getData();
+
+                // since we've added the listener to the child, we'll have to pass on
+                // the parent to the callback functions!
+                $formModifier($event->getForm()->getParent(), $efector);
+            }
+        );
+        
                         
         
     }
     
     public function configureOptions(OptionsResolver $resolver)
     {
-        
+        $resolver->setDefaults(array(
+            'data_class' => 'RI\DBHmi2GuaycuruCamasBundle\Entity\Camas'
+        ));
     }
 }
