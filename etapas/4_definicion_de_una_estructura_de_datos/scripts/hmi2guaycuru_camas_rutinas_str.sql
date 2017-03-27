@@ -81,6 +81,9 @@ BEGIN
     DECLARE nombre_habitacion VARCHAR(255);
     DECLARE ns VARCHAR(255);
     DECLARE nh VARCHAR(255);
+    DECLARE aux_ns VARCHAR(255);
+    DECLARE aux_nh VARCHAR(255);
+    DECLARE aux_nh2 VARCHAR(255);
     
     DECLARE prefijo VARCHAR(255);
     
@@ -109,7 +112,33 @@ BEGIN
 			
 	WHILE ns<>'' DO
 		
-		SET prefijo=CONCAT(prefijo,LEFT(ns,1));
+		SET aux_ns = RIGHT(LEFT(ns,2),1);
+		IF (aux_ns='.') THEN
+		
+			SET aux_ns = 
+				CONCAT(
+					LEFT(ns,1),
+					RIGHT(LEFT(ns,3),1)
+					);
+		
+		ELSE
+		
+			IF (
+					LEFT(ns,2)='OB'
+				OR	LEFT(ns,2)='ON'
+				OR	LEFT(ns,2)='OT') THEN
+				 
+				SET aux_ns = LEFT(ns,2);
+				
+			ELSE
+			
+				SET aux_ns = LEFT(ns,1);
+				
+			END IF;
+			
+		END IF;
+		
+		SET prefijo=CONCAT(prefijo,aux_ns);
 		
 		SET pos=pos+1;    
 		SET ns = 
@@ -139,7 +168,42 @@ BEGIN
 			
 	WHILE nh<>'' DO
 		
-		SET prefijo=CONCAT(prefijo,LEFT(nh,1));
+		SET aux_nh = LEFT(nh,1);
+		IF (aux_nh='0' OR aux_nh='1' OR aux_nh='2') THEN
+		
+			SET aux_nh = LEFT(nh,2);
+		
+		ELSE
+			
+			SET aux_nh2 = RIGHT(LEFT(nh,2),1);
+			
+			IF (
+					aux_nh2 = '0' 
+				OR	aux_nh2 = '1' 
+				OR	aux_nh2 = '2' 
+				OR	aux_nh2 = '3' 
+				OR	aux_nh2 = '4' 
+				OR	aux_nh2 = '5' 
+				OR	aux_nh2 = '6' 
+				OR	aux_nh2 = '7'
+				OR	aux_nh2 = '8'
+				OR	aux_nh2 = '9') THEN
+				
+				SET aux_nh = TRIM(LEFT(nh,3));
+			
+			ELSE
+			
+				IF (LEFT(nh,3)='HAB') THEN
+				
+					SET aux_nh = LEFT(nh,5);
+					
+				END IF;
+				
+			END IF;
+			
+		END IF;
+		
+		SET prefijo=CONCAT(prefijo,aux_nh);
 		
 		SET pos=pos+1;    
 		SET nh = 

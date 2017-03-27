@@ -36,23 +36,23 @@ class Efectores
     private $idSubnodo;
 
     /**
-     * @var boolean
+     * @var smallint
      *
-     * @ORM\Column(name="id_dependencia_adm", type="boolean", nullable=true)
+     * @ORM\Column(name="id_dependencia_adm", type="smallint", nullable=true)
      */
     private $idDependenciaAdm;
 
     /**
-     * @var boolean
+     * @var smallint
      *
-     * @ORM\Column(name="id_regimen_juridico", type="boolean", nullable=false)
+     * @ORM\Column(name="id_regimen_juridico", type="smallint", nullable=false)
      */
     private $idRegimenJuridico;
 
     /**
-     * @var boolean
+     * @var smallint
      *
-     * @ORM\Column(name="id_nivel_complejidad", type="boolean", nullable=false)
+     * @ORM\Column(name="id_nivel_complejidad", type="smallint", nullable=false)
      */
     private $idNivelComplejidad;
 
@@ -92,9 +92,9 @@ class Efectores
     private $nomRedEfector;
 
     /**
-     * @var boolean
+     * @var smallint
      *
-     * @ORM\Column(name="nodo", type="boolean", nullable=false)
+     * @ORM\Column(name="nodo", type="smallint", nullable=false)
      */
     private $nodo;
 
@@ -192,7 +192,7 @@ class Efectores
     /**
      * Set idDependenciaAdm
      *
-     * @param boolean $idDependenciaAdm
+     * @param smallint $idDependenciaAdm
      *
      * @return Efectores
      */
@@ -206,7 +206,7 @@ class Efectores
     /**
      * Get idDependenciaAdm
      *
-     * @return boolean
+     * @return smallint
      */
     public function getIdDependenciaAdm()
     {
@@ -216,7 +216,7 @@ class Efectores
     /**
      * Set idRegimenJuridico
      *
-     * @param boolean $idRegimenJuridico
+     * @param smallint $idRegimenJuridico
      *
      * @return Efectores
      */
@@ -230,7 +230,7 @@ class Efectores
     /**
      * Get idRegimenJuridico
      *
-     * @return boolean
+     * @return smallint
      */
     public function getIdRegimenJuridico()
     {
@@ -240,7 +240,7 @@ class Efectores
     /**
      * Set idNivelComplejidad
      *
-     * @param boolean $idNivelComplejidad
+     * @param smallint $idNivelComplejidad
      *
      * @return Efectores
      */
@@ -254,7 +254,7 @@ class Efectores
     /**
      * Get idNivelComplejidad
      *
-     * @return boolean
+     * @return smallint
      */
     public function getIdNivelComplejidad()
     {
@@ -384,7 +384,7 @@ class Efectores
     /**
      * Set nodo
      *
-     * @param boolean $nodo
+     * @param smallint $nodo
      *
      * @return Efectores
      */
@@ -398,7 +398,7 @@ class Efectores
     /**
      * Get nodo
      *
-     * @return boolean
+     * @return smallint
      */
     public function getNodo()
     {

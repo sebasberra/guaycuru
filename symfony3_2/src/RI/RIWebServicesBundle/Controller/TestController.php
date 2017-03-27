@@ -47,10 +47,9 @@ class TestController extends Controller
             $form->handleRequest($request);
             
             // check submit
-            if ($form->isSubmitted() && 
-                    $form->isValid()) {
+            if ($form->isSubmitted()) {
 
-
+                dump($request);die();
             }
 
         }catch(\Exception $e){
@@ -75,6 +74,54 @@ class TestController extends Controller
         
     }
     
+    
+    /**
+    * @Route("/combos2")
+    */
+    public function testCombos2Action(Request $request)
+    {
+        
+        try {
+
+            $this->get('app.ri_formularios');
+            
+            // form
+            $form = RI::$form_factory->create(
+                    'RI\RIWebServicesBundle\Form\Test\TestCombos2Type');
+            
+
+            $form->handleRequest($request);
+            
+            // check submit
+            if ($form->isSubmitted() && 
+                    $form->isValid()) {
+
+
+            }
+
+        }catch(\Exception $e){
+            
+            $msg = 'Desconocido';
+            
+            RI::$error_debug .= 
+                    "Funcion testCombosAction: "
+                    .$e->getMessage();
+            
+            return $this->renderException(
+                    'Error al cargar la página de test web services', 
+                    $msg);
+
+        }
+    
+        return $this->render(
+                "RIWebServicesBundle:Test:RITestCombos2.html.twig",
+                array(
+                    'form' =>$form->createView()
+                ));
+        
+    }
+    
+    
     /**
     * @Route("/camas")
     */
@@ -93,9 +140,14 @@ class TestController extends Controller
             if ($form->isSubmitted() && 
                     $form->isValid()) {
 
-                return $this->renderRedireccionarTestWS(
+                $render = $this->renderRedireccionarTestWS(
                         $form,
                         RIFormularios::TEST_WS_FORM_CAMAS);
+                
+                if ($render!=null){
+                    
+                    return $render;
+                }
 
             }
 

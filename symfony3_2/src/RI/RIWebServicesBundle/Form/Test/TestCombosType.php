@@ -26,7 +26,7 @@ class TestCombosType extends AbstractType
                     RI::$doctrine->getRepository
                         (RIUtiles::DB_BUNDLE.':Efectores')
                         ->findByConfiguracionesSistemas();
-        
+//        dump($efectores);die();
         $builder
             ->add('efectores', EntityType::class, array(
                 'class'       => RIUtiles::DB_BUNDLE.':Efectores',

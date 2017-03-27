@@ -16,17 +16,10 @@
 
 /* actualizacion de nombre de camas para desarrollo */
 UPDATE
-	hmi2_cullen.camas c,
-	hmi2_cullen.habitaciones h,
-	hmi2_cullen.salas s
+	hmi2_cullen.camas c
 SET
-	c.nombre = CONCAT(
-				TRIM(LEFT(c.nombre,22)),
-				'-',
-				TRIM(LEFT(h.nombre,15)),
-				'(',
-				TRIM(LEFT(s.nombre,10)),
-				')')
-WHERE
-	c.id_habitacion = h.id_habitacion
-AND h.id_sala = s.id_sala;
+	c.nombre = 
+		CONCAT(
+			hmi2_cullen.hmi2_str_prefijo_cama(c.id_habitacion),
+			'-',
+			c.nombre);

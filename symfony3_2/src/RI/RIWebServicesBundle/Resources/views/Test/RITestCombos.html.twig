@@ -32,12 +32,20 @@
             var data = {};
             data[$efectores.attr('name')] = $efectores.val();
             
+            console.log($form);
+            console.log(data);
+            
             // Submit data via AJAX to the form's action path.
             $.ajax({
                 url : $form.attr('action'),
                 type: $form.attr('method'),
                 data : data,
                 success: function(html) {
+                    
+                    console.log($form.attr('action'));
+                    console.log($form.attr('method'));
+                    console.log(html);
+                    console.log($(html));
                     
                     $('#test_combos_salas').replaceWith(
                         

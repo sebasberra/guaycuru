@@ -131,44 +131,6 @@ class RIFormularios extends RI
         return $form;
     }
     
-    public static function crearFormularioTestWSCamas(){
-    
-        // form
-        $form = RI::$form_factory->create(
-                    'RI\RIWebServicesBundle\Form\Test\TestWSCamasType');
-    
-        
-    
-        return $form;
-        
-    }
-    
-    public static function crearFormularioTestWSHabitaciones(){
-    
-        $camas = new \RI\DBHmi2GuaycuruCamasBundle\Entity\Camas;
-        
-        // form
-        $form = RI::$form_factory->create(
-                    'RI\RIWebServicesBundle\Form\Test\TestWSHabitacionesType',
-                $camas);
-    
-        
-    
-        return $form;
-        
-    }
-    
-    public static function crearFormularioTestWSSalas(){
-    
-        // form
-        $form = RI::$form_factory->create(
-                    'RI\RIWebServicesBundle\Form\Test\TestWSSalasType');
-    
-        
-    
-        return $form;
-        
-    }
     
     private static function checkOptionsCDSalas(
             $id_sala,

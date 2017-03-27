@@ -2,7 +2,7 @@
 /* a la estructura de datos de gestion de camas criticas		*/
 
 /* id_efector */
-SET @id_efector = 72;
+SET @id_efector = 184;
 		
 		
 /* salas */
@@ -52,7 +52,7 @@ SELECT
 	
 FROM
 
-	hmi2_iturraspe.salas s
+	hpr_hmi2_20161111.salas s
 	
 WHERE
 
@@ -85,7 +85,7 @@ SELECT
 		SELECT
 			s0.nombre
 		FROM
-			hmi2_iturraspe.salas s0
+			hpr_hmi2_20161111.salas s0
 		WHERE
 			s0.id_sala = h0.id_sala
 		)
@@ -117,7 +117,7 @@ SELECT
 	
 FROM
 
-	hmi2_iturraspe.habitaciones h0;
+	hpr_hmi2_20161111.habitaciones h0;
 	
 		
 		
@@ -147,9 +147,9 @@ SELECT
 			SELECT
 				h0.nombre
 			FROM
-				hmi2_iturraspe.camas c0
+				hpr_hmi2_20161111.camas c0
 			INNER JOIN
-				hmi2_iturraspe.habitaciones h0
+				hpr_hmi2_20161111.habitaciones h0
 			ON
 				c0.id_habitacion = h0.id_habitacion
 			WHERE
@@ -167,15 +167,15 @@ SELECT
 			SELECT
 				s0.nombre
 			FROM
-				hmi2_iturraspe.salas s0
+				hpr_hmi2_20161111.salas s0
 			WHERE
 				s0.id_sala = (
 					SELECT
 						h0.id_sala
 					FROM
-						hmi2_iturraspe.camas c0
+						hpr_hmi2_20161111.camas c0
 					INNER JOIN
-						hmi2_iturraspe.habitaciones h0
+						hpr_hmi2_20161111.habitaciones h0
 					ON
 						c0.id_habitacion = h0.id_habitacion
 					WHERE
@@ -205,7 +205,7 @@ SELECT
 	
 FROM
 
-	hmi2_iturraspe.camas c;
+	hpr_hmi2_20161111.camas c;
 	
   
 	
@@ -230,7 +230,7 @@ SELECT
 			SELECT
 				s0.nombre
 			FROM
-				hmi2_iturraspe.salas s0
+				hpr_hmi2_20161111.salas s0
 			WHERE
 				s0.id_sala = ss.id_sala
 			)
@@ -242,7 +242,7 @@ SELECT
 			(SELECT
 				es0.cod_servicio
 			FROM
-				hmi2_iturraspe.efectores_servicios es0
+				hpr_hmi2_20161111.efectores_servicios es0
 			WHERE
 				es0.id_efector_servicio = ss.id_efector_servicio
 			),
@@ -250,7 +250,7 @@ SELECT
 			(SELECT
 				es0.sector
 			FROM
-				hmi2_iturraspe.efectores_servicios es0
+				hpr_hmi2_20161111.efectores_servicios es0
 			WHERE
 				es0.id_efector_servicio = ss.id_efector_servicio
 			),
@@ -258,7 +258,7 @@ SELECT
 			(SELECT
 				es0.subsector
 			FROM
-				hmi2_iturraspe.efectores_servicios es0
+				hpr_hmi2_20161111.efectores_servicios es0
 			WHERE
 				es0.id_efector_servicio = ss.id_efector_servicio
 			)
@@ -281,7 +281,7 @@ SELECT
 			(SELECT
 				es0.cod_servicio
 			FROM
-				hmi2_iturraspe.efectores_servicios es0
+				hpr_hmi2_20161111.efectores_servicios es0
 			WHERE
 				es0.id_efector_servicio = ss.id_efector_servicio
 			),
@@ -289,7 +289,7 @@ SELECT
 			(SELECT
 				es0.sector
 			FROM
-				hmi2_iturraspe.efectores_servicios es0
+				hpr_hmi2_20161111.efectores_servicios es0
 			WHERE
 				es0.id_efector_servicio = ss.id_efector_servicio
 			),
@@ -297,7 +297,7 @@ SELECT
 			(SELECT
 				es0.subsector
 			FROM
-				hmi2_iturraspe.efectores_servicios es0
+				hpr_hmi2_20161111.efectores_servicios es0
 			WHERE
 				es0.id_efector_servicio = ss.id_efector_servicio
 			)
@@ -316,7 +316,7 @@ SELECT
 		SELECT
 			s0.nombre
 		FROM
-			hmi2_iturraspe.salas s0
+			hpr_hmi2_20161111.salas s0
 		WHERE
 			s0.id_sala = ss.id_sala
 		)
@@ -336,11 +336,11 @@ SELECT
 	
 FROM
 
-	hmi2_iturraspe.servicios_salas ss
+	hpr_hmi2_20161111.servicios_salas ss
 	
 INNER JOIN
 
-	hmi2_iturraspe.salas s
+	hpr_hmi2_20161111.salas s
 	
 ON
 

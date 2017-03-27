@@ -359,4 +359,10 @@ class Habitaciones
     {
         return $this->idSala;
     }
+    
+    public function __toString()
+    {
+      return $this->nombre;
+      
+    }
 }

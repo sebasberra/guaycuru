@@ -2,12 +2,14 @@
 
 namespace RI\RIWebServicesBundle\Form\Test;
 
-use Doctrine\ORM\EntityRepository;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,8 +17,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
-
-use RI\DBHmi2GuaycuruCamasBundle\Entity\Efectores;
 
 
 
@@ -50,105 +50,75 @@ class TestWSCamasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-
-        // choices habitaciones
-        $hab_choices = RIUtiles::getSalasHabitacionesChoices(72);
         
-        // choices camas
-        $camas_choices = RIUtiles::getSalasHabCamasChoices(72);
+        // efectores configuraciones sistemas
+        $efectores = 
+                    RI::$doctrine->getRepository
+                        (RIUtiles::DB_BUNDLE.':Efectores')
+                        ->findByConfiguracionesSistemas();
         
-//        dump($camas_choices);die();
+        // clasificaciones camas
+        $clasificaciones_camas = 
+                    RI::$doctrine->getRepository
+                        (RIUtiles::DB_BUNDLE.':ClasificacionesCamas')
+                        ->findAll();
         
         $builder
             ->add(
-                    'id_clasificacion_cama', 
+                    'efectores', 
+                    'Symfony\Bridge\Doctrine\Form\Type\EntityType',
+                    array(
+                        'label' => 'Efector',
+                        'class' => RIUtiles::DB_BUNDLE.':Efectores',
+                        'choices' => $efectores,
+                        'choice_label' => 'nomEfector',
+                        'group_by' => function($efector, $key, $index) {
+                            
+                            return ('Región: '.$efector->getNodo());
+                        }
+                    )
+            )
+            ->add(
+                    'salas', EntityType::class, array(
+                    'class'       => RIUtiles::DB_BUNDLE.':Salas',
+                    'placeholder' => '',
+                    'choices'     => array(),
+                    'required'    => false
+                    )
+            )
+            ->add(
+                    'habitaciones', EntityType::class, array(
+                    'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
+                    'placeholder' => '',
+                    'choices'     => array(),
+                    'required'    => false
+                    )
+            )
+            ->add(
+                    'clasificaciones_camas', 
                     'Symfony\Bridge\Doctrine\Form\Type\EntityType',
                     array(
                         'label' => 'Clasificación',
                         'class' => RIUtiles::DB_BUNDLE.':ClasificacionesCamas',
-                        'query_builder' => function (EntityRepository $er) {
-                            
-                            $qb = $er
-                                    ->createQueryBuilder('cc')
-                                    ->orderBy('cc.tipoCuidadoProgresivo', 'ASC');
-                            
-                            return $qb;
-                        },
                         'choice_label' => 'clasificacionCama',
+                        'choices' => $clasificaciones_camas,
                         'group_by' => function($clasificacion_cama, $key, $index) {
                             
                             switch ($clasificacion_cama->getTipoCuidadoProgresivo()){
                                 
                                 case 0:
-                                    
                                     return('Cuidado Moderado');
-                                    
+                                
                                 case 1:
-                                    
                                     return('Cuidado Intermedio');
                                     
                                 case 2:
-                                    
                                     return('Cuidado Intensivo');
                                     
                             }
                         },
                     )
             )
-            ->add(
-                    'id_efector', 
-                    'Symfony\Bridge\Doctrine\Form\Type\EntityType',
-                    array(
-                        'label' => 'Efector',
-                        'class' => RIUtiles::DB_BUNDLE.':Efectores',
-                        'query_builder' => function (EntityRepository $er) {
-                            
-                            $qb = $er
-                                    ->createQueryBuilder('e')
-                                    ->where('e.idEfector = 72 or e.idEfector=121');    
-                            
-                            return $qb;
-                        },
-                        'choice_label' => 'nomEfector'
-                    )
-            )
-//            ->addEventListener(
-//                FormEvents::PRE_SET_DATA,
-//                function (FormEvent $event) {
-//                
-//                    $form = $event->getForm();
-//
-//                    // 
-//                    $data = $event->getData();
-//
-//                    if ($data == null){
-//                        
-//                        return array(); 
-//                    }
-//                                        
-//                    $efector = $data->getIdEfector();
-//                    
-//                    $id_efector = $efector->getIdEfector();
-//                    
-//                    $habitaciones = 
-//                        RI::$em
-//                        ->getRepository(RIUtiles::DB_BUNDLE.':Habitaciones')
-//                        ->findByIdEfector($id_efector);
-//                    
-//                    $form->add('id_habitacion', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', array(
-//                        'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
-//                        'placeholder' => '',
-//                        'choices'     => $habitaciones,
-//                        'choice_label' => 'nombre',
-//                        'group_by' => function($habitaciones, $key, $index) {
-//                            
-//                            return $habitaciones->getIdSala()->getNombre();
-//                        }
-//                        
-//                    ));
-//                }
-//                
-//            )
             ->add(
                     'nombre', 
                     'Symfony\Component\Form\Extension\Core\Type\TextType',
@@ -244,71 +214,79 @@ class TestWSCamasType extends AbstractType
                     array(
                         'label' => 'Baja'
                     )
-            );
-            
-        
-            
-        $formModifier = function (FormInterface $form, Efectores $efector = null) {
-            
-            
-
-            $id_efector = $efector->getIdEfector();
-
-            $habitaciones = 
-                RI::$em
-                ->getRepository(RIUtiles::DB_BUNDLE.':Habitaciones')
-                ->findByIdEfector($id_efector);
-
-            $form->add('id_habitacion', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', array(
-                'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
-                'placeholder' => '',
-                'choices'     => $habitaciones,
-                'choice_label' => 'nombre',
-                'group_by' => function($habitaciones, $key, $index) {
-
-                    return $habitaciones->getIdSala()->getNombre();
-                }
-
-            ));
-            
-        };
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
-                // this would be your entity, i.e. SportMeetup
-                $data = $event->getData();
+            )
+            ->add(
+                    'bt_probar', 
+                    'Symfony\Component\Form\Extension\Core\Type\SubmitType',
+                    array(
+                        'label' => 'Probar'
+                    )
+            )
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                array($this, 'onPreSubmit')
+                )
+            ->addEventListener(
+                FormEvents::POST_SUBMIT,
+                array($this, 'onPostSubmit')
+                )
                 
-                if ($data == null){
-
-                    return array(); 
-                }
-
-                $formModifier($event->getForm(), $data->getIdEfector());
-            }
-        );
-
-        $builder->get('id_efector')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
-                // It's important here to fetch $event->getForm()->getData(), as
-                // $event->getData() will get you the client data (that is, the ID)
-                $efector = $event->getForm()->getData();
-
-                // since we've added the listener to the child, we'll have to pass on
-                // the parent to the callback functions!
-                $formModifier($event->getForm()->getParent(), $efector);
-            }
-        );
-        
-                        
+                ;
         
     }
     
+    
+    
+    public function onPostSubmit(FormEvent $event)
+    {
+        
+        $data = $event->getData();
+        dump($data);die();
+    }                
+    public function onPreSubmit(FormEvent $event)
+    {
+        $data = $event->getData();
+        
+        $id_efector = $data['efectores'];
+        $salas = null === $id_efector ? array() : 
+                    RI::$doctrine->getRepository
+                        (RIUtiles::DB_BUNDLE.':Salas')
+                        ->findByIdEfector($id_efector);
+        $form = $event->getForm();
+
+        $form->add(
+                    'salas', EntityType::class, array(
+                    'class'       => RIUtiles::DB_BUNDLE.':Salas',
+                    'placeholder' => '',
+                    'choices'     => $salas,
+                    'required'    => false
+                    )
+            );
+        
+        $id_sala = $data['salas'];
+        $habitaciones = null === $id_sala ? array() : 
+                    RI::$doctrine->getRepository
+                        (RIUtiles::DB_BUNDLE.':Habitaciones')
+                        ->findByIdSala($id_sala);
+        
+        $form->add(
+                    'habitaciones', EntityType::class, array(
+                    'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
+                    'placeholder' => '',
+                    'choices'     => $habitaciones,
+                    'required'    => false
+                    )
+            );
+        
+        dump($data);
+        
+    }
+    
+   
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'RI\DBHmi2GuaycuruCamasBundle\Entity\Camas'
-        ));
+//        $resolver->setDefaults(array(
+//            'data_class' => 'RI\DBHmi2GuaycuruCamasBundle\Entity\Camas'
+//        ));
     }
 }

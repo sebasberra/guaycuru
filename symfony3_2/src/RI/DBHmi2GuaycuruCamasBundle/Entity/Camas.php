@@ -348,4 +348,10 @@ class Camas
     {
         return $this->idHabitacion;
     }
+    
+    public function __toString()
+    {
+      return $this->nombre;
+      
+    }
 }

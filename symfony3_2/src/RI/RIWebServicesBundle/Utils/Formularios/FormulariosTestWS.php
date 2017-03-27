@@ -6,6 +6,8 @@ namespace RI\RIWebServicesBundle\Utils\Formularios;
 use RI\RIWebServicesBundle\Utils\RI\RIFormularios;
 use RI\RIWebServicesBundle\Utils\Render\RenderTest;
 
+use RI\RIWebServicesBundle\Utils\RI\RI;
+
 
 trait FormulariosTestWS
 {
@@ -25,8 +27,9 @@ trait FormulariosTestWS
                 // camas
                 case RIFormularios::TEST_WS_FORM_CAMAS:
                     
-                    $form = 
-                            RIFormularios::crearFormularioTestWSCamas();
+                    $form = RI::$form_factory->create(
+                            'RI\RIWebServicesBundle\Form\Test\TestWSCamasType');
+                    
                     break;
                 
                 case RIFormularios::TEST_WS_FORM_HABITACIONES:

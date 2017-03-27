@@ -1,0 +1,110 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    
+
+{% endblock %}
+
+
+{% block cuerpo %} 
+
+    <h2>Dynamic Generation for Submitted Forms Test</h2>
+
+    {{ form_start(form) }}
+    
+        {{ form_row(form.efectores) }}    
+        {{ form_row(form.salas) }} 
+        {# ... #}
+    {{ form_end(form) }}
+    
+    <script>
+        
+        var $efectores = $('#test_combos2_efectores');
+        var $salas = $('#test_combos2_salas');
+        var $habitaciones = $('#test_combos2_habitaciones');
+        
+        // 0: salas
+        // 1: habitaciones
+        // 2: camas
+        function refresh_combos(combo,obj){
+            
+            // form
+            var $form = $(obj).closest('form');
+          
+            // data
+            var data = {};
+            data[$efectores.attr('name')] = $efectores.val();
+            data[$salas.attr('name')] = $salas.val();
+            data[$habitaciones.attr('name')] = $habitaciones.val();
+            
+            
+            // Submit data via AJAX to the form's action path.
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                    
+                switch(combo) {
+
+                    case 0: 
+
+                        $('#test_combos2_salas').replaceWith(
+
+                            $(html).find('#test_combos2_salas')
+                        );
+                                                                        
+                        break;
+
+                    case 1: 
+
+                        $('#test_combos2_habitaciones').replaceWith(
+
+                            $(html).find('#test_combos2_habitaciones')
+                        );
+                                                                
+                        break;
+
+                    case 2:
+
+                        $('#test_combos2_camas').replaceWith(
+
+                            $(html).find('#test_combos2_camas')
+                        );
+
+                    }
+                    
+                }
+                    
+            });
+
+        }
+                
+        $efectores.change(function() {
+            
+            refresh_combos(0,this);
+        });
+        
+        
+        $salas.change(function() {
+        
+            refresh_combos(1,this);
+            
+        });
+        
+        $habitaciones.change(function() {
+            
+            refresh_combos(2,this);
+            
+        });
+        
+    </script>
+    
+        
+    
+{% endblock %}
+
+
+

@@ -66,7 +66,7 @@ source localidades_efectores_servicios.sql
 /* source hmi2_v0_996_rename_camas.sql */
 
 /* datos */
-source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_iturraspe.sql
+/* source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_iturraspe.sql */
 
 
 /* ------ */
@@ -76,4 +76,11 @@ source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_iturraspe.sql
 /* source hmi2_v0_996_rename_camas_cullen.sql */
 
 /* datos */
-source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_cullen.sql
+/* source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_cullen.sql */
+
+
+/* ---------- */
+/* centenario */
+
+/* datos */
+/* source migra_hmi2_v0_9_996_a_hmi2guaycuru_camas_datos_centenario.sql */
