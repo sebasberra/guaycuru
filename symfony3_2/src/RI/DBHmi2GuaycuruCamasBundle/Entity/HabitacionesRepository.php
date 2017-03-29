@@ -41,6 +41,36 @@ class HabitacionesRepository extends EntityRepository
         return $habitaciones;
     }
     
+    public function findByIdCama(
+            $id_cama)
+    {
+                        
+        $dql =
+            "SELECT "
+                ."h "
+            ."FROM "
+                .RIUtiles::DB_BUNDLE.":Habitaciones h "
+            ."INNER JOIN "
+                .RIUtiles::DB_BUNDLE.":Camas c "
+            ."WHERE "
+                ."c.idCama = :id_cama "
+            ."AND c.idHabitacion = h.idHabitacion ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_cama", $id_cama);
+            
+            $habitacion = $query->getSingleResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
+        
+        return $habitacion;
+    }
     
     /** Obtiene la habitacion o habitaciones que coincidan con el
      *  nombre y id_efector pasados por parametro

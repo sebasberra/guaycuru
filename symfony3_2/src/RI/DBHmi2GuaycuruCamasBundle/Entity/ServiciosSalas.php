@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ServiciosSalas
  *
  * @ORM\Table(name="servicios_salas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_id_efector_servicio_id_sala", columns={"id_efector_servicio", "id_sala"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_id_efector_servicio_id_sala", columns={"id_efector", "id_efector_servicio", "id_sala"})}, indexes={@ORM\Index(name="idx_fk_servicios_salas_id_sala", columns={"id_sala"}), @ORM\Index(name="fk_servicios_salas_id_efector_idx", columns={"id_efector"}), @ORM\Index(name="IDX_D8861F428239A6E4", columns={"id_efector_servicio"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="RI\DBHmi2GuaycuruCamasBundle\Entity\ServiciosSalasRepository")
  */
 class ServiciosSalas
 {
@@ -257,5 +257,11 @@ class ServiciosSalas
     public function getIdSala()
     {
         return $this->idSala;
+    }
+    
+    public function __toString()
+    {
+      return $this->idEfectorServicio->getNomServicioEstadistica();
+      
     }
 }

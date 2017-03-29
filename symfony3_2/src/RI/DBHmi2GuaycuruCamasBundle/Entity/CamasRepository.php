@@ -63,8 +63,8 @@ class CamasRepository extends EntityRepository
             ."INNER JOIN "
                 ."DBHmi2GuaycuruCamasBundle:Habitaciones h "
             ."WHERE "
-                ."h.id_sala = :id_sala "
-            ."AND c.id_habitacion = h.id_habitacion ";
+                ."h.idSala = :id_sala "
+            ."AND c.idHabitacion = h.idHabitacion ";
         
         try{
             

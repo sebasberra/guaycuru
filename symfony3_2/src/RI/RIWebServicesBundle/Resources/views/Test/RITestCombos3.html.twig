@@ -1,0 +1,184 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    
+
+{% endblock %}
+
+
+{% block cuerpo %} 
+
+    <h2>Dynamic Generation for Submitted Forms Test</h2>
+
+    {{ form_start(form) }}
+    
+    {{ form_end(form) }}
+    
+    <script>
+        
+        var $efectores = $('#test_combos3_efectores');
+        var $servicios_salas = $('#test_combos3_servicios_salas');
+        var $camas = $('#test_combos3_camas');
+        
+        
+        $efectores.change(function() {
+            
+            refresh_combos(0,this);
+        });
+        
+        
+        // 0: salas
+        // 1: habitaciones
+        // 2: camas
+        function refresh_combos(combo,obj){
+            
+            // form
+            var $form = $(obj).closest('form');
+          
+            // captura datos
+            switch(combo) {
+                
+                case 0:
+                    
+                    id_efector = $efectores.val();
+                    id_servicio_sala = '';
+                    id_cama ='';
+                
+                    break;
+                    
+                case 1:
+                    
+                    id_efector = $efectores.val();
+                    id_servicio_sala = $servicios_salas.val();
+                    id_cama ='';
+                    
+                    break;
+                    
+                case 2:
+                    
+                    id_efector = $efectores.val();
+                    id_servicio_sala = $servicios_salas.val();
+                    id_cama = $camas.val();
+                    
+                    break;
+                                        
+            }
+                    
+            // set arreglo de datos AJAX
+            var data = {};
+            data[$efectores.attr('name')] = id_efector;
+            data[$servicios_salas.attr('name')] = id_servicio_sala;
+            data[$camas.attr('name')] = id_cama;
+            
+            console.log(data);
+            
+            // submit AJAX
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                
+                console.log(html);
+                
+                switch(combo) {
+
+                    case 0: 
+
+                        // servicios_salas
+                        $('#test_combos3_servicios_salas').replaceWith(
+                        
+                            $(html).find('#test_combos3_servicios_salas')
+                        );
+                
+                        // sala
+                        $('#test_combos3_sala').replaceWith(
+                        
+                            $(html).find('#test_combos3_sala')
+                        );
+                        
+                        // limpia habitacion
+                        $('#test_combos3_habitacion').replaceWith(
+                        
+                            $(html).find('#test_combos3_habitacion')
+                        );
+                
+                        // limpia camas
+                        $('#test_combos3_camas').replaceWith(
+                        
+                            $(html).find('#test_combos3_camas')
+                        );
+                
+                        // refresh listener
+                        $servicios_salas = $('#test_combos3_servicios_salas');
+                
+                        $servicios_salas.change(function() {
+        
+                            refresh_combos(1,this);
+
+                        });
+                                                                        
+                        break;
+
+                    case 1:
+                        
+                        // sala
+                        $('#test_combos3_sala').replaceWith(
+                        
+                            $(html).find('#test_combos3_sala')
+                        );
+                
+                        // limpia habitacion
+                        $('#test_combos3_habitacion').replaceWith(
+                        
+                            $(html).find('#test_combos3_habitacion')
+                        );
+
+                        $('#test_combos3_camas').replaceWith(
+                        
+                            $(html).find('#test_combos3_camas')
+                        );
+                
+                        // refresh listener camas
+                        $camas = $('#test_combos3_camas');                                                        
+                        
+                        $camas.change(function() {
+        
+                            refresh_combos(2,this);
+
+                        });
+                        
+                        break;
+                        
+                    
+                    
+                    case 2:
+                        
+                        // habitacion
+                        $('#test_combos3_habitacion').replaceWith(
+                        
+                            $(html).find('#test_combos3_habitacion')
+                        );                
+                                                                                
+                        break;
+                        
+                    }
+
+                    
+                }
+                    
+            });
+
+        }
+        
+        
+    </script>
+    
+        
+    
+{% endblock %}
+
+
+

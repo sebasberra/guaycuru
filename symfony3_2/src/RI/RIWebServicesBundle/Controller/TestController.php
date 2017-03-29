@@ -123,6 +123,53 @@ class TestController extends Controller
     
     
     /**
+    * @Route("/combos3")
+    */
+    public function testCombos3Action(Request $request)
+    {
+        
+        try {
+
+            $this->get('app.ri_formularios');
+            
+            // form
+            $form = RI::$form_factory->create(
+                    'RI\RIWebServicesBundle\Form\Test\TestCombos3Type');
+            
+
+            $form->handleRequest($request);
+            
+            // check submit
+            if ($form->isSubmitted() && 
+                    $form->isValid()) {
+
+
+            }
+
+        }catch(\Exception $e){
+            
+            $msg = 'Desconocido';
+            
+            RI::$error_debug .= 
+                    "Funcion testCombos3Action: "
+                    .$e->getMessage();
+            
+            return $this->renderException(
+                    'Error al cargar la página de test web services', 
+                    $msg);
+
+        }
+    
+        return $this->render(
+                "RIWebServicesBundle:Test:RITestCombos3.html.twig",
+                array(
+                    'form' =>$form->createView()
+                ));
+        
+    }
+    
+    
+    /**
     * @Route("/camas")
     */
     public function testWSCamasAction(

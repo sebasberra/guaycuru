@@ -24,6 +24,13 @@
         var $efectores = $('#test_combos2_efectores');
         var $salas = $('#test_combos2_salas');
         var $habitaciones = $('#test_combos2_habitaciones');
+                
+        
+        $efectores.change(function() {
+            
+            refresh_combos(0,this);
+        });
+        
         
         // 0: salas
         // 1: habitaciones
@@ -33,46 +40,111 @@
             // form
             var $form = $(obj).closest('form');
           
-            // data
+            // captura datos
+            switch(combo) {
+                
+                case 0:
+                    
+                    id_efector = $efectores.val();
+                    id_sala = '';
+                    id_habitacion = '';
+                
+                    break;
+                    
+                case 1:
+                    
+                    id_efector = $efectores.val();
+                    id_sala = $salas.val();
+                    id_habitacion = '';
+                    
+                    break;
+                    
+                case 2: 
+                    
+                    id_efector = $efectores.val();
+                    id_sala = $salas.val();
+                    id_habitacion = $habitaciones.val();
+                  
+                    break;
+                    
+            }
+                    
+            // set arreglo de datos AJAX
             var data = {};
-            data[$efectores.attr('name')] = $efectores.val();
-            data[$salas.attr('name')] = $salas.val();
-            data[$habitaciones.attr('name')] = $habitaciones.val();
+            data[$efectores.attr('name')] = id_efector;
+            data[$salas.attr('name')] = id_sala;
+            data[$habitaciones.attr('name')] = id_habitacion;
             
             
-            // Submit data via AJAX to the form's action path.
+            // submit AJAX
             $.ajax({
                 url : $form.attr('action'),
                 type: $form.attr('method'),
                 data : data,
                 success: function(html) {
-                    
+                
+                
                 switch(combo) {
 
                     case 0: 
 
                         $('#test_combos2_salas').replaceWith(
-
+                        
                             $(html).find('#test_combos2_salas')
                         );
+                        
+                        $('#test_combos2_habitaciones').replaceWith(
+                        
+                            $(html).find('#test_combos2_habitaciones')
+                        );
+                
+                        $('#test_combos2_camas').replaceWith(
+                        
+                            $(html).find('#test_combos2_camas')
+                        );
+                
+                        // refresh listener
+                        $salas = $('#test_combos2_salas');
+                
+                        $salas.change(function() {
+        
+                            refresh_combos(1,this);
+
+                        });
                                                                         
                         break;
 
                     case 1: 
 
                         $('#test_combos2_habitaciones').replaceWith(
-
+                        
                             $(html).find('#test_combos2_habitaciones')
                         );
-                                                                
+                        
+                        $('#test_combos2_camas').replaceWith(
+                        
+                            $(html).find('#test_combos2_camas')
+                        );
+                
+                        // refresh listener
+                        $habitaciones = $('#test_combos2_habitaciones');
+                        
+                        $habitaciones.change(function() {
+
+                            refresh_combos(2,this);
+
+                        });
+                                                                                
                         break;
 
                     case 2:
 
                         $('#test_combos2_camas').replaceWith(
-
+                        
                             $(html).find('#test_combos2_camas')
                         );
+                                
+                        break;
 
                     }
                     
@@ -81,24 +153,7 @@
             });
 
         }
-                
-        $efectores.change(function() {
-            
-            refresh_combos(0,this);
-        });
         
-        
-        $salas.change(function() {
-        
-            refresh_combos(1,this);
-            
-        });
-        
-        $habitaciones.change(function() {
-            
-            refresh_combos(2,this);
-            
-        });
         
     </script>
     

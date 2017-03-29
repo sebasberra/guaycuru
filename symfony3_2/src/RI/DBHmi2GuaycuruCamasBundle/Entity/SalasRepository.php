@@ -4,6 +4,9 @@ namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
+
+
 class SalasRepository extends EntityRepository
 {
     
@@ -38,6 +41,38 @@ class SalasRepository extends EntityRepository
         
         return $sala;
     }
+    
+    public function findByIdServicioSala(
+            $id_servicio_sala)
+    {
+                        
+        $dql =
+            "SELECT "
+                ."s "
+            ."FROM "
+                .RIUtiles::DB_BUNDLE.":Salas s "
+            ."INNER JOIN "
+                .RIUtiles::DB_BUNDLE.":ServiciosSalas ss "
+            ."WHERE "
+                ."ss.idSala = s.idSala "
+            ."AND ss.idServicioSala = :id_servicio_sala";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_servicio_sala", $id_servicio_sala);
+            
+            $sala = $query->getSingleResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
+        
+        return $sala;
+    }
+    
     
     public function findOneByNombreIdEfector(
             $nombre_sala,
