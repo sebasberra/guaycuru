@@ -3,6 +3,7 @@
 namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 /** Realiza el acceso a la DB hmi2guaycuru para actualizacion de
  *  la configuracion edilicia.
@@ -40,7 +41,7 @@ class ConfiguracionEdilicia extends RI
         $habitacion->setCantCamas($count);
         
         // validacion assert
-        $this->validacionAssert($habitacion);
+        RIUtiles::validacionAssert($habitacion);
         
         RI::$em->persist($habitacion);
         RI::$em->flush();
@@ -60,7 +61,7 @@ class ConfiguracionEdilicia extends RI
         
         
         // validacion assert
-        $this->validacionAssert($sala);
+        RIUtiles::validacionAssert($sala);
         
         RI::$em->persist($sala);
         RI::$em->flush();
@@ -114,7 +115,7 @@ class ConfiguracionEdilicia extends RI
             }
             
             // validacion assert
-            $this->validacionAssert($cama);
+            RIUtiles::validacionAssert($cama);
             
             RI::$em->persist($cama);
 
@@ -153,7 +154,7 @@ class ConfiguracionEdilicia extends RI
             }
             
             // validacion assert
-            $this->validacionAssert($cama);
+            RIUtiles::validacionAssert($cama);
             
             RI::$em->persist($cama);
 
@@ -180,7 +181,7 @@ class ConfiguracionEdilicia extends RI
             $habitacion->setBaja($baja);
 
             // validacion assert
-            $this->validacionAssert($habitacion);
+            RIUtiles::validacionAssert($habitacion);
             
             RI::$em->persist($habitacion);
 

@@ -7,13 +7,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
@@ -68,7 +66,8 @@ class TestWSCamasType extends AbstractType
                     'efectores', 
                     'Symfony\Bridge\Doctrine\Form\Type\EntityType',
                     array(
-                        'label' => 'Efector',
+                        'label' => 'Efector: ',
+                        'placeholder' => '',
                         'class' => RIUtiles::DB_BUNDLE.':Efectores',
                         'choices' => $efectores,
                         'choice_label' => 'nomEfector',
@@ -79,26 +78,33 @@ class TestWSCamasType extends AbstractType
                     )
             )
             ->add(
-                    'salas', EntityType::class, array(
-                    'class'       => RIUtiles::DB_BUNDLE.':Salas',
-                    'placeholder' => '',
-                    'choices'     => array(),
-                    'required'    => false
+                    'sala',
+                    TextType::class, 
+                    array(
+                        'label'       => 'Sala:',
+                        'required'    => false,
+                        'data'        => '',
+                        'attr' => array(
+                            'placeholder' => 'Debe seleccionar una habitación de la lista',
+                            'readonly'    => 'readonly'
+                            )
                     )
             )
             ->add(
-                    'habitaciones', EntityType::class, array(
-                    'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
-                    'placeholder' => '',
-                    'choices'     => array(),
-                    'required'    => false
+                    'habitaciones', 
+                    EntityType::class, 
+                    array(
+                        'label'       => "Habitaciones: ",
+                        'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
+                        'placeholder' => '',
+                        'choices'     => array(),
                     )
             )
             ->add(
                     'clasificaciones_camas', 
                     'Symfony\Bridge\Doctrine\Form\Type\EntityType',
                     array(
-                        'label' => 'Clasificación',
+                        'label' => 'Clasificación: ',
                         'class' => RIUtiles::DB_BUNDLE.':ClasificacionesCamas',
                         'choice_label' => 'clasificacionCama',
                         'choices' => $clasificaciones_camas,
@@ -116,13 +122,14 @@ class TestWSCamasType extends AbstractType
                                     return('Cuidado Intensivo');
                                     
                             }
-                        },
+                        }
                     )
             )
             ->add(
                     'nombre', 
                     'Symfony\Component\Form\Extension\Core\Type\TextType',
                     array(
+                        'label'=> 'Nombre: ',
                         'attr' => array(
                             'placeholder' => 'Nombre de la cama'
                             )
@@ -133,17 +140,13 @@ class TestWSCamasType extends AbstractType
                     'estado', 
                     'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     array(
-                        
+                        'label'   => 'Estado: ',
                         'choices' => array(
-                            'Seleccione el estado de la cama' => '',
                             'Libre' => 'L',
                             'Ocupada' => 'O',
                             'Fuera de servicio' => 'F',
                             'En Reparación' => 'R',
                             'Reservada' => 'V'
-                        ),
-                        'constraints' => array(
-                            new NotBlank(),
                         )
                     )
                 )
@@ -151,6 +154,7 @@ class TestWSCamasType extends AbstractType
                     'rotativa', 
                     'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     array(
+                        'label'   => '¿ Es rotativa ?',
                         'choices' => array(
                             'Si' => 1,
                             'No' => 0
@@ -164,6 +168,7 @@ class TestWSCamasType extends AbstractType
                     'baja', 
                     'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     array(
+                        'label'   => '¿ Está dada de baja ?',
                         'choices' => array(
                             'Si' => 1,
                             'No' => 0
@@ -225,68 +230,92 @@ class TestWSCamasType extends AbstractType
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
                 array($this, 'onPreSubmit')
-                )
-            ->addEventListener(
-                FormEvents::POST_SUBMIT,
-                array($this, 'onPostSubmit')
-                )
-                
-                ;
+                );
         
     }
     
-    
-    
-    public function onPostSubmit(FormEvent $event)
-    {
         
-        $data = $event->getData();
-        dump($data);die();
-    }                
     public function onPreSubmit(FormEvent $event)
     {
+        // ini form y data
+        $form = $event->getForm();
         $data = $event->getData();
         
-        $id_efector = $data['efectores'];
-        $salas = null === $id_efector ? array() : 
-                    RI::$doctrine->getRepository
-                        (RIUtiles::DB_BUNDLE.':Salas')
-                        ->findByIdEfector($id_efector);
-        $form = $event->getForm();
-
-        $form->add(
-                    'salas', EntityType::class, array(
-                    'class'       => RIUtiles::DB_BUNDLE.':Salas',
-                    'placeholder' => '',
-                    'choices'     => $salas,
-                    'required'    => false
-                    )
-            );
+        //
+        // data
+        // 
         
-        $id_sala = $data['salas'];
-        $habitaciones = null === $id_sala ? array() : 
+        // efector 
+        $id_efector = $data['efectores'];
+
+        // id_habitacion
+        $id_habitacion = $data['habitaciones'];
+        
+        
+        // habitaciones
+        if ($id_efector==''){
+            
+            $habitaciones = array();
+        }else{
+            
+        
+            $habitaciones = 
                     RI::$doctrine->getRepository
                         (RIUtiles::DB_BUNDLE.':Habitaciones')
-                        ->findByIdSala($id_sala);
+                        ->findByIdEfector($id_efector);
+        }
         
+        // habitaciones
         $form->add(
-                    'habitaciones', EntityType::class, array(
+                'habitaciones', 
+                EntityType::class, 
+                array(
                     'class'       => RIUtiles::DB_BUNDLE.':Habitaciones',
                     'placeholder' => '',
                     'choices'     => $habitaciones,
-                    'required'    => false
+                    'required'    => false,
+                    'group_by' => function($habitacion, $key, $index) {
+
+                        return ($habitacion->getIdSala()->getNombre());
+                    }
+                )
+            );
+                
+        // POST id_habitacion
+        if ($id_habitacion != ''){
+            
+            
+            $habitacion =
+                    RI::$doctrine->getRepository
+                        (RIUtiles::DB_BUNDLE.':Habitaciones')
+                        ->findByIdHabitacion($id_habitacion);
+            
+            
+            $form->add(
+                    'sala',
+                    TextType::class, 
+                    array(
+                        'label'       => 'Sala:',
+                        'required'    => false,
+//                        'data'        => $habitacion[0]->getIdSala()->getNombre(),
+                        'attr' => array(
+                            'placeholder' => 'Debe seleccionar una habitación de la lista',
+                            'value'       => $habitacion[0]->getIdSala()->getNombre(),
+                            'readonly'    => 'readonly'
+                            )
                     )
             );
+            
+        }
         
-        dump($data);
+        
+        
         
     }
+        
     
-   
     public function configureOptions(OptionsResolver $resolver)
     {
-//        $resolver->setDefaults(array(
-//            'data_class' => 'RI\DBHmi2GuaycuruCamasBundle\Entity\Camas'
-//        ));
+
     }
 }

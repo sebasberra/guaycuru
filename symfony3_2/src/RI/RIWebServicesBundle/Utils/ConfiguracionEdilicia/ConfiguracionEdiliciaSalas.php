@@ -110,7 +110,7 @@ trait ConfiguracionEdiliciaSalas{
         
         
             // validacion assert
-            $this->validacionAssert($sala);
+            RIUtiles::validacionAssert($sala);
     
         
             // insert datos en la DB
@@ -186,7 +186,7 @@ trait ConfiguracionEdiliciaSalas{
         $sala->setMoverCamas($modif_sala["mover_camas"]);
         
         // validacion assert
-        $this->validacionAssert($sala);
+        RIUtiles::validacionAssert($sala);
     
         
         // begintrans

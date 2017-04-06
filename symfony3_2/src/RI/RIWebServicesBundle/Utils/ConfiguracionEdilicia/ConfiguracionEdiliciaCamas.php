@@ -2,6 +2,7 @@
 
 namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 
+use RI\DBHmi2GuaycuruCamasBundle\Entity\Camas;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
@@ -11,9 +12,10 @@ trait ConfiguracionEdiliciaCamas{
     
     /** Agrega una cama a la base centralizada
      *  El parametro $nueva_cama es un arreglo con:
-     *  ["nombre_cama"]
-     *  ["nombre_habitacion"]
      *  ["id_efector"]
+     *  ["nombre_sala"]
+     *  ["nombre_habitacion"]
+     *  ["nombre_cama"]
      *  ["id_clasificacion_cama"]
      *  ["estado"]
      *  ["rotativa"]
@@ -47,6 +49,15 @@ trait ConfiguracionEdiliciaCamas{
 //        fecha_modificacion TIMESTAMP de actualizacion del registro
         
         
+        // efector
+        try{
+            
+            $efector = RIUtiles::getEfector($nueva_cama["id_efector"]);
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
         
         // clasificacion cama
         try {
@@ -62,16 +73,6 @@ trait ConfiguracionEdiliciaCamas{
             
         }
         
-        
-        // efector
-        try{
-            
-            $efector = RIUtiles::getEfector($nueva_cama["id_efector"]);
-            
-        } catch (\Exception $e) {
-
-            throw $e;
-        }
         
         // rotativa
         $rotativa = RIUtiles::wrapBoolean($nueva_cama["rotativa"]);
@@ -139,7 +140,7 @@ trait ConfiguracionEdiliciaCamas{
         
         
         // validacion assert
-        $this->validacionAssert($cama);
+        RIUtiles::validacionAssert($cama);
     
         
         // begintrans
@@ -316,7 +317,7 @@ trait ConfiguracionEdiliciaCamas{
         
         
         // validacion assert
-        $this->validacionAssert($cama);
+        RIUtiles::validacionAssert($cama);
         
         // transaccion
         // begintrans
@@ -481,7 +482,7 @@ trait ConfiguracionEdiliciaCamas{
         $cama->setEstado('O');
         
         // validacion assert
-        $this->validacionAssert($cama);
+        RIUtiles::validacionAssert($cama);
         
         
         // begintrans
@@ -543,7 +544,7 @@ trait ConfiguracionEdiliciaCamas{
         $cama->setEstado('L');
         
         // validacion assert
-        $this->validacionAssert($cama);
+        RIUtiles::validacionAssert($cama);
         
         // begintrans
         RI::$conn->beginTransaction();

@@ -27,8 +27,8 @@ trait RenderTest{
                 $datos_cama = 
                         array(
                             'id_efector' => $param['efectores']->getIdEfector(),
-                            'nombre_sala' => 72001,
-//                            'nombre_habitacion' => $param['habitaciones']->getNombre(),
+                            'nombre_sala' => $param['sala'],
+                            'nombre_habitacion' => $param['habitaciones']->getNombre(),
                             'nombre_cama' => $param['nombre'],
                             'id_clasificacion_cama' => $param['clasificaciones_camas']->getIdClasificacionCama(),
                             'estado' => $param['estado'],

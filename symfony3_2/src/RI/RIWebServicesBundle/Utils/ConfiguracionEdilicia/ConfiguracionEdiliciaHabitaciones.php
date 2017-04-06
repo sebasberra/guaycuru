@@ -61,7 +61,7 @@ trait ConfiguracionEdiliciaHabitaciones{
         
         
         // validacion assert
-        $this->validacionAssert($habitacion);
+        RIUtiles::validacionAssert($habitacion);
     
         
         // begintrans
@@ -141,7 +141,7 @@ trait ConfiguracionEdiliciaHabitaciones{
         
         
         // validacion assert
-        $this->validacionAssert($habitacion);
+        RIUtiles::validacionAssert($habitacion);
     
         
         // begintrans
