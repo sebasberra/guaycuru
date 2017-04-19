@@ -3,6 +3,28 @@
     color: blue;
 }
 
+.ri-tabla-titulolibre-left{
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: none;
+    text-align: left;
+    background-color: transparent;
+    color: black;
+    font-size: 90%;
+}
+
+.ri-tabla-titulolibre-right{
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: none;
+    text-align: right;
+    background-color: transparent;
+    color: black;
+    font-size: 90%;
+}
+
 .ri-tabla-titulo1 {
 
     border-left: none;
@@ -62,6 +84,35 @@
 .ri-th-left-lista {
 
     border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+
+}
+
+.ri-th-left-right-lista {
+
+    border-left:  1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+
+}
+
+.ri-th-foot-left-lista {
+
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+
+}
+
+.ri-th-foot-left-right-lista {
+
+    border-left:  1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     text-align: center;
 
 }

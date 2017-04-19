@@ -297,7 +297,7 @@ trait ConfiguracionEdiliciaCamas{
         
         $cama->setBaja($baja_nueva);
         
-        // estado libre
+        // estado
         $cama->setEstado($modif_cama["estado"]);
         
         // timestamp fecha modificacion

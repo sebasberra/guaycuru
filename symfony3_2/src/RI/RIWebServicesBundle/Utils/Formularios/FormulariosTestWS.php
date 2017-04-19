@@ -34,14 +34,16 @@ trait FormulariosTestWS
                 
                 case RIFormularios::TEST_WS_FORM_HABITACIONES:
                     
-                    $form = 
-                            RIFormularios::crearFormularioTestWSHabitaciones();
+                    $form = RI::$form_factory->create(
+                            'RI\RIWebServicesBundle\Form\Test\TestWSHabitacionesType');
+                    
                     break;
                 
                 case RIFormularios::TEST_WS_FORM_SALAS:
                     
-                    $form = 
-                            RIFormularios::crearFormularioTestWSSalas();
+                    $form = RI::$form_factory->create(
+                            'RI\RIWebServicesBundle\Form\Test\TestWSSalasType');
+                    
                     break;
                 
                 default:

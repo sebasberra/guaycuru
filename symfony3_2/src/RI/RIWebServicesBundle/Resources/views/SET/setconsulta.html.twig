@@ -1,0 +1,334 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script>    
+        $(document).ready(
+            
+            function() {
+
+                $('#listadoscamas').DataTable( {
+                    
+                    responsive: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    stateSave: true,
+                    lengthMenu: [ 
+                        [ 5, 10, 25, 50, -1 ], 
+                        [ 5, 10, 25, 50, "Todo" ] 
+                    ],
+                    fixedHeader: {
+                        header: true,
+                        footer: true
+                    },
+                    language:
+                    {
+                        url: "{{ asset('bundles/ri/js/datatable/espanol.json') }}",
+                        buttons: {
+                            colvis: 'Columnas',
+                            colvisRestore: 'Restaurar'
+                        }
+                    },
+                    dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'colvis',
+                            postfixButtons: [ 'colvisRestore' ]
+                        }
+                    ]
+                    
+                });
+                
+                
+            } 
+        );
+
+    </script>
+    
+{% endblock %}
+
+
+{% block cuerpo %} 
+
+    {{ form_start(form) }}
+    
+    {{ form_end(form) }}
+
+    <div class="container row">
+
+    <div class="col-md-11 twelvecol table-responsive">
+        
+    <table>
+        <tr>
+            <th 
+                class="ri-tabla-titulolibre-left">RESULTADOS:
+            </th>
+            <th
+                class="ri-tabla-titulolibre-right">
+                {% if camas|length!=0 %}
+                    Fecha/Hora: {{ "now"|date('m/d/Y H:i','America/Argentina/Buenos_Aires') }}
+                {% endif %}
+            </th>
+        </tr>
+    </table>
+            
+            
+    <table id="listadoscamas" class="ri-tabla-lista" cellspacing="10" width="100%">
+        <thead>
+            
+            <tr>
+                <th 
+                    class="ri-th-left-lista">Efector
+                </th>
+                <th 
+                    class="ri-th-left-lista">Sala
+                </th>
+                <th 
+                    class="ri-th-left-lista">Habitación
+                </th>
+                <th 
+                    class="ri-th-left-lista">Cama
+                </th>
+                <th 
+                    class="ri-th-left-lista">Estado
+                </th>
+                <th 
+                    class="ri-th-left-lista">Clasificación
+                </th>
+                <th 
+                    class="ri-th-left-lista">Oxígeno
+                </th>
+                <th 
+                    class="ri-th-left-lista">Respirador
+                </th>
+                <th 
+                    class="ri-th-left-right-lista">Aislamiento
+                </th>
+            </tr>
+            
+        </thead>
+        
+        
+        {% if camas|length!=0 %}
+            
+        <tfoot>
+            
+            <tr>
+                <th 
+                    class="ri-th-foot-left-lista">Efector
+                </th>
+                <th 
+                    class="ri-th-foot-left-lista">Sala
+                </th>
+                <th 
+                    class="ri-th-foot-left-lista">Habitación
+                </th>
+                <th 
+                    class="ri-th-foot-left-lista">Cama
+                </th>
+                <th 
+                    class="ri-th-foot-left-lista">Estado
+                </th>
+                <th 
+                    class="ri-th-foot-left-lista">Clasificación
+                </th>
+                <th 
+                    class="ri-th-foot-left-lista">Oxígeno
+                </th>
+                <th 
+                    class="ri-th-foot-left-lista">Respirador
+                </th>
+                <th 
+                    class="ri-th-foot-left-right-lista">Aislamiento
+                </th>
+            </tr>
+            
+        </tfoot>
+        
+        {% endif %}
+        
+        
+        <tbody>
+            {% for cama in camas %}
+            <tr>
+                <td 
+                    class="ri-th-bottom-lista">{{ cama.idEfector.nomEfector }}
+                </td>
+                <td 
+                    class="ri-th-bottom-lista">{{ cama.idHabitacion.idSala.nombre }}
+                </td>
+                <td
+                    class="ri-th-bottom-lista">{{ cama.idHabitacion.nombre }}
+                </td>
+                <td
+                    class="ri-th-bottom-lista">{{ cama.nombre }}
+                </td>
+                {# L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada #}
+                <td
+                    class="ri-th-bottom-lista">
+                    {% if cama.estado == 'L' %}
+                        LIBRE
+                    {% endif %}
+                    {% if cama.estado == 'O' %}
+                        OCUPADA
+                    {% endif %}
+                    {% if cama.estado == 'F' %}
+                        FUERA DE SERVICIO
+                    {% endif %}
+                    {% if cama.estado == 'R' %}
+                        REPARACION
+                    {% endif %}
+                    {% if cama.estado == 'V' %}
+                        RESERVADA
+                    {% endif %}
+                </td>
+                <td
+                    class="ri-th-bottom-lista">{{ cama.idClasificacionCama.clasificacionCama }}
+                </td>
+                <td
+                    class="ri-th-bottom-lista">
+                    {% if cama.idClasificacionCama.oxigeno %}
+                        SI
+                    {% else %}
+                        NO
+                    {% endif %}
+                </td>
+                <td
+                    class="ri-th-bottom-lista">
+                    {% if cama.idClasificacionCama.respirador %}
+                        SI
+                    {% else %}
+                        NO
+                    {% endif %}
+                </td>
+                <td
+                    class="ri-th-bottom-lista">
+                    {% if cama.idClasificacionCama.aislamiento %}
+                        SI
+                    {% else %}
+                        NO
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+                    
+        </tbody>
+    </table>
+            
+            
+            
+            
+    <script>
+        
+        var $efectores = $('#set_consulta_efectores');
+        var $salas = $('#set_consulta_salas');
+        
+        
+        $efectores.change(function() {
+            
+            refresh_combos(0,this);
+        });
+        
+                
+        $salas.change(function() {
+        
+            refresh_combos(1,this);
+
+        });
+        
+        
+        
+        function refresh_combos(combo,obj){
+            
+            // form
+            var $form = $(obj).closest('form');
+          
+            // captura datos
+            switch(combo) {
+                
+                case 0:
+                    
+                    id_efector = $efectores.val();
+                    id_sala = '';
+                
+                    break;
+                    
+                case 1:
+                    
+                    id_efector = $efectores.val();
+                    id_sala = $salas.val();
+                    
+                    break;
+                                                            
+            }
+                    
+            // set arreglo de datos AJAX
+            var data = {};
+            data[$efectores.attr('name')] = id_efector;
+            data[$salas.attr('name')] = id_sala;
+            
+            
+            console.log(data);
+            
+            // submit AJAX
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                
+                    console.log(html);
+
+                    switch(combo) {
+
+                        case 0: 
+
+                            // salas
+                            $('#set_consulta_salas').replaceWith(
+
+                                $(html).find('#set_consulta_salas')
+                            );
+
+                            // habitaciones
+                            $('#set_consulta_habitaciones').replaceWith(
+
+                                $(html).find('#set_consulta_habitaciones')
+                            );
+
+                            // refresh listener
+                            $salas = $('#set_consulta_salas');
+
+                            $salas.change(function() {
+
+                                refresh_combos(1,this);
+
+                            });
+
+                            break;
+
+                        case 1:
+
+                            // habitaciones
+                            $('#set_consulta_habitaciones').replaceWith(
+
+                                $(html).find('#set_consulta_habitaciones')
+                            );
+
+
+                            break;
+                    }
+
+
+                }
+
+            });
+
+        }
+        
+        
+        
+    </script>
+    
+{% endblock %}

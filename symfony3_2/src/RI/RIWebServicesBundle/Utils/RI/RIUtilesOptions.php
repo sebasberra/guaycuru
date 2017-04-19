@@ -85,7 +85,7 @@ trait RIUtilesOptions{
         $camas = 
                 parent::$em
                 ->getRepository(self::DB_BUNDLE.':Camas')
-                ->findByIdEfector($id_efector);
+                ->findByIdEfectorOptimizado($id_efector);
         
         
         $salas_hab_camas_choices=array();

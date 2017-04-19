@@ -2,406 +2,90 @@
 
 namespace RI\RIWebServicesBundle\Controller;
 
+
+use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
+
+use RI\RIWebServicesBundle\Utils\Render\Render;
 
 
 class ConfiguracionEdiliciaController extends Controller
 {
     
+    use Render;
+    
     /**
-    * @Route("/")
+    * @Route("/organigrama")
     */
-    public function indexAction()
+    public function organigramaAction(Request $request)
     {
         
-        return $this->render('RIWebServicesBundle:Default:index.html.twig');
-    }
-    
-    /**
-    * @Route("/agregarcama/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}",
-    *   name="ws_camas_agregar")
-    */
-    public function agregarCamaAction(
-            $id_efector,
-            $nombre_sala,
-            $nombre_habitacion,
-            $nombre_cama,
-            $id_clasificacion_cama,
-            $estado,
-            $rotativa,
-            $baja){
+        $config_edilicia = array();
+        $config_orgchart = array();
         
-        
-        $nueva_cama = [
-            'id_efector' => $id_efector,
-            'nombre_sala' => $nombre_sala,
-            'nombre_habitacion' => $nombre_habitacion,
-            'nombre_cama' => $nombre_cama,
-            'id_clasificacion_cama' => $id_clasificacion_cama,
-            'estado' => $estado,
-            'rotativa' => $rotativa,
-            'baja' => $baja
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $nueva_cama, 
-                "agregar_cama");
-        
-    }    
-    
-    
-    
-    /**
-    * @Route("/modificarcama/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}",
-    *   name="ws_camas_modificar")
-    */
-    public function modificarCamaAction(
-            $id_efector,
-            $nombre_sala,
-            $nombre_habitacion,
-            $nombre_cama,
-            $id_clasificacion_cama,
-            $estado,
-            $rotativa,
-            $baja){
-        
-        
-        $modif_cama = [
-            'id_efector' => $id_efector,
-            'nombre_sala' => $nombre_sala,
-            'nombre_habitacion' => $nombre_habitacion,
-            'nombre_cama' => $nombre_cama,
-            'id_clasificacion_cama' => $id_clasificacion_cama,
-            'estado' => $estado,
-            'rotativa' => $rotativa,
-            'baja' => $baja
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $modif_cama, 
-                "modificar_cama");
-        
-    }
-    
-    
-    /**
-    * @Route("/eliminarcama/{id_efector}/{nombre_cama}",
-    *   name="ws_camas_eliminar")
-    */
-    public function eliminarCamaAction(
-            $id_efector,
-            $nombre_cama){
-        
-        
-        $elimina_cama = [
-            'id_efector' => $id_efector,
-            'nombre_cama' => $nombre_cama
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $elimina_cama,
-                "eliminar_cama");
-        
-    }
-    
-    /**
-    * @Route("/ocuparcama/{id_efector}/{nombre_cama}",
-    *   name="ws_camas_ocupar")
-    */
-    public function ocuparCamaAction(
-            $id_efector,
-            $nombre_cama){
-        
-        
-        $ocupa_cama = [
-            'id_efector' => $id_efector,
-            'nombre_cama' => $nombre_cama
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $ocupa_cama,
-                "ocupar_cama");
-        
-    }
-    
-    /**
-    * @Route("/liberarcama/{id_efector}/{nombre_cama}",
-    *   name="ws_camas_liberar")
-    */
-    public function liberarCamaAction(
-            $id_efector,
-            $nombre_cama){
-        
-        
-        $libera_cama = [
-            'id_efector' => $id_efector,
-            'nombre_cama' => $nombre_cama
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $libera_cama,
-                "liberar_cama");
-        
-    }
-    
-    
-    /**
-    * @Route("/agregarhabitacion/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
-    */
-    public function agregarHabitacionAction(
-            $id_efector,
-            $nombre_sala,
-            $nombre_habitacion,
-            $sexo,
-            $edad_desde,
-            $edad_hasta,
-            $tipo_edad,
-            $baja){
-        
-        
-        $nueva_hab = [
-            'id_efector' => $id_efector,
-            'nombre_sala' => $nombre_sala,
-            'nombre_habitacion' => $nombre_habitacion,
-            'sexo' => $sexo,
-            'edad_desde' => $edad_desde,
-            'edad_hasta' => $edad_hasta,
-            'tipo_edad' => $tipo_edad,
-            'baja' => $baja
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $nueva_hab, 
-                "agregar_habitacion");
-        
-    }
-    
-    /**
-    * @Route("/modificarhabitacion/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{cant_camas}/{baja}")
-    */
-    public function modificarHabitacionAction(
-            $id_efector,
-            $nombre_sala,
-            $nombre_habitacion,
-            $sexo,
-            $edad_desde,
-            $edad_hasta,
-            $tipo_edad,
-            $cant_camas,
-            $baja){
-        
-        
-        $modif_hab = [
-            'id_efector' => $id_efector,
-            'nombre_sala' => $nombre_sala,
-            'nombre_habitacion' => $nombre_habitacion,
-            'sexo' => $sexo,
-            'edad_desde' => $edad_desde,
-            'edad_hasta' => $edad_hasta,
-            'tipo_edad' => $tipo_edad,
-            'cant_camas' => $cant_camas,
-            'baja' => $baja
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $modif_hab, 
-                "modificar_habitacion");
-        
-    }
-    
-    
-    /**
-    * @Route("/agregarsala/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}")
-    */
-    public function agregarSalaAction(
-            $id_efector,
-            $nombre_sala,
-            $area_cod_servicio,
-            $area_sector,
-            $area_subsector,
-            $mover_camas,
-            $baja){
-        
-        
-        $nueva_sala = [
-            'id_efector' => $id_efector,
-            'nombre_sala' => $nombre_sala,
-            'area_cod_servicio' => $area_cod_servicio,
-            'area_sector' => $area_sector,
-            'area_subsector' => $area_subsector,
-            'mover_camas' => $mover_camas,
-            'baja' => $baja
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $nueva_sala, 
-                "agregar_sala");
-        
-    }
-    
-    
-    /**
-    * @Route("/modificarsala/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}")
-    */
-    public function modificarSalaAction(
-            $id_efector,
-            $nombre_sala,
-            $area_cod_servicio,
-            $area_sector,
-            $area_subsector,
-            $mover_camas,
-            $baja){
-        
-        
-        $nueva_sala = [
-            'id_efector' => $id_efector,
-            'nombre_sala' => $nombre_sala,
-            'area_cod_servicio' => $area_cod_servicio,
-            'area_sector' => $area_sector,
-            'area_subsector' => $area_subsector,
-            'mover_camas' => $mover_camas,
-            'baja' => $baja
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $nueva_sala, 
-                "modificar_sala");
-        
-    }
-    
-    
-    
-    private function execConfiguracionEdilicia(
-            $datos,
-            $accion){
-        
-                
-        // ConfiguracionEdilicia
-        $ce = $this->get("app.configuracion_edilicia");
-        
-        try{
-                    
-            switch ($accion){
+        try {
 
-                case 'agregar_cama':
-                    
-                    $msg = $ce->agregarCama($datos);
-                    break;
-                
-                case 'modificar_cama':
+            $this->get('app.ri_formularios');
+            
+            
+            // form
+            $form = RI::$form_factory->create(
+                    'RI\RIWebServicesBundle\Form\ConfiguracionEdilicia\ConfiguracionEdiliciaType');
+            
 
-                    $msg = $ce->modificarCama($datos);
-                    break;
-                
-                case 'eliminar_cama':
+            $form->handleRequest($request);
+            
+            // check submit
+            if ($form->isSubmitted() && 
+                    $form->isValid()) {
 
-                    $msg = $ce->eliminarCama($datos);
-                    break;
-                
-                case 'ocupar_cama':
-                    
-                    $msg = $ce->ocuparCama($datos);
-                    break;
-                
-                case 'liberar_cama':
-                    
-                    $msg = $ce->liberarCama($datos);
-                    break;
-                
-                case 'agregar_habitacion':
-                    
-                    $msg = $ce->agregarHabitacion($datos);
-                    break;
-                
-                case 'modificar_habitacion':
-                    
-                    $msg = $ce->modificarHabitacion($datos);
-                    break;
-                
-                case 'agregar_sala':
-                    
-                    $msg = $ce->agregarSala($datos);
-                    break;
-                
-                case 'modificar_sala':
-                    
-                    $msg = $ce->modificarSala($datos);
-                    break;
 
-            }
-        
-            return $this->render(
-                'RIWebServicesBundle:Default:msg.html.twig',
-                array(
-                    'datos' => $datos,
-                    'msg' => $msg,
-                    'error_debug' => RI::$error_debug)
+                
+                $param = $form->getData();
+                
+                $id_efector = 
+                        $param['efectores']->getIdEfector();
+           
+                $config_edilicia = RIUtiles::getSalasHabCamasChoices($id_efector);
+                
+                $config_orgchart = array(
+                    
+                    'direccion'                 => $param['direccion'],
+                    'zoom'                      => $param['zoom'],
+                    'pan'                       => $param['pan'],
+                    'profundidad'               => $param['profundidad'],
+                    'export_file_extension'     => $param['export_file_extension']
+                        
                     );
-            
-        } catch (\Exception $e) {
-
-            $msg = $e->getMessage();
-            
-            switch ($accion){
-
-                case 'agregar_cama':
-                    
-                    $titulo = "Error al agregar la cama";
-                    break;
                 
-                case 'modificar_cama':
-                    
-                    $titulo = "Error al modificar la cama";
-                    break;
-
-                case 'eliminar_cama':
-
-                   $titulo = "Error al eliminar la cama";
-                   break;
-               
-                case 'ocupar_cama':
-                   
-                   $titulo = "Error al ocupar la cama";
-                   break;
-               
-                case 'liberar_cama':
-                    
-                   $titulo = "Error al liberar la cama";
-                   break;
-               
-                case 'agregar_habitacion':
-                    
-                   $titulo = "Error al agregar la habitación";
-                   break;
-               
-               case 'modificar_habitacion':
-                    
-                   $titulo = "Error al modificar la habitación";
-                   break;
-               
-
             }
+
+        }catch(\Exception $e){
             
-            // error al generar el censo
-            return $this->render(
-                    'Exception/error.html.twig',
-                    array(
-                        'titulo' => $titulo,
-                        'msg' => $msg,
-                        'debug' => RI::$error_debug)
-                    );
+            $msg = 'Desconocido';
+            
+            RI::$error_debug .= 
+                    "Funcion organigramaAction: "
+                    .$e->getMessage();
+            
+            return $this->renderException(
+                    'Error al cargar el organigrama de la configuración edilicia del efector', 
+                    $msg);
+
         }
+    
+        return $this->render(
+                'RIWebServicesBundle:ConfiguracionEdilicia:config_edilicia_organigrama.html.twig',
+                array(
+                    'form' =>$form->createView(),
+                    'config_edilicia' => $config_edilicia,
+                    'config_orgchart' => $config_orgchart
+                ));
     }
+    
 }
