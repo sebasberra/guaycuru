@@ -2,8 +2,10 @@
 
 namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 
+use RI\DBHmi2GuaycuruCamasBundle\Entity\Salas;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 
 trait ConfiguracionEdiliciaSalas{
@@ -11,22 +13,56 @@ trait ConfiguracionEdiliciaSalas{
     public function agregarSala($nueva_sala){
         
         
-                        
-        // objeto Habitaciones doctrine
+        
+        try{
+            
+            // get efector
+            $efector = RIUtiles::getEfector($nueva_sala['id_efector']);
+        
+            // check area
+            if ($nueva_sala['area_cod_servicio']!=-1){
+
+                $area_efector_servicio = 
+                        RIUtiles::getEfectorServicioCodigoEstadistica(
+                                $nueva_sala['id_efector'], 
+                                $nueva_sala['area_cod_servicio'], 
+                                $nueva_sala['area_sector'], 
+                                $nueva_sala['area_subsector']);
+
+                $area_cod_servicio = $area_efector_servicio->getCodServicio();
+                $area_sector = $area_efector_servicio->getSector();
+                $area_subsector = $area_efector_servicio->getSubsector();
+
+            }else{
+
+                $area_efector_servicio = null;
+                $area_cod_servicio = null;
+                $area_sector = null;
+                $area_subsector = null;
+
+            }
+        
+        } catch (\Exception $e) {
+            
+            RI::$error_debug .= " Función agregarSala";
+            
+            throw $e;
+            
+        }
+        
+        
+        // objeto Salas doctrine
         $sala = new Salas();
         
         
-        // area_cod_servicio
-        $sala->setAreaCodServicio($nueva_sala["area_cod_servicio"]);
-        
         // areaEfectorServicio
-        $sala->setAreaEfectorServicio($nueva_sala["area_id_efector_servicio"]);
+        $sala->setAreaEfectorServicio($area_efector_servicio);
         
         // area_sector
-        $sala->setSector($nueva_sala["area_sector"]);
+        $sala->setAreaSector($area_sector);
         
         // area_subsector
-        $sala->setSubsector($nueva_sala["area_subsector"]);
+        $sala->setAreaSubsector($area_subsector);
         
         // cant_camas
         $sala->setCantCamas(0);
@@ -35,14 +71,18 @@ trait ConfiguracionEdiliciaSalas{
         $sala->setFechaModificacion(null);
         
         // id_efector
-        $sala->setIdEfector($nueva_sala["id_efector"]);
+        $sala->setIdEfector($efector);
          
         // mover_camas
-        $sala->setMoverCamas($nueva_sala["mover_camas"]);
+        $sala->setMoverCamas(RIUtiles::wrapBoolean($nueva_sala["mover_camas"]));
         
         // nombre sala
         $sala->setNombre($nueva_sala["nombre_sala"]);
         
+        // baja
+        $sala->setBaja(RIUtiles::wrapBoolean($nueva_sala["baja"]));
+        
+//        dump($sala);die();
         
         // begintrans
         RI::$conn->beginTransaction();
@@ -54,8 +94,10 @@ trait ConfiguracionEdiliciaSalas{
             // nro_sala
             $nro_sala = 
                 RI::$doctrine->getRepository
-                    ('DBHmi2GuaycuruCamasBundle:Salas')
-                    ->getProximoNroSala($nueva_sala["id_efector"]);
+                    (RIUtiles::DB_BUNDLE.':Salas')
+                    ->getProximoNroSala($efector->getIdEfector())
+                    ['proximo_nro_sala'];
+            
             
             if ($nro_sala<=0){
             
@@ -63,12 +105,12 @@ trait ConfiguracionEdiliciaSalas{
                     "No se pudo recuperar el próximo nro de sala en el "
                     ." efector. La función servicios_get_proximo_nro_sala "
                     ." ("
-                    .$nueva_sala["id_efector"]
+                    .$efector->getIdEfector()
                     .") devolvió: "
                     .$nro_sala;
             
                 $msg = "Error al recupar el próximo nro de sala del efector: "
-                        .$nueva_sala["id_efector"];
+                        .$efector->getIdEfector();
                 
                 // rollback
                 RI::$conn->rollBack();
@@ -83,21 +125,22 @@ trait ConfiguracionEdiliciaSalas{
             // id_sala
             $id_sala = 
                 RI::$doctrine->getRepository
-                    ('DBHmi2GuaycuruCamasBundle:Salas')
-                    ->getProximoIdSala($nueva_sala["id_efector"]);
+                    (RIUtiles::DB_BUNDLE.':Salas')
+                    ->getProximoIdSala($efector->getIdEfector())
+                    ['proximo_id_sala'];
             
-            if ($nro_sala<=0){
+            if ($id_sala<=0){
             
                 RI::$error_debug .=
                     "No se pudo recuperar el próximo id de sala en el "
                     ." efector. La función servicios_get_proximo_id_sala "
                     ." ("
-                    .$nueva_sala["id_efector"]
+                    .$efector->getIdEfector()
                     .") devolvió: "
                     .$id_sala;
             
                 $msg = "Error al recupar el próximo id de sala del efector: "
-                        .$nueva_sala["id_efector"];
+                        .$efector->getIdEfector();
                 
                 // rollback
                 RI::$conn->rollBack();
@@ -133,7 +176,9 @@ trait ConfiguracionEdiliciaSalas{
         
         $msg = "La sala: ".$nueva_sala["nombre_sala"]
                 ." fue ingresada al efector: "
-                .$nueva_sala["id_efector"];
+                .$efector->getIdEfector().". "
+                ."El id de sala asignado es: "
+                .$id_sala;
         
         
         return $msg;
@@ -272,7 +317,7 @@ trait ConfiguracionEdiliciaSalas{
         try {
         
             $sala =
-                    RIUtiles::geSala(
+                    RIUtiles::getSalaPorNombre(
                             $elimina_sala["nombre_sala"],
                             $elimina_sala["id_efector"]
                             );
@@ -294,7 +339,7 @@ trait ConfiguracionEdiliciaSalas{
             // count camas habitacion
             $count = 
                 RI::$doctrine->getRepository
-                    ('DBHmi2GuaycuruCamasBundle:Salas')
+                    (RIUtiles::DB_BUNDLE.':Salas')
                     ->countCamasTodas(
                             $sala->getIdSala());
             

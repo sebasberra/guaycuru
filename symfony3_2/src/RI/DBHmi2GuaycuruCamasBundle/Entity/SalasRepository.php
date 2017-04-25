@@ -4,6 +4,7 @@ namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 
@@ -18,7 +19,7 @@ class SalasRepository extends EntityRepository
             "SELECT "
                 ."s, e , aes "
             ."FROM "
-                ."DBHmi2GuaycuruBundle:Salas s "
+                .RIUtiles::DB_BUNDLE.":Salas s "
             ."JOIN "
                 ."s.idEfector e "
             ."LEFT JOIN "
@@ -36,6 +37,8 @@ class SalasRepository extends EntityRepository
             
         } catch (\Exception $e) {
 
+            RI::$error_debug .= $e->getMessage();
+            
             throw $e;
         }
         
@@ -67,6 +70,8 @@ class SalasRepository extends EntityRepository
             
         } catch (\Exception $e) {
 
+            RI::$error_debug .= $e->getMessage();
+            
             throw $e;
         }
         
@@ -85,7 +90,7 @@ class SalasRepository extends EntityRepository
             "SELECT "
                 ."s "
             ."FROM "
-                ."DBHmi2GuaycuruCamasBundle:Salas s "
+                .RIUtiles::DB_BUNDLE.":Salas s "
             ."WHERE "
                 ."s.nombre = :nombre_sala "
             ."AND s.idEfector = :id_efector ";
@@ -101,6 +106,8 @@ class SalasRepository extends EntityRepository
             
         } catch (\Exception $e) {
 
+            RI::$error_debug .= $e->getMessage();
+            
             throw $e;            
         }
         
@@ -115,9 +122,9 @@ class SalasRepository extends EntityRepository
                 "SELECT "
                     ."COUNT(c.idCama) "
                 ."FROM "
-                    ."DBHmi2GuaycuruCamasBundle:Camas c "
+                    .RIUtiles::DB_BUNDLE.":Camas c "
                 ."INNER JOIN "
-                    ."DBHmi2GuaycuruCamasBundle:Habitaciones h "
+                    .RIUtiles::DB_BUNDLE.":Habitaciones h "
                 ."WHERE "
                     ."c.idSala = :id_sala "
                 ."AND h.idHabitacion = c.idHabitacion";
@@ -132,6 +139,8 @@ class SalasRepository extends EntityRepository
             
         } catch (\Exception $e) {
 
+            RI::$error_debug .= $e->getMessage();
+            
             throw $e;            
             
         }
@@ -148,9 +157,9 @@ class SalasRepository extends EntityRepository
                 "SELECT "
                     ."COUNT(c.idCama) "
                 ."FROM "
-                    ."DBHmi2GuaycuruCamasBundle:Camas c "
+                    .RIUtiles::DB_BUNDLE.":Camas c "
                 ."INNER JOIN "
-                    ."DBHmi2GuaycuruCamasBundle:Habitaciones h "
+                    .RIUtiles::DB_BUNDLE.":Habitaciones h "
                 ."WHERE "
                     ."c.idSala = :id_sala "
                 ."AND c.baja = :baja "
@@ -167,6 +176,8 @@ class SalasRepository extends EntityRepository
             
         } catch (\Exception $e) {
 
+            RI::$error_debug .= $e->getMessage();
+            
             throw $e;            
             
         }
@@ -180,7 +191,7 @@ class SalasRepository extends EntityRepository
         
         $sql = 
                 "SELECT "
-                    ."servicios_get_proximo_id_sala(:id_efector) ";
+                    ."servicios_get_proximo_id_sala(:id_efector) AS 'proximo_id_sala' ";
                 
         // prepare sql
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
@@ -194,9 +205,11 @@ class SalasRepository extends EntityRepository
                         
         } catch (\Exception $e) {
 
-            $msg = "Error calcular el proximo id_sala libre del efector: "
+            $msg = "Error al calcular el proximo id_sala libre del efector: "
                     .$id_efector;
-                    
+            
+            RI::$error_debug .= $e->getMessage();
+            
             throw new \Exception($msg);
             
         }
@@ -211,7 +224,7 @@ class SalasRepository extends EntityRepository
         
         $sql = 
                 "SELECT "
-                    ."servicios_get_proximo_nro_sala(:id_efector) ";
+                    ."servicios_get_proximo_nro_sala(:id_efector) AS proximo_nro_sala ";
                 
         // prepare sql
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
@@ -225,9 +238,11 @@ class SalasRepository extends EntityRepository
                         
         } catch (\Exception $e) {
 
-            $msg = "Error calcular el proximo nro de sala libre del efector: "
+            $msg = "Error al calcular el proximo nro de sala libre del efector: "
                     .$id_efector;
-                    
+            
+            RI::$error_debug .= $e->getMessage();
+            
             throw new \Exception($msg);
             
         }

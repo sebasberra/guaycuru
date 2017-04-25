@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EfectoresServicios
  *
  * @ORM\Table(name="efectores_servicios", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_claveestd_cod_servicio_sector_subsector", columns={"claveestd", "cod_servicio", "sector", "subsector"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_id_servicio_estadistica", columns={"id_efector", "id_servicio_estadistica"})}, indexes={@ORM\Index(name="idx_fk_efectores_servicios_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_efectores_servicios_id_servicio_estadistica", columns={"id_servicio_estadistica"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="RI\DBHmi2GuaycuruCamasBundle\Entity\EfectoresServiciosRepository")
  */
 class EfectoresServicios
 {

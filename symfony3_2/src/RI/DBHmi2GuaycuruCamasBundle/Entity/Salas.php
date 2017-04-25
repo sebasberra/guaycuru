@@ -27,7 +27,7 @@ class Salas
      *
      * @ORM\Column(name="id_sala", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idSala;
 
@@ -141,6 +141,21 @@ class Salas
 
 
     /**
+     * Set idSala
+     *
+     * @param integer $idSala
+     *
+     * @return Salas
+     */
+    public function setIdSala($idSala)
+    {
+        $this->idSala = $idSala;
+
+        return $this;
+    }
+    
+    
+    /**
      * Get idSala
      *
      * @return integer
@@ -150,6 +165,7 @@ class Salas
         return $this->idSala;
     }
 
+    
     /**
      * Set nroSala
      *

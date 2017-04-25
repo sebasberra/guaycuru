@@ -41,6 +41,40 @@ class HabitacionesRepository extends EntityRepository
         return $habitaciones;
     }
     
+    
+    public function findByIdEfectorConAsociaciones(
+            $id_efector)
+    {
+                        
+        $dql =
+            "SELECT "
+                ."h, s "
+            ."FROM "
+                .RIUtiles::DB_BUNDLE.":Habitaciones h "
+            ."INNER JOIN "
+                ."h.idSala s "
+            ."WHERE "
+                ."s.idEfector = :id_efector "
+            ."AND s.idSala = h.idSala ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_efector", $id_efector);
+            
+            $habitaciones = $query->getResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
+        
+        return $habitaciones;
+    }
+    
+    
+    
     public function findByIdCama(
             $id_cama)
     {
@@ -94,7 +128,7 @@ class HabitacionesRepository extends EntityRepository
             "SELECT "
                 ."s "
             ."FROM "
-                ."DBHmi2GuaycuruCamasBundle:Salas s "
+                .RIUtiles::DB_BUNDLE.":Salas s "
             ."WHERE "
                 ."s.idEfector = :id_efector "
             ."AND s.nombre = :nombre_sala ";
@@ -120,9 +154,9 @@ class HabitacionesRepository extends EntityRepository
             "SELECT "
                 ."h "
             ."FROM "
-                ."DBHmi2GuaycuruCamasBundle:Habitaciones h "
+                .RIUtiles::DB_BUNDLE.":Habitaciones h "
             ."INNER JOIN "
-                ."DBHmi2GuaycuruCamasBundle:Salas s "
+                .RIUtiles::DB_BUNDLE.":Salas s "
             ."WHERE "
                 ."h.nombre = :nombre_habitacion "
             ."AND s.idEfector = :id_efector "
@@ -157,7 +191,7 @@ class HabitacionesRepository extends EntityRepository
                 "SELECT "
                     ."COUNT(c.idCama) "
                 ."FROM "
-                    ."DBHmi2GuaycuruCamasBundle:Camas c "
+                    .RIUtiles::DB_BUNDLE.":Camas c "
                 ."WHERE "
                    ." c.idHabitacion = :id_habitacion "
                 ."AND c.baja = :baja";
@@ -188,7 +222,7 @@ class HabitacionesRepository extends EntityRepository
                 "SELECT "
                     ."COUNT(c.idCama) "
                 ."FROM "
-                    ."DBHmi2GuaycuruCamasBundle:Camas c "
+                    .RIUtiles::DB_BUNDLE.":Camas c "
                 ."WHERE "
                    ." c.idHabitacion = :id_habitacion ";
         

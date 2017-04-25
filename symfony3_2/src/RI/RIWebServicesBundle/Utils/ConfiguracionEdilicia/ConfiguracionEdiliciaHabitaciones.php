@@ -2,6 +2,7 @@
 
 namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 
+use RI\DBHmi2GuaycuruCamasBundle\Entity\Habitaciones;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 
@@ -247,7 +248,7 @@ trait ConfiguracionEdiliciaHabitaciones{
             // count camas habitacion
             $count = 
                 $this->doctrine->getRepository
-                    ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                    (RIUtiles::DB_BUNDLE.':Habitaciones')
                     ->countCamas(
                             $habitacion->getIdHabitacion());
             

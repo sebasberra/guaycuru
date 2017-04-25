@@ -14,4 +14,77 @@
        
     {{form_end(form)}}
 
+    <script>
+        
+        var $efectores = $('#test_ws_salas_efectores');
+        
+        
+        $efectores.change(function() {
+            
+            refresh_combos(0,this);
+        });
+        
+                        
+        
+        // 0: efectores_servicios
+        function refresh_combos(combo,obj){
+            
+            // form
+            var $form = $(obj).closest('form');
+          
+            // captura datos
+            switch(combo) {
+                
+                case 0:
+                    
+                    id_efector = $efectores.val();
+                    
+                    break;
+                    
+                                                            
+            }
+                    
+            // set arreglo de datos AJAX
+            var data = {};
+            data[$efectores.attr('name')] = id_efector;
+                        
+            
+            console.log(data);
+            
+            // submit AJAX
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                
+                    console.log(html);
+
+                    switch(combo) {
+
+                        case 0: 
+
+                            // efectores_servicios
+                            $('#test_ws_salas_efectores_servicios').replaceWith(
+
+                                $(html).find('#test_ws_salas_efectores_servicios')
+                            );
+
+
+                            break;
+
+                    }
+
+
+                }
+
+            });
+
+        }
+        
+        
+        
+    </script>
+    
+    
 {% endblock %}

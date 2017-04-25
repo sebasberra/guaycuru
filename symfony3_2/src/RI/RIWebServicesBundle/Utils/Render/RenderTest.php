@@ -107,7 +107,65 @@ trait RenderTest{
             
             case RIFormularios::TEST_WS_FORM_SALAS:
                 
-                                
+                // area_id_efector_servicio
+                $area_efector_servicio = $param['efectores_servicios'];
+                if ($area_efector_servicio != null){
+                
+                    $area_cod_servicio = $area_efector_servicio->getCodServicio();
+                    $area_sector = $area_efector_servicio->getSector();
+                    $area_subsector = $area_efector_servicio->getSubsector();
+                    
+                }else{
+                    
+                    $area_cod_servicio = -1;
+                    $area_sector = -1;
+                    $area_subsector = -1;
+                    
+                }
+                
+                $datos_sala = 
+                        array(
+                            'id_efector' => $param['efectores']->getIdEfector(),
+                            'nombre_sala' => $param['nombre'],
+                            'area_cod_servicio' => $area_cod_servicio,
+                            'area_sector' => $area_sector,
+                            'area_subsector' => $area_subsector,
+                            'mover_camas' => $param['mover_camas'],
+                            'baja' => $param['baja']);
+                
+                //dump($datos_sala);die();
+
+
+                // agregar
+                if ($form->get('bt_agregar')->isClicked()) {
+
+                    // redirect
+                    return $this->redirectToRoute(
+                            'ws_salas_agregar',
+                            $datos_sala);
+
+                }
+
+                // modificar
+                if ($form->get('bt_modificar')->isClicked()) {
+
+                    // redirect
+                    return $this->redirectToRoute(
+                            'ws_salas_modificar',
+                            $datos_sala);
+
+                }
+
+                // eliminar
+                if ($form->get('bt_eliminar')->isClicked()) {
+
+                    // redirect
+                    return $this->redirectToRoute(
+                            'ws_salas_eliminar',
+                            $datos_sala);
+
+                }
+                
                 break;
             
             default:

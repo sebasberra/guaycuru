@@ -207,6 +207,103 @@ class RIUtiles extends RI
         
     }
     
+    public static function getSalaPorNombre(
+            $nombre_sala,
+            $id_efector){
+        
+        
+        // sala
+        try {
+        
+            $sala = 
+                self::$doctrine->getRepository
+                    (self::DB_BUNDLE.':Salas')
+                    ->findOneByNombreIdEfector(
+                            $nombre_sala,
+                            $id_efector);
+            
+        
+        } catch (\Doctrine\ORM\NoResultException $nre){
+            
+            $msg = "La sala no existe en la base de datos";
+            
+            $msg_debug = "El nombre de sala: "
+                    .$nombre_sala
+                    ." en el efector "
+                    .$id_efector
+                    ." no existe en la base de datos";
+            
+            self::$error_debug .= " Función getSalaPorNombre: "
+                    .$msg_debug
+                    ." || exception.getMessage: "
+                    .$nre->getMessage();
+            
+            throw new \Exception($msg);
+            
+        
+        } catch (\Doctrine\ORM\NonUniqueResultException $nure){
+            
+            
+            $msg =
+                    "Existe más de una sala con el nombre y efector especificados";
+            
+            $msg_debug =
+                    "Existe más de una sala con el nombre: "
+                    .$nombre_sala
+                    ." en el efector "
+                    .$id_efector
+                    ." especificados";
+            
+            self::$error_debug .= "<p>Función getSalaPorNombre: "
+                    .$msg_debug
+                    ." || exception.getMessage: "
+                    .$nure->getMessage()
+                    ."</p>";
+            
+            
+            
+            throw new \Exception($msg);
+            
+        } catch (\Exception $e) {
+
+            $msg = 'Error al buscar la sala';
+            
+            $msg_debug = 'Error al buscar la sala con nombre: '
+                    .$nombre_sala
+                    ." en el efector "
+                    .$id_efector;
+            
+            self::$error_debug .= "<p>Función getSalaPorNombre: "
+                    .$msg_debug
+                    ." || exception.getMessage: "
+                    .$e->getMessage()
+                    ."</p>";
+            
+            throw new \Exception($msg);
+            
+        }
+        
+        // check sala encontrada o lanza excepcion
+        if (!$sala){
+        
+            $msg = "La sala no existe en la base de datos";
+            
+            $msg_debug = "El nombre de sala: "
+                    .$nombre_sala
+                    ." en el efector "
+                    .$id_efector
+                    ." no existe en la base de datos";
+            
+            self::$error_debug .= "Función getSalaPorNombre"
+                    .$msg_debug;
+                    
+            throw new \Exception($msg);
+            
+        }
+        
+        return $sala;
+        
+    }
     
     public static function getEfectorServicio(
             $id_efector_servicio,
@@ -295,6 +392,130 @@ class RIUtiles extends RI
                     ." no existe en la base de datos";
             
             self::$error_debug .= "Función getEfectorServicio"
+                    .$msg_debug;
+                    
+            throw new \Exception($msg);
+            
+        }
+        
+        return $efector_servicio;
+        
+    }
+    
+    
+    
+    public static function getEfectorServicioCodigoEstadistica(
+            $id_efector,
+            $cod_servicio,
+            $sector,
+            $subsector){
+        
+        
+        // efector servicio
+        try {
+        
+            $efector_servicio = 
+                self::$doctrine->getRepository
+                    (self::DB_BUNDLE.':EfectoresServicios')
+                    ->findOneByCodigoServicio(
+                            $id_efector,
+                            $cod_servicio,
+                            $sector,
+                            $subsector);
+            
+        
+        } catch (\Doctrine\ORM\NoResultException $nre){
+            
+            $msg = "El servicio no existe en el efector";
+            
+            $msg_debug = "El id de efector servicio con "
+                    ."id_efector = "
+                    .$id_efector.", "
+                    ."cod_servicio = "
+                    .$cod_servicio.", "
+                    ."sector = "
+                    .$sector.", "
+                    ."subsector = "
+                    .$subsector
+                    ." no existe en la base de datos";
+            
+            self::$error_debug .= " Función getEfectorServicioCodigoEstadistica: "
+                    .$msg_debug
+                    ." || exception.getMessage: "
+                    .$nre->getMessage();
+            
+            throw new \Exception($msg);
+            
+        
+        } catch (\Doctrine\ORM\NonUniqueResultException $nure){
+            
+            
+            $msg =
+                    "Existe más de un servicio con el identificador especificado";
+            
+            $msg_debug =
+                    "Existe más de un servicio con: "
+                    ."id_efector = "
+                    .$id_efector.", "
+                    ."cod_servicio = "
+                    .$cod_servicio.", "
+                    ."sector = "
+                    .$sector.", "
+                    ."subsector = "
+                    .$subsector
+                    ." especificados";
+            
+            self::$error_debug .= "<p>Función getEfectorServicioCodigoEstadistica: "
+                    .$msg_debug
+                    ." || exception.getMessage: "
+                    .$nure->getMessage()
+                    ."</p>";
+            
+            
+            
+            throw new \Exception($msg);
+            
+        } catch (\Exception $e) {
+
+            $msg = 'Error al buscar servicio en el efector';
+            
+            $msg_debug = 'Error al buscar el efector_servicio con: '
+                    ."id_efector = "
+                    .$id_efector.", "
+                    ."cod_servicio = "
+                    .$cod_servicio.", "
+                    ."sector = "
+                    .$sector.", "
+                    ."subsector = "
+                    .$subsector;
+            
+            self::$error_debug .= "<p>Función getEfectorServicioCodigoEstadistica: "
+                    .$msg_debug
+                    ." || exception.getMessage: "
+                    .$e->getMessage()
+                    ."</p>";
+            
+            throw new \Exception($msg);
+            
+        }
+        
+        // check efector servicio encontrada o lanza excepcion
+        if (!$efector_servicio){
+        
+            $msg = "El servicio no existe en el efector";
+            
+            $msg_debug = "El id efector servicio con: "
+                    ."id_efector = "
+                    .$id_efector.", "
+                    ."cod_servicio = "
+                    .$cod_servicio.", "
+                    ."sector = "
+                    .$sector.", "
+                    ."subsector = "
+                    .$subsector
+                    ." no existe en la base de datos";
+            
+            self::$error_debug .= "Función getEfectorServicioCodigoEstadistica"
                     .$msg_debug;
                     
             throw new \Exception($msg);

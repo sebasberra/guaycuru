@@ -81,7 +81,8 @@ trait RIUtilesOptions{
      */
     public static function getSalasHabCamasChoices($id_efector){
         
-                
+        
+        // obtiene las camas
         $camas = 
                 parent::$em
                 ->getRepository(self::DB_BUNDLE.':Camas')
@@ -129,6 +130,48 @@ trait RIUtilesOptions{
                 }
                 
             }
+        }
+        
+        
+        // obtiene las salas
+        $salas =
+                parent::$em
+                ->getRepository(self::DB_BUNDLE.':Salas')
+                ->findByIdEfector($id_efector);
+        
+        // agrega salas que no tienen camas
+        foreach($salas as $sala){
+            
+            $nombre_sala = $sala->getNombre();
+            
+            if ( !array_key_exists($nombre_sala,$salas_hab_camas_choices) ){
+                
+                $salas_hab_camas_choices[$nombre_sala] = array();
+            }
+        }
+        
+        // obtiene las habitaciones
+        $habitaciones =
+                parent::$em
+                ->getRepository(self::DB_BUNDLE.':Habitaciones')
+                ->findByIdEfectorConAsociaciones($id_efector);
+ 
+        
+        // agrega habitaciones que no tienen camas
+        foreach($habitaciones as $habitacion){
+            
+            $nombre_sala = $habitacion->getIdSala()->getNombre();
+            $nombre_hab = $habitacion->getNombre();
+            
+            if (!array_key_exists(
+                    $nombre_hab, 
+                    $salas_hab_camas_choices[$nombre_sala])){
+
+
+                    $salas_hab_camas_choices[$nombre_sala][$nombre_hab] = array();
+                    
+            }
+            
         }
         
         return $salas_hab_camas_choices;

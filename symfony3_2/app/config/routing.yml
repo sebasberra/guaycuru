@@ -8,8 +8,8 @@ ri_set:
     type:     annotation
     prefix:   /set
 
-ri_web_services:
-    resource: "@RIWebServicesBundle/Controller/WebServicesController.php"
+ri_ws:
+    resource: "@RIWebServicesBundle/Controller/WSController.php"
     type:     annotation
     prefix:   /ws
     
