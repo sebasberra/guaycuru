@@ -34,8 +34,8 @@ class ConfiguracionEdilicia extends RI
         // count camas habitacion
         $count = 
             RI::$doctrine->getRepository
-                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
-                ->countCamas($habitacion->getIdHabitacion());
+                (RIUtiles::DB_BUNDLE.':Habitaciones')
+                ->countCamas($habitacion->getIdHabitacion(),false);
         
         // cant camas
         $habitacion->setCantCamas($count);
@@ -53,8 +53,8 @@ class ConfiguracionEdilicia extends RI
         // count camas salas
         $count = 
             RI::$doctrine->getRepository
-                ('DBHmi2GuaycuruCamasBundle:Salas')
-                ->countCamas($sala->getIdSala());
+                (RIUtiles::DB_BUNDLE.':Salas')
+                ->countCamas($sala->getIdSala(),false);
         
         // cant camas
         $sala->setCantCamas($count);
@@ -75,7 +75,7 @@ class ConfiguracionEdilicia extends RI
         // habitaciones de la sala
         $habitaciones = 
             RI::$doctrine->getRepository
-                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                (RIUtiles::DB_BUNDLE.':Habitaciones')
                 ->findByIdSala($id_sala);
 
         foreach($habitaciones as $habitacion) {
@@ -94,7 +94,7 @@ class ConfiguracionEdilicia extends RI
         // baja cama de la habitacion
         $camas = 
             RI::$doctrine->getRepository
-                ('DBHmi2GuaycuruCamasBundle:Camas')
+                (RIUtiles::DB_BUNDLE.':Camas')
                 ->findByIdHabitacion($id_habitacion);
 
         foreach($camas as $cama) {
@@ -133,7 +133,7 @@ class ConfiguracionEdilicia extends RI
         // baja cama de la sala
         $camas = 
             RI::$doctrine->getRepository
-                ('DBHmi2GuaycuruCamasBundle:Camas')
+                (RIUtiles::DB_BUNDLE.':Camas')
                 ->findByIdSala($id_sala);
 
         foreach($camas as $cama) {
@@ -172,7 +172,7 @@ class ConfiguracionEdilicia extends RI
         // habitaciones de la sala
         $habitaciones = 
             RI::$doctrine->getRepository
-                ('DBHmi2GuaycuruCamasBundle:Habitaciones')
+                (RIUtiles::DB_BUNDLE.':Habitaciones')
                 ->findByIdSala($id_sala);
 
         foreach($habitaciones as $habitacion) {

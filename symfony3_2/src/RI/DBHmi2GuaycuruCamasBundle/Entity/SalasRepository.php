@@ -11,6 +11,40 @@ use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 class SalasRepository extends EntityRepository
 {
     
+    public function findByIdEfectorBaja(
+            $id_efector,
+            $baja)
+    {
+                        
+        $dql =
+            "SELECT "
+                ."s "
+            ."FROM "
+                .RIUtiles::DB_BUNDLE.":Salas s "
+            ."WHERE "
+                ."s.idEfector = :id_efector "
+            ."AND s.baja = :baja";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_efector", $id_efector);
+            $query->setParameter("baja", $baja);
+            
+            $salas = $query->getResult();
+            
+        } catch (\Exception $e) {
+
+            RI::$error_debug .= $e->getMessage();
+            
+            throw $e;
+        }
+        
+        return $salas;
+    }
+    
+    
     public function findOneByIdSalaConAsociaciones(
             $id_sala)
     {
@@ -126,7 +160,7 @@ class SalasRepository extends EntityRepository
                 ."INNER JOIN "
                     .RIUtiles::DB_BUNDLE.":Habitaciones h "
                 ."WHERE "
-                    ."c.idSala = :id_sala "
+                    ."h.idSala = :id_sala "
                 ."AND h.idHabitacion = c.idHabitacion";
                    
         
@@ -161,7 +195,7 @@ class SalasRepository extends EntityRepository
                 ."INNER JOIN "
                     .RIUtiles::DB_BUNDLE.":Habitaciones h "
                 ."WHERE "
-                    ."c.idSala = :id_sala "
+                    ."h.idSala = :id_sala "
                 ."AND c.baja = :baja "
                 ."AND h.idHabitacion = c.idHabitacion";
                    

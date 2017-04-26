@@ -102,7 +102,48 @@ trait RenderTest{
                 
             case RIFormularios::TEST_WS_FORM_HABITACIONES:
                 
-                                
+                $datos_habitacion = 
+                        array(
+                            'id_efector' => $param['efectores']->getIdEfector(),
+                            'nombre_sala' => $param['salas']->getNombre(),
+                            'nombre_habitacion' => $param['nombre'],
+                            'sexo' => $param['sexo'],
+                            'tipo_edad' => $param['tipo_edad'],
+                            'edad_desde' => $param['edad_desde'],
+                            'edad_hasta' => $param['edad_hasta'],
+                            'baja' => $param['baja']);
+
+
+                // agregar
+                if ($form->get('bt_agregar')->isClicked()) {
+
+                    // redirect
+                    return $this->redirectToRoute(
+                            'ws_habitaciones_agregar',
+                            $datos_habitacion);
+
+                }
+
+                // modificar
+                if ($form->get('bt_modificar')->isClicked()) {
+
+                    // redirect
+                    return $this->redirectToRoute(
+                            'ws_habitaciones_modificar',
+                            $datos_habitacion);
+
+                }
+
+                // eliminar
+                if ($form->get('bt_eliminar')->isClicked()) {
+
+                    // redirect
+                    return $this->redirectToRoute(
+                            'ws_habitaciones_eliminar',
+                            $datos_habitacion);
+
+                }
+                
                 break;
             
             case RIFormularios::TEST_WS_FORM_SALAS:

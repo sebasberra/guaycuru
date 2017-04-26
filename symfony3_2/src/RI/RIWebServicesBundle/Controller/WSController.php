@@ -11,7 +11,9 @@ use RI\RIWebServicesBundle\Utils\RI\RI;
 class WSController extends Controller
 {
 
-    use WSSalasController;
+    use WSSalasController,
+        WSHabitacionesController,
+        WSCamasController;
     
     
     /**

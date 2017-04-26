@@ -251,7 +251,7 @@ class TestWSHabitacionesType extends AbstractType
             $salas = 
                     RI::$doctrine->getRepository
                         (RIUtiles::DB_BUNDLE.':Salas')
-                        ->findByIdEfector($id_efector);
+                        ->findByIdEfectorBaja($id_efector,false);
         }
         
         // salas

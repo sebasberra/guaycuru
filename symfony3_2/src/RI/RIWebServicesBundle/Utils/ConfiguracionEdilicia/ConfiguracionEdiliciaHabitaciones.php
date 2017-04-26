@@ -5,6 +5,7 @@ namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 use RI\DBHmi2GuaycuruCamasBundle\Entity\Habitaciones;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 
 trait ConfiguracionEdiliciaHabitaciones{

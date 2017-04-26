@@ -417,7 +417,7 @@ class RIUtiles extends RI
             $efector_servicio = 
                 self::$doctrine->getRepository
                     (self::DB_BUNDLE.':EfectoresServicios')
-                    ->findOneByCodigoServicio(
+                    ->findOneByCodigoEstadistica(
                             $id_efector,
                             $cod_servicio,
                             $sector,

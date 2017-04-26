@@ -58,6 +58,9 @@ trait ConfiguracionEdiliciaSalas{
         // areaEfectorServicio
         $sala->setAreaEfectorServicio($area_efector_servicio);
         
+        // area_cod_servicio
+        $sala->setAreaCodServicio($area_cod_servicio);
+        
         // area_sector
         $sala->setAreaSector($area_sector);
         
@@ -192,13 +195,39 @@ trait ConfiguracionEdiliciaSalas{
         try {
         
             $sala =
-                    RIUtiles::geSala(
+                    RIUtiles::getSalaPorNombre(
                             $modif_sala["nombre_sala"],
                             $modif_sala["id_efector"]
                             );
             
-        } catch (\Exception $e) {
+        
+            // check area
+            if ($modif_sala['area_cod_servicio']!=-1){
 
+                $area_efector_servicio = 
+                        RIUtiles::getEfectorServicioCodigoEstadistica(
+                                $modif_sala['id_efector'], 
+                                $modif_sala['area_cod_servicio'], 
+                                $modif_sala['area_sector'], 
+                                $modif_sala['area_subsector']);
+
+                $area_cod_servicio = $area_efector_servicio->getCodServicio();
+                $area_sector = $area_efector_servicio->getSector();
+                $area_subsector = $area_efector_servicio->getSubsector();
+
+            }else{
+
+                $area_efector_servicio = null;
+                $area_cod_servicio = null;
+                $area_sector = null;
+                $area_subsector = null;
+
+            }
+        
+        } catch (\Exception $e) {
+            
+            RI::$error_debug .= " Función agregarSala";
+            
             throw $e;
             
         }
@@ -212,23 +241,23 @@ trait ConfiguracionEdiliciaSalas{
         
         $sala->setBaja($baja_nueva);
                 
-        // area_cod_servicio
-        $sala->setAreaCodServicio($modif_sala["area_cod_servicio"]);
-        
         // areaEfectorServicio
-        $sala->setAreaEfectorServicio($modif_sala["area_id_efector_servicio"]);
+        $sala->setAreaEfectorServicio($area_efector_servicio);
+        
+        // area_cod_servicio
+        $sala->setAreaCodServicio($area_cod_servicio);
         
         // area_sector
-        $sala->setSector($modif_sala["area_sector"]);
+        $sala->setAreaSector($area_sector);
         
         // area_subsector
-        $sala->setSubsector($modif_sala["area_subsector"]);
+        $sala->setAreaSubsector($area_subsector);
         
         // timestamp fecha modificacion
         $sala->setFechaModificacion(null);
         
         // mover_camas
-        $sala->setMoverCamas($modif_sala["mover_camas"]);
+        $sala->setMoverCamas(RIUtiles::wrapBoolean($modif_sala["mover_camas"]));
         
         // validacion assert
         RIUtiles::validacionAssert($sala);
@@ -278,7 +307,7 @@ trait ConfiguracionEdiliciaSalas{
                 $this->setCantCamasHabSala($sala->getIdSala());
                 
                 // cant_camas sala
-                $this->setCantCamasSala($sala->getIdSala());
+                $this->setCantCamasSala($sala);
 
             }
             
@@ -322,21 +351,11 @@ trait ConfiguracionEdiliciaSalas{
                             $elimina_sala["id_efector"]
                             );
             
-        } catch (\Exception $e) {
-            
-            throw $e;
-
-        }
+            // begintrans
+            RI::$conn->beginTransaction();
         
         
-        
-        // begintrans
-        RI::$conn->beginTransaction();
-        
-        try{
-            
-        
-            // count camas habitacion
+            // count camas salas
             $count = 
                 RI::$doctrine->getRepository
                     (RIUtiles::DB_BUNDLE.':Salas')
@@ -349,6 +368,7 @@ trait ConfiguracionEdiliciaSalas{
                 RI::$em->remove($sala);
                                     
             }else{
+                
                 
                 // set baja = true
                 $sala->setBaja(true);
@@ -367,7 +387,7 @@ trait ConfiguracionEdiliciaSalas{
                 $this->setCantCamasHabSala($sala->getIdSala());
                 
                 // cant_camas sala
-                $this->setCantCamasSala($sala->getIdSala());
+                $this->setCantCamasSala($sala);
                 
             }
 
@@ -395,7 +415,7 @@ trait ConfiguracionEdiliciaSalas{
         $msg = "La sala: "
                 .$elimina_sala["nombre_sala"]
                 ." fue eliminada/baja del efector: "
-                .$sala->getIdEfector()->getNombre();
+                .$sala->getIdEfector()->getNomEfector();
                 
         return $msg;
         
