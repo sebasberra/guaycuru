@@ -1,0 +1,30 @@
+Hola Sebastian,
+Te hago algunas observaciones con respecto a tus CUs.
+1. No incluyas escenarios. Quien evalue tu informe final te va a pedir la ficha que usan en la catedra de IS.
+
+RE:	Se eliminaron las filas de escenarios de los casos de uso
+	
+2. Esta no es la instancia de hablar de W services. Pensa que estas identificando requerimientos. Estas tomando contacto con la informacion del dominio a trabajar. Me parece que lo estas llevando ya a la implementacion y todavia te faltan muchas etapas.
+Podes generalizar esos actores como "sistema...". Si no no se entiende,
+
+RE: Modifique el nombre, la descripción de los actores y los CUs.
+
+3. Hay un unico usuario del SIES? La unica funcionalidad que dispara es la de listar camas?
+
+RE: Si, por lo menos en esta instancia. En realidad el SIES tiene otro sistema para
+gestionar los traslados. Lo que no conoce el SIES es el estado actual de camas en los
+hospitales. Esta sería la solución a la cual quiero llegar. Quizas esta pantalla de
+consulta quede enganchada en el otro sistema, pero ya escaparía a este proyecto.
+
+4. Inclui en el informe las actividades que realizaste para identificar requerimientos
+
+RE: Esto quisiera consultarte porque en realidad la persona que desarrollo internacion en
+los efector provinciales soy yo y no se como escribir esto. lo de la consulta web del sies 
+podria involucrar a otra persona.
+
+5. Revisa la redaccion y el formato del documento.
+
+RE: Pasame algun tips sobre que te parece que deberia mejorar
+
+Saludos.
+Lucila

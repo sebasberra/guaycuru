@@ -41,7 +41,7 @@ trait WSHabitacionesController{
     }
     
     /**
-    * @Route("/modificarhabitacion/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{cant_camas}/{baja}",
+    * @Route("/modificarhabitacion/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}",
     *   name="ws_habitaciones_modificar")
     */
     public function modificarHabitacionAction(
@@ -52,7 +52,6 @@ trait WSHabitacionesController{
             $edad_desde,
             $edad_hasta,
             $tipo_edad,
-            $cant_camas,
             $baja){
         
         
@@ -64,7 +63,6 @@ trait WSHabitacionesController{
             'edad_desde' => $edad_desde,
             'edad_hasta' => $edad_hasta,
             'tipo_edad' => $tipo_edad,
-            'cant_camas' => $cant_camas,
             'baja' => $baja
         ];
         

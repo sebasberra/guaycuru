@@ -17,7 +17,7 @@ trait ConfiguracionEdiliciaHabitaciones{
         try {
         
             $sala =
-                    RIUtiles::getSala(
+                    RIUtiles::getSalaPorNombre(
                             $nueva_hab["nombre_sala"],
                             $nueva_hab["id_efector"]
                             );
@@ -248,9 +248,9 @@ trait ConfiguracionEdiliciaHabitaciones{
         
             // count camas habitacion
             $count = 
-                $this->doctrine->getRepository
+                RI::$doctrine->getRepository
                     (RIUtiles::DB_BUNDLE.':Habitaciones')
-                    ->countCamas(
+                    ->countCamasTodas(
                             $habitacion->getIdHabitacion());
             
             if ($count==0){
@@ -300,7 +300,7 @@ trait ConfiguracionEdiliciaHabitaciones{
                 ." fue eliminada/baja de la sala: "
                 .$habitacion->getIdSala()->getNombre()
                 ." del efector: "
-                .$habitacion->getIdSala()->getIdEfector()->getNombre();
+                .$habitacion->getIdSala()->getIdEfector()->getNomEfector();
                 
         return $msg;
         

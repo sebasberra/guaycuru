@@ -214,13 +214,6 @@ class TestWSCamasType extends AbstractType
                     )
             )
             ->add(
-                    'bt_baja', 
-                    'Symfony\Component\Form\Extension\Core\Type\SubmitType',
-                    array(
-                        'label' => 'Baja'
-                    )
-            )
-            ->add(
                     'bt_probar', 
                     'Symfony\Component\Form\Extension\Core\Type\SubmitType',
                     array(

@@ -290,7 +290,7 @@ trait ConfiguracionEdiliciaCamas{
         }
         
         // baja actual
-        $baja_actual = $cama->getBaja();
+        $baja_actual = $cama->isBaja();
         
         // baja_nueva
         $baja_nueva = RIUtiles::wrapBoolean($modif_cama["baja"]);
