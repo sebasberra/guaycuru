@@ -1,6 +1,6 @@
 <?php
 
-namespace RI\RIWebServicesBundle\Controller;
+namespace RI\RIWebServicesBundle\Controller\ConfiguracionEdilicia;
 
 
 use Symfony\Component\HttpFoundation\Request;

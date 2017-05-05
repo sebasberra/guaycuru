@@ -1,6 +1,6 @@
 <?php
 
-namespace RI\RIWebServicesBundle\Controller;
+namespace RI\RIWebServicesBundle\Controller\Test;
 
 use Symfony\Component\HttpFoundation\Request;
 

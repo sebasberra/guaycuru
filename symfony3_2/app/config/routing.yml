@@ -4,21 +4,25 @@ ri_default:
     prefix:   /
     
 ri_set:
-    resource: "@RIWebServicesBundle/Controller/SETController.php"
+    resource: "@RIWebServicesBundle/Controller/SET/SETController.php"
     type:     annotation
     prefix:   /set
 
 ri_ws:
-    resource: "@RIWebServicesBundle/Controller/WSController.php"
+    resource: "@RIWebServicesBundle/Controller/WS/WSController.php"
     type:     annotation
     prefix:   /ws
     
 ri_configuracion_edilicia:
-    resource: "@RIWebServicesBundle/Controller/ConfiguracionEdiliciaController.php"
+    resource: "@RIWebServicesBundle/Controller/ConfiguracionEdilicia/ConfiguracionEdiliciaController.php"
     type:     annotation
     prefix:   /configuracion_edilicia
     
 ri_test_ws:
-    resource: "@RIWebServicesBundle/Controller/TestController.php"
+    resource: "@RIWebServicesBundle/Controller/Test/TestController.php"
     type:     annotation
     prefix:   /test
+    
+ri_test_fosrest:
+    resource: "@RIWebServicesBundle/Controller/Test/TestFosRestController.php"
+    type: rest

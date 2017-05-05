@@ -1,6 +1,6 @@
 <?php
 
-namespace RI\RIWebServicesBundle\Controller;
+namespace RI\RIWebServicesBundle\Controller\WS;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 

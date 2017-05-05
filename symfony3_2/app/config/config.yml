@@ -44,6 +44,10 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
+        mapping_types:
+            enum: string
+            # Mysql trabaja los boolean como tinyint(1), despues editar a mano
+            tinyint: integer
         driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"
@@ -70,3 +74,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+    
+fos_rest:
+    routing_loader:
+        default_format: json

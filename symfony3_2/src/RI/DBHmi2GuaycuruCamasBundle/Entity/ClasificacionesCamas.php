@@ -342,4 +342,10 @@ class ClasificacionesCamas
     {
         return $this->fechaExpiracion;
     }
+    
+    public function __toString()
+    {
+      return $this->clasificacionCama;
+      
+    }
 }

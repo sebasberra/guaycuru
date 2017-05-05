@@ -1,6 +1,6 @@
 <?php
 
-namespace RI\RIWebServicesBundle\Controller;
+namespace RI\RIWebServicesBundle\Controller\SET;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

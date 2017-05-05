@@ -10,3 +10,6 @@ symfony2_8/src/Guaycuru/DBHmi2Bundle/Resources/config/doctrine/
 sies
 /nbproject/
 /symfony3_2/nbproject/private/
+/rest
+/crud
+/crud/nbproject/private/
