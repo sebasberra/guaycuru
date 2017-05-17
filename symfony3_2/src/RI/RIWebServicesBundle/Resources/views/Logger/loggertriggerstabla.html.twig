@@ -1,0 +1,256 @@
+/* Generacion automatica de TRIGGERS para Logger */
+/* Fecha y hora: {{ "now"|date('m/d/Y H:i','America/Argentina/Buenos_Aires') }}  */
+/* Servidor: {{ database_host }} Puerto: {{ database_port }} */
+/* Base de datos: {{ database_name }} */
+/* Version aplicación: {{ major }}.{{ minor }}.{{ revision }} */
+/* Debug sobre tabla: {{ tabla }} */
+
+DELIMITER ;
+
+
+/* -----------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+/* Trigger after insert - tabla {{ tabla }} */
+/* -----------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+
+DROP TRIGGER IF EXISTS logs_after_insert_{{ tabla }};
+
+DELIMITER $$
+
+CREATE TRIGGER
+
+    logs_after_insert_{{ tabla }}
+
+AFTER INSERT 
+
+ON {{ tabla }}
+
+FOR EACH ROW
+
+BEGIN
+        
+    DECLARE estado INTEGER;
+    DECLARE msg VARCHAR(255);
+    DECLARE campos TEXT;
+    DECLARE valores TEXT;
+    
+    
+    SET campos = CONCAT_WS(';',
+        {% for columna in columnas %}
+        '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+        
+    SET valores = CONCAT_WS(';',
+        {% for columna in columnas %}
+        IFNULL(NEW.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+    
+    
+    CALL logs_debug
+        ('{{ tabla }}',
+        campos,
+        valores,
+        'I',
+        @estado,
+        @msg);
+        
+END; 
+
+$$
+
+
+DELIMITER ;
+
+
+/* ------------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+/* Trigger before update - tabla {{ tabla }} */
+/* ------------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+
+DROP TRIGGER IF EXISTS logs_before_update_{{ tabla }};
+
+DELIMITER $$
+
+CREATE TRIGGER
+
+    logs_before_update_{{ tabla }}
+
+BEFORE UPDATE
+
+ON {{ tabla }}
+
+FOR EACH ROW
+
+BEGIN
+        
+    DECLARE estado INTEGER;
+    DECLARE msg VARCHAR(255);
+    DECLARE campos TEXT;
+    DECLARE valores TEXT;
+    DECLARE guardar_modificaciones_nulas TINYINT(1);
+    
+    /* flag guardar modificaciones nulas */
+    SET guardar_modificaciones_nulas = 
+        (SELECT 
+            la.guardar_modificaciones_nulas
+        FROM
+            logs_auditados la
+        LIMIT 0,1);
+    
+    SET campos = CONCAT_WS(';',
+        {% for columna in columnas %}
+        '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+        
+    SET valores = CONCAT_WS(';',
+        {% for columna in columnas %}
+        IFNULL(OLD.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+    
+    IF({% for columna in columnas %} {% if columna.IS_NULLABLE == 'YES' %}(
+            ( ISNULL(OLD.{{ columna.COLUMN_NAME }}) AND NOT ISNULL(NEW.{{ columna.COLUMN_NAME }}) ) OR 
+            ( NOT ISNULL(OLD.{{ columna.COLUMN_NAME }}) AND ISNULL(NEW.{{ columna.COLUMN_NAME }}) ) OR
+            ( NOT ISNULL(OLD.{{ columna.COLUMN_NAME }}) 
+                AND NOT ISNULL(NEW.{{ columna.COLUMN_NAME }}) 
+                AND OLD.{{ columna.COLUMN_NAME }} <> NEW.{{ columna.COLUMN_NAME }})
+           )
+        {% else %}OLD.{{ columna.COLUMN_NAME }} <> NEW.{{ columna.COLUMN_NAME }}
+        {% endif %}OR{% endfor %} guardar_modificaciones_nulas = 1 ) THEN 
+       
+        CALL logs_debug
+            ('{{ tabla }}',
+            campos,
+            valores,
+            'O',
+            @estado,
+            @msg);
+            
+    END IF;
+    
+END; 
+
+$$
+
+
+DELIMITER ;
+
+
+/* -----------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+/* Trigger after update - tabla {{ tabla }} */
+/* -----------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+
+DROP TRIGGER IF EXISTS logs_after_update_{{ tabla }};
+
+DELIMITER $$
+
+CREATE TRIGGER
+
+    logs_after_update_{{ tabla }}
+
+AFTER UPDATE
+
+ON {{ tabla }}
+
+FOR EACH ROW
+
+BEGIN
+        
+    DECLARE estado INTEGER;
+    DECLARE msg VARCHAR(255);
+    DECLARE campos TEXT;
+    DECLARE valores TEXT;
+    DECLARE guardar_modificaciones_nulas TINYINT(1);
+    
+    /* flag guardar modificaciones nulas */
+    SET guardar_modificaciones_nulas = 
+        (SELECT 
+            la.guardar_modificaciones_nulas
+        FROM
+            logs_auditados la
+        LIMIT 0,1);
+    
+    SET campos = CONCAT_WS(';',
+        {% for columna in columnas %}
+        '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+        
+    SET valores = CONCAT_WS(';',
+        {% for columna in columnas %}
+        IFNULL(NEW.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+    
+    IF({% for columna in columnas %} {% if columna.IS_NULLABLE == 'YES' %}(
+            ( ISNULL(OLD.{{ columna.COLUMN_NAME }}) AND NOT ISNULL(NEW.{{ columna.COLUMN_NAME }}) ) OR 
+            ( NOT ISNULL(OLD.{{ columna.COLUMN_NAME }}) AND ISNULL(NEW.{{ columna.COLUMN_NAME }}) ) OR
+            ( NOT ISNULL(OLD.{{ columna.COLUMN_NAME }}) 
+                AND NOT ISNULL(NEW.{{ columna.COLUMN_NAME }}) 
+                AND OLD.{{ columna.COLUMN_NAME }} <> NEW.{{ columna.COLUMN_NAME }})
+           )
+        {% else %}OLD.{{ columna.COLUMN_NAME }} <> NEW.{{ columna.COLUMN_NAME }}
+        {% endif %}OR{% endfor %} guardar_modificaciones_nulas = 1 ) THEN 
+       
+        CALL logs_debug
+            ('{{ tabla }}',
+            campos,
+            valores,
+            'N',
+            @estado,
+            @msg);
+            
+    END IF;
+    
+END; 
+
+$$
+
+
+DELIMITER ;
+
+
+/* ------------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+/* Trigger before delete - tabla {{ tabla }} */
+/* ------------------------------{% for i in 1..tabla|length %}-{% endfor %} */
+
+DROP TRIGGER IF EXISTS logs_before_delete_{{ tabla }};
+
+DELIMITER $$
+
+CREATE TRIGGER
+
+    logs_before_delete_{{ tabla }}
+
+BEFORE DELETE 
+
+ON {{ tabla }}
+
+FOR EACH ROW
+
+BEGIN
+        
+    DECLARE estado INTEGER;
+    DECLARE msg VARCHAR(255);
+    DECLARE campos TEXT;
+    DECLARE valores TEXT;
+    
+    
+    SET campos = CONCAT_WS(';',
+        {% for columna in columnas %}
+        '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+        
+    SET valores = CONCAT_WS(';',
+        {% for columna in columnas %}
+        IFNULL(OLD.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
+        {% endif %}{% endfor %});
+    
+    
+    CALL logs_debug
+        ('{{ tabla }}',
+        campos,
+        valores,
+        'D',
+        @estado,
+        @msg);
+        
+END; 
+
+$$
+    

@@ -22,6 +22,11 @@ class RITwigExtension extends \Twig_Extension implements \Twig_Extension_Globals
     public function getGlobals()
     {
         return array(
+            
+            'database_host' => $this->container->getParameter('database_host'),
+            'database_port' => $this->container->getParameter('database_port'),
+            'database_name' => $this->container->getParameter('database_name'),
+            
             'pie_pagina_titulo' => $this->container->getParameter('pie_pagina_titulo'),
             'pie_pagina_domicilio' => $this->container->getParameter('pie_pagina_domicilio'),
             'pie_pagina_telefono' => $this->container->getParameter('pie_pagina_telefono'),

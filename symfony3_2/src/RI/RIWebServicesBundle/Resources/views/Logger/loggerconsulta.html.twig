@@ -1,0 +1,159 @@
+{% extends '::base.html.twig' %}
+
+{% block cuerpo %} 
+
+    {{form_start(form)}}
+    {{form_end(form)}}
+    
+    <div id="tree"></div>
+    
+    <script>
+        
+            
+        var data = [
+                
+        {% for log_conexion in data %}
+        {
+        
+            name: 'Conexión: {{ log_conexion.id_log_conexion }}',
+            tipo: 'conexion',
+            children: [
+            
+                { name: 'Usuario: {{ log_conexion.user_db }}',
+                  tipo: 'usuario'},
+                { name: 'Host: {{ log_conexion.host_db }}',
+                  tipo: 'host'},
+                { name: 'Descripción: {{ log_conexion.descripcion }}',
+                  tipo: 'descripcion'},
+                { name: 'Fecha/Hora: {{ log_conexion.fecha_hora }}',
+                  tipo: 'fecha_hora'},
+                { name: 'Info:',
+                  tipo: 'info',
+                  children: [
+                    {% for tabla in log_conexion.info %}
+                                
+                        { name: 'Tabla: {{ tabla.tabla }}',
+                          tipo: 'tabla'},
+                        { name: 'SQL: {{ tabla.tipo_sql }}',
+                          tipo: 'sql'},
+                        { name: 'Datos:',
+                          tipo: 'datos',
+                          children: [
+                            {% for key,dato in tabla.datos %}
+                                
+                                { name: '{{ key }}: {{ dato[3:] }}',
+                                  tipo: '{{ dato[0:3] }}' },
+                            {% endfor %}
+                          ]},
+                    {% endfor %}
+                ]}
+                
+                        
+            ]
+        },
+                
+        {% endfor %}
+        ];
+        
+        
+        $(function() {
+            $('#tree').tree({
+                data: data,
+                onCreateLi: function(node, $li) {
+                    
+                    var $title = $li.find('.jqtree-title');
+                    
+                    console.log($title);
+                    switch (node.tipo){
+                        
+                        case 'conexion':
+                            $title.addClass('ri_jqtree_conexion');
+                            break;
+                            
+                        case 'usuario':
+                            $title.before('<span class="fa fa-user"></span>');
+                            break;
+                            
+                        case 'host':
+                            $title.before('<span class="fa fa-laptop"></span>');
+                            break;
+                            
+                        case 'descripcion':
+                            $title.before('<span class="fa fa-comment"></span>');
+                            break;
+                            
+                        case 'fecha_hora':
+                            $title.before('<span class="fa fa-clock-o"></span>');
+                            break;
+                            
+                        case 'info':
+                            $title.addClass('ri_jqtree_info');
+                            break;
+                        
+                        case 'tabla':
+                            $title.before('<span class="fa fa-table"></span>');
+                            break;
+                        
+                        case 'sql':
+                            $title.before('<span class="fa fa-database"></span>');
+                            
+                            switch (node.name){
+                                
+                                case 'SQL: UPDATE':
+                                    $title.addClass('ri_jqtree_blue');
+                                    break;
+                                    
+                                case 'SQL: INSERT':
+                                    $title.addClass('ri_jqtree_green');
+                                    break;
+                                    
+                                case 'SQL: DELETE':
+                                    $title.addClass('ri_jqtree_red');
+                                    break;
+                                    
+                                case 'SQL: LOG':
+                                    $title.addClass('ri_jqtree_magenta');
+                                    break;
+                                    
+                            }
+                            
+                            break;
+                            
+                        case 'datos':
+                            $title.addClass('ri_jqtree_datos');
+                            break;
+                        
+                        {# modificacion #}
+                        case '[M]':
+                            $title.before('<span class="fa fa-exchange"></span>');
+                            $title.addClass('ri_jqtree_change');
+                            break;
+                            
+                        {# insert #}    
+                        case '[I]':
+                            $title.before('<span class="fa fa-plus"></span>');
+                            break;
+                        
+                        {# delete #}
+                        case '[D]':
+                            $title.before('<span class="fa fa-minus"></span>');
+                            $title.addClass('ri_jqtree_red');
+                            break;
+                            
+                        {# no modificacion #}
+                        case '[O]':
+                            $title.before('<span class="fa fa-lock"></span>');
+                            break;
+                            
+                        {# log #}
+                        case '[L]':
+                            $title.before('<span class="fa fa-bars"></span>');
+                            break;
+                    }
+                    
+                }
+            });
+        });
+        
+    </script>
+{% endblock %}

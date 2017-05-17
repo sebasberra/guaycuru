@@ -2,16 +2,65 @@
 
 namespace RI\RIWebServicesBundle\Controller\WS;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use FOS\RestBundle\Controller\Annotations\Put;
+use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Delete;
+use FOS\RestBundle\Controller\Annotations\Patch;
+use FOS\RestBundle\Controller\Annotations\Get;
+
+use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 
-trait WSCamasController{
+trait WSCamasController
+{
+    
     
     /**
-    * @Route("/agregarcama/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}",
-    *   name="ws_camas_agregar")
+    * @Get("/camas/ver/{id_efector}/{nombre_cama}")
     */
-    public function agregarCamaAction(
+    public function camasVerAction(
+            $id_efector,
+            $nombre_cama) 
+    {
+        
+        // ConfiguracionEdilicia
+        $this->get("app.configuracion_edilicia");
+        
+        
+        try {
+                
+                    
+            $data = RIUtiles::getCama($nombre_cama,$id_efector);
+            
+            $status_code = 200;
+            
+            RIUtiles::logsDebugManual(
+                    'WS Ver Cama', 
+                    $status_code.' '.$data);
+
+        } catch (\Exception $e) {
+
+            $status_code = 404;
+
+            $data = array('Error'=>$e->getMessage());
+            
+            RIUtiles::logsDebugManual(
+                    'WS Ver Cama', 
+                    $status_code.' '.$e->getMessage());
+
+        }
+
+        $view = $this->view($data, $status_code);
+        
+        return $this->handleView($view);    
+        
+    }
+    
+    /**
+    * @Put("/camas/modificar/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}")
+    */
+    public function camasModificarAction(
             $id_efector,
             $nombre_sala,
             $nombre_habitacion,
@@ -19,42 +68,12 @@ trait WSCamasController{
             $id_clasificacion_cama,
             $estado,
             $rotativa,
-            $baja){
+            $baja) 
+    {
         
         
-        $nueva_cama = [
-            'id_efector' => $id_efector,
-            'nombre_sala' => $nombre_sala,
-            'nombre_habitacion' => $nombre_habitacion,
-            'nombre_cama' => $nombre_cama,
-            'id_clasificacion_cama' => $id_clasificacion_cama,
-            'estado' => $estado,
-            'rotativa' => $rotativa,
-            'baja' => $baja
-        ];
-        
-        return 
-            $this->execConfiguracionEdilicia(
-                $nueva_cama, 
-                "agregar_cama");
-        
-    }    
-    
-    
-    
-    /**
-    * @Route("/modificarcama/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}",
-    *   name="ws_camas_modificar")
-    */
-    public function modificarCamaAction(
-            $id_efector,
-            $nombre_sala,
-            $nombre_habitacion,
-            $nombre_cama,
-            $id_clasificacion_cama,
-            $estado,
-            $rotativa,
-            $baja){
+        // ConfiguracionEdilicia
+        $ce = $this->get("app.configuracion_edilicia");
         
         
         $modif_cama = [
@@ -68,75 +87,258 @@ trait WSCamasController{
             'baja' => $baja
         ];
         
-        return 
-            $this->execConfiguracionEdilicia(
-                $modif_cama, 
-                "modificar_cama");
+        
+        // begintrans
+        RI::$conn->beginTransaction();
+        
+        try {
+        
+            $data = $ce->modificarCama($modif_cama);
+
+            $status_code = 204;
+            
+            RIUtiles::logsDebugManual(
+                    'WS Modificar Cama', 
+                    $status_code.' '.$data);
+                        
+            RI::$conn->commit();
+            
+        } catch (\Exception $e) {
+
+            $status_code = 404;
+
+            $data = array('Error'=>$e->getMessage());
+
+            RI::$conn->rollback();
+            
+            RIUtiles::logsDebugManual(
+                    'WS Modificar Cama', 
+                    $status_code.' '.$e->getMessage());
+            
+        }
+
+        $view = $this->view($data, $status_code);
+        
+        return $this->handleView($view);
         
     }
     
     
+
     /**
-    * @Route("/eliminarcama/{id_efector}/{nombre_cama}",
-    *   name="ws_camas_eliminar")
+    * @Post("/camas/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}")
     */
-    public function eliminarCamaAction(
+    public function camasNuevaAction(
             $id_efector,
-            $nombre_cama){
+            $nombre_sala,
+            $nombre_habitacion,
+            $nombre_cama,
+            $id_clasificacion_cama,
+            $estado,
+            $rotativa,
+            $baja) 
+    {
+        
+        // ConfiguracionEdilicia
+        $ce = $this->get("app.configuracion_edilicia");
         
         
-        $elimina_cama = [
+        $nueva_cama = [
             'id_efector' => $id_efector,
-            'nombre_cama' => $nombre_cama
+            'nombre_sala' => $nombre_sala,
+            'nombre_habitacion' => $nombre_habitacion,
+            'nombre_cama' => $nombre_cama,
+            'id_clasificacion_cama' => $id_clasificacion_cama,
+            'estado' => $estado,
+            'rotativa' => $rotativa,
+            'baja' => $baja
         ];
         
-        return 
-            $this->execConfiguracionEdilicia(
-                $elimina_cama,
-                "eliminar_cama");
+        // begintrans
+        RI::$conn->beginTransaction();
+        
+        try {
+                
+            $data = $ce->agregarCama($nueva_cama);
+
+            $status_code = 201;
+            
+            RIUtiles::logsDebugManual(
+                    'WS Agregar Cama', 
+                    $status_code.' '.$data);
+            
+            RI::$conn->commit();
+
+        } catch (\Exception $e) {
+
+            $status_code = 404;
+
+            $data = array('Error'=>$e->getMessage());
+            
+            RI::$conn->rollback();
+            
+            RIUtiles::logsDebugManual(
+                    'WS Agregar Cama', 
+                    $status_code.' '.$e->getMessage());
+
+        }
+
+        $view = $this->view($data, $status_code);
+        
+        return $this->handleView($view);
         
     }
     
     /**
-    * @Route("/ocuparcama/{id_efector}/{nombre_cama}",
-    *   name="ws_camas_ocupar")
+    * @Delete("/camas/eliminar/{id_efector}/{nombre_cama}")
     */
-    public function ocuparCamaAction(
+    public function camasEliminarAction(
             $id_efector,
-            $nombre_cama){
+            $nombre_cama) 
+    {
+        
+        // ConfiguracionEdilicia
+        $ce = $this->get("app.configuracion_edilicia");
         
         
-        $ocupa_cama = [
+        $eliminar_cama = [
             'id_efector' => $id_efector,
             'nombre_cama' => $nombre_cama
         ];
         
-        return 
-            $this->execConfiguracionEdilicia(
-                $ocupa_cama,
-                "ocupar_cama");
+        // begintrans
+        RI::$conn->beginTransaction();
+        
+        try {
+                
+            $data = $ce->eliminarCama($eliminar_cama);
+
+            $status_code = 200;
+            
+            RIUtiles::logsDebugManual(
+                    'WS Eliminar Cama', 
+                    $status_code.' '.$data);
+            
+            RI::$conn->commit();
+
+        } catch (\Exception $e) {
+
+            $status_code = 404;
+
+            $data = array('Error'=>$e->getMessage());
+            
+            RI::$conn->rollback();
+            
+            RIUtiles::logsDebugManual(
+                    'WS Eliminar Cama', 
+                    $status_code.' '.$e->getMessage());
+
+        }
+
+        $view = $this->view($data, $status_code);
+        
+        return $this->handleView($view);
         
     }
     
     /**
-    * @Route("/liberarcama/{id_efector}/{nombre_cama}",
-    *   name="ws_camas_liberar")
+    * @Patch("/camas/liberar/{id_efector}/{nombre_cama}")
     */
-    public function liberarCamaAction(
+    public function camasLiberarAction(
             $id_efector,
-            $nombre_cama){
+            $nombre_cama) 
+    {
         
+        // ConfiguracionEdilicia
+        $ce = $this->get("app.configuracion_edilicia");
         
-        $libera_cama = [
+        $liberar_cama = [
             'id_efector' => $id_efector,
             'nombre_cama' => $nombre_cama
         ];
         
-        return 
-            $this->execConfiguracionEdilicia(
-                $libera_cama,
-                "liberar_cama");
+        // begintrans
+        RI::$conn->beginTransaction();
         
+        try {
+                
+            $data = $ce->liberarCama($liberar_cama);
+
+            $status_code = 204;
+            
+            RIUtiles::logsDebugManual(
+                    'WS Liberar Cama', 
+                    $status_code.' '.$data);
+            
+            RI::$conn->commit();
+
+        } catch (\Exception $e) {
+
+            $status_code = 404;
+
+            $data = array('Error'=>$e->getMessage());
+            
+            RI::$conn->rollback();
+            
+            RIUtiles::logsDebugManual(
+                    'WS Liberar Cama', 
+                    $status_code.' '.$e->getMessage());
+
+        }
+
+        $view = $this->view($data, $status_code);
+        
+        return $this->handleView($view);
+        
+    }
+    
+    /**
+    * @Patch("/camas/ocupar/{id_efector}/{nombre_cama}")
+    */
+    public function camasOcuparAction(
+            $id_efector,
+            $nombre_cama) 
+    {
+        
+        // ConfiguracionEdilicia
+        $ce = $this->get("app.configuracion_edilicia");
+        
+        $ocupar_cama = [
+            'id_efector' => $id_efector,
+            'nombre_cama' => $nombre_cama
+        ];
+        
+        
+        try {
+            
+            
+            $data = $ce->ocuparCama($ocupar_cama);
+
+            $status_code = 204;
+            
+            RIUtiles::logsDebugManual(
+                    'WS Ocupar Cama', 
+                    $status_code.' '.$data);
+            
+            RI::$conn->commit();
+
+        } catch (\Exception $e) {
+
+            $status_code = 404;
+
+            $data = array('Error'=>$e->getMessage());
+            
+            RI::$conn->rollback();
+            
+            RIUtiles::logsDebugManual(
+                    'WS Ocupar Cama', 
+                    $status_code.' '.$e->getMessage());
+
+        }
+
+        $view = $this->view($data, $status_code);
+        
+        return $this->handleView($view);
     }
     
 }

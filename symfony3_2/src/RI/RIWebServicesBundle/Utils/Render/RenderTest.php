@@ -88,16 +88,6 @@ trait RenderTest{
                 }
 
 
-                // baja
-                if ($form->get('bt_baja')->isClicked()) {
-
-                    // redirect
-                    return $this->redirectToRoute(
-                            'ws_camas_baja',
-                            $datos_cama);
-
-                }
-
                 break;
                 
             case RIFormularios::TEST_WS_FORM_HABITACIONES:

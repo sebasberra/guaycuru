@@ -65,7 +65,7 @@ class RIFormularios extends RI
         
         // form
         $form = RI::$form_factory->create(
-                    'RI\RIBundle\Form\CensosDiariosSalasType',
+                    'RI\RIWebServicesBundle\Form\CensosDiariosSalasType',
                     $options
                 );
     
@@ -122,7 +122,7 @@ class RIFormularios extends RI
         
         // form
         $form = RI::$form_factory->create(
-                    'RI\RIBundle\Form\CensosDiariosServiciosType',
+                    'RI\RIWebServicesBundle\Form\CensosDiariosServiciosType',
                     $options
                 );
     

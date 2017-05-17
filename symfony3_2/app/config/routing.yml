@@ -10,19 +10,24 @@ ri_set:
 
 ri_ws:
     resource: "@RIWebServicesBundle/Controller/WS/WSController.php"
-    type:     annotation
-    prefix:   /ws
+    type: rest
     
 ri_configuracion_edilicia:
     resource: "@RIWebServicesBundle/Controller/ConfiguracionEdilicia/ConfiguracionEdiliciaController.php"
     type:     annotation
     prefix:   /configuracion_edilicia
-    
-ri_test_ws:
+
+ri_test:
     resource: "@RIWebServicesBundle/Controller/Test/TestController.php"
     type:     annotation
     prefix:   /test
     
-ri_test_fosrest:
-    resource: "@RIWebServicesBundle/Controller/Test/TestFosRestController.php"
-    type: rest
+ri_test_ws:
+    resource: "@RIWebServicesBundle/Controller/Test/TestWSController.php"
+    type:     annotation
+    prefix:   /test/ws
+    
+ri_logger:
+    resource: "@RIWebServicesBundle/Controller/Logger/LoggerController.php"
+    type:     annotation
+    prefix:   /logger

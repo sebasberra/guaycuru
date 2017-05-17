@@ -52,6 +52,14 @@
             
             <link rel="stylesheet" href="{{ asset('bundles/ri/css/RI/ri.css') }}" />
             
+            {#
+                -----
+                jqtre
+                -----
+            #}
+            
+            <link rel="stylesheet" href="{{ asset('bundles/ri/css/jqtree/jqtree.css') }}" />
+            
             <!--[if lte IE 9]>
                 <link rel="Shortcut icon" href="//www.santafe.gov.ar/assets/standard/images/favicon.ico" type="image/x-icon" />
                 <link rel = "stylesheet" type = "text/css" href ="//www.santafe.gov.ar/assets/standard/css/ie.css" />
@@ -81,6 +89,18 @@
            
         {% endblock %}
         
+        {% block jquery %}
+            
+            {#
+                ------
+                jquery
+                ------
+            #}
+            
+            <script src="{{ asset('bundles/ri/js/stg/jquery-1.10.2.min.js') }}"></script>
+            
+        {% endblock %}
+        
         {% block javascripts %}
             
             {# 
@@ -88,8 +108,7 @@
                 javascripts de la STG
                 ---------------------
             #}
-{#            <script src="{{ asset('bundles/ri/js/stg/jquery-1.10.2.min.js') }}"></script>#}
-            <script src="{{ asset('bundles/ri/js/jquery/jquery-3.2.1.min.js') }}"></script>
+            
             <script src="{{ asset('bundles/ri/js/stg/jquery-ui.min.js') }}"></script>
             <script src="{{ asset('bundles/ri/js/stg/jquery.ui.datepicker-es.js') }}"></script>
             <script src="{{ asset('bundles/ri/js/stg/jquery.ui.touch-punch.min.js') }}"></script>
@@ -104,7 +123,6 @@
             
             #}
             
-{#            <script src="{{ asset('bundles/ri/js/datatable/jquery.js') }}"></script>#}
             <script src="{{ asset('bundles/ri/js/datatable/jquery.dataTables.min.js') }}"></script>
             
             <script src="{{ asset('bundles/ri/js/datatable/buttons/dataTables.buttons.min.js') }}"></script> 
@@ -116,15 +134,10 @@
             <script src="{{ asset('bundles/ri/js/datatable/buttons/buttons.html5.min.js') }}"></script>
             <script src="{{ asset('bundles/ri/js/datatable/buttons/buttons.print.min.js') }}"></script>
             <script src="{{ asset('bundles/ri/js/datatable/buttons/buttons.colVis.min.js') }}"></script>
-            
             <script src="{{ asset('bundles/ri/js/datatable/FixedColumns/dataTables.fixedColumns.min.js') }}"></script>
-            
             <script src="{{ asset('bundles/ri/js/datatable/FixedHeader/dataTables.fixedHeader.min.js') }}"></script>
-            
             <script src="{{ asset('bundles/ri/js/datatable/Responsive/dataTables.responsive.min.js') }}"></script>
-                        
             <script src="{{ asset('bundles/ri/js/datatable/Scroller/dataTables.scroller.min.js') }}"></script>
-            
             
             {# 
             
@@ -134,18 +147,38 @@
             
             #}
             
-            <script src="{{ asset('bundles/ri/Stuk-jszip-5250332/dist/jszip.min.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/jszip/jszip.min.js') }}"></script>
             
+            {#
             
+                ------
+                jqtree
+                ------
+            
+            #}
+            
+            <script src="{{ asset('bundles/ri/js/jqtree/tree.jquery.js') }}"></script>                        
+
             {# 
             
-                --------------------
-                javascripts OrgChart
-                --------------------
+                --------
+                OrgChart
+                --------
             
             #}
             
             <script src="{{ asset('bundles/ri/js/orgchart/jquery.orgchart.js') }}"></script>
+            
+            {# 
+            
+                -----
+                jspdf
+                -----
+            
+            #}
+            
+            <script src="{{ asset('bundles/ri/js/jspdf/jspdf.debug.js') }}"></script>
+            <script src="{{ asset('bundles/ri/js/jspdf/jspdf.min.js') }}"></script>
             
             
         {% endblock %}
@@ -196,6 +229,14 @@
                                 <li class='has-sub'><a href='#'><span>Configuración Edilicia</span></a>
                                     <ul>
                                         <li><a href='{{ path_root_menu }}/configuracion_edilicia/organigrama'><span>Organigrama</span></a></li>
+                                    </ul>
+                                </li>
+                                
+                                <li class='has-sub'><a href='#'><span>Logger</span></a>
+                                    <ul>
+                                        <li><a href="{{ path_root_menu }}/logger/consulta"><span>Consulta</span></a></li>
+                                        <li><a href="{{ path_root_menu }}/logger/triggers"><span>Triggers</span></a></li>
+                                        <li><a href="{{ path_root_menu }}/logger/config"><span>Configuración</span></a></li>
                                     </ul>
                                 </li>
                                 
