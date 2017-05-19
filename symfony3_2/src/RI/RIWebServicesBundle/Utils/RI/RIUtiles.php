@@ -768,8 +768,7 @@ class RIUtiles extends RI
             $msg="(1) ".$errors[0]->getMessage();
             for ($i=1;$i<count($errors);$i++){
                 
-                //$msg.=" (".($i+1).") ".$errors[$i]->getMessage();
-                $msg.="<p> (".($i+1).") ".$errors[$i]->getMessage()."</p>";
+                $msg.=" (".($i+1).") ".$errors[$i]->getMessage();
                 
             }
             

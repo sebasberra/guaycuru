@@ -63,7 +63,7 @@
                     
                     var $title = $li.find('.jqtree-title');
                     
-                    console.log($title);
+{#                    console.log($title);#}
                     switch (node.tipo){
                         
                         case 'conexion':
@@ -153,7 +153,103 @@
                     
                 }
             });
+            
+            $('#tree').bind(
+                
+                'tree.click',
+                
+                function(event) {
+                    
+                    {#console.log(event.node.parent.name);
+                    console.log(event.node);#}
+                    
+                    var padre = event.node.parent.name.split(":");
+                    var nodo = event.node.name.split(":");
+                    var x;
+                    
+                    for (x in padre) {
+                        
+                        padre[x] = limpiarCadena(padre[x]);
+                    } 
+
+                    for (x in nodo) {
+                        
+                        nodo[x] = limpiarCadena(nodo[x]);
+                    } 
+                    
+                    {#console.log(padre);
+                    console.log(nodo);
+                    console.log(nodo[0]);#}
+                    
+                    switch (padre[0]){
+                            
+                        case "datos":
+                            
+                            var tabla = 
+                                    event.node.parent.parent.children[0].name.split(":");
+                            
+                            var sql = 
+                                    event.node.parent.parent.children[1].name.split(":");
+                            
+                            {#console.log(sql);#}
+                            
+                            if (limpiarCadena(sql[1])!=="log"){
+                                
+                                for (x in tabla) {
+
+                                    tabla[x] = limpiarCadena(tabla[x]);
+
+                                }
+                                tabla=tabla[1];
+                                
+                                
+                                var campo = nodo[0];
+                                var valor = nodo[1];
+                                
+                                console.log(tabla);
+                                console.log(campo);
+                                console.log(valor);
+                                                                                                                                
+                                var data = {};
+                                
+                                $.ajax({
+                                    method: "GET",
+                                    url: "/ajax/logger/foreignkey/"+tabla+"/"+campo+"/"+valor,
+                                    dataType: 'json',
+                                    success: function(data)
+                                    {
+                                        
+                                        
+                                    }
+                                    
+                                })
+                                
+                            }
+                            
+                            break;
+                            
+                    }
+                            
+                    
+                }
+            );
         });
+        
+        
+        function limpiarCadena(cadena){
+        
+            cadena = cadena.toLowerCase();
+            cadena = cadena.trim();
+            cadena = cadena.replace(/á/gi,"a");
+            cadena = cadena.replace(/é/gi,"e");
+            cadena = cadena.replace(/í/gi,"i");
+            cadena = cadena.replace(/ó/gi,"o");
+            cadena = cadena.replace(/ú/gi,"u");
+            cadena = cadena.replace(/ñ/gi,"n");
+            
+            return cadena;
+            
+        }
         
     </script>
 {% endblock %}

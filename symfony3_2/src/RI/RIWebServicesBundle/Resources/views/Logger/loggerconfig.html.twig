@@ -5,4 +5,10 @@
     {{form_start(form)}}
     {{form_end(form)}}
     
+    {% if mensaje != '' %}
+        
+        <p> {{ mensaje }} </p>
+        
+    {% endif %}
+    
 {% endblock %}

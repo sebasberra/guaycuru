@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Get;
 
+use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 
@@ -19,7 +20,7 @@ trait WSHabitacionesController
     /**
     * @Get("/habitaciones/ver/{id_efector}/{nombre_sala}/{nombre_habitacion}")
     */
-    public function habitacioniesVerAction(
+    public function habitacionesVerAction(
             $id_efector,
             $nombre_sala,
             $nombre_habitacion) 
@@ -94,7 +95,7 @@ trait WSHabitacionesController
         
         try {
         
-            $data = $ce->modificarCama($modif_hab);
+            $data = $ce->modificarHabitacion($modif_hab);
 
             $status_code = 204;
             
@@ -213,7 +214,7 @@ trait WSHabitacionesController
         
         try {
                 
-            $data = $ce->eliminarCama($elimina_habitacion);
+            $data = $ce->eliminarHabitacion($elimina_habitacion);
 
             $status_code = 200;
             

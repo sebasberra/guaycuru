@@ -1,5 +1,5 @@
 /* Generacion automatica de TRIGGERS para Logger */
-/* Fecha y hora: 05/14/2017 00:21  */
+/* Fecha y hora: 05/18/2017 23:40  */
 /* Servidor: localhost Puerto:  */
 /* Base de datos: hmi2guaycuru_camas */
 /* Version aplicación: 0.0.1 */
@@ -34,7 +34,7 @@ BEGIN
     DECLARE valores TEXT;
     
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
                 'id_cama',
                 'id_clasificacion_cama',
                 'id_efector',
@@ -46,7 +46,7 @@ BEGIN
                 'baja',
                 'fecha_modificacion');
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
                 IFNULL(NEW.id_cama,''),
                 IFNULL(NEW.id_clasificacion_cama,''),
                 IFNULL(NEW.id_efector,''),
@@ -109,7 +109,7 @@ BEGIN
             logs_auditados la
         LIMIT 0,1);
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
                 'id_cama',
                 'id_clasificacion_cama',
                 'id_efector',
@@ -121,7 +121,7 @@ BEGIN
                 'baja',
                 'fecha_modificacion');
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
                 IFNULL(OLD.id_cama,''),
                 IFNULL(OLD.id_clasificacion_cama,''),
                 IFNULL(OLD.id_efector,''),
@@ -209,7 +209,7 @@ BEGIN
             logs_auditados la
         LIMIT 0,1);
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
                 'id_cama',
                 'id_clasificacion_cama',
                 'id_efector',
@@ -221,7 +221,7 @@ BEGIN
                 'baja',
                 'fecha_modificacion');
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
                 IFNULL(NEW.id_cama,''),
                 IFNULL(NEW.id_clasificacion_cama,''),
                 IFNULL(NEW.id_efector,''),
@@ -301,7 +301,7 @@ BEGIN
     DECLARE valores TEXT;
     
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
                 'id_cama',
                 'id_clasificacion_cama',
                 'id_efector',
@@ -313,7 +313,7 @@ BEGIN
                 'baja',
                 'fecha_modificacion');
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
                 IFNULL(OLD.id_cama,''),
                 IFNULL(OLD.id_clasificacion_cama,''),
                 IFNULL(OLD.id_efector,''),

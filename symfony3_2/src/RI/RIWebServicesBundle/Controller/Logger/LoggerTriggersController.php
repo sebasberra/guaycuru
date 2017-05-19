@@ -23,10 +23,28 @@ trait LoggerTriggersController{
 
             $this->get('app.ri_utiles');
             
+            // columnas
+            $consulta = 
+                    "SELECT " 
+                        ."t.TABLE_NAME "
+                    ."FROM "
+                        ."INFORMATION_SCHEMA.TABLES t "
+                    ."WHERE "
+                        ."t.TABLE_SCHEMA = :table_schema "
+                    ."AND t.TABLE_NAME NOT LIKE 'logs%'";
+
+            $stmt = RI::$conn->prepare($consulta);
             
+            $stmt->bindValue("table_schema", $this->getParameter('database_name'));
+        
+            // ejecuta consulta
+            $stmt->execute();
+            $tablas = $stmt->fetchAll();
+        
             // form
             $form = RI::$form_factory->create(
-                    'RI\RIWebServicesBundle\Form\Logger\LoggerTriggersType');
+                    'RI\RIWebServicesBundle\Form\Logger\LoggerTriggersType',
+                    $tablas);
             
 
             $form->handleRequest($request);
@@ -36,7 +54,12 @@ trait LoggerTriggersController{
                     $form->isValid()) {
                 
                 $param = $form->getData();
-                
+
+                return $this->redirectToRoute(
+                        'logger_triggers',
+                        array('tabla'=>$param['tabla'])
+                        );
+               
             }
                 
                 

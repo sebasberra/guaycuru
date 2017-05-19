@@ -34,12 +34,12 @@ BEGIN
     DECLARE valores TEXT;
     
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
         {% for columna in columnas %}
         '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
         {% for columna in columnas %}
         IFNULL(NEW.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
@@ -95,12 +95,12 @@ BEGIN
             logs_auditados la
         LIMIT 0,1);
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
         {% for columna in columnas %}
         '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
         {% for columna in columnas %}
         IFNULL(OLD.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
@@ -167,12 +167,12 @@ BEGIN
             logs_auditados la
         LIMIT 0,1);
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
         {% for columna in columnas %}
         '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
         {% for columna in columnas %}
         IFNULL(NEW.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
@@ -231,12 +231,12 @@ BEGIN
     DECLARE valores TEXT;
     
     
-    SET campos = CONCAT_WS(';',
+    SET campos = CONCAT_WS('|;|',
         {% for columna in columnas %}
         '{{ columna.COLUMN_NAME }}'{% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
         
-    SET valores = CONCAT_WS(';',
+    SET valores = CONCAT_WS('|;|',
         {% for columna in columnas %}
         IFNULL(OLD.{{ columna.COLUMN_NAME }},''){% if loop.index != columnas|length %},
         {% endif %}{% endfor %});
