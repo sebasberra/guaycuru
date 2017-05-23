@@ -143,12 +143,12 @@ trait ConfiguracionEdiliciaCamas{
         RIUtiles::validacionAssert($cama);
     
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try{
         
-            //
+            // begintrans
+            RI::$conn->beginTransaction();
+        
             // insert datos en la DB
             RI::$em->persist($cama);
             RI::$em->flush();
@@ -319,13 +319,14 @@ trait ConfiguracionEdiliciaCamas{
         // validacion assert
         RIUtiles::validacionAssert($cama);
         
-        // transaccion
-        // begintrans
-        RI::$conn->beginTransaction();
+       
         
         try{
-        
-            //
+       
+            // begintrans
+            RI::$conn->beginTransaction();
+            
+            
             // update datos en la DB
             RI::$em->persist($cama);
             RI::$em->flush();
@@ -408,7 +409,9 @@ trait ConfiguracionEdiliciaCamas{
         
         try{
             
-        
+            // begintrans
+            RI::$conn->beginTransaction();
+            
             // elimina la cama
             RI::$em->remove($cama);
             RI::$em->flush();
@@ -485,10 +488,10 @@ trait ConfiguracionEdiliciaCamas{
         RIUtiles::validacionAssert($cama);
         
         
-        // begintrans
-        RI::$conn->beginTransaction();
-        
         try{
+        
+            // begintrans
+            RI::$conn->beginTransaction();
         
             // ocupa la cama
             RI::$em->persist($cama);
@@ -546,10 +549,11 @@ trait ConfiguracionEdiliciaCamas{
         // validacion assert
         RIUtiles::validacionAssert($cama);
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try{
+        
+            // begintrans
+            RI::$conn->beginTransaction();
         
             // ocupa la cama
             RI::$em->persist($cama);

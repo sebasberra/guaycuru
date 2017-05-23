@@ -61,15 +61,14 @@ trait ConfiguracionEdiliciaHabitaciones{
         $habitacion->setNombre($nueva_hab["nombre_habitacion"]);
         
         
-        
         // validacion assert
         RIUtiles::validacionAssert($habitacion);
     
         
-        // begintrans
-        RI::$conn->beginTransaction();
-        
         try{
+    
+            // begintrans
+            RI::$conn->beginTransaction();
         
             // insert datos en la DB
             RI::$em->persist($habitacion);
@@ -146,10 +145,10 @@ trait ConfiguracionEdiliciaHabitaciones{
         RIUtiles::validacionAssert($habitacion);
     
         
-        // begintrans
-        RI::$conn->beginTransaction();
-        
         try{
+    
+            // begintrans
+            RI::$conn->beginTransaction();
         
             // update datos en la DB
             RI::$em->persist($habitacion);
@@ -239,13 +238,11 @@ trait ConfiguracionEdiliciaHabitaciones{
         }
         
         
-        
-        // begintrans
-        RI::$conn->beginTransaction();
-        
         try{
             
-        
+            // begintrans
+            RI::$conn->beginTransaction();
+            
             // count camas habitacion
             $count = 
                 RI::$doctrine->getRepository

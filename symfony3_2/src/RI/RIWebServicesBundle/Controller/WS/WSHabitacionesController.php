@@ -6,7 +6,6 @@ namespace RI\RIWebServicesBundle\Controller\WS;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
-use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Get;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
@@ -90,10 +89,11 @@ trait WSHabitacionesController
             'baja' => $baja
         ];
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try {
+        
+            // begintrans
+            RI::$conn->beginTransaction();
         
             $data = $ce->modificarHabitacion($modif_hab);
 
@@ -153,11 +153,12 @@ trait WSHabitacionesController
             'baja' => $baja
         ];
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try {
                 
+            // begintrans
+            RI::$conn->beginTransaction();
+        
             $data = $ce->agregarHabitacion($nueva_hab);
 
             $status_code = 201;
@@ -209,11 +210,11 @@ trait WSHabitacionesController
         ];
         
         
-        // begintrans
-        RI::$conn->beginTransaction();
-        
         try {
                 
+            // begintrans
+            RI::$conn->beginTransaction();
+        
             $data = $ce->eliminarHabitacion($elimina_habitacion);
 
             $status_code = 200;

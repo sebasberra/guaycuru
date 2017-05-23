@@ -85,15 +85,13 @@ trait ConfiguracionEdiliciaSalas{
         // baja
         $sala->setBaja(RIUtiles::wrapBoolean($nueva_sala["baja"]));
         
-//        dump($sala);die();
-        
-        // begintrans
-        RI::$conn->beginTransaction();
-        
+       
         
         try{
             
-            
+            // begintrans
+            RI::$conn->beginTransaction();
+        
             // nro_sala
             $nro_sala = 
                 RI::$doctrine->getRepository
@@ -226,7 +224,7 @@ trait ConfiguracionEdiliciaSalas{
         
         } catch (\Exception $e) {
             
-            RI::$error_debug .= " Función agregarSala";
+            RI::$error_debug .= " Función modificarSala";
             
             throw $e;
             
@@ -263,10 +261,11 @@ trait ConfiguracionEdiliciaSalas{
         RIUtiles::validacionAssert($sala);
     
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try{
+        
+            // begintrans
+            RI::$conn->beginTransaction();
         
             // update datos en la DB
             RI::$em->persist($sala);
@@ -345,16 +344,15 @@ trait ConfiguracionEdiliciaSalas{
         // sala
         try {
         
+            // begintrans
+            RI::$conn->beginTransaction();
+            
             $sala =
                     RIUtiles::getSalaPorNombre(
                             $elimina_sala["nombre_sala"],
                             $elimina_sala["id_efector"]
                             );
             
-            // begintrans
-            RI::$conn->beginTransaction();
-        
-        
             // count camas salas
             $count = 
                 RI::$doctrine->getRepository

@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Get;
 
+use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 
@@ -88,10 +89,10 @@ trait WSCamasController
         ];
         
         
-        // begintrans
-        RI::$conn->beginTransaction();
-        
         try {
+        
+            // begintrans
+            RI::$conn->beginTransaction();
         
             $data = $ce->modificarCama($modif_cama);
 
@@ -154,11 +155,12 @@ trait WSCamasController
             'baja' => $baja
         ];
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try {
-                
+            
+            // begintrans
+            RI::$conn->beginTransaction();
+        
             $data = $ce->agregarCama($nueva_cama);
 
             $status_code = 201;
@@ -206,11 +208,12 @@ trait WSCamasController
             'nombre_cama' => $nombre_cama
         ];
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try {
-                
+            
+            // begintrans
+            RI::$conn->beginTransaction();
+        
             $data = $ce->eliminarCama($eliminar_cama);
 
             $status_code = 200;
@@ -257,11 +260,12 @@ trait WSCamasController
             'nombre_cama' => $nombre_cama
         ];
         
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try {
-                
+        
+            // begintrans
+            RI::$conn->beginTransaction();
+        
             $data = $ce->liberarCama($liberar_cama);
 
             $status_code = 204;
@@ -311,6 +315,8 @@ trait WSCamasController
         
         try {
             
+            // begintrans
+            RI::$conn->beginTransaction();
             
             $data = $ce->ocuparCama($ocupar_cama);
 

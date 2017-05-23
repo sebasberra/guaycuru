@@ -58,7 +58,7 @@ trait TestWSSalasController
             $baja){
         
         
-        $nueva_sala = [
+        $modif_sala = [
             'id_efector' => $id_efector,
             'nombre_sala' => $nombre_sala,
             'area_cod_servicio' => $area_cod_servicio,
@@ -70,7 +70,7 @@ trait TestWSSalasController
         
         return 
             $this->execConfiguracionEdilicia(
-                $nueva_sala, 
+                $modif_sala, 
                 "modificar_sala");
         
     }

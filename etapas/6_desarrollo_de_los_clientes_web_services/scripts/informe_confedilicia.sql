@@ -69,3 +69,4 @@ ORDER BY
 	nombre_sala,
 	nombre_habitacion,
 	nombre_cama;
+

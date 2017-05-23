@@ -11,7 +11,8 @@ class WSController extends FOSRestController
   
     use WSCamasController,
         WSHabitacionesController,
-        WSSalasController;
+        WSSalasController,
+        WSSyncController;
     
     
     private function execConfiguracionEdilicia(
