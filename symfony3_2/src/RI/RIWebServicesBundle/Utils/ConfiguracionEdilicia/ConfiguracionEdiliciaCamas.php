@@ -212,7 +212,7 @@ trait ConfiguracionEdiliciaCamas{
      */
     public function modificarCama($modif_cama){
     
-        
+//        dump($modif_cama);die();
         // cama
         try {
             
@@ -265,8 +265,8 @@ trait ConfiguracionEdiliciaCamas{
         // cama rotativa entonces puede tener la habitacion null, en otro caso
         // controla que exista la habitacion
         if ($rotativa==true &&                
-                $modif_cama["nombre_sala"]="" &&
-                $modif_cama["nombre_habitacion"] = ""){
+                $modif_cama["nombre_sala"] == "" &&
+                $modif_cama["nombre_habitacion"] == ""){
             
             // cama rotativa sin habitacion asignada
             $habitacion = null;
@@ -403,9 +403,6 @@ trait ConfiguracionEdiliciaCamas{
         // habitacion
         $habitacion=$cama->getIdHabitacion();
         
-        
-        // begintrans
-        RI::$conn->beginTransaction();
         
         try{
             

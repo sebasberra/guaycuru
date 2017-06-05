@@ -10,129 +10,305 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
-use Doctrine\ORM\NoResultException;
 
 
 trait WSSyncController
 {
     
     /**
-    * @Post("/sync/{id_efector}")
+    * @Post("/sync")
     */
-    public function syncAction(
-            Request $request,
-            $id_efector){
+    public function syncAction(Request $request){
         
-        $status_code = 201;
-//        dump($request);die();
-        $data = $request->getContent();
-//        $csv = new CsvEncoder(',', '"');
-//        $csvd = $csv->decode($data, 'csv');
         
-        $serializer = $this->get('serializer');
-        $csv = $serializer->decode($data,'csv');
         
-        foreach ($csv as $row){
             
-            $nombre_cama = $row['nombre_cama'];
-            $nombre_habitacion = $row['nombre_habitacion'];
-            $nombre_sala = $row['nombre_sala'];
+        try {
             
-            if ($nombre_cama == '-1'){
+            // content
+            $content = $request->getContent();
+
+            // csv
+            $serializer = $this->get('serializer');
+            $csv = $serializer->decode($content,'csv');
+
+            // ConfiguracionEdilicia
+            $ce = $this->get("app.configuracion_edilicia");
+            
+            // begintrans
+            RI::$conn->beginTransaction();
+
+            // check efector
+            $id_efector = $csv[0]['id_efector'];
+            $data = RIUtiles::getEfector($id_efector);
+            
+            
+            // resync add y update
+            foreach ($csv as $row){
+
+                // get arrays camas, habitaciones y salas
+                $r = $this->getRowInforme($row);
+
+                $cama = $r['cama'];
+                $habitacion = $r['habitacion'];
+                $sala = $r['sala'];
+
                 
-                if ($nombre_habitacion == '-1'){
-                    
-                    $tipo = 'sala';
-                }else{
-                    
-                    $tipo = 'habitacion';
+                // sala
+                if ($row['cama_nombre'] == '-1' &&
+                    $row['habitacion_nombre'] == '-1'){
+
+                    $ce->refreshAgregarModificarSala($sala);
+
                 }
-            
-            }else{
-                
-                $tipo = 'cama';
+
+                // habitacion
+                if ($row['cama_nombre'] == '-1' &&
+                    $row['habitacion_nombre'] != '-1'){
+
+                    $ce->refreshAgregarModificarHabitacion($habitacion);
+                }
+
+                // cama
+                if ($row['cama_nombre'] != '-1'){
+
+                    $ce->refreshAgregarModificarCama($cama);
+                }
+                    
             }
             
-            switch ($tipo){
-                
-                case 'cama':
-                    
-                    try{
-                    
-                        $cama = RIUtiles::getCama($nombre_cama, $id_efector);
-                        
-                    } catch (NoResultException $nre) {
-
-                        // ConfiguracionEdilicia
-                        $ce = $this->get("app.configuracion_edilicia");
-
-
-                        $nueva_cama = [
-                            'id_efector' => $id_efector,
-                            'nombre_sala' => $nombre_sala,
-                            'nombre_habitacion' => $nombre_habitacion,
-                            'nombre_cama' => $nombre_cama,
-                            'id_clasificacion_cama' => $id_clasificacion_cama,
-                            'estado' => $estado,
-                            'rotativa' => $rotativa,
-                            'baja' => $baja
-                        ];
-
-
-                        try {
-
-                            // begintrans
-                            RI::$conn->beginTransaction();
-                        
-                            $data = $ce->agregarCama($nueva_cama);
-
-                            $status_code = 201;
-
-                            RIUtiles::logsDebugManual(
-                                    'WS Agregar Cama en Sync Controller', 
-                                    $status_code.' '.$data);
-
-                            RI::$conn->commit();
-
-                        } catch (\Exception $e) {
-
-                            $status_code = 404;
-
-                            $data = array('Error'=>$e->getMessage());
-
-                            RI::$conn->rollback();
-
-                            RIUtiles::logsDebugManual(
-                                    'WS Agregar Cama en Sync Controller', 
-                                    $status_code.' '.$e->getMessage());
-
-                        }
-                    }
-                    
-                    
-                    break;
-                
-                case 'habitacion':
-                    
-                    RIUtiles::getHabitacion($nombre_habitacion, $nombre_sala, $id_efector);
-                    
-                    break;
-                
-                case 'sala':
-                    
-                    RIUtiles::getSalaPorNombre($nombre_sala, $id_efector);
-                    
-                    break;
-            }
-            
-        }
-//        dump($data);
-//        die();
+            // array camas, habitaciones y salas del informe
+            $infcamas = $this->getCamasInforme($csv);
+            $infhabs = $this->getHabsInforme($csv);
+            $infsalas = $this->getSalasInforme($csv);
         
-        $view = $this->view($csv, $status_code);
+            // resync eliminar camas
+            $ce->refreshEliminarCamas($infcamas);
+            
+            // resync eliminar habitaciones
+            $ce->refreshEliminarHab($infhabs);
+            
+            // resync eliminar salas
+            $ce->refreshEliminarSalas($infsalas);
+            
+            // 200
+            $status_code = 200;
+            
+            RIUtiles::logsDebugManual(
+                    'WS Sync Configuración Edilicia ('.$id_efector.')', 
+                    'RESPONSE CODE: '
+                    .$status_code
+                    .' id_efector: '
+                    .$id_efector);
+            
+            // commit
+            RI::$conn->commit();
+            
+
+        } catch (\Exception $e) {
+
+            // 404
+            $status_code = 404;
+
+            $data = array('Error'=>$e->getMessage());
+            
+            // rollback
+            RI::$conn->rollback();
+            
+            $descripcion = 'WS Sync Configuración Edilicia';
+            if (isset($id_efector)){
+                $descripcion.=' ('.$id_efector.')';
+            }
+            RIUtiles::logsDebugManual(
+                    $descripcion,  
+                    'RESPONSE CODE: '
+                    .$status_code
+                    .' Error: '
+                    .$e->getMessage());
+
+        }
+            
+        
+        $view = $this->view($data, $status_code);
         
         return $this->handleView($view);
         
     }
+    
+    
+    private function getRowInforme($row){
+    
+        // informe configuracion edilicia
+        //             
+        //    sala_nombre
+        //    sala_cant_camas
+        //    sala_mover_camas
+        //
+        //    habitacion_nombre
+        //    habitacion_sexo
+        //    habitacion_edad_desde
+        //    habitacion_edad_hasta
+        //    habitacion_tipo_edad
+        //    habitacion_cant_camas
+        //    habitacion_baja
+        //
+        //    cama_nombre
+        //    cama_id_clasificacion_cama
+        //    cama_estado
+        //    cama_rotativa
+        //    cama_baja
+                   
             
+        // cama
+        // 
+        // {id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}
+
+        $cama = array(
+            'id_efector' => $row['id_efector'],
+            'nombre_sala' => $row['sala_nombre'],
+            'nombre_habitacion' => $row['habitacion_nombre'],
+            'nombre_cama' => $row['cama_nombre'],
+            'id_clasificacion_cama' => $row['cama_id_clasificacion_cama'],
+            'estado' => $row['cama_estado'],
+            'rotativa' => $row['cama_rotativa'],
+            'baja' => $row['cama_baja']
+                );
+
+
+        // habitacion
+        // 
+        // {id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}
+
+        $habitacion = array(
+            'id_efector' => $row['id_efector'],
+            'nombre_sala' => $row['sala_nombre'],
+            'nombre_habitacion' => $row['habitacion_nombre'],
+            'sexo' => $row['habitacion_sexo'],
+            'edad_desde' => $row['habitacion_edad_desde'],
+            'edad_hasta' => $row['habitacion_edad_hasta'],
+            'tipo_edad' => $row['habitacion_tipo_edad'],
+            'baja' => $row['habitacion_baja']
+                );
+
+        // sala
+        //
+        // {id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}
+
+        $sala = array(
+            'id_efector' => $row['id_efector'],
+            'nombre_sala' => $row['sala_nombre'],
+            'area_cod_servicio' => -1,
+            'area_sector' => -1,
+            'area_subsector' => -1,
+            'mover_camas' => $row['sala_mover_camas'],
+            'baja' => false
+            );
+
+        return 
+            array(
+                'cama' => $cama,
+                'habitacion' => $habitacion,
+                'sala' => $sala
+                );
+            
+    }
+    
+    
+    private function getCamasInforme($csv){
+        
+        $camas = array();
+        $i=0;
+        
+        // bucle informe
+        foreach ($csv as $row){
+
+            // cama
+            if ($row['cama_nombre'] != '-1'){
+
+                $cama = array(
+                    'id_efector' => $row['id_efector'],
+                    'nombre_sala' => $row['sala_nombre'],
+                    'nombre_habitacion' => $row['habitacion_nombre'],
+                    'nombre_cama' => $row['cama_nombre'],
+                    'id_clasificacion_cama' => $row['cama_id_clasificacion_cama'],
+                    'estado' => $row['cama_estado'],
+                    'rotativa' => $row['cama_rotativa'],
+                    'baja' => $row['cama_baja']
+                        );
+                        
+                $camas[$i] = $cama;
+                $i++;
+            }
+
+        }
+        
+        return $camas;
+    
+    }
+    
+    
+    private function getHabsInforme($csv){
+        
+        $habitaciones = array();
+        $i=0;
+        // bucle informe
+        foreach ($csv as $row){
+
+            // habitacion
+            if ($row['cama_nombre'] == '-1' &&
+                $row['habitacion_nombre'] != '-1'){
+
+                $habitacion = array(
+                    'id_efector' => $row['id_efector'],
+                    'nombre_sala' => $row['sala_nombre'],
+                    'nombre_habitacion' => $row['habitacion_nombre'],
+                    'sexo' => $row['habitacion_sexo'],
+                    'edad_desde' => $row['habitacion_edad_desde'],
+                    'edad_hasta' => $row['habitacion_edad_hasta'],
+                    'tipo_edad' => $row['habitacion_tipo_edad'],
+                    'baja' => $row['habitacion_baja']
+                        );
+                        
+                $habitaciones[$i] = $habitacion;
+                $i++;
+            }
+
+        }
+    
+        return $habitaciones;
+    }
+    
+    
+    private function getSalasInforme($csv){
+        
+        $salas = array();
+        $i=0;
+        
+        // bucle informe
+        foreach ($csv as $row){
+
+            // sala
+            if ($row['cama_nombre'] == '-1' &&
+                $row['habitacion_nombre'] == '-1'){
+
+                $sala = array(
+                    'id_efector' => $row['id_efector'],
+                    'nombre_sala' => $row['sala_nombre'],
+                    'area_cod_servicio' => -1,
+                    'area_sector' => -1,
+                    'area_subsector' => -1,
+                    'mover_camas' => $row['sala_mover_camas'],
+                    'baja' => false
+                    );
+                        
+                $salas[$i] = $sala;
+                $i++;
+                
+            }
+
+        }
+    
+        return $salas;
+    }
+    
 }

@@ -22,10 +22,9 @@ class ConfiguracionEdilicia extends RI
     use 
         ConfiguracionEdiliciaCamas,
         ConfiguracionEdiliciaHabitaciones,
-        ConfiguracionEdiliciaSalas;
+        ConfiguracionEdiliciaSalas,
+        ConfiguracionEdiliciaSync;
             
-    
-    
     
     
     private function setCantCamasHab($habitacion){
