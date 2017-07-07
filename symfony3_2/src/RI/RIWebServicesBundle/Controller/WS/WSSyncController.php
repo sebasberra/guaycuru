@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ * 
+ * @version 0.1.0
+ */
 namespace RI\RIWebServicesBundle\Controller\WS;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -11,18 +19,82 @@ use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 
-
+/**
+ * Web Services Sincronizador de Configuración Edilicia 
+ * 
+ * @api
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ * 
+ * @see http://symfony.com/doc/current/bundles/FOSRestBundle/1-setting_up_the_bundle.html Documentación de FOSRest Bundle de Symfony
+ */
 trait WSSyncController
 {
     
     /**
-    * @Post("/sync")
-    */
+     * 
+     * Web Services para la inicialización y resincronización de la 
+     * Configuración Edilicia de un efector
+     * 
+     * Generar un Request que tenga un "content" con la siguiente información:
+     * 
+     * Efector: Cualquier efector que tenga implementado el módulo HMI2
+     * 
+     * Base local: hmi2
+     * 
+     * Formato: .csv
+     * 
+     * Separador: ,
+     * 
+     * Campos encerrados con: "
+     * 
+     * Orden del listado: Salas, Habitaciones, Camas
+     * 
+     * NULL: -1
+     * 
+     * Campos:
+     * 
+     * id_efector  
+     * 
+     * sala_nombre                        
+     * 
+     * sala_cant_camas  
+     * 
+     * sala_mover_camas  
+     * 
+     * habitacion_nombre                   
+     * 
+     * habitacion_sexo  
+     * 
+     * habitacion_edad_desde  
+     * 
+     * habitacion_edad_hasta  
+     * 
+     * habitacion_tipo_edad  
+     * 
+     * habitacion_cant_camas  
+     * 
+     * habitacion_baja  
+     * 
+     * cama_nombre                                 
+     * 
+     * cama_id_clasificacion_cama  
+     * 
+     * cama_estado  
+     * 
+     * cama_rotativa  cama_baja  
+     * 
+     * @api 
+     * 
+     * @Post("/sync")
+     *
+     * @param Request $request Listado de la configuración edilicia en el content
+     * 
+     * @return Response OK: 200 y id_efector; Error: 404 y mensaje de error
+     */
     public function syncAction(Request $request){
         
         
-        
-            
         try {
             
             // content
@@ -135,7 +207,13 @@ trait WSSyncController
         
     }
     
-    
+    /**
+     * @internal Separa una fila del informe en 3 arreglos
+     * 
+     * @param array $row Fila leida del informe de configuración edilicia
+     * @return array Arreglo asociativo de camas, habitaciones y salas
+     * 
+     */
     private function getRowInforme($row){
     
         // informe configuracion edilicia
@@ -159,10 +237,12 @@ trait WSSyncController
         //    cama_baja
                    
             
-        // cama
-        // 
-        // {id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}
-
+        /**
+         * arreglo cama
+         *
+         * {id_efector}/{nombre_sala}/{nombre_habitacion}/{nombre_cama}/{id_clasificacion_cama}/{estado}/{rotativa}/{baja}
+         * 
+         */
         $cama = array(
             'id_efector' => $row['id_efector'],
             'nombre_sala' => $row['sala_nombre'],
@@ -175,10 +255,12 @@ trait WSSyncController
                 );
 
 
-        // habitacion
-        // 
-        // {id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}
-
+        /**
+         * arreglo habitacion
+         *
+         * {id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}
+         * 
+         */
         $habitacion = array(
             'id_efector' => $row['id_efector'],
             'nombre_sala' => $row['sala_nombre'],
@@ -190,10 +272,12 @@ trait WSSyncController
             'baja' => $row['habitacion_baja']
                 );
 
-        // sala
-        //
-        // {id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}
-
+        /**
+         * arreglo sala
+         *
+         * {id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}
+         * 
+         */
         $sala = array(
             'id_efector' => $row['id_efector'],
             'nombre_sala' => $row['sala_nombre'],
@@ -213,7 +297,14 @@ trait WSSyncController
             
     }
     
-    
+    /**
+     * @internal Obtiene un arreglo de camas del informe de la configuración
+     * edilicia recibido
+     * 
+     * @param array $csv
+     * @return array
+     * 
+     */
     private function getCamasInforme($csv){
         
         $camas = array();
@@ -246,7 +337,15 @@ trait WSSyncController
     
     }
     
-    
+    /**
+     * @internal Obtiene un arreglo de habitaciones del informe de la 
+     * configuración edilicia recibido
+     *  
+     * @param array $csv
+     * @return array
+     * 
+     * @internal
+     */
     private function getHabsInforme($csv){
         
         $habitaciones = array();
@@ -278,7 +377,14 @@ trait WSSyncController
         return $habitaciones;
     }
     
-    
+    /**
+     * @internal Obtiene un arreglo de salas del informe de la configuración 
+     * edilicia recibido
+     * 
+     * @param array $csv
+     * @return array
+     * 
+     */
     private function getSalasInforme($csv){
         
         $salas = array();

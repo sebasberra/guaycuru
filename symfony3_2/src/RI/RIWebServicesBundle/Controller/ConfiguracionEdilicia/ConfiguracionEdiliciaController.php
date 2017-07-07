@@ -1,4 +1,9 @@
 <?php
+/** 
+ * Controlador de la Configuración Edilicia 
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ */
 
 namespace RI\RIWebServicesBundle\Controller\ConfiguracionEdilicia;
 
@@ -13,13 +18,21 @@ use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 use RI\RIWebServicesBundle\Utils\Render\Render;
 
-
+/**
+ * Controlador de la Configuración Edilicia
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ */
 class ConfiguracionEdiliciaController extends Controller
 {
     
     use Render;
     
     /**
+    * Action URI de acceso al organigrama de la configuración edilicia
+    * 
+    * @param Request $request Petición HTML
+    * 
     * @Route("/organigrama")
     */
     public function organigramaAction(Request $request)

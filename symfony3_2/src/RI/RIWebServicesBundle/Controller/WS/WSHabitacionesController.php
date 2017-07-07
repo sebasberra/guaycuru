@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ * 
+ * @version 0.1.0
+ */
 namespace RI\RIWebServicesBundle\Controller\WS;
 
 
@@ -11,14 +19,31 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
-
+/**
+ * Web Services Habitaciones 
+ *  
+ * @api
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ * 
+ * @see http://symfony.com/doc/current/bundles/FOSRestBundle/1-setting_up_the_bundle.html Documentación de FOSRest Bundle de Symfony
+ */
 trait WSHabitacionesController
 {
     
     
     /**
-    * @Get("/habitaciones/ver/{id_efector}/{nombre_sala}/{nombre_habitacion}")
-    */
+     * Web Services: Obtiene los datos de la habitación
+     * 
+     * @Get("/habitaciones/ver/{id_efector}/{nombre_sala}/{nombre_habitacion}")
+     * 
+     * @param int $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * @param string $nombre_habitacion Nombre único de habitación dentro de la sala
+     * 
+     * @return Response:200 Información de cama Response:404 cama no encontrada
+     *  
+     */
     public function habitacionesVerAction(
             $id_efector,
             $nombre_sala,
@@ -61,8 +86,22 @@ trait WSHabitacionesController
     
     
     /**
-    * @Put("/habitaciones/modificar/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
-    */
+     * Web Services: Modificar datos de la habitación
+     * 
+     * @Put("/habitaciones/modificar/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
+     *
+     * @param integer $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * @param string $nombre_habitacion Nombre único de habitación dentro de la sala
+     * @param integer $sexo 1=varones 2=mujeres 3=mixta
+     * @param integer $edad_desde Edad desde 
+     * @param integer $edad_hasta Edad hasta
+     * @param integer $tipo_edad 1=años 2=meses 3=días 4=horas 5=minutos 6=se ignora
+     * @param boolean $baja 0=habilitada; 1=baja
+     * 
+     * @return Response:204 Información de habitación actualizada Response:404 error
+     * 
+     */
     public function habitacionesModificarAction(
             $id_efector,
             $nombre_sala,
@@ -125,8 +164,22 @@ trait WSHabitacionesController
     }
     
     /**
-    * @Post("/habitaciones/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
-    */
+     * Web Services: Agregar habitación
+     * 
+     * @Post("/habitaciones/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
+     * 
+     * @param integer $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * @param string $nombre_habitacion Nombre único de habitación dentro de la sala
+     * @param integer $sexo 1=varones 2=mujeres 3=mixta
+     * @param integer $edad_desde Edad desde 
+     * @param integer $edad_hasta Edad hasta
+     * @param integer $tipo_edad 1=años 2=meses 3=días 4=horas 5=minutos 6=se ignora
+     * @param boolean $baja 0=habilitada; 1=baja
+     * 
+     * @return Response:201 Habitación nueva ingresada Response:404 error
+     * 
+     */
     public function habitacionesNuevaAction(
             $id_efector,
             $nombre_sala,
@@ -191,8 +244,17 @@ trait WSHabitacionesController
             
             
     /**
-    * @Delete("/habitaciones/eliminar/{id_efector}/{nombre_sala}/{nombre_habitacion}")
-    */
+     * Web Services: Eliminar habitación
+     * 
+     * @Delete("/habitaciones/eliminar/{id_efector}/{nombre_sala}/{nombre_habitacion}")
+     * 
+     * @param int $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * @param string $nombre_habitacion Nombre único de habitación dentro de la sala
+     * 
+     * @return Response:200 Habitación eliminada/baja Response:404 habitación no encontrada o error
+     * 
+     */
     public function habitacionesEliminarAction(
             $id_efector,
             $nombre_sala,

@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ *
+ * @version 0.1.0
+ */
 namespace RI\RIWebServicesBundle\Controller\WS;
 
 
@@ -11,13 +19,30 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
-
+/**
+ * Web Services Sincronizador de Configuración Edilicia 
+ * 
+ * @api
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ * 
+ * @see http://symfony.com/doc/current/bundles/FOSRestBundle/1-setting_up_the_bundle.html Documentación de FOSRest Bundle de Symfony
+ * 
+ */
 trait WSSalasController
 {
  
     /**
-    * @Get("/salas/ver/{id_efector}/{nombre_sala}")
-    */
+     * Web Services: Obtiene los datos de la sala
+     * 
+     * @Get("/salas/ver/{id_efector}/{nombre_sala}")
+     * 
+     * @param int $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * 
+     * @return Response:200 Información de sala Response:404 sala no encontrada
+     * 
+     */
     public function salasVerAction(
             $id_efector,
             $nombre_sala) 
@@ -59,8 +84,20 @@ trait WSSalasController
     
     
     /**
-    * @Put("/salas/modificar/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}")
-    */
+     * Web Services: Modificar datos de la sala
+     * 
+     * @Put("/salas/modificar/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}")
+     * 
+     * @param int $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * @param string $area_cod_servicio código de 3 dígitos del área SIPES
+     * @param string $area_sector campo sector correspondiente al área SIPES (1=varones; 2=mujeres; 3=mixto; >3 mixto estudios, talleres, etc)
+     * @param string $area_subsector subsector correspondiente al área SIPES (4=internación; 5=CE; 6=atención domiciliaria)
+     * @param boolean $mover_camas bandera para el sistema que indica si se permite mover camas entre las habitaciones de la misma sala. por ejemplo: las incubadoras
+     * @param boolean $baja
+     * 
+     * @return Response:204 Información de sala actualizada Response:404 error
+     */ 
     public function salasModificarAction(
             $id_efector,
             $nombre_sala,
@@ -122,8 +159,21 @@ trait WSSalasController
     
     
     /**
-    * @Post("/salas/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
-    */
+     * Web Services: Agregar sala
+     * 
+     * @Post("/salas/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
+     * 
+     * @param int $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * @param string $area_cod_servicio código de 3 dígitos del área SIPES
+     * @param string $area_sector campo sector correspondiente al área SIPES (1=varones; 2=mujeres; 3=mixto; >3 mixto estudios, talleres, etc)
+     * @param string $area_subsector subsector correspondiente al área SIPES (4=internación; 5=CE; 6=atención domiciliaria)
+     * @param boolean $mover_camas bandera para el sistema que indica si se permite mover camas entre las habitaciones de la misma sala. por ejemplo: las incubadoras
+     * @param boolean $baja 
+     * 
+     * @return Response:201 Sala nueva ingresada Response:404 error
+     * 
+     */
     public function salasNuevaAction(
             $id_efector,
             $nombre_sala,
@@ -186,8 +236,16 @@ trait WSSalasController
     
     
     /**
-    * @Delete("/salas/eliminar/{id_efector}/{nombre_sala}")
-    */
+     * Web Services: Eliminar habitación
+     *  
+     * @param int $id_efector ID efector
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * 
+     * @Delete("/salas/eliminar/{id_efector}/{nombre_sala}")
+     * 
+     * @return Response:200 Sala eliminada/baja Response:404 sala no encontrada o error
+     * 
+     */
     public function salasEliminarAction(
             $id_efector,
             $nombre_sala){

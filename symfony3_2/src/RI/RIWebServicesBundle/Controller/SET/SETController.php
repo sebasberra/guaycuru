@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Controlador para el anexo del sistema de SET
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ */
 namespace RI\RIWebServicesBundle\Controller\SET;
 
 
@@ -15,12 +19,21 @@ use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 use RI\RIWebServicesBundle\Utils\Render\Render;
 
 
+/**
+ * Controlador para el anexo del sistema de SET
+ * 
+ * @author Sebastián Berra sebasberra@yahoo.com.ar
+ */
 class SETController extends Controller
 {
     
     use Render;
     
     /**
+     * Action URI de formulario de consulta de camas libres
+     * 
+     * @param Request $request
+     * 
      * @Route("/consulta")
      */
     public function consultaAction(Request $request)
