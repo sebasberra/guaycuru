@@ -20,7 +20,7 @@ use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 /**
- * Web Services Sincronizador de Configuración Edilicia 
+ * Web Services Salas 
  * 
  * @api
  * 
