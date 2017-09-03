@@ -21,13 +21,22 @@ use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 /**
- * Web Services Camas 
+ * Web Services: ABM de Camas
  * 
- * @api
+ * @api *Librería de Web Services para ABM de la 
+ * Configuración Edilicia Hospitalaria Prov. de Santa Fe*
  * 
- * @author Sebastián Berra sebasberra@yahoo.com.ar
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
  * 
- * @see http://symfony.com/doc/current/bundles/FOSRestBundle/1-setting_up_the_bundle.html Documentación de FOSRest Bundle de Symfony
+ * @link http://symfony.com/doc/current/bundles/FOSRestBundle/1-setting_up_the_bundle.html 
+ * Documentación de FOSRest Bundle de Symfony
+ * 
+ * @link https://symfony.com/doc/current/introduction/http_fundamentals.html 
+ * Symfony and HTTP Fundamentals
+ * 
+ * @link http://api.symfony.com/3.4/Symfony/Component/HttpFoundation/Response.html
+ * Symfony Response Class
+ * 
  */
 trait WSCamasController
 {
@@ -41,7 +50,8 @@ trait WSCamasController
      * @param int $id_efector ID efector
      * @param string $nombre_cama Nombre único de cama en el efector
      * 
-     * @return Response:200 Información de cama Response:404 cama no encontrada
+     * @return Response Devuelve el código de estado HTTP: 200(OK - Información de cama) 
+     * o 404 (cama no encontrada)
      * 
      */
     public function camasVerAction(
@@ -96,7 +106,8 @@ trait WSCamasController
      * @param string $rotativa true o false
      * @param string $baja true o false
      * 
-     * @return Response:204 Información de cama actualizada Response:404 error
+     * @return Response Devuelve el código de estado HTTP: 204 (cama actualizada) 
+     * o 404 (error de actualización)
      * 
      */
     public function camasModificarAction(
@@ -178,7 +189,8 @@ trait WSCamasController
      * @param string $rotativa true o false
      * @param string $baja true o false
      * 
-     * @return Response:201 Cama nueva ingresada Response:404 error
+     * @return Response Devuelve el código de estado HTTP: 201 (cama nueva ingresada) 
+     * o 404 (error al agregar la cama)
      * 
      */
     public function camasNuevaAction(
@@ -251,7 +263,8 @@ trait WSCamasController
      * @param int $id_efector ID efector
      * @param string $nombre_cama Nombre único de cama en el efector
      * 
-     * @return Response:200 Cama eliminada Response:404 cama no encontrada o error
+     * @return Response Devuelve el código de estado HTTP:200 (cama eliminada) 
+     * o 404 (cama no encontrada o error)
      *  
      */
     public function camasEliminarAction(
@@ -312,7 +325,8 @@ trait WSCamasController
      * @param int $id_efector ID efector
      * @param string $nombre_cama Nombre único de cama en el efector
      * 
-     * @return Response:204 Cama liberada Response:404 cama no encontrada o error
+     * @return Response Devuelve el código de estado HTTP: 204 (cama liberada) 
+     * o 404 (cama no encontrada o error)
      * 
      */
     public function camasLiberarAction(
@@ -372,7 +386,8 @@ trait WSCamasController
      * @param int $id_efector ID efector
      * @param string $nombre_cama Nombre único de cama en el efector
      * 
-     * @return Response:204 Información de cama Response:404 cama no encontrada
+     * @return Response Devuelve el código de estado HTTP: 204 (cama ocupada)
+     * o 404 (cama no encontrada o error)
      * 
      */
     public function camasOcuparAction(
