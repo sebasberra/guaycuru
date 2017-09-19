@@ -1,7 +1,0 @@
-yaaukaniga_homepage:
-    path:     /
-    defaults: { _controller: YaaukanigaBundle:Default:index }
-    
-yaaukaniga_hello:
-    path:     /soap
-    defaults: { _controller: YaaukanigaBundle:HelloService:index }

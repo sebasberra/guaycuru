@@ -1,0 +1,18 @@
+ri_set:
+    resource: "@RIWebServicesBundle/Controller/SET/SETController.php"
+    type:     annotation
+    prefix:   /
+
+ri_ws:
+    resource: "@RIWebServicesBundle/Controller/WS/WSController.php"
+    type: rest
+    
+ri_configuracion_edilicia:
+    resource: "@RIWebServicesBundle/Controller/ConfiguracionEdilicia/ConfiguracionEdiliciaController.php"
+    type:     annotation
+    prefix:   /configuracion_edilicia
+
+ri_logger:
+    resource: "@RIWebServicesBundle/Controller/Logger/LoggerController.php"
+    type:     annotation
+    prefix:   /logger

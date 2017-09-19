@@ -1,0 +1,255 @@
+{% extends '::base.html.twig' %}
+
+{% block cuerpo %} 
+
+    {{form_start(form)}}
+    {{form_end(form)}}
+    
+    <div id="tree"></div>
+    
+    <script>
+        
+            
+        var data = [
+                
+        {% for log_conexion in data %}
+        {
+        
+            name: 'Conexión: {{ log_conexion.id_log_conexion }}',
+            tipo: 'conexion',
+            children: [
+            
+                { name: 'Usuario: {{ log_conexion.user_db }}',
+                  tipo: 'usuario'},
+                { name: 'Host: {{ log_conexion.host_db }}',
+                  tipo: 'host'},
+                { name: 'Descripción: {{ log_conexion.descripcion }}',
+                  tipo: 'descripcion'},
+                { name: 'Fecha/Hora: {{ log_conexion.fecha_hora }}',
+                  tipo: 'fecha_hora'},
+                { name: 'Info:',
+                  tipo: 'info',
+                  children: [
+                    {% for tabla in log_conexion.info %}
+                                
+                        { name: 'Tabla: {{ tabla.tabla }}',
+                          tipo: 'tabla'},
+                        { name: 'SQL: {{ tabla.tipo_sql }}',
+                          tipo: 'sql'},
+                        { name: 'Datos:',
+                          tipo: 'datos',
+                          children: [
+                            {% for key,dato in tabla.datos %}
+                                
+                                { name: '{{ key }}: {{ dato[3:] }}',
+                                  tipo: '{{ dato[0:3] }}' },
+                            {% endfor %}
+                          ]},
+                    {% endfor %}
+                ]}
+                
+                        
+            ]
+        },
+                
+        {% endfor %}
+        ];
+        
+        
+        $(function() {
+            $('#tree').tree({
+                data: data,
+                onCreateLi: function(node, $li) {
+                    
+                    var $title = $li.find('.jqtree-title');
+                    
+{#                    console.log($title);#}
+                    switch (node.tipo){
+                        
+                        case 'conexion':
+                            $title.addClass('ri_jqtree_conexion');
+                            break;
+                            
+                        case 'usuario':
+                            $title.before('<span class="fa fa-user"></span>');
+                            break;
+                            
+                        case 'host':
+                            $title.before('<span class="fa fa-laptop"></span>');
+                            break;
+                            
+                        case 'descripcion':
+                            $title.before('<span class="fa fa-comment"></span>');
+                            break;
+                            
+                        case 'fecha_hora':
+                            $title.before('<span class="fa fa-clock-o"></span>');
+                            break;
+                            
+                        case 'info':
+                            $title.addClass('ri_jqtree_info');
+                            break;
+                        
+                        case 'tabla':
+                            $title.before('<span class="fa fa-table"></span>');
+                            break;
+                        
+                        case 'sql':
+                            $title.before('<span class="fa fa-database"></span>');
+                            
+                            switch (node.name){
+                                
+                                case 'SQL: UPDATE':
+                                    $title.addClass('ri_jqtree_blue');
+                                    break;
+                                    
+                                case 'SQL: INSERT':
+                                    $title.addClass('ri_jqtree_green');
+                                    break;
+                                    
+                                case 'SQL: DELETE':
+                                    $title.addClass('ri_jqtree_red');
+                                    break;
+                                    
+                                case 'SQL: LOG':
+                                    $title.addClass('ri_jqtree_magenta');
+                                    break;
+                                    
+                            }
+                            
+                            break;
+                            
+                        case 'datos':
+                            $title.addClass('ri_jqtree_datos');
+                            break;
+                        
+                        {# modificacion #}
+                        case '[M]':
+                            $title.before('<span class="fa fa-exchange"></span>');
+                            $title.addClass('ri_jqtree_change');
+                            break;
+                            
+                        {# insert #}    
+                        case '[I]':
+                            $title.before('<span class="fa fa-plus"></span>');
+                            break;
+                        
+                        {# delete #}
+                        case '[D]':
+                            $title.before('<span class="fa fa-minus"></span>');
+                            $title.addClass('ri_jqtree_red');
+                            break;
+                            
+                        {# no modificacion #}
+                        case '[O]':
+                            $title.before('<span class="fa fa-lock"></span>');
+                            break;
+                            
+                        {# log #}
+                        case '[L]':
+                            $title.before('<span class="fa fa-bars"></span>');
+                            break;
+                    }
+                    
+                }
+            });
+            
+            $('#tree').bind(
+                
+                'tree.click',
+                
+                function(event) {
+                    
+                    {#console.log(event.node.parent.name);
+                    console.log(event.node);#}
+                    
+                    var padre = event.node.parent.name.split(":");
+                    var nodo = event.node.name.split(":");
+                    var x;
+                    
+                    for (x in padre) {
+                        
+                        padre[x] = limpiarCadena(padre[x]);
+                    } 
+
+                    for (x in nodo) {
+                        
+                        nodo[x] = limpiarCadena(nodo[x]);
+                    } 
+                    
+                    {#console.log(padre);
+                    console.log(nodo);
+                    console.log(nodo[0]);#}
+                    
+                    switch (padre[0]){
+                            
+                        case "datos":
+                            
+                            var tabla = 
+                                    event.node.parent.parent.children[0].name.split(":");
+                            
+                            var sql = 
+                                    event.node.parent.parent.children[1].name.split(":");
+                            
+                            {#console.log(sql);#}
+                            
+                            if (limpiarCadena(sql[1])!=="log"){
+                                
+                                for (x in tabla) {
+
+                                    tabla[x] = limpiarCadena(tabla[x]);
+
+                                }
+                                tabla=tabla[1];
+                                
+                                
+                                var campo = nodo[0];
+                                var valor = nodo[1];
+                                
+                                console.log(tabla);
+                                console.log(campo);
+                                console.log(valor);
+                                                                                                                                
+                                var data = {};
+                                
+                                $.ajax({
+                                    method: "GET",
+                                    url: "/ajax/logger/foreignkey/"+tabla+"/"+campo+"/"+valor,
+                                    dataType: 'json',
+                                    success: function(data)
+                                    {
+                                        
+                                        
+                                    }
+                                    
+                                })
+                                
+                            }
+                            
+                            break;
+                            
+                    }
+                            
+                    
+                }
+            );
+        });
+        
+        
+        function limpiarCadena(cadena){
+        
+            cadena = cadena.toLowerCase();
+            cadena = cadena.trim();
+            cadena = cadena.replace(/á/gi,"a");
+            cadena = cadena.replace(/é/gi,"e");
+            cadena = cadena.replace(/í/gi,"i");
+            cadena = cadena.replace(/ó/gi,"o");
+            cadena = cadena.replace(/ú/gi,"u");
+            cadena = cadena.replace(/ñ/gi,"n");
+            
+            return cadena;
+            
+        }
+        
+    </script>
+{% endblock %}

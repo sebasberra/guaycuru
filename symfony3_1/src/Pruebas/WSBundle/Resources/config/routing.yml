@@ -1,4 +1,0 @@
-configuracion_edilicia:
-    resource: "@WSBundle/Controller/ConfiguracionEdiliciaController.php"
-    prefix:   /configuracionedilicia
-    type:     annotation

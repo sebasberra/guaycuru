@@ -1,9 +1,0 @@
-<script>
-    $(function() {
-        {% for mensajes in app.session.flashbag.all %} {% set mensaje = mensajes | first %}
-            {% if mensaje.titulo is defined %}
-                mensaje_usuario_permanente("{{ mensaje.titulo }}", "{{ mensaje.mensaje }}", "{{ mensaje.tipo }}");
-            {% endif %}
-        {% endfor %}
-    })
-</script>

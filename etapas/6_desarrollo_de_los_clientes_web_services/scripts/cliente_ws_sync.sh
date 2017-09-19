@@ -17,7 +17,7 @@
 # 3) Genera el archivo "confedilicia.csv"
 #
 #		>confedilicia.csv
-mysql -uroot coronda_hmi2_20160920 <informe_confedilicia.sql | sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/" >confedilicia.csv
+mysql -uroot evaperon_hmi2_20170912 <informe_confedilicia.sql | sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/" >confedilicia.csv
 
 # Genera una peticion(Request) POST con el archivo "confedilicia.csv" como "Content"
-curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8003/sync.json 
+curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8004/sync.json 

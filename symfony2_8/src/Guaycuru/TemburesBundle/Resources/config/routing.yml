@@ -1,3 +1,0 @@
-tembures_homepage:
-    path:     /
-    defaults: { _controller: TemburesBundle:Default:index }

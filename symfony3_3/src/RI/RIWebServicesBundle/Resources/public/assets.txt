@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.bootstrap4.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.bootstrap4.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.bootstrap.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.foundation.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.foundation.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.jqueryui.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.jqueryui.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.material.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.material.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.semanticui.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.semanticui.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.uikit.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/dataTables.uikit.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/jquery.dataTables.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/jquery.dataTables.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/datatable/jquery.dataTables_themeroller.css') }}" />
+
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/stg/1140.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/stg/bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/stg/html5-pagination.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/stg/jquery-ui-1.10.3.custom.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/stg/menu.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/stg/normalize.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/assets/css/stg/styles-1.0.css') }}" />
+
+
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.bootstrap4.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.foundation.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.foundation.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.jqueryui.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.jqueryui.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.material.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.material.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.semanticui.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.semanticui.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.uikit.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/dataTables.uikit.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/datatable/jquery.js') }}"></script>
+
+
+<script src="{{ asset('bundles/assets/js/stg/interface.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/stg/jquery-1.10.2.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/stg/jquery.ui.datepicker-es.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/stg/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/stg/jquery.ui.touch-punch.min.js') }}"></script>
+<script src="{{ asset('bundles/assets/js/stg/match-media.js') }}"></script>
+
+

@@ -1,0 +1,194 @@
+.ri_jqtree_conexion {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.ri_jqtree_info {
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.ri_jqtree_datos {
+    font-weight: bold;
+    background-color: white;
+}
+
+.ri_jqtree_magenta {
+    color: magenta !important;
+}
+
+.ri_jqtree_blue {
+    color: blue !important;
+}
+
+.ri_jqtree_green {
+    color: green !important;
+}
+
+.ri_jqtree_red {
+    color: red !important;
+}
+
+.ri_jqtree_change {
+    color: blue !important;
+    background-color: white;
+}
+
+.detalles label {
+    display: block;
+    margin-left: 1em;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+
+.detalles span {
+    margin-left: 1em;
+    color: #666;
+    display: block;
+    font-size: 0.9em;
+}
+
+
+
+.ri-tabla-titulo1 {
+
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: transparent;
+    color: black;
+    font-size: 100%;    
+}
+
+.ri-tabla-titulo2 {
+
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    text-align: center;
+    background-color: transparent;
+    color: black;
+    font-size: 90%;    
+}
+
+.ri-tabla-titulo3 {
+
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: none;
+    text-align: center;
+    background-color: transparent;
+    color: black;
+    font-size: 90%;    
+}
+
+.ri-tabla-lista {
+
+    text-align: center;
+    font-size: 80%;    
+}
+
+.ri-tabla-resumen {
+
+    border: 1px solid black;
+    text-align: center;
+    font-size: 80%;    
+}
+
+.ri-td-resumen {
+
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+
+.ri-th-left-lista {
+
+    border-left: 1px solid black;
+    text-align: center;
+
+}
+
+.ri-th-bottom-lista {
+
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+
+}
+
+
+
+/* clases para la pagina de ayuda */
+
+.ri-th-ayuda-titulo1 {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    color: black;
+    background-color: #bbb;
+    font-size: 160%;
+    
+}
+
+.ri-th-ayuda-titulo2 {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    color: black;
+    background-color: #ccc;
+    font-size: 130%;
+    
+}
+
+.ri-td-ayuda-titulo-desc {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: left;
+    background-color: #ddd;
+    color: black;
+    font-size: 110%;
+    
+}
+
+.ri-th-ayuda {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: #ddd;
+    color: black;
+    font-size: 100%;
+}
+
+.ri-td-ayuda {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: left;
+    background-color: #ddd;
+    color: black;
+    font-size: 90%;
+}
+
+
