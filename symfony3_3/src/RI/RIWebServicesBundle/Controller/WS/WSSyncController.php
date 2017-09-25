@@ -42,60 +42,94 @@ trait WSSyncController
      * 
      * **Web Services para la inicialización y resincronización de la Configuración Edilicia de un efector**
      * 
-     * Generar un Request que tenga un "content" con la siguiente información:
+     * Generar un **Request** que tenga los datos del **content** con las siguientes características:
      * 
-     * Efector: Cualquier efector que tenga implementado el módulo HMI2
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>Formato</td>
+     *  <td>csv</td>
+     * </tr>
+     * <tr>
+     *  <td>Separador</td>
+     *  <td>,</td>
+     * </tr>
+     * <tr>
+     *  <td>Campos encerrados</td>
+     *  <td>"</td>
+     * </tr>
+     * </table>
      * 
-     * Base local: hmi2
+     * La información del archivo .csv corresponde a los datos de las Salas,
+     * Habitaciones y Camas del efector.
      * 
-     * Formato: .csv
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td style="text-align:center;"><strong>IMPORTANTE</string></td>
+     * </tr>
+     * <tr>
+     *  <td style="text-align:left;"><b>Orden de las filas:</b> Salas, Habitaciones y Camas</td>
+     * </tr>
+     * <tr>
+     *  <td style="text-align:left;">Las columnas vacías se llenan con -1</td>
+     * </tr>
+     * </table>
      * 
-     * Separador: ,
+     * Formato de la información por columnas:
      * 
-     * Campos encerrados con: "
-     * 
-     * Orden del listado: Salas, Habitaciones, Camas
-     * 
-     * NULL: -1
-     * 
-     * Campos:
-     * 
-     * id_efector  
-     * 
-     * sala_nombre                        
-     * 
-     * sala_cant_camas  
-     * 
-     * sala_mover_camas  
-     * 
-     * habitacion_nombre                   
-     * 
-     * habitacion_sexo  
-     * 
-     * habitacion_edad_desde  
-     * 
-     * habitacion_edad_hasta  
-     * 
-     * habitacion_tipo_edad  
-     * 
-     * habitacion_cant_camas  
-     * 
-     * habitacion_baja  
-     * 
-     * cama_nombre                                 
-     * 
-     * cama_id_clasificacion_cama  
-     * 
-     * cama_estado  
-     * 
-     * cama_rotativa  
-     * 
-     * cama_baja  
-     * 
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td style="text-align:left;">id_efector</td>
+     * </tr>
+     * <tr>
+     *  <td style="text-align:left;">sala_nombre</td>
+     * </tr>                        
+     * <tr>
+     *  <td style="text-align:left;">sala_cant_camas</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">sala_mover_camas</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">habitacion_nombre</td>
+     * </tr>                   
+     * <tr>
+     *  <td style="text-align:left;">habitacion_sexo</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">habitacion_edad_desde</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">habitacion_edad_hasta</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">habitacion_tipo_edad</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">habitacion_cant_camas</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">habitacion_baja</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">cama_nombre</td>
+     * </tr>                                 
+     * <tr>
+     *  <td style="text-align:left;">cama_id_clasificacion_cama</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">cama_estado</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">cama_rotativa</td>
+     * </tr>  
+     * <tr>
+     *  <td style="text-align:left;">cama_baja</td>
+     * </tr>  
+     * </table>
      * 
      * @Post("/sync")
      *
-     * @param Request $request Listado de la configuración edilicia en el content
+     * @param Request $request Listado con información de la configuración edilicia
      * 
      * @return Response OK: 200 y id_efector; Error: 404 y mensaje de error
      */

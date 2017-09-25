@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ * 
+ * @version 0.1.0
+ */
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,9 +17,47 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * Salas
+ * Tabla: Salas
+ * 
+ * @api *Librería de acceso a la base de datos centralizada del sistema de camas críticas de internación*
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ *  
+ * @link http://www.doctrine-project.org
+ * Doctrine Project
+ * 
+ * @link https://symfony.com/doc/current/doctrine.html
+ * Symfony - Databases and the Doctrine ORM
  *
- * @ORM\Table(name="salas", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_id_efector_nombre", columns={"id_efector", "nombre"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_nro_sala", columns={"id_efector", "nro_sala"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_area_id_efector_servicio", columns={"area_id_efector_servicio"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_cod_servicio_sector_subsector", columns={"id_efector", "area_cod_servicio", "area_sector", "area_subsector"})}, indexes={@ORM\Index(name="idx_fk_salas_area_id_efector_servicio", columns={"area_id_efector_servicio"}), @ORM\Index(name="IDX_FEDB5403305FE2F", columns={"id_efector"})})
+ * @link http://symfony.com/doc/current/validation.html
+ * Symfony - Validation
+ * 
+ * @ORM\Table(
+ *      name="salas", 
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(
+ *              name="idx_unique_id_efector_nombre", 
+ *              columns={"id_efector", "nombre"}), 
+ *          @ORM\UniqueConstraint(
+ *              name="idx_unique_id_efector_nro_sala", 
+ *              columns={"id_efector", "nro_sala"}), 
+ *          @ORM\UniqueConstraint(
+ *              name="idx_unique_id_efector_area_id_efector_servicio", 
+ *              columns={"area_id_efector_servicio"}), 
+ *          @ORM\UniqueConstraint(
+ *              name="idx_unique_id_efector_cod_servicio_sector_subsector", 
+ *              columns={"id_efector", "area_cod_servicio", "area_sector", "area_subsector"})
+ *      }, 
+ *      indexes={
+ *          @ORM\Index(
+ *              name="idx_fk_salas_area_id_efector_servicio", 
+ *              columns={"area_id_efector_servicio"}), 
+ *          @ORM\Index(
+ *              name="IDX_FEDB5403305FE2F", 
+ *              columns={"id_efector"})
+ *      }
+ *  )
+ * 
  * @ORM\Entity(repositoryClass="RI\DBHmi2GuaycuruCamasBundle\Entity\SalasRepository")
  * 
  * @UniqueEntity(
@@ -23,7 +69,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Salas
 {
     /**
-     * @var integer
+     * @var integer Clave primaria. Concatenación del id_efector y nro_sala
      *
      * @ORM\Column(name="id_sala", type="integer", nullable=false)
      * @ORM\Id
@@ -32,14 +78,14 @@ class Salas
     private $idSala;
 
     /**
-     * @var integer
+     * @var integer Número de sala dentro del efector, se implementa como incremental por efector
      *
      * @ORM\Column(name="nro_sala", type="smallint", nullable=false)
      */
     private $nroSala;
 
     /**
-     * @var string
+     * @var string Nombre de la sala dentro del efector
      *
      * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      * 
@@ -52,7 +98,7 @@ class Salas
     private $nombre;
 
     /**
-     * @var integer
+     * @var integer Cantidad total de camas activas de la sala
      *
      * @ORM\Column(name="cant_camas", type="smallint", nullable=false)
      * 
@@ -65,7 +111,7 @@ class Salas
     private $cantCamas;
 
     /**
-     * @var boolean
+     * @var boolean Bandera para el sistema que indica si se permite mover camas entre las habitaciones de la misma sala. por ejemplo: las incubadoras
      *
      * @ORM\Column(name="mover_camas", type="boolean", nullable=false)
      * 
@@ -78,28 +124,28 @@ class Salas
     private $moverCamas;
 
     /**
-     * @var string
+     * @var string Código de 3 digitos del área SIPES
      *
      * @ORM\Column(name="area_cod_servicio", type="string", length=3, nullable=true)
      */
     private $areaCodServicio;
 
     /**
-     * @var string
+     * @var string Campo sector correspondiente al área SIPES (1=varones; 2=mujeres; 3=mixto)
      *
      * @ORM\Column(name="area_sector", type="string", length=1, nullable=true)
      */
     private $areaSector;
 
     /**
-     * @var string
+     * @var string Subsector correspondiente al área SIPES (4=internación; 5=CE; 6=atención domiciliaria)
      *
      * @ORM\Column(name="area_subsector", type="string", length=1, nullable=true)
      */
     private $areaSubsector;
 
     /**
-     * @var boolean
+     * @var boolean Marca si la sala está actualmente cerrada
      *
      * @ORM\Column(name="baja", type="boolean", nullable=false)
      * 
@@ -112,14 +158,14 @@ class Salas
     private $baja;
 
     /**
-     * @var \DateTime
+     * @var \DateTime Fecha de última modificación del registro
      *
      * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=false)
      */
     private $fechaModificacion = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \Efectores
+     * @var \Efectores Efector donde pertenece la sala
      *
      * @ORM\ManyToOne(targetEntity="Efectores")
      * @ORM\JoinColumns({
@@ -129,7 +175,7 @@ class Salas
     private $idEfector;
 
     /**
-     * @var \EfectoresServicios
+     * @var \EfectoresServicios Area SIPES
      *
      * @ORM\ManyToOne(targetEntity="EfectoresServicios")
      * @ORM\JoinColumns({
@@ -430,6 +476,11 @@ class Salas
         return $this->areaEfectorServicio;
     }
     
+    /**
+     * Implementación __toString
+     *
+     * @return string Nombre de la sala
+     */
     public function __toString()
     {
       return $this->nombre;

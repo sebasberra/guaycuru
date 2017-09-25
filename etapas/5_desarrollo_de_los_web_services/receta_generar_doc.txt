@@ -1,0 +1,2 @@
+/* comando para generar documentación del código */
+apigen generate --access-levels=public,protected,private -s ~/guaycuru/symfony3_3/src/RI/RIWebServicesBundle/Controller/WS/ -s ~/guaycuru/symfony3_3/src/RI/DBHmi2GuaycuruCamasBundle/Entity/ -s ~/guaycuru/symfony3_3/src/RI/RIWebServicesBundle/Utils/ConfiguracionEdilicia/ -d ./apigen/

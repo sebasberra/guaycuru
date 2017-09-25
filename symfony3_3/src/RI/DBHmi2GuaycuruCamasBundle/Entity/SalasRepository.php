@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ * 
+ * @version 0.1.0
+ */
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
@@ -7,10 +15,31 @@ use Doctrine\ORM\EntityRepository;
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
-
+/**
+ * **Repositorio del objeto Doctrine Salas**
+ * 
+ * @api *Librería de acceso a la base de datos centralizada del sistema de camas críticas de internación*
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ *  
+ * @link http://www.doctrine-project.org
+ * Doctrine Project
+ * 
+ * @link https://symfony.com/doc/current/doctrine.html
+ * Symfony - Databases and the Doctrine ORM
+ *
+ */
 class SalasRepository extends EntityRepository
 {
     
+    /**
+     * Obtiene las salas del efector que estén habilitadas o no según parámetros
+     * 
+     * @param integer $id_efector ID de efector 
+     * @param boolean $baja Habilitada o no habilitada
+     * @return Salas
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function findByIdEfectorBaja(
             $id_efector,
             $baja)
@@ -45,6 +74,17 @@ class SalasRepository extends EntityRepository
     }
     
     
+    /**
+     * Obtiene los datos de la sala de un efector con los objetos relacionados
+     * inicializados para evitar el LAZY_LOADING de Doctrine
+     * 
+     * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/extra-lazy-associations.html
+     * Doctrine 2 - Lazy Loading Associations
+     * 
+     * @param integer $id_sala
+     * @return Salas
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function findOneByIdSalaConAsociaciones(
             $id_sala)
     {
@@ -79,6 +119,13 @@ class SalasRepository extends EntityRepository
         return $sala;
     }
     
+    /**
+     * Obtiene la sala según el ID de servicio_sala pasado como parámetro
+     * 
+     * @param integer $id_servicio_sala ID de servicio_sala
+     * @return Sala
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function findByIdServicioSala(
             $id_servicio_sala)
     {
@@ -112,7 +159,15 @@ class SalasRepository extends EntityRepository
         return $sala;
     }
     
-    
+    /**
+     * Obtiene la sala buscando por nombre de sala y id de efector
+     * NOTA: Si no encuentra el registro lanza una excepción
+     * 
+     * @param string $nombre_sala Nombre de la sala dentro del efector
+     * @param integer $id_efector ID de efector
+     * @return Salas
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function findOneByNombreIdEfector(
             $nombre_sala,
             $id_efector)
@@ -148,7 +203,14 @@ class SalasRepository extends EntityRepository
         return $sala;
     }
     
-    
+    /**
+     * Obtiene el total de camas (activas y no activas) de la sala
+     * 
+     * @param integer $id_sala ID de sala
+     * 
+     * @return integer
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function countCamasTodas(
             $id_sala){
         
@@ -183,6 +245,15 @@ class SalasRepository extends EntityRepository
         
     }
     
+    /**
+     * Obtiene el total de camas de la sala que estén activas o no activas
+     * según los parámetros
+     * 
+     * @param integer $id_sala ID de sala
+     * @param boolean $baja Bandera de cama activa o no activa
+     * @return integer
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function countCamas(
             $id_sala,
             $baja){
@@ -220,6 +291,16 @@ class SalasRepository extends EntityRepository
         
     }
     
+    /**
+     * Obtiene el próximo id de sala para el efector pasado como parámetro
+     * NOTA: el ID de sala no es un número autoincremental puro, es un 
+     * identificativo único a partir de la combinación de ID efector y un 
+     * valor autoincremental por efector
+     * 
+     * @param integer $id_efector ID efector
+     * @return integer Próximo ID de sala para el efector
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function getProximoIdSala(
             $id_efector){
         
@@ -253,6 +334,15 @@ class SalasRepository extends EntityRepository
         
     }
     
+    
+    /**
+     * Obtiene el próximo nro de sala para el efector pasado como parámetro
+     * NOTA: el nro de sala es un valor autoincremental por efector
+     * 
+     * @param integer $id_efector ID efector
+     * @return integer Próximo nro de sala para el efector
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function getProximoNroSala(
             $id_efector){
         

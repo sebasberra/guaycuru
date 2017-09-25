@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ * 
+ * @version 0.1.0
+ */
 namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
@@ -7,9 +15,49 @@ use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 use Doctrine\ORM\NoResultException;
 
-
+/**
+ * **Realiza las operaciones de Inicialización y Sincronización de la Configuración Edilicia**
+ * 
+ * @api *Librería de acceso a la base de datos centralizada del sistema de camas críticas de internación*
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ *  
+ * @link http://www.doctrine-project.org
+ * Doctrine Project
+ * 
+ * @link https://symfony.com/doc/current/doctrine.html
+ * Symfony - Databases and the Doctrine ORM
+ *  
+ * @see RI\DBHmi2GuaycuruCamasBundle\Entity\Salas
+ * @see RI\DBHmi2GuaycuruCamasBundle\Entity\Habitaciones
+ * @see RI\DBHmi2GuaycuruCamasBundle\Entity\Camas
+ */
 trait ConfiguracionEdiliciaSync{
 
+    /**
+     * **Actualiza en la base centralizada el registro de la sala pasada como parámetro**
+     * 
+     * - Si la sala **NO** existe entonces la agrega a la base
+     * - Si la sala **existe** sólo actualiza el registro si hay cambio en los campos:
+     * 
+     * <blockquote>
+     * <p>
+     * </p>
+     * <table style="border-style: dashed;">
+     *  <tr><td style="border-style: none; text-align:left">mover_camas</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">baja</td></tr>
+     * </table>
+     * </blockquote>
+     * 
+     * @see ConfiguracionEdiliciaSalas 
+     * 
+     * @param array $sala Ver los métodos **agregarSala()** y **modificarSala()**
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     * 
+     */
     public function refreshAgregarModificarSala($sala){
         
         try{
@@ -42,6 +90,33 @@ trait ConfiguracionEdiliciaSync{
     }
     
     
+    /**
+     * **Actualiza en la base centralizada el registro de la habitación pasada como parámetro**
+     * 
+     * - Si la habitación **NO** existe entonces la agrega a la base
+     * - Si la habitación **existe** sólo actualiza el registro si hay cambio en los campos:
+     * 
+     * <blockquote>
+     * <p>
+     * </p>
+     * <table style="border-style: dashed;">
+     *  <tr><td style="border-style: none; text-align:left">sexo</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">edad_desde</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">edad_hasta</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">tipo_edad</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">baja</td></tr>
+     * </table>
+     * </blockquote>
+     * 
+     * @see ConfiguracionEdiliciaHabitaciones 
+     * 
+     * @param array $habitacion Ver los métodos **agregarHabitacion()** y **modificarHabitacion()**
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     * 
+     */
     public function refreshAgregarModificarHabitacion($habitacion){
     
         try{
@@ -78,6 +153,33 @@ trait ConfiguracionEdiliciaSync{
     }
     
     
+    /**
+     * **Actualiza en la base centralizada el registro de la cama pasada como parámetro**
+     * 
+     * - Si la cama **NO** existe entonces la agrega a la base
+     * - Si la cama **existe** sólo actualiza el registro si hay cambio en los campos:
+     * 
+     * <blockquote>
+     * <p>
+     * </p>
+     * <table style="border-style: dashed;">
+     *  <tr><td style="border-style: none; text-align:left">id_clasificacion_cama</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">id_habitacion</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">estado</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">rotativa</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">baja</td></tr>
+     * </table>
+     * </blockquote>
+     * 
+     * @see ConfiguracionEdiliciaCamas 
+     * 
+     * @param array $cama Ver los métodos **agregarCama()** y **modificarCama()**
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     * 
+     */
     public function refreshAgregarModificarCama($cama){
         
     
@@ -113,7 +215,65 @@ trait ConfiguracionEdiliciaSync{
         
     }
     
-    
+    /**
+     * **Recorre el arreglo de camas pasado como parámetro y va eliminando de la
+     * base centralizada las camas que no estén en dicho arreglo**
+     * 
+     * @see ConfiguracionEdiliciaCamas 
+     * 
+     * @param array $infcamas Es un arreglo del tipo arreglo:
+     * 
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la cama</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_sala"]</td>
+     *  <td>Nombre de la sala donde pertenece la cama.
+     *      NOTA: se busca el id_sala en base central por nombre</td>
+     *  <td>string</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_habitacion"]</td>
+     *  <td>Nombre de habitación donde pertenece la cama.
+     *      NOTA: se busca el id_habitacion en base central por nombre
+     *  <td>string</td>
+     * <tr>
+     *  <td>["nombre_cama"]</td>
+     *  <td>Nombre de la cama. 
+     *      NOTA: Se utiliza solo para encontrar la cama, <strong>no se modifica</strong></td>
+     *  <td>string</td>
+     * </tr>
+     * <tr>
+     *  <td>["id_clasificacion_cama"]</td>
+     *  <td>Clasificación de camas. Ver tabla: clasificaciones_camas</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["estado"]</td>
+     *  <td>L=libre; O=ocupada; F=fuera de servicio; R=en reparación; V=reservada</td>
+     *  <td>string</td>
+     * </tr>
+     * <tr>
+     *  <td>["rotativa"]</td>
+     *  <td>0=no es rotativa, 1=es rotativa; 
+     *  NOTA: Las camas rotativas pueden cambiarse de habitación o sala o no estar asignada a una habitación en un momento dado</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["baja"]</td>
+     *  <td>0 = habilitada; 1 = baja</td>
+     *  <td>integer</td>
+     * </tr>
+     * </table> 
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     * 
+     */
     public function refreshEliminarCamas($infcamas){
         
         try {
@@ -161,6 +321,64 @@ trait ConfiguracionEdiliciaSync{
     }
     
     
+    /**
+     * **Recorre el arreglo de habitaciones pasado como parámetro y va eliminando de la
+     * base centralizada las habitaciones que no estén en dicho arreglo**
+     * 
+     * @see ConfiguracionEdiliciaHabitaciones 
+     * 
+     * @param array $infhabs Es un arreglo del tipo arreglo:
+     * 
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la habitación</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_sala"]</td>
+     *  <td>Nombre de la sala donde pertenece la habitación.
+     *      NOTA: se busca el id_sala en base central por nombre</td>
+     *  <td>string</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_habitacion"]</td>
+     *  <td>Nombre de habitación de la nueva habitación
+     *  <td>string</td>
+     * </tr>
+     * 
+     * <tr>
+     *  <td>["sexo"]</td>
+     *  <td>1=masculino, 2=femenino, 3=mixto</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["edad_desde"]</td>
+     *  <td>0 a 255. NOTA: Cuando es cero no se valida el límite</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["edad_hasta"]</td>
+     *  <td>0 a 255. NOTA: Cuando es 255 no se valida el límite</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["tipo_edad"]</td>
+     *  <td>1=años, 2=meses, 3=días, 4=horas, 5=minutos, 6=se ignora</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["baja"]</td>
+     *  <td>0 = habilitada; 1 = baja</td>
+     *  <td>integer</td>
+     * </tr>
+     * </table> 
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     * 
+     */
     public function refreshEliminarHab($infhabs){
         
         try {
@@ -211,6 +429,58 @@ trait ConfiguracionEdiliciaSync{
     }
     
     
+    /**
+     * **Recorre el arreglo de salas pasado como parámetro y va eliminando de la
+     * base centralizada las salas que no estén en dicho arreglo**
+     * 
+     * @see ConfiguracionEdiliciaSalas 
+     * 
+     * @param array $infsalas Es un arreglo del tipo arreglo:
+     * 
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la sala</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_sala"]</td>
+     *  <td>Nombre de la sala</td>
+     *  <td>string</td>
+     * </tr>
+     * <tr>
+     *  <td>["area_cod_servicio"]</td>
+     *  <td>*(Opcional)* Código de 3 dígitos del área (SIPES) o -1 </td>
+     *  <td>string</td>
+     * </tr>
+     * 
+     * <tr>
+     *  <td>["area_sector"]</td>
+     *  <td>*(Opcional)* Campo sector correspondiente al área (SIPES) (1=varones; 2=mujeres; 3=mixto; >3 mixto estudios, talleres, etc)</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["area_subsector"]</td>
+     *  <td>*(Opcional)* Subsector correspondiente al área (SIPES) (4=internación; 5=CE; 6=atención domiciliaria)</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["mover_camas"]</td>
+     *  <td>0 = No 1 = Si</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["baja"]</td>
+     *  <td>0 = habilitada; 1 = baja</td>
+     *  <td>integer</td>
+     * </tr>
+     * </table> 
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     * 
+     */
     public function refreshEliminarSalas($infsalas){
         
         try {

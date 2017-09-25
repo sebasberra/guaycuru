@@ -1,11 +1,29 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ * 
+ * @version 0.1.0
+ */
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ClasificacionesCamas
+ * **Tabla: ClasificacionesCamas**
+ * 
+ * @api *Librería de acceso a la base de datos centralizada del sistema de camas críticas de internación*
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ *  
+ * @link http://www.doctrine-project.org
+ * Doctrine Project
+ * 
+ * @link https://symfony.com/doc/current/doctrine.html
+ * Symfony - Databases and the Doctrine ORM
  *
  * @ORM\Table(name="clasificaciones_camas")
  * @ORM\Entity
@@ -13,7 +31,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ClasificacionesCamas
 {
     /**
-     * @var integer
+     * @var integer Clave primaria
      *
      * @ORM\Column(name="id_clasificacion_cama", type="integer", nullable=false)
      * @ORM\Id
@@ -22,70 +40,70 @@ class ClasificacionesCamas
     private $idClasificacionCama;
 
     /**
-     * @var string
+     * @var string Descripción de la clasificación
      *
      * @ORM\Column(name="clasificacion_cama", type="string", length=50, nullable=false)
      */
     private $clasificacionCama;
 
     /**
-     * @var string
+     * @var string Abreviatura de la descripción
      *
      * @ORM\Column(name="abreviatura", type="string", length=5, nullable=false)
      */
     private $abreviatura;
 
     /**
-     * @var string
+     * @var string Información extra
      *
      * @ORM\Column(name="definicion", type="text", length=65535, nullable=true)
      */
     private $definicion;
 
     /**
-     * @var integer
+     * @var integer 0 = cuidado moderado; 1 = cuidado intermedio ; 2 = cuidado crítico
      *
      * @ORM\Column(name="tipo_cuidado_progresivo", type="integer", nullable=false)
      */
     private $tipoCuidadoProgresivo;
 
     /**
-     * @var integer
-     *
+     * @var integer 0 = NO crítica; 1 = crítica
+     * 
      * @ORM\Column(name="critica", type="integer", nullable=false)
      */
     private $critica;
 
     /**
-     * @var string
+     * @var string ADU= adulto (>14 a); PED= pediátrica (>28 d y <14 a); NEO= neonatológica (<28 d)
      *
      * @ORM\Column(name="categoria_edad", type="string", length=5, nullable=false)
      */
     private $categoriaEdad;
 
     /**
-     * @var integer
+     * @var integer 0 = sin oxigeno ; 1 = con oxigeno
      *
      * @ORM\Column(name="oxigeno", type="integer", nullable=false)
      */
     private $oxigeno;
 
     /**
-     * @var integer
+     * @var integer 0 = sin respirador; 1 = con respirador
      *
      * @ORM\Column(name="respirador", type="integer", nullable=false)
      */
     private $respirador;
 
     /**
-     * @var integer
+     * @var integer 0 = sin aislamiento; 1 = con aislamiento (casos donde el paciente debe estar aislado de los otros por el tipo de efermedad)
      *
      * @ORM\Column(name="aislamiento", type="integer", nullable=false)
      */
     private $aislamiento;
 
     /**
-     * @var \DateTime
+     * @var \DateTime Fecha de última modificación del registro
      *
      * @ORM\Column(name="fecha_expiracion", type="date", nullable=true)
      */
@@ -343,6 +361,11 @@ class ClasificacionesCamas
         return $this->fechaExpiracion;
     }
     
+    /**
+     * Implementación __toString
+     *
+     * @return string Descripción de la clasificación
+     */
     public function __toString()
     {
       return $this->clasificacionCama;

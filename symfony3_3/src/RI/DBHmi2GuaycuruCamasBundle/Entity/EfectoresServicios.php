@@ -1,11 +1,30 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ * 
+ * @version 0.1.0
+ */
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EfectoresServicios
+ * **Tabla: EfectoresServicios**
+ * 
+ * @api *Librería de acceso a la base de datos centralizada del sistema de camas críticas de internación*
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ *  
+ * @link http://www.doctrine-project.org
+ * Doctrine Project
+ * 
+ * @link https://symfony.com/doc/current/doctrine.html
+ * Symfony - Databases and the Doctrine ORM
+ *
  *
  * @ORM\Table(name="efectores_servicios", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_claveestd_cod_servicio_sector_subsector", columns={"claveestd", "cod_servicio", "sector", "subsector"}), @ORM\UniqueConstraint(name="idx_unique_id_efector_id_servicio_estadistica", columns={"id_efector", "id_servicio_estadistica"})}, indexes={@ORM\Index(name="idx_fk_efectores_servicios_id_efector", columns={"id_efector"}), @ORM\Index(name="idx_fk_efectores_servicios_id_servicio_estadistica", columns={"id_servicio_estadistica"})})
  * @ORM\Entity(repositoryClass="RI\DBHmi2GuaycuruCamasBundle\Entity\EfectoresServiciosRepository")
@@ -13,7 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EfectoresServicios
 {
     /**
-     * @var integer
+     * @var integer Clave primaria
      *
      * @ORM\Column(name="id_efector_servicio", type="integer", nullable=false)
      * @ORM\Id
@@ -22,56 +41,56 @@ class EfectoresServicios
     private $idEfectorServicio;
 
     /**
-     * @var string
+     * @var string Clave de establecimiento definida por la Dirección Gral. de Estadística
      *
      * @ORM\Column(name="claveestd", type="string", length=8, nullable=false)
      */
     private $claveestd;
 
     /**
-     * @var string
+     * @var string Código nuclear de servicios de nación vigente desde 2008
      *
      * @ORM\Column(name="cod_servicio", type="string", length=3, nullable=false)
      */
     private $codServicio;
 
     /**
-     * @var string
+     * @var string 1=varones; 2=mujeres; 3=mixto; >3 especificación
      *
      * @ORM\Column(name="sector", type="string", length=1, nullable=false)
      */
     private $sector;
 
     /**
-     * @var string
+     * @var string 4=internación; 5=CE; 6=atención domiciliaria
      *
      * @ORM\Column(name="subsector", type="string", length=1, nullable=false)
      */
     private $subsector;
 
     /**
-     * @var string
+     * @var string Nombre del servicio de estadística
      *
      * @ORM\Column(name="nom_servicio_estadistica", type="string", length=255, nullable=false)
      */
     private $nomServicioEstadistica;
 
     /**
-     * @var boolean
+     * @var boolean Bandera de registro activo o no activo
      *
      * @ORM\Column(name="baja", type="boolean", nullable=false)
      */
     private $baja;
 
     /**
-     * @var \DateTime
+     * @var \DateTime Fecha de última modificación del registro
      *
      * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=false)
      */
     private $fechaModificacion = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \Efectores
+     * @var \Efectores Efector donde se ha habilitado el servicio de 5 dígitos
      *
      * @ORM\ManyToOne(targetEntity="Efectores")
      * @ORM\JoinColumns({
@@ -81,7 +100,7 @@ class EfectoresServicios
     private $idEfector;
 
     /**
-     * @var \ServiciosEstadistica
+     * @var \ServiciosEstadistica Servicio de 5 dígitos de estadística Santa Fe
      *
      * @ORM\ManyToOne(targetEntity="ServiciosEstadistica")
      * @ORM\JoinColumns({

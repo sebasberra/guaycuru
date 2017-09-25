@@ -1,11 +1,30 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ * 
+ * @version 0.1.0
+ */
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ConfiguracionesSistemas
+ * **Tabla: ConfiguracionesSistemas**
+ * 
+ * @api *Librería de acceso a la base de datos centralizada del sistema de camas críticas de internación*
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ *  
+ * @link http://www.doctrine-project.org
+ * Doctrine Project
+ * 
+ * @link https://symfony.com/doc/current/doctrine.html
+ * Symfony - Databases and the Doctrine ORM
+ *
  *
  * @ORM\Table(name="configuraciones_sistemas", indexes={@ORM\Index(name="idx_fk_configuraciones_sistemas_id_efector", columns={"id_efector"})})
  * @ORM\Entity
@@ -13,7 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ConfiguracionesSistemas
 {
     /**
-     * @var integer
+     * @var integer Clave primaria
      *
      * @ORM\Column(name="id_configuracion_sistema", type="integer", nullable=false)
      * @ORM\Id
@@ -22,21 +41,21 @@ class ConfiguracionesSistemas
     private $idConfiguracionSistema;
 
     /**
-     * @var boolean
+     * @var boolean Define si está activo el efector en el sistema
      *
      * @ORM\Column(name="activa", type="boolean", nullable=false)
      */
     private $activa;
 
     /**
-     * @var string
+     * @var string Descripción u observación del efector
      *
      * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
      */
     private $observaciones;
 
     /**
-     * @var \Efectores
+     * @var \Efectores Efector asociado
      *
      * @ORM\ManyToOne(targetEntity="Efectores")
      * @ORM\JoinColumns({

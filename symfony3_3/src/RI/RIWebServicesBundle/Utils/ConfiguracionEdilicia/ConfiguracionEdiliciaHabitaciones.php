@@ -77,7 +77,7 @@ trait ConfiguracionEdiliciaHabitaciones{
      * </tr>
      * <tr>
      *  <td>["tipo_edad"]</td>
-     *  <td>1=años, 2=meses, 3=días, 4=horas, 5=minutos</td>
+     *  <td>1=años, 2=meses, 3=días, 4=horas, 5=minutos, 6=se ignora</td>
      *  <td>integer</td>
      * </tr>
      * <tr>
@@ -178,6 +178,72 @@ trait ConfiguracionEdiliciaHabitaciones{
         
     }
     
+    
+    /** 
+     * **Modifica una habitación en la base centralizada**
+     * 
+     * La modificación de habitación se aplica a
+     * 
+     * <table style="border-style: dashed;">
+     *  <tr><td style="border-style: none; text-align:left">sexo</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">edad_desde</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">edad_hasta</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">tipo_edad</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">baja</td></tr>
+     * </table>
+     * 
+     *  *NOTA: El id de habitación se busca en la base centralizada a partir de la combinacion de los parámetros [id_efector-nombre_sala-nombre_habitacion]*
+     *  
+     * @param array $modif_hab
+     *  
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la habitación</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_sala"]</td>
+     *  <td>Nombre de la sala donde pertenece la habitación</td>
+     *  <td>string</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_habitacion"]</td>
+     *  <td>Nombre de habitación a modificar
+     *  <td>string</td>
+     * </tr>
+     * 
+     * <tr>
+     *  <td>["sexo"]</td>
+     *  <td>1=masculino, 2=femenino, 3=mixto</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["edad_desde"]</td>
+     *  <td>0 a 255. NOTA: Cuando es cero no se valida el límite</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["edad_hasta"]</td>
+     *  <td>0 a 255. NOTA: Cuando es 255 no se valida el límite</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["tipo_edad"]</td>
+     *  <td>1=años, 2=meses, 3=días, 4=horas, 5=minutos, 6=se ignora</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["baja"]</td>
+     *  <td>0 = habilitada; 1 = baja</td>
+     *  <td>integer</td>
+     * </tr>
+     * </table>
+     * 
+     * @return string Mensaje de habitación modificada
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function modificarHabitacion($modif_hab){
         
         // habitacion
@@ -292,12 +358,35 @@ trait ConfiguracionEdiliciaHabitaciones{
     }
     
     
-    /** Elimina la habitacion de base de datos, la
-     *  baja se implementa como modificacion
+    /** 
+     * **Elimina una habitación de la base centralizada**
      * 
-     * @param type $elimina_hab
-     * @return string
-     * @throws \Exception
+     * *NOTA: Elimina la habitación usando DELETE, la baja se hace
+     * a través de la modificación de habitación*
+     * 
+     * @param array $elimina_hab
+     *  
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la habitación</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_sala"]</td>
+     *  <td>Nombre de la sala donde pertenece la habitación</td>
+     *  <td>string</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_habitacion"]</td>
+     *  <td>Nombre de habitación a eliminar
+     *  <td>string</td>
+     * </tr>
+     * </table>
+     * 
+     * @return string Mensaje de habitación eliminada
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
      */
     public function eliminarHabitacion($elimina_hab){
         

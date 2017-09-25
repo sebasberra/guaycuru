@@ -69,7 +69,7 @@ trait ConfiguracionEdiliciaCamas{
      * <tr>
      *  <td>["id_clasificacion_cama"]</td>
      *  <td>Clasificación de camas. Ver tabla: clasificaciones_camas</td>
-     *  <td><a href="class-RI.DBHmi2GuaycuruCamasBundle.Entity.ClasificacionesCamas.html">ClasificacionesCamas</a></td>
+     *  <td>integer</td>
      * </tr>
      * <tr>
      *  <td>["estado"]</td>
@@ -252,15 +252,17 @@ trait ConfiguracionEdiliciaCamas{
     }
     
     /** 
-     * **Modifica una cama en la base centralizadas**
+     * **Modifica una cama en la base centralizada**
      * 
      * La modificación de cama se aplica a
      * 
-     *  - id_clasificacion_cama
-     *  - id_habitacion
-     *  - estado
-     *  - rotativa
-     *  - baja
+     * <table style="border-style: dashed;">
+     *  <tr><td style="border-style: none; text-align:left">id_clasificacion_cama</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">id_habitacion</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">estado</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">rotativa</td></tr>
+     *  <tr><td style="border-style: none; text-align:left">baja</td></tr>
+     * </table>
      * 
      *  *NOTA: El cambio de nombre es un caso especial y no se permire modificar porque es clave única (nombre,id_efector)*
      *  
@@ -292,7 +294,7 @@ trait ConfiguracionEdiliciaCamas{
      * <tr>
      *  <td>["id_clasificacion_cama"]</td>
      *  <td>Clasificación de camas. Ver tabla: clasificaciones_camas</td>
-     *  <td><a href="class-RI.DBHmi2GuaycuruCamasBundle.Entity.ClasificacionesCamas.html">ClasificacionesCamas</a></td>
+     *  <td>integer</td>
      * </tr>
      * <tr>
      *  <td>["estado"]</td>
@@ -368,8 +370,10 @@ trait ConfiguracionEdiliciaCamas{
         // rotativa
         $rotativa = RIUtiles::wrapBoolean($modif_cama["rotativa"]);
         
-        // cama rotativa entonces puede tener la habitacion null, en otro caso
-        // controla que exista la habitacion
+        /**
+         * @internal cama rotativa entonces puede tener la habitacion null, 
+         * en otro caso controla que exista la habitación
+         */
         if ($rotativa==true &&                
                 $modif_cama["nombre_sala"] == "" &&
                 $modif_cama["nombre_habitacion"] == ""){
@@ -483,11 +487,30 @@ trait ConfiguracionEdiliciaCamas{
     }
     
     
-    /** Elimina la cama usando DELETE, la baja se hace
-     *  a traves de la modificacion de cama
+    /** 
+     * **Elimina una cama en la base centralizada**
+     * 
+     * *NOTA: Elimina la cama usando DELETE, la baja se hace
+     * a través de la modificación de cama*
      *  
-     * @param type $elimina_cama
-     * @throws \Exception
+     * @param array $elimina_cama
+     * 
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la cama</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_cama"]</td>
+     *  <td>Nombre de la cama</td>
+     *  <td>string</td>
+     * </tr>
+     * </table>
+     * 
+     * @return string Mensaje de cama eliminada
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
      */
     public function eliminarCama($elimina_cama){
         
@@ -554,6 +577,30 @@ trait ConfiguracionEdiliciaCamas{
         
     }
     
+    /** 
+     * **Cambia el estado de la cama a "ocupada" en la base centralizada**
+     *  
+     * @param array $ocupa_cama
+     * 
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la cama</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_cama"]</td>
+     *  <td>Nombre de la cama</td>
+     *  <td>string</td>
+     * </tr>
+     * </table>
+     * 
+     * @param boolean $sobrecarga Si la cama está ocupada lanza una excepción
+     * 
+     * @return string Mensaje de cama ocupada
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function ocuparCama(
             $ocupa_cama,
             $sobrecarga=false){
@@ -573,7 +620,9 @@ trait ConfiguracionEdiliciaCamas{
 
         }
         
-        // check cama ocupada
+        /**
+         * @internal check cama ocupada
+         */
         if ($cama->getEstado()=='O' &&
             $sobrecarga==false){
                 
@@ -619,6 +668,29 @@ trait ConfiguracionEdiliciaCamas{
         return $msg;
     }
     
+    
+    /** 
+     * **Cambia el estado de la cama a "libre" en la base centralizada**
+     *  
+     * @param array $libera_cama
+     * 
+     * <table cellpadding="0" cellspacing="0" border="1" style="border-style: solid; border-color: #cccccc #cccccc;">
+     * <tr>
+     *  <td>["id_efector"]</td>
+     *  <td>ID efector donde pertenece la cama</td>
+     *  <td>integer</td>
+     * </tr>
+     * <tr>
+     *  <td>["nombre_cama"]</td>
+     *  <td>Nombre de la cama</td>
+     *  <td>string</td>
+     * </tr>
+     * </table>
+     * 
+     * @return string Mensaje de cama liberada
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
     public function liberarCama($libera_cama){
         
         // cama

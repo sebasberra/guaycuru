@@ -1,20 +1,43 @@
 <?php
-
+/**
+ * Proyecto Final Ingeniería Informática 2017 - UNL - Santa Fe - Argentina
+ * 
+ * Web Services Plataforma Web para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ * 
+ * @version 0.1.0
+ */
 namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
-/** Realiza el acceso a la DB hmi2guaycuru para actualizacion de
- *  la configuracion edilicia.
- *  NOTA: la sincronizacion entre efectores y base central no puede
- *  ser completa en toda la estructura. Se inicia con la restriccion
- *  a implementar en las bases de hospitales que es nombre unico de
- *  cama por efector. La jararquia hacia arriba de camas, o sea, las
- *  relaciones con tabla habitaciones y salas no se implementara. Se
- *  sugiere nombres de habitaciones unicas por efector para que la 
- *  informacion se refleje en la base central, pero de no ser posible
- *  no se indicara la habitacion de la cama en base central
+/** 
+ * **Realiza los accesos a la base de datos para actualización de la configuracion edilicia.**
+ * 
+ * *NOTA: la sincronización entre la DB de los efectores y DB central no puede
+ * ser completa en toda la estructura. Se define la restricción de nombre único
+ * de cama por efector y debe implementarse en las bases de los hospitales . 
+ * Se sugiere, pero no es una restricción, nombres únicos de habitación 
+ * por efector.*
+ * 
+ * @api *Librería de acceso a la base de datos centralizada del sistema de camas críticas de internación*
+ * 
+ * @author Sebastián Berra <sebasberra@yahoo.com.ar>
+ *  
+ * @link http://www.doctrine-project.org
+ * Doctrine Project
+ * 
+ * @link https://symfony.com/doc/current/doctrine.html
+ * Symfony - Databases and the Doctrine ORM
+ * 
+ * @see RI\DBHmi2GuaycuruCamasBundle\Entity\Camas
+ * 
+ * @see RI\DBHmi2GuaycuruCamasBundle\Entity\Habitaciones
+ * 
+ * @see RI\DBHmi2GuaycuruCamasBundle\Entity\Salas
+ * 
  */
 class ConfiguracionEdilicia extends RI
 {
@@ -26,7 +49,10 @@ class ConfiguracionEdilicia extends RI
         ConfiguracionEdiliciaSync;
             
     
-    
+    /**
+     * 
+     * @param RI\DBHmi2GuaycuruCamasBundle\Entity\Habitaciones $habitacion
+     */
     private function setCantCamasHab($habitacion){
         
         
@@ -47,6 +73,10 @@ class ConfiguracionEdilicia extends RI
         
     }
     
+    /**
+     * 
+     * @param RI\DBHmi2GuaycuruCamasBundle\Entity\Salas $sala
+     */
     private function setCantCamasSala($sala){
         
         // count camas salas
@@ -67,7 +97,10 @@ class ConfiguracionEdilicia extends RI
         
     }
     
-    
+    /**
+     * 
+     * @param integer $id_sala
+     */
     private function setCantCamasHabSala($id_sala){
         
         
@@ -85,7 +118,11 @@ class ConfiguracionEdilicia extends RI
                 
     }
     
-    
+    /**
+     * 
+     * @param integer $id_habitacion
+     * @param boolean $baja
+     */
     private function setBajaCamasHabitacion(
             $id_habitacion,
             $baja){
@@ -124,7 +161,11 @@ class ConfiguracionEdilicia extends RI
         
     }
     
-    
+    /**
+     * 
+     * @param integer $id_sala
+     * @param boolean $baja
+     */
     private function setBajaCamasSala(
             $id_sala,
             $baja){
@@ -163,7 +204,11 @@ class ConfiguracionEdilicia extends RI
         
     }
         
-    
+    /**
+     * 
+     * @param integer $id_sala
+     * @param boolean $baja
+     */
     private function setBajaHabitacionesSala(
             $id_sala,
             $baja){
