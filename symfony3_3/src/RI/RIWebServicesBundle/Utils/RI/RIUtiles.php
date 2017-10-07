@@ -12,7 +12,8 @@ class RIUtiles extends RI
 {
 
     use RIUtilesOptions,
-        RIUtilesLogger;
+        RIUtilesLogger,
+        RIUtilesREST;
     
     
     const DB_BUNDLE = 'DBHmi2GuaycuruCamasBundle';
@@ -685,7 +686,7 @@ class RIUtiles extends RI
                             (self::DB_BUNDLE.':Camas')
                     ->findOneByNombreIdEfector(
                     $nombre, $id_efector);
-            
+            //dump($cama);die();
         } catch (NoResultException $nre) {
 
             $msg = "La cama: "

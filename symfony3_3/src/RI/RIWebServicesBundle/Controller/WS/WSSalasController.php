@@ -102,7 +102,7 @@ trait WSSalasController
      * @param string $area_sector campo sector correspondiente al área SIPES (1=varones; 2=mujeres; 3=mixto; >3 mixto estudios, talleres, etc)
      * @param string $area_subsector subsector correspondiente al área SIPES (4=internación; 5=CE; 6=atención domiciliaria)
      * @param boolean $mover_camas bandera para el sistema que indica si se permite mover camas entre las habitaciones de la misma sala. por ejemplo: las incubadoras
-     * @param boolean $baja
+     * @param boolean $baja 0=habilitada; 1=baja
      * 
      * @return Response Devuelve el código de estado HTTP: 204 (sala actualizada) 
      * o 404 (error de actualización)
@@ -246,7 +246,7 @@ trait WSSalasController
     
     
     /**
-     * Web Services: Eliminar habitación
+     * Web Services: Eliminar sala
      *  
      * @param int $id_efector ID efector
      * @param string $nombre_sala Nombre único de sala en el efector

@@ -66,13 +66,16 @@ trait WSCamasController
         try {
                 
                     
-            $data = RIUtiles::getCama($nombre_cama,$id_efector);
+            $data = RIUtiles::getCamaREST($nombre_cama,$id_efector);
             
             $status_code = 200;
             
             RIUtiles::logsDebugManual(
                     'WS Ver Cama', 
-                    $status_code.' '.$data);
+                    $status_code
+                    .' '
+                    .implode(' ', $data)
+                    );
 
         } catch (\Exception $e) {
 
@@ -300,8 +303,20 @@ trait WSCamasController
         } catch (\Exception $e) {
 
             $status_code = 404;
+            
+            if ($e instanceof \Doctrine\ORM\NoResultException){
+                
+                $data = array(
+                    'Error'=>
+                        "La cama: "
+                        .$nombre_cama
+                        ." no fue encontrada en el efector: "
+                        .$id_efector);
+                
+            }else{
 
-            $data = array('Error'=>$e->getMessage());
+                $data = array('Error'=>$e->getMessage());
+            }
             
             RI::$conn->rollback();
             
