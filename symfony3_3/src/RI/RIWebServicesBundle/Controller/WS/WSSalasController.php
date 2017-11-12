@@ -63,20 +63,35 @@ trait WSSalasController
         try {
                 
                     
-            $data = RIUtiles::getSalaPorNombre
+            $data = RIUtiles::getSalaPorNombreREST
                     ($nombre_sala, $id_efector);
             
             $status_code = 200;
             
             RIUtiles::logsDebugManual(
-                    'WS Ver Sala', 
-                    $status_code.' '.$data);
-
+                    'WS Ver Sala',
+                    $status_code
+                    .' '
+                    .implode(' ', $data)
+                    );
+            
         } catch (\Exception $e) {
 
             $status_code = 404;
 
-            $data = array('Error'=>$e->getMessage());
+            if ($e instanceof \Doctrine\ORM\NoResultException){
+                
+                $data = array(
+                    'Error'=>
+                        "La sala: "
+                        .$nombre_sala
+                        ." no fue encontrada en el efector: "
+                        .$id_efector);
+                
+            }else{
+
+                $data = array('Error'=>$e->getMessage());
+            }
             
             RIUtiles::logsDebugManual(
                     'WS Ver Sala', 
@@ -151,7 +166,19 @@ trait WSSalasController
 
             $status_code = 404;
 
-            $data = array('Error'=>$e->getMessage());
+            if ($e instanceof \Doctrine\ORM\NoResultException){
+                
+                $data = array(
+                    'Error'=>
+                        "La sala: "
+                        .$nombre_sala
+                        ." no fue encontrada en el efector: "
+                        .$id_efector);
+                
+            }else{
+
+                $data = array('Error'=>$e->getMessage());
+            }
 
             RI::$conn->rollback();
             

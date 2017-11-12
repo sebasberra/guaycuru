@@ -11,6 +11,9 @@
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
+
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionCodigoServicio;
 
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
@@ -66,7 +69,7 @@ class EfectoresServiciosRepository extends EntityRepository
             $query->setParameter("id_efector", $id_efector);
             
             $efectores_servicios = $query->getResult();
-            
+        
         } catch (\Exception $e) {
 
             throw $e;
@@ -119,7 +122,16 @@ class EfectoresServiciosRepository extends EntityRepository
             $query->setParameter("subsector", $subsector);
             
             $efectores_servicios = $query->getSingleResult();
+        
+        } catch (NoResultException $nre) {
+
+            throw new NoResultExceptionCodigoServicio(
+                    $id_efector,
+                    $cod_servicio,
+                    $sector,
+                    $subsector);
             
+        
         } catch (\Exception $e) {
 
             throw $e;

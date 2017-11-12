@@ -13,7 +13,10 @@ namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
-use Doctrine\ORM\NoResultException;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionCama;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionHabitacion;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionSala;
+
 
 /**
  * **Realiza las operaciones de Inicialización y Sincronización de la Configuración Edilicia**
@@ -76,7 +79,7 @@ trait ConfiguracionEdiliciaSync{
             }
             
         
-        } catch (NoResultException $nre) {
+        } catch (NoResultExceptionSala $nres) {
 
             $this->agregarSala($sala);
 
@@ -139,7 +142,7 @@ trait ConfiguracionEdiliciaSync{
             }        
                         
         
-        } catch (NoResultException $nre) {
+        } catch (NoResultExceptionHabitacion $nreh) {
 
             $this->agregarHabitacion($habitacion);
 
@@ -202,7 +205,7 @@ trait ConfiguracionEdiliciaSync{
             }
                         
         
-        } catch (NoResultException $nre) {
+        } catch (NoResultExceptionCama $nrec) {
 
             $this->agregarCama($cama);
 

@@ -11,7 +11,12 @@
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionHabitacion;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionSala;
+
+use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
 /**
@@ -193,6 +198,12 @@ class HabitacionesRepository extends EntityRepository
             
             // exec query para chequear que exista la sala
             $query->getSingleResult();
+        
+        } catch (NoResultException $nre) {
+            
+            RI::$error_debug .= $nre->getMessage();
+            
+            throw new NoResultExceptionSala($id_efector,$nombre_sala);
             
         } catch (\Exception $e) {
 
@@ -224,6 +235,15 @@ class HabitacionesRepository extends EntityRepository
             
             
             $habitaciones = $query->getSingleResult();
+            
+        } catch (NoResultException $nre) {
+            
+            RI::$error_debug .= $nre->getMessage();
+            
+            throw new NoResultExceptionHabitacion(
+                    $id_efector,
+                    $nombre_sala,
+                    $nombre_habitacion);
             
         } catch (\Exception $e) {
 

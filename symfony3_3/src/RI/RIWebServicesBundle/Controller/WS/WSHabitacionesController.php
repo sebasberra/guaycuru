@@ -66,21 +66,24 @@ trait WSHabitacionesController
         try {
                 
                     
-            $data = RIUtiles::getHabitacion
+            $data = RIUtiles::getHabitacionREST
                     ($nombre_habitacion, $nombre_sala, $id_efector);
             
             $status_code = 200;
             
             RIUtiles::logsDebugManual(
                     'WS Ver Habitación', 
-                    $status_code.' '.$data);
+                    $status_code
+                    .' '
+                    .implode(' ', $data)
+                    );
 
         } catch (\Exception $e) {
 
             $status_code = 404;
 
             $data = array('Error'=>$e->getMessage());
-            
+                        
             RIUtiles::logsDebugManual(
                     'WS Ver Habitación', 
                     $status_code.' '.$e->getMessage());
@@ -159,7 +162,7 @@ trait WSHabitacionesController
             $status_code = 404;
 
             $data = array('Error'=>$e->getMessage());
-
+            
             RI::$conn->rollback();
             
             RIUtiles::logsDebugManual(
@@ -238,7 +241,7 @@ trait WSHabitacionesController
             $status_code = 404;
 
             $data = array('Error'=>$e->getMessage());
-            
+                        
             RI::$conn->rollback();
             
             RIUtiles::logsDebugManual(
@@ -304,7 +307,7 @@ trait WSHabitacionesController
             $status_code = 404;
 
             $data = array('Error'=>$e->getMessage());
-            
+                        
             RI::$conn->rollback();
             
             RIUtiles::logsDebugManual(

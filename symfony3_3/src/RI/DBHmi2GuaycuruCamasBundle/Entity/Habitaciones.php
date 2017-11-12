@@ -121,7 +121,7 @@ class Habitaciones
      * @var string Unidad definida para establecer los parámetros de edad permitida.
      * 1=años, 2=meses, 3=días, 4=horas, 5=minutos, 6=se ignora
      *
-     * @Assert\Choice({"1", "2", "3", "4", "5"},
+     * @Assert\Choice({"1", "2", "3", "4", "5", "6"},
      *      message = "El valor de tipo edad: {{ value }} no es válido. Valores posibles 1=años, 2=meses, 3=días, 4=horas, 5=minutos"
      * )
      * 

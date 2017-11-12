@@ -161,7 +161,7 @@ trait WSCamasController
             $status_code = 404;
 
             $data = array('Error'=>$e->getMessage());
-
+            
             RI::$conn->rollback();
             
             RIUtiles::logsDebugManual(
@@ -304,20 +304,8 @@ trait WSCamasController
 
             $status_code = 404;
             
-            if ($e instanceof \Doctrine\ORM\NoResultException){
-                
-                $data = array(
-                    'Error'=>
-                        "La cama: "
-                        .$nombre_cama
-                        ." no fue encontrada en el efector: "
-                        .$id_efector);
-                
-            }else{
-
-                $data = array('Error'=>$e->getMessage());
-            }
-            
+            $data = array('Error'=>$e->getMessage());
+                        
             RI::$conn->rollback();
             
             RIUtiles::logsDebugManual(
@@ -378,7 +366,7 @@ trait WSCamasController
             $status_code = 404;
 
             $data = array('Error'=>$e->getMessage());
-            
+                        
             RI::$conn->rollback();
             
             RIUtiles::logsDebugManual(
@@ -439,7 +427,7 @@ trait WSCamasController
             $status_code = 404;
 
             $data = array('Error'=>$e->getMessage());
-            
+                        
             RI::$conn->rollback();
             
             RIUtiles::logsDebugManual(

@@ -11,6 +11,9 @@
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
+
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionSala;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
@@ -62,6 +65,12 @@ class SalasRepository extends EntityRepository
             $query->setParameter("baja", $baja);
             
             $salas = $query->getResult();
+        
+        } catch (NoResultException $nre){
+            
+            RI::$error_debug .= $e->getMessage();
+            
+            throw new NoResultExceptionSala($id_efector);
             
         } catch (\Exception $e) {
 
@@ -83,6 +92,7 @@ class SalasRepository extends EntityRepository
      * 
      * @param integer $id_sala
      * @return Salas
+     * @throws NoResultExceptionSala
      * @throws \Exception Las excepciones son capturadas y relanzadas
      */
     public function findOneByIdSalaConAsociaciones(
@@ -108,6 +118,56 @@ class SalasRepository extends EntityRepository
             $query->setParameter("id_sala", $id_sala);
             
             $sala = $query->getSingleResult();
+        
+        } catch (NoResultException $nre) {
+            
+            RI::$error_debug .= $nre->getMessage();
+            
+            throw new NoResultExceptionSala(0,'',$id_sala);
+            
+        } catch (\Exception $e) {
+
+            RI::$error_debug .= $e->getMessage();
+            
+            throw $e;
+        }
+        
+        return $sala;
+    }
+    
+    /**
+     * Obtiene los datos de la sala de un efector
+     * 
+     * @param integer $id_sala
+     * @return Salas
+     * @throws NoResultExceptionSala
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
+    public function findOneByIdSala(
+            $id_sala)
+    {
+                        
+        $dql =
+            "SELECT "
+                ."s "
+            ."FROM "
+                .RIUtiles::DB_BUNDLE.":Salas s "
+            ."WHERE "
+                ."s.idSala = :id_sala ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_sala", $id_sala);
+            
+            $sala = $query->getSingleResult();
+        
+        } catch (NoResultException $nre) {
+            
+            RI::$error_debug .= $nre->getMessage();
+            
+            throw new NoResultExceptionSala(0,'',$id_sala);
             
         } catch (\Exception $e) {
 
@@ -148,7 +208,7 @@ class SalasRepository extends EntityRepository
             $query->setParameter("id_servicio_sala", $id_servicio_sala);
             
             $sala = $query->getSingleResult();
-            
+        
         } catch (\Exception $e) {
 
             RI::$error_debug .= $e->getMessage();
@@ -192,7 +252,13 @@ class SalasRepository extends EntityRepository
             $query->setParameter("id_efector",$id_efector);
             
             $sala = $query->getSingleResult();
+        
+        } catch (NoResultException $nre) {
             
+            RI::$error_debug .= $nre->getMessage();
+            
+            throw new NoResultExceptionSala($id_efector,$nombre_sala);
+        
         } catch (\Exception $e) {
 
             RI::$error_debug .= $e->getMessage();

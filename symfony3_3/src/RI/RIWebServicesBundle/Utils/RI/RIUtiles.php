@@ -5,6 +5,12 @@ namespace RI\RIWebServicesBundle\Utils\RI;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\NonUniqueResultException;
 
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionCodigoServicio;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionCama;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionHabitacion;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionSala;
+
+
 /** Funciones utiles de la configuracion edilicia
  * 
  */
@@ -43,8 +49,6 @@ class RIUtiles extends RI
         
         } catch (NoResultException $nre){
             
-            $msg = "El efector no existe en la base de datos";
-            
             $msg_debug = "El id de efector: "
                     .$id_efector
                     ." no existe en la base de datos";
@@ -59,11 +63,6 @@ class RIUtiles extends RI
         
         } catch (NonUniqueResultException $nure){
             
-            
-            $msg =
-                    "Existe más de una efector con el "
-                    ."identificador especificado";
-            
             $msg_debug = "Existe más de una efector con el id: "
                     .$id_efector;
             
@@ -72,7 +71,7 @@ class RIUtiles extends RI
                     ." || exception.getMessage: "
                     .$nure->getMessage();
             
-            throw new NonUniqueResultException($msg);
+            throw $nure;
             
         } catch (\Exception $e) {
 
@@ -94,8 +93,6 @@ class RIUtiles extends RI
         // check efector encontrado o lanza excepcion
         if (!$efector){
         
-            $msg = "El efector no existe en la base de datos";
-            
             $msg_debug = "El id de efector: "
                     .$id_efector
                     ." no existe en la base de datos";
@@ -103,7 +100,7 @@ class RIUtiles extends RI
             self::$error_debug .= " Función getEfector"
                     .$msg_debug;
                     
-            throw new NoResultException($msg);
+            throw new NoResultException();
             
         }
         
@@ -135,27 +132,11 @@ class RIUtiles extends RI
                         ->findOneByIdSala($id_sala);
             }
         
-        } catch (NoResultException $nre){
+        } catch (NoResultExceptionSala $nres){
             
-            $msg = "La sala no existe en la base de datos";
+            throw $nres;
             
-            $msg_debug = "El id de sala: "
-                    .$id_sala
-                    ." no existe en la base de datos";
-            
-            self::$error_debug .= " Función getSala: "
-                    .$msg_debug
-                    ." || exception.getMessage: "
-                    .$nre->getMessage();
-            
-            throw new NoResultException($msg);
-            
-        
         } catch (NonUniqueResultException $nure){
-            
-            
-            $msg =
-                    "Existe más de una sala con el identificador especificado";
             
             $msg_debug =
                     "Existe más de una sala con el id: "
@@ -168,7 +149,7 @@ class RIUtiles extends RI
                     .$nure->getMessage()
                     ."</p>";
                         
-            throw new NonUniqueResultException($msg);
+            throw $nure;
             
             
         } catch (\Exception $e) {
@@ -191,8 +172,6 @@ class RIUtiles extends RI
         // check sala encontrada o lanza excepcion
         if (!$sala){
         
-            $msg = "La sala no existe en la base de datos";
-            
             $msg_debug = "El id de sala: "
                     .$id_sala
                     ." no existe en la base de datos";
@@ -200,7 +179,7 @@ class RIUtiles extends RI
             self::$error_debug .= "Función getSala"
                     .$msg_debug;
                     
-            throw new NoResultException($msg);
+            throw new NoResultException();
             
         }
         
@@ -224,45 +203,9 @@ class RIUtiles extends RI
                             $id_efector);
             
         
-        } catch (NoResultException $nre){
+        } catch (NoResultExceptionSala $nres){
             
-            $msg = "La sala no existe en la base de datos";
-            
-            $msg_debug = "El nombre de sala: "
-                    .$nombre_sala
-                    ." en el efector "
-                    .$id_efector
-                    ." no existe en la base de datos";
-            
-            self::$error_debug .= " Función getSalaPorNombre: "
-                    .$msg_debug
-                    ." || exception.getMessage: "
-                    .$nre->getMessage();
-            
-            throw new NoResultException($msg);
-            
-        
-        } catch (NonUniqueResultException $nure){
-            
-            
-            $msg =
-                    "Existe más de una sala con el nombre y efector especificados";
-            
-            $msg_debug =
-                    "Existe más de una sala con el nombre: "
-                    .$nombre_sala
-                    ." en el efector "
-                    .$id_efector
-                    ." especificados";
-            
-            self::$error_debug .= "<p>Función getSalaPorNombre: "
-                    .$msg_debug
-                    ." || exception.getMessage: "
-                    .$nure->getMessage()
-                    ."</p>";
-            
-            throw new NonUniqueResultException($msg);
-           
+            throw $nres;
             
         } catch (\Exception $e) {
 
@@ -286,18 +229,7 @@ class RIUtiles extends RI
         // check sala encontrada o lanza excepcion
         if (!$sala){
         
-            $msg = "La sala no existe en la base de datos";
-            
-            $msg_debug = "El nombre de sala: "
-                    .$nombre_sala
-                    ." en el efector "
-                    .$id_efector
-                    ." no existe en la base de datos";
-            
-            self::$error_debug .= "Función getSalaPorNombre"
-                    .$msg_debug;
-                    
-            throw new NoResultException($msg);
+            throw new NoResultExceptionSala($id_efector,$nombre_sala);
             
         }
         
@@ -330,8 +262,6 @@ class RIUtiles extends RI
         
         } catch (NoResultException $nre){
             
-            $msg = "El servicio no existe en el efector";
-            
             $msg_debug = "El id de efector servicio: "
                     .$id_efector_servicio
                     ." no existe en la base de datos";
@@ -341,14 +271,10 @@ class RIUtiles extends RI
                     ." || exception.getMessage: "
                     .$nre->getMessage();
             
-            throw new NoResultException($msg);
+            throw $nre;
             
         
         } catch (NonUniqueResultException $nure){
-            
-            
-            $msg =
-                    "Existe más de un servicio con el identificador especificado";
             
             $msg_debug =
                     "Existe más de un servicio con el id: "
@@ -361,7 +287,7 @@ class RIUtiles extends RI
                     .$nure->getMessage()
                     ."</p>";
             
-            throw new NonUniqueResultException($msg);
+            throw $nure;
             
             
         } catch (\Exception $e) {
@@ -384,8 +310,6 @@ class RIUtiles extends RI
         // check efector servicio encontrada o lanza excepcion
         if (!$efector_servicio){
         
-            $msg = "El servicio no existe en el efector";
-            
             $msg_debug = "El id efector servicio: "
                     .$id_efector_servicio
                     ." no existe en la base de datos";
@@ -393,7 +317,7 @@ class RIUtiles extends RI
             self::$error_debug .= "Función getEfectorServicio"
                     .$msg_debug;
                     
-            throw new NoResultException($msg);
+            throw new NoResultException();
             
         }
         
@@ -423,34 +347,16 @@ class RIUtiles extends RI
                             $subsector);
             
         
-        } catch (\Doctrine\ORM\NoResultException $nre){
-            
-            $msg = "El servicio no existe en el efector";
-            
-            $msg_debug = "El id de efector servicio con "
-                    ."id_efector = "
-                    .$id_efector.", "
-                    ."cod_servicio = "
-                    .$cod_servicio.", "
-                    ."sector = "
-                    .$sector.", "
-                    ."subsector = "
-                    .$subsector
-                    ." no existe en la base de datos";
+        } catch (NoResultExceptionCodigoServicio $nrecs){
             
             self::$error_debug .= " Función getEfectorServicioCodigoEstadistica: "
-                    .$msg_debug
                     ." || exception.getMessage: "
-                    .$nre->getMessage();
+                    .$nrecs->getMessage();
             
-            throw new \Exception($msg);
+            throw $nrecs;
             
         
-        } catch (\Doctrine\ORM\NonUniqueResultException $nure){
-            
-            
-            $msg =
-                    "Existe más de un servicio con el identificador especificado";
+        } catch (NonUniqueResultException $nure){
             
             $msg_debug =
                     "Existe más de un servicio con: "
@@ -470,9 +376,7 @@ class RIUtiles extends RI
                     .$nure->getMessage()
                     ."</p>";
             
-            
-            
-            throw new \Exception($msg);
+            throw $nure;
             
         } catch (\Exception $e) {
 
@@ -501,8 +405,6 @@ class RIUtiles extends RI
         // check efector servicio encontrada o lanza excepcion
         if (!$efector_servicio){
         
-            $msg = "El servicio no existe en el efector";
-            
             $msg_debug = "El id efector servicio con: "
                     ."id_efector = "
                     .$id_efector.", "
@@ -517,7 +419,7 @@ class RIUtiles extends RI
             self::$error_debug .= "Función getEfectorServicioCodigoEstadistica"
                     .$msg_debug;
                     
-            throw new \Exception($msg);
+            throw NoResultException;
             
         }
         
@@ -573,11 +475,10 @@ class RIUtiles extends RI
      *  de una habitacion con el mismo nombre en el efector y tambien
      *  devuelve NULL en tal caso
      * 
-     * @param type $nombre_habitacion
-     * @param type $id_efector
-     * @param type $id_habitacion
-     * @param type $msg
-     * @return boolean
+     * @param string $nombre_habitacion Nombre único de habitación en la sala
+     * @param string $nombre_sala Nombre único de sala en el efector
+     * @param integer $id_efector ID efector
+     * @return Habitaciones
      */
     public static function getHabitacion(
             $nombre_habitacion, 
@@ -606,32 +507,29 @@ class RIUtiles extends RI
                             (self::DB_BUNDLE.':Habitaciones')
                     ->findOneByNombreSalaIdEfector(
                     $id_efector, $nombre_sala, $nombre_habitacion);
-        } catch (\Doctrine\ORM\NonUniqueResultException $nure) {
+            
+        } catch (NoResultExceptionSala $nres) {
 
-            // mas de una habitacion encontrada, no se puede determinar
-            // cual es
+            // no existe sala
             self::$error_debug .= " Función getHabitacion: "
-                    . $nure->getMessage();
+                    . $nres->getMessage();
 
-            $msg .= "Existe más de una habitación con el nombre especificado";
-
-            throw new \Doctrine\ORM\NonUniqueResultException($msg);
-        } catch (\Doctrine\ORM\NoResultException $nre) {
+            throw $nres;
+        
+        } catch (NoResultExceptionHabitacion $nreh) {
 
             // no existe habitacion
             self::$error_debug .= " Función getHabitacion: "
-                    . $nre->getMessage();
+                    . $nreh->getMessage();
 
-            $msg .= "No existe una habitación con el nombre especificado";
-            //dump($msg);die();
-            throw new \Doctrine\ORM\NoResultException($msg);
+            throw $nreh;
+        
         } catch (\Exception $e) {
-
 
             self::$error_debug .= " Función getHabitacion: "
                     . $e->getMessage();
 
-            throw new \ErrorException($msg);
+            throw new \Exception($msg);
         }
 
 
@@ -687,17 +585,12 @@ class RIUtiles extends RI
                     ->findOneByNombreIdEfector(
                     $nombre, $id_efector);
             //dump($cama);die();
-        } catch (NoResultException $nre) {
-
-            $msg = "La cama: "
-                    . $nombre
-                    . " no existe en el efector: "
-                    . $id_efector;
+        } catch (NoResultExceptionCama $nrec) {
 
             self::$error_debug .= " Función getCama: "
-                    . $nre->getMessage();
+                    . $nrec->getMessage();
 
-            throw new NoResultException($msg);
+            throw $nrec;
             
         } catch (\Exception $e) {
 

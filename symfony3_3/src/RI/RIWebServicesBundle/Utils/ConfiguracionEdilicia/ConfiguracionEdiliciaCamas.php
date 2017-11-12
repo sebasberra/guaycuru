@@ -11,9 +11,11 @@
 namespace RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia;
 
 use RI\DBHmi2GuaycuruCamasBundle\Entity\Camas;
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionHabitacion;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
+
 
 /**
  * **Realiza las operaciones de ABM de Camas**
@@ -152,6 +154,8 @@ trait ConfiguracionEdiliciaCamas{
                         $nueva_cama["nombre_habitacion"],
                         $nueva_cama["nombre_sala"],
                         $nueva_cama["id_efector"]);
+                
+            } catch (NoResultExceptionHabitacion $nreh){
 
             } catch (\Exception $e){
 
@@ -390,10 +394,12 @@ trait ConfiguracionEdiliciaCamas{
                         $modif_cama["nombre_habitacion"],
                         $modif_cama["nombre_sala"],
                         $modif_cama["id_efector"]);
+                
+            } catch (NoResultExceptionHabitacion $nreh){
+                
+            } catch (\Exception $e){
 
-            } catch (\ErrorException $ee){
-
-                throw $ee;
+                throw $e;
 
             }
             

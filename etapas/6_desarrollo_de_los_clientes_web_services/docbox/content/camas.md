@@ -214,7 +214,7 @@ curl -X DELETE http://localhost:8004/camas/eliminar/72/cama_no_existe.xml
 ```html
 <?xml version="1.0" ?>
 	<response>
-		<Error>La cama: cama_no_existe no fue encontrada en el efector: 72</Error>
+		<Error>El nombre de cama: cama_no_existe no se encuentra en el efector: 72</Error>
 	</response>
 ```
 ### Liberar cama

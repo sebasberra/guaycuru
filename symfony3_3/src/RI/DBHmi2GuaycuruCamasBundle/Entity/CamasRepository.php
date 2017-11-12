@@ -11,8 +11,11 @@
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
+
+use RI\DBHmi2GuaycuruCamasBundle\Exception\NoResultExceptionCama;
 
 /**
  * **Repositorio del objeto Doctrine Camas**
@@ -66,6 +69,10 @@ class CamasRepository extends EntityRepository
             $query->setParameter("id_efector", $id_efector);
             
             $cama = $query->getSingleResult();
+        
+        }catch (NoResultException $nre){
+            
+            throw new NoResultExceptionCama($id_efector,$nombre_cama);
             
         } catch (\Exception $e) {
 
