@@ -1,254 +1,287 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Red de Internación</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="author" content="" />
-        <meta name="copyright" content="&copy;" />
-        <meta name="robot" content="all" />
-        
-        {% block stylesheets %}
-            
-            {# 
-            
-                ------------------
-                estilos datatables           
-                ------------------
-            
-            #}
-            
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/jquery.dataTables.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/buttons/buttons.dataTables.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/Responsive/responsive.dataTables.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/FixedColumns/fixedColumns.dataTables.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/FixedHeader/fixedHeader.dataTables.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/Scroller/scroller.dataTables.min.css') }}" />
-            
-            {# 
-            
-                -----------
-                estilos stg
-                -----------
-            
-            #}
-            
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/bootstrap.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/normalize.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/1140.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/jquery-ui-1.10.3.custom.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/menu.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/html5-pagination.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/styles-1.0.css') }}" />
-            
-            {#
-                --
-                RI
-                --
-            #}
-            
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri.css') }}" />
-            
-            {#
-                -----
-                jqtre
-                -----
-            #}
-            
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jqtree/jqtree.css') }}" />
-            
-            <!--[if lte IE 9]>
-                <link rel="Shortcut icon" href="//www.santafe.gov.ar/assets/standard/images/favicon.ico" type="image/x-icon" />
-                <link rel = "stylesheet" type = "text/css" href ="//www.santafe.gov.ar/assets/standard/css/ie.css" />
-                <script src="//www.santafe.gov.ar/assets/standard/js/html5shiv.js"></script>
-                <script src="//www.santafe.gov.ar/assets/standard/js/respond.min.js"></script>
-            <![endif]-->
-            
-            {# 
-            
-                --------------------
-                estilos font-awesome
-                --------------------
-            
-            #}
-            
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}" />
-            
-            {# 
-            
-                ----------------
-                estilos OrgChart
-                ----------------
-            
-            #}
-            
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/orgchart/jquery.orgchart.css') }}" />
-           
-        {% endblock %}
-        
-        {% block jquery %}
-            
-            {#
-                ------
-                jquery
-                ------
-            #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/stg/jquery-1.10.2.min.js') }}"></script>
-            
-        {% endblock %}
+<head>
+    <title>Red Internación</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content=""/>
+    <meta name="copyright" content="&copy;"/>
+    <meta name="robot" content="all"/>
+
+    {% block stylesheets %}
+
+        {#
+
+            ------------------
+            estilos datatables
+            ------------------
+
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/jquery.dataTables.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/buttons/buttons.dataTables.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/Responsive/responsive.dataTables.min.css') }}"/>
+        <link rel="stylesheet"
+              href="{{ asset('bundles/riwebservices/css/datatable/FixedColumns/fixedColumns.dataTables.min.css') }}"/>
+        <link rel="stylesheet"
+              href="{{ asset('bundles/riwebservices/css/datatable/FixedHeader/fixedHeader.dataTables.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/Scroller/scroller.dataTables.min.css') }}"/>
+
+        {#
+
+            -----------
+            estilos stg
+            -----------
+
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/bootstrap/3.3.7/bootstrap.min.css') }}"/>
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/normalize.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/1140.css') }}"/>
+
+            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jquery-ui-1.12.1/jquery-ui.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jquery-ui-1.12.1/jquery-ui.structure.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jquery-ui-1.12.1/jquery-ui.theme.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_stg_form.css') }}" />
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/menu.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/html5-pagination.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/styles-1.0.2.css') }}"/>
+
+        {#
+            --
+            RI
+            --
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_jqtree.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_censos.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_table.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_datatable.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_modal.css') }}"/>
+
+        {#
+            -----
+            jqtre
+            -----
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jqtree/jqtree.css') }}"/>
+
+        <!--[if lte IE 9]>
+        <link rel="Shortcut icon" href="//www.santafe.gov.ar/assets/standard/images/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="//www.santafe.gov.ar/assets/standard/css/ie.css"/>
+        <script src="//www.santafe.gov.ar/assets/standard/js/html5shiv.js"></script>
+        <script src="//www.santafe.gov.ar/assets/standard/js/respond.min.js"></script>
+        <![endif]-->
+
+        {#
+
+            --------------------
+            estilos font-awesome
+            --------------------
+
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}"/>
+
+        {#
+
+            ----------------
+            estilos OrgChart
+            ----------------
+
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/orgchart/jquery.orgchart.css') }}"/>
+
+    {% endblock %}
+
         
         {% block javascripts %}
+        
+            {# JQuery #}
             
-            {# 
-                ---------------------
-                javascripts de la STG
-                ---------------------
-            #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/stg/jquery-ui.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/stg/jquery.ui.datepicker-es.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/stg/jquery.ui.touch-punch.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/stg/match-media.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/stg/interface.js') }}"></script>
-                        
-            {# 
-            
-                ----------------------
-                javascripts datatables           
-                ----------------------
-            
-            #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/datatable/jquery.dataTables.min.js') }}"></script>
-            
-            <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/dataTables.buttons.min.js') }}"></script> 
-            <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.flash.min.js') }}"></script>
-            
-            <script src="{{ asset('bundles/riwebservices/js/pdfmake/pdfmake.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/pdfmake/vfs_fonts.js') }}"></script>
-            
-            <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.html5.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.print.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.colVis.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/datatable/FixedColumns/dataTables.fixedColumns.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/datatable/FixedHeader/dataTables.fixedHeader.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/datatable/Responsive/dataTables.responsive.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/datatable/Scroller/dataTables.scroller.min.js') }}"></script>
-            
-            {# 
-            
-                -----------------
-                javascripts jszip           
-                -----------------
-            
-            #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/jszip/jszip.min.js') }}"></script>
-            
-            {#
-            
-                ------
-                jqtree
-                ------
-            
-            #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/jqtree/tree.jquery.js') }}"></script>                        
+            <script src="{{ asset('bundles/riwebservices/js/jquery/jquery-3.2.1.min.js') }}"></script>
+            <script src="{{ asset('bundles/riwebservices/js/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+        
+        {#
+            ---------------------
+            javascripts de la STG
+            ---------------------
+        #}
 
-            {# 
-            
-                --------
-                OrgChart
-                --------
-            
-            #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/orgchart/jquery.orgchart.js') }}"></script>
-            
-            {# 
-            
-                -----
-                jspdf
-                -----
-            
-            #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/jspdf/jspdf.debug.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/jspdf/jspdf.min.js') }}"></script>
-            
-            
+        <script src="{{ asset('bundles/riwebservices/js/stg/match-media.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/stg/interface.js') }}"></script>
+
+        {#
+
+            ----------------------
+            javascripts datatables
+            ----------------------
+
+        #}
+
+        <script src="{{ asset('bundles/riwebservices/js/datatable/jquery.dataTables.min.js') }}"></script>
+
+        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/dataTables.buttons.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.flash.min.js') }}"></script>
+
+        <script src="{{ asset('bundles/riwebservices/js/pdfmake/pdfmake.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/pdfmake/vfs_fonts.js') }}"></script>
+
+        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.html5.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.print.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.colVis.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/datatable/FixedColumns/dataTables.fixedColumns.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/datatable/FixedHeader/dataTables.fixedHeader.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/datatable/Responsive/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/datatable/Scroller/dataTables.scroller.min.js') }}"></script>
+
+        {#
+
+            -----------------
+            javascripts jszip
+            -----------------
+
+        #}
+
+        <script src="{{ asset('bundles/riwebservices/js/jszip/jszip.min.js') }}"></script>
+
+        {#
+
+            ------
+            jqtree
+            ------
+
+        #}
+
+        <script src="{{ asset('bundles/riwebservices/js/jqtree/tree.jquery.js') }}"></script>
+
+        {#
+
+            --------
+            OrgChart
+            --------
+
+        #}
+
+        <script src="{{ asset('bundles/riwebservices/js/orgchart/jquery.orgchart.js') }}"></script>
+
+        {#
+
+            -----
+            jspdf
+            -----
+
+        #}
+
+        <script src="{{ asset('bundles/riwebservices/js/jspdf/jspdf.debug.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/jspdf/jspdf.min.js') }}"></script>
+
+        {#
+
+            ---------
+            bootstrap
+            ---------
+        #}
+
+            <script src="{{ asset('bundles/riwebservices/js/bootstrap-3.3.7/bootstrap.min.js') }}"></script>
+
+        {#
+
+            --
+            RI
+            --
+
+        #}
+
+        <script src="{{ asset('bundles/riwebservices/js/RI/ri_mod.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/RI/ri_form.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/js/RI/ri_orgchart.js') }}"></script>
+
+        {#
+
+            --
+            UIblock
+            --
+
+        #}
+
+        <script src="{{ asset('bundles/riwebservices/js/UIblock/UIblock.js') }}"></script>
+
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('red-internacion.ico') }}"/>
+</head>
+
+<body id="top">
+
+{% include 'cabecera.html.twig' %}
+
+<div class="container">
+
+    <div class="row top-padding">
+
+        {% include 'top.html.twig' %}
+
+        {% block barraHerramientas %}
         {% endblock %}
-        
-        <link rel="icon" href="{{ asset('red-internacion.ico') }}" />
-        
-    </head>
     
-    <body id="top">
+        <div id='cssmenu'>
+            <ul>
+                {% block menu %} 
+                    {% block submenus %}
+                        <li class='has-sub'><a href='#'><span>Consultas</span></a>
+                            <ul>
+                                <li><a href='{{ path_root_menu }}/set/consulta'><span>Camas</span></a></li>
+                            </ul>
+                        </li>
 
-        <div role="navigation" class="navbar navbar-sf navbar-fixed-top">
-            <div class="container row-top">
-                <div class="navbar-header">
-                    <a href="//www.santafe.gov.ar" class="navbar-brand">
-                        <img alt="Gobierno de Santa Fe" src="{{ asset('bundles/riwebservices/images/stg/gob-santafe.png') }}">
-                    </a> 
-                </div>
-            </div>
-        </div>        
+                        <li class='has-sub'><a href='#'><span>Configuración Edilicia</span></a>
+                            <ul>
+                                <li><a href='{{ path_root_menu }}/configuracion_edilicia/organigrama'><span>Organigrama</span></a></li>
+                            </ul>
+                        </li>
 
-        <div class="container">
+                        <li class='has-sub'><a href='#'><span>Logger</span></a>
+                            <ul>
+                                <li><a href="{{ path_root_menu }}/logger/consulta"><span>Consulta</span></a></li>
+                                <li><a href="{{ path_root_menu }}/logger/triggers"><span>Triggers</span></a></li>
+                                <li><a href="{{ path_root_menu }}/logger/config"><span>Configuración</span></a></li>
+                            </ul>
+                        </li>
 
-            <div class="row top-padding">  
-
-                {% include 'top.html.twig' %}
-
-                {% block barraHerramientas %}                
+                    {% endblock %}
                 {% endblock %}
+            </ul>
+        </div>
 
-                <div id='cssmenu'>
-                    <ul>
-                        {% block menu %} 
-                            {% block submenus %}
-                                <li class='has-sub'><a href='#'><span>Consultas</span></a>
-                                    <ul>
-                                        <li><a href='{{ path_root_menu }}/set/consulta'><span>Camas</span></a></li>
-                                    </ul>
-                                </li>
-                                
-                                <li class='has-sub'><a href='#'><span>Configuración Edilicia</span></a>
-                                    <ul>
-                                        <li><a href='{{ path_root_menu }}/configuracion_edilicia/organigrama'><span>Organigrama</span></a></li>
-                                    </ul>
-                                </li>
-                                
-                                <li class='has-sub'><a href='#'><span>Logger</span></a>
-                                    <ul>
-                                        <li><a href="{{ path_root_menu }}/logger/consulta"><span>Consulta</span></a></li>
-                                        <li><a href="{{ path_root_menu }}/logger/triggers"><span>Triggers</span></a></li>
-                                        <li><a href="{{ path_root_menu }}/logger/config"><span>Configuración</span></a></li>
-                                    </ul>
-                                </li>
-                                
-                            {% endblock %}
-                        {% endblock %}
-                        </ul>
-                    </div>
 
-                    {# ruta de navegacion #} 
+        {# ruta de navegacion #}
 
-                    {% block cuerpo %}{% endblock %} 
+        {% block cuerpo %}{% endblock %}
 
-                    {% include 'footer.html.twig' %} 
+        {% include 'footer.html.twig' %}
 
-                    {% include 'modales.html.twig' %}
+        {% include 'modales.html.twig' %}
 
-                </div>
-            </div>
+        <!-- <div style="float: right; color: white;padding: 20px;">
+        <a href="#top" class="link_white"> arriba </a>
+        </div> -->
 
-            <div id="myProgressBar" style="visibility: hidden;"></div>
-            
-        </body>
+    </div>
+
+</div>
+
+{# RI datepicker #}
+<script src="{{ asset('bundles/riwebservices/js/RI/ri_datepicker.js') }}"></script>
+
+<div id="myProgressBar" style="visibility: hidden;"></div>
+
+</body>
 </html>

@@ -1,0 +1,142 @@
+{% if config_edilicia is null or config_edilicia is empty %}
+
+    {}
+
+{% else %}
+
+    {
+
+        "name": "Efector",
+        "title": "{{ config_edilicia['efector']['nom_efector'] }}",
+        "nivel_complejidad": "{{ config_edilicia['efector']['nivel_complejidad'] }}",
+        "cant_camas": "{{ config_edilicia['efector']['cant_camas'] }}",
+        "className": "ri-orgchart-efector",
+        "children": [
+        {% for id_sala, sala in config_edilicia['efector']['salas'] %}
+            {
+            
+            "nodeId": "s{{ id_sala }}",
+            
+            "name": "Sala",
+            "title": "{{ sala['nombre'] }}",
+
+            "mover_camas": "{{ sala['mover_camas'] }}",
+            "mover_camas_desc": "{{ sala['mover_camas_desc'] }}",
+
+            "area_cod_servicio": "{{ sala['area_cod_servicio'] }}",
+            "area_sector": "{{ sala['area_sector'] }}",
+            "area_subsector": "{{ sala['area_subsector'] }}",
+            "area_nom_servicio_estadistica": "{{ sala['area_nom_servicio_estadistica'] }}",
+            "area_desc": "{{ sala['area_desc'] }}",
+
+            "cant_camas": "{{ sala['cant_camas'] }}",
+
+            "baja": "{{ sala['baja'] }}",
+            "baja_desc": "{{ sala['baja_desc'] }}",
+
+            {% if sala['baja']==1 %}
+                "className": "ri-orgchart-sala-baja",
+            {% else %}
+                "className": "ri-orgchart-sala",
+            {% endif %}
+            
+            "collapsed": false,
+            "children": [
+
+            {% for id_habitacion, habitacion in sala['habitaciones'] %}
+                {
+                
+                "nodeId": "h{{ id_habitacion }}",
+                
+                "name": "Habitación",
+                "title": "{{ habitacion['nombre'] }}",
+
+                "sexo": "{{ habitacion['sexo'] }}",
+                "sexo_desc": "{{ habitacion['sexo_desc'] }}",
+
+                "edad_desde": "{{ habitacion['edad_desde'] }}",
+                "edad_desde_desc": "{{ habitacion['edad_desde_desc'] }}",
+
+                "edad_hasta": "{{ habitacion['edad_hasta'] }}",
+                "edad_hasta_desc": "{{ habitacion['edad_hasta_desc'] }}",
+
+                "tipo_edad": "{{ habitacion['tipo_edad'] }}",
+                "tipo_edad_desc": "{{ habitacion['tipo_edad_desc'] }}",
+
+                "cant_camas": "{{ habitacion['cant_camas'] }}",
+
+                "baja": "{{ habitacion['baja'] }}",
+                "baja_desc": "{{ habitacion['baja_desc'] }}",
+
+                {% if habitacion['baja']==1 %}
+                    "className": "ri-orgchart-habitacion-baja",
+                {% else %}    
+                    "className": "ri-orgchart-habitacion",
+                {% endif %}
+                
+                "collapsed": false,
+                "children": [
+
+                {% for id_cama, cama in habitacion['camas'] %}
+                    {
+                        "nodeId": "c{{ id_cama }}",
+                        
+                        "name": "Cama",
+                        "title": "{{ cama['nombre'] }}",
+
+                        "clasificacion_cama": "{{ cama['clasificacion_cama'] }}",
+
+                        "tipo_cuidado_progresivo": "{{ cama['tipo_cuidado_progresivo'] }}",
+                        "tipo_cuidado_progresivo_desc": "{{ cama['tipo_cuidado_progresivo_desc'] }}",
+
+                        "internacion_apellido": "{{ cama['internacion_apellido'] }}",
+                        "internacion_nombre": "{{ cama['internacion_nombre'] }}",
+
+                        "estado": "{{ cama['estado'] }}",
+                        "estado_desc": "{{ cama['estado_desc'] }}",
+
+                        "rotativa": "{{ cama['rotativa'] }}",
+                        "rotativa_desc": "{{ cama['rotativa_desc'] }}",
+
+                        "baja": "{{ cama['baja'] }}",
+                        "baja_desc": "{{ cama['baja_desc'] }}",
+
+                        {% if cama['baja']==1 %}
+                            
+                            "className": "ri-orgchart-cama-baja"
+                            
+                        {% else %}
+                            
+                            {% if cama['estado']=='O' %}
+                                "className": "ri-orgchart-cama-ocupada"
+                            {% else %}
+                                {% if cama['estado']=='L' %}
+                                    "className": "ri-orgchart-cama-libre"
+                                {% else %}
+                                    {% if cama['estado']=='F' %}
+                                        "className": "ri-orgchart-cama-fuera"
+                                    {% else %}
+                                        "className": "ri-orgchart-cama-default"
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            
+                        {% endif %}
+                        
+                        } {% if not loop.last %} , {% endif %}
+                {% endfor %}
+                    ]
+                } {% if not loop.last %} , {% endif %}
+
+            {% endfor %}
+                ]
+            } {% if not loop.last %} , {% endif %}
+        {% endfor %}
+        ]
+    }
+
+{% endif %}
+
+
+
+            

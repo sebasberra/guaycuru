@@ -14,7 +14,11 @@ let slug = title => { slugger.reset(); return slugger.slug(title); };
 let languageOptions = [
   { title: 'cURL',
     short: 'cURL',
-    value: 'curl' }
+    value: 'curl' },
+    
+  { title: 'PHP',
+    short: 'PHP',
+    value: 'php' }
 ];
 
 let defaultLanguage = languageOptions[0];

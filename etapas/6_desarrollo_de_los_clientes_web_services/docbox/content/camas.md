@@ -22,7 +22,52 @@ Devuelve el código de estado HTTP: 200 (OK - Información de cama) o 404 (cama 
 ```curl
 $ curl http://localhost:8004/camas/ver/121/HD4.json
 ```
+```php
+<?php
 
+	// variables 
+	$get = 'http://localhost:8004/camas/ver';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '121',
+		
+		// nombre_cama
+		2 => 'HD4'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 ```json
@@ -40,10 +85,60 @@ $ curl http://localhost:8004/camas/ver/121/HD4.json
 ```
 
 #### Ejemplo Request JSON con espacios escapados (ver cama)
+
 ```curl
 $ curl $(echo "http://localhost:8004/camas/ver/63/cgcq-hab2-cama 2.json" | sed 's/ /%20/g' )
 ```
 
+```php
+<?php
+
+	// variables 
+	$get = 'http://localhost:8004/camas/ver';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '63',
+		
+		// nombre_cama
+		2 => 'cgcq-hab2-cama 2'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// reemplaza espacios
+	$get = str_replace ( ' ', '%20', $get);
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 ```json
@@ -66,6 +161,52 @@ $ curl $(echo "http://localhost:8004/camas/ver/63/cgcq-hab2-cama 2.json" | sed '
 $ curl http://localhost:8004/camas/ver/121/HD4.xml
 ```
 
+```php
+<?php
+
+	// variables 
+	$get = 'http://localhost:8004/camas/ver';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '121',
+		
+		// nombre_cama
+		2 => 'HD4'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 ```html
@@ -105,12 +246,79 @@ Variable | Descripción
 
 Devuelve el código de estado HTTP: 204 (cama actualizada)  o 404 (error de actualización)
 
-#### Ejemplo Request JSON (modificar cama)
+#### Ejemplo Request JSON con espacios escapados (modificar cama)
 
 ```curl
 $ curl -X PUT $(echo "http://localhost:8004/camas/modificar/63/clinica medica/hab 5/cm-hab5-cama 2/5/L/false/false.json" | sed 's/ /%20/g' )
 ```
+```php
+<?php
 
+	// variables 
+	$put = 'http://localhost:8004/camas/modificar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '63',
+		
+		// nombre_sala
+		2 => 'clinica medica',
+		
+		// nombre_habitacion
+		3 => 'hab 5',
+		
+		// nombre_cama
+		4 => 'cm-hab5-cama 2',
+		
+		// id_clasificacion_cama
+		5 => '5',
+		
+		// estado
+		6 => 'L',
+		
+		// rotativa
+		7 => 'false',
+		
+		// baja
+		8 => 'false'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$put .= '/'.$var;
+		
+	}
+	$put.='.'.$format;
+	
+	// reemplaza espacios
+	$put = str_replace ( ' ', '%20', $put);
+	
+	// inicializa cUrl
+	$ch = curl_init($put);
+	curl_setopt($ch, CURLOPT_PUT, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP: 204 No Content
@@ -141,6 +349,71 @@ Devuelve el código de estado HTTP: 201 (cama nueva ingresada) o 404 (error al a
 ```curl
 curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.json
 ```
+```php
+<?php
+
+	// variables 
+	$post = 'http://localhost:8004/camas/nueva';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '292',
+		
+		// nombre_sala
+		2 => 'tocoginecologia',
+		
+		// nombre_habitacion
+		3 => 'hab1',
+		
+		// nombre_cama
+		4 => 't-hab1-cama3',
+		
+		// id_clasificacion_cama
+		5 => '1',
+		
+		// estado
+		6 => 'L',
+		
+		// rotativa
+		7 => 'false',
+		
+		// baja
+		8 => 'false'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$post .= '/'.$var;
+		
+	}
+	$post.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($post);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 
 #### Ejemplo Response
 
@@ -154,10 +427,76 @@ curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-c
 
 #### Ejemplo Request XML (agregar cama ya existente)
 
+>Suponiendo que el ejemplo anterior (Request JSON) agregó la cama con éxito, el siguiente ejemplo deberá responder con código 404
+
 ```curl
 curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.xml
 ```
+```php
+<?php
 
+	// variables 
+	$post = 'http://localhost:8004/camas/nueva';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '292',
+		
+		// nombre_sala
+		2 => 'tocoginecologia',
+		
+		// nombre_habitacion
+		3 => 'hab1',
+		
+		// nombre_cama
+		4 => 't-hab1-cama3',
+		
+		// id_clasificacion_cama
+		5 => '1',
+		
+		// estado
+		6 => 'L',
+		
+		// rotativa
+		7 => 'false',
+		
+		// baja
+		8 => 'false'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$post .= '/'.$var;
+		
+	}
+	$post.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($post);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 404 Not Found
@@ -190,7 +529,54 @@ Devuelve el código de estado HTTP: 200 (cama eliminada) o 404 (cama no encontra
 ```curl
 curl -X DELETE http://localhost:8004/camas/eliminar/72/cm-h01-1.json
 ```
+```php
+<?php
 
+	// variables 
+	$delete = 'http://localhost:8004/camas/eliminar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '72',
+		
+		// nombre_cama
+		2 => 'cm-h01-1',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$delete .= '/'.$var;
+		
+	}
+	$delete.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($delete);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -206,7 +592,54 @@ curl -X DELETE http://localhost:8004/camas/eliminar/72/cm-h01-1.json
 ```curl
 curl -X DELETE http://localhost:8004/camas/eliminar/72/cama_no_existe.xml
 ```
+```php
+<?php
 
+	// variables 
+	$delete = 'http://localhost:8004/camas/eliminar';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '72',
+		
+		// nombre_cama
+		2 => 'cama_no_existe',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$delete .= '/'.$var;
+		
+	}
+	$delete.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($delete);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 404 Error
@@ -238,7 +671,54 @@ Devuelve el código de estado HTTP: 204 (cama liberada) o 404 (cama no encontrad
 ```curl
 curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.json
 ```
+```php
+<?php
 
+	// variables 
+	$patch = 'http://localhost:8004/camas/liberar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '71',
+		
+		// nombre_cama
+		2 => 's1u-ua-4',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$patch .= '/'.$var;
+		
+	}
+	$patch.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($patch);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+        die(' Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 > HTTP 204 No Content
@@ -248,7 +728,54 @@ curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.json
 ```curl
 curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.xml
 ```
+```php
+<?php
 
+	// variables 
+	$patch = 'http://localhost:8004/camas/liberar';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '71',
+		
+		// nombre_cama
+		2 => 's1u-ua-4',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$patch .= '/'.$var;
+		
+	}
+	$patch.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($patch);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+        die(' Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 > HTTP 404 Error
@@ -264,10 +791,6 @@ curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.xml
 
 Ocupar una cama
 
-```endpoint
-PATCH /camas/ocupar/{id_efector}/{nombre_cama}.{_format}
-```
-
 Propiedad | Descripción
 ---|---
 `id_efector` | ID efector
@@ -276,12 +799,64 @@ Propiedad | Descripción
 
 Devuelve el código de estado HTTP: 204 (cama ocupada) o 404 (cama no encontrada o error)
 
+
+```endpoint
+PATCH /camas/ocupar/{id_efector}/{nombre_cama}.{_format}
+```
+
 #### Ejemplo Request JSON (ocupar cama)
 
 ```curl
 curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.json
 ```
+```php
+<?php
 
+	// variables 
+	$patch = 'http://localhost:8004/camas/ocupar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '71',
+		
+		// nombre_cama
+		2 => 's1u-ua-4',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$patch .= '/'.$var;
+		
+	}
+	$patch.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($patch);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 204 No Content
@@ -291,7 +866,54 @@ curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.json
 ```curl
 curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.xml
 ```
+```php
+<?php
 
+	// variables 
+	$patch = 'http://localhost:8004/camas/ocupar';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '71',
+		
+		// nombre_cama
+		2 => 's1u-ua-4',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$patch .= '/'.$var;
+		
+	}
+	$patch.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($patch);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 404 Error

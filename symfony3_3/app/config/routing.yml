@@ -16,3 +16,8 @@ ri_logger:
     resource: "@RIWebServicesBundle/Controller/Logger/LoggerController.php"
     type:     annotation
     prefix:   /logger
+    
+ri_ajax:
+    resource: "@RIWebServicesBundle/Controller/Ajax/AjaxController.php"
+    type:     annotation
+    prefix:   /ajax

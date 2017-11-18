@@ -1,98 +1,81 @@
-{% extends '::base_organigrama.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
-    
-    
-    <style>
-        
-        html,body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-          }
 
-          body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.428571429;
-            color: #333333;
-          }
+    <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_orgchart.css') }}"/>
 
-          #chart-container {
-            position: relative;
-            display: inline-block;
-            top: 10px;
-            left: 10px;
-            height: 420px;
-            width: calc(100% - 24px);
-            border: 2px dashed #aaa;
-            border-radius: 5px;
-            overflow: auto;
-            text-align: center;
-          }
-
-          .home-link {
-            margin-top: 20px;
-            margin-right: 20px;
-            float: right;
-          }
-
-          .home-link a {
-            font-size: 36px;
-            color: #000;
-            text-decoration: none;
-          }
-
-          .home-link a:hover {
-            text-shadow: 0 0 3px #000;
-          }
-
-          .home-link img {
-            border-radius: 24px;
-            vertical-align: bottom;
-            margin-left: 20px;
-          }
-
-          .home-link a:hover+img {
-              box-shadow: 0 1px 0 #ccc,
-                0 2px 0 #c9c9c9,
-                0 3px 0 #bbb,
-                0 4px 0 #b9b9b9,
-                0 5px 0 #aaa,
-                0 6px 1px rgba(0,0,0,.1),
-                0 0 5px rgba(0,0,0,.1),
-                0 1px 3px rgba(0,0,0,.3),
-                0 3px 5px rgba(0,0,0,.2),
-                0 5px 10px rgba(0,0,0,.25),
-                0 10px 10px rgba(0,0,0,.2),
-                0 20px 20px rgba(0,0,0,.15);
-          }
-          
-          table td {
-              
-                background: transparent;
-                border-left: none;
-                border-right: none;                
-          }
-          
-    </style>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
-          
 {% endblock %}
 
 
 
 {% block cuerpo %} 
 
-    <h2>Configuración Edilicia - Organigrama</h2>
-
-    {{form_start(form)}}
+    <div class="row form">
         
-    {{form_end(form)}}
+        <h2>Configuración Edilicia - Organigrama</h2>
 
+        {{ form_start(form) }}
+        
+        <div class="col-md-12">
+            
+            {{ form_label(form.efectores) }}
+            {{ form_widget (form.efectores) }}
+            {{ form_errors (form.efectores) }}
+
+        </div>
+
+        <div class="col-md-3">
+            
+            {{ form_label(form.direccion) }}
+            {{ form_widget (form.direccion) }}
+            {{ form_errors (form.direccion) }}
+            
+        </div>
+        
+        <div class="col-md-2">
+            
+            {{ form_label(form.zoom) }}
+            {{ form_widget (form.zoom) }}
+            {{ form_errors (form.zoom) }}
+            
+        </div>
+            
+        <div class="col-md-2">
+            
+            {{ form_label(form.pan) }}
+            {{ form_widget (form.pan) }}
+            {{ form_errors (form.pan) }}
+            
+        </div>
+            
+        <div class="col-md-2">
+            
+            {{ form_label(form.profundidad) }}
+            {{ form_widget (form.profundidad) }}
+            {{ form_errors (form.profundidad) }}
+            
+        </div>
+            
+        <div class="col-md-3">
+            
+            {{ form_label(form.export_file_extension) }}
+            {{ form_widget (form.export_file_extension) }}
+            {{ form_errors (form.export_file_extension) }}
+            
+        </div>
+        <div class="row">
+            
+            <div class="col-md-2">
+
+                {{ form_label(form.bt_ver) }}
+                {{ form_widget (form.bt_ver) }}
+
+            </div>
+        </div>
+        {{ form_end(form) }}
+        
+    </div>
     
     {% if config_edilicia is null or config_edilicia is empty %}
     
@@ -108,70 +91,161 @@
     <script>
         
         var $efectores = $('#configuracion_edilicia_efectores');
-        console.log($efectores);
-        var datos = {
-                
-                'name': 'Configuración Edilicia',
-                'title': $efectores.find('option:selected').text(),
-                'children': [
-                {% for sala,habitaciones in config_edilicia %}
-                    {
-                    'name':'Sala', 
-                    'title':'{{ sala }}',
-                    'collapsed': false,
-                    'children': [
-
-                    {% for habitacion,camas in habitaciones %}
-                        {
-                        'name':'Habitación', 
-                        'title':'{{ habitacion }}',
-                        'collapsed': false,
-                        'children': [
-
-                        {% for nombre,cama in camas %}
-                            {
-                                'name':'Cama', 
-                                'title':'{{ nombre }}'
-                            },
-                        {% endfor %}
-                            ]
-                        },
-                        
-                    {% endfor %}
-                        ]
-                    },
-                {% endfor %}
-                ]
-            };
-                    
-                    
-        $('#chart-container').orgchart({
-        'data': datos,
-        'nodeContent': 'title',
-        'direction': '{{ config_orgchart.direccion }}',
-        'zoom': {{ config_orgchart.zoom }},
-        'pan' : {{ config_orgchart.pan }},
         
-        {% if config_orgchart.export_file_extension != 'false' %}
-            
-            'exportButton': true,
-            'exportFilename': 'ri_configuracion_edilicia',
-            'exportFileextension': '{{ config_orgchart.export_file_extension }}',
-            
-        {% endif %}
+        $(document).ready(
+            function () {
+                                
+                /* change efectores */
+                $efectores.change(function () {
 
-        {% if config_orgchart.profundidad == 'true' %}
+                    id_efector = $efectores.val();
+
+                    reloadOrganigrama(id_efector);
+                });
+
+
+                // si el usuario tiene un efector asignado carga el organigrama
+                if ($efectores.val() !== '') {
+
+                    reloadOrganigrama($efectores.val());
+
+                }
+
+            }
     
-            'verticalDepth': 3,
-            'depth': 3
+        );
+
+        /**
+        * Recarga el organigrama
+        */
+       function reloadOrganigrama(id_efector){
+
+           var data ={};
+
+           data['id_efector'] =  id_efector;
+           // submit AJAX
+           $.ajax({
+               url: "{{ path('ajax_config_edilicia_salas_hab_camas_orgchart_json') }}",
+               data: data,
+               type: "GET",
+               dataType: 'json',
+               success: function(json){
+
+                   // limpia y reinicia el div del orgchart
+                   reloadDivChartContainer(json);
+
+                   fullScreenButton();
+               }
+           });
+
+       }
+
+
+       /**
+       * Recarga el div del organigrama
+        */
+       function reloadDivChartContainer(json){
+
+           $('#chart-container').html('');
+
+           $oc = $('#chart-container').orgchart({
+
+               'data': json,
+               'nodeContent': 'title',
+               'direction': '{{ config_orgchart.direccion }}',
+               'zoom': {{ config_orgchart.zoom }},
+               'pan': {{ config_orgchart.pan }},
+
+               {% if config_orgchart.export_file_extension != 'false' %}
+
+                   'exportButton': true,
+                   'exportFilename': 'ri_configuracion_edilicia',
+                   'exportFileextension': '{{ config_orgchart.export_file_extension }}',
+
+               {% endif %}
+
+               {% if config_orgchart.profundidad == 'true' %}
+
+                   'verticalDepth': 3,
+                   'depth': 3,
+
+               {% else %}
+
+                   'depth': 2,
+
+               {% endif %}
+
+               'createNode': function($node, data) {
+
+                   var secondMenu = '<div class="second-menu">';
+
+                   switch (data['className']){
+
+                       case 'ri-orgchart-efector':
+
+                           secondMenu += '<ul>' +
+                                   '<li>Complejidad: ' + data['nivel_complejidad'] + '</li>' +
+                                   '<li>Camas: ' + data['cant_camas'] + '</li></ul>';
+                           break;
+
+                       case 'ri-orgchart-sala':
+                       case 'ri-orgchart-sala-baja':
+
+                           secondMenu += '<ul>' +
+                                   '<li>Area: ' + data['area_desc'] + '</li>' +
+                                   '<li>Mover Camas: ' + data['mover_camas_desc'] + '</li>' +
+                                   '<li>Camas: ' + data['cant_camas'] + '</li>' +
+                                   '<li>Baja: ' + data['baja_desc'] + '</li></ul>';
+                           break;
+
+                       case 'ri-orgchart-habitacion':
+                       case 'ri-orgchart-habitacion-baja':
+
+                           secondMenu += '<ul>' +
+                                   '<li>Sexo: ' + data['sexo_desc'] + '</li>' +
+                                   '<li>Edad Desde: ' + data['edad_desde_desc'] + '</li>' +
+                                   '<li>Edad Hasta: ' + data['edad_hasta_desc'] + '</li>' +
+                                   '<li>Tipo de Edad: ' + data['tipo_edad_desc'] + '</li>' +
+                                   '<li>Camas: ' + data['cant_camas'] + '</li>' +
+                                   '<li>Baja: ' + data['baja_desc'] + '</li></ul>';
+
+                           break;
+
+                       case 'ri-orgchart-cama-baja':
+                       case 'ri-orgchart-cama-libre':
+                       case 'ri-orgchart-cama-fuera':
+                       case 'ri-orgchart-cama-ocupada':
+                       case 'ri-orgchart-cama-default':
+
+                           secondMenu += '<ul>' +
+                                   '<li>Clasificacion: ' + data['clasificacion_cama'] + '</li>' +
+                                   '<li>Cuidado: ' + data['tipo_cuidado_progresivo_desc'] + '</li>' +
+
+                                   '<li>Estado: ' + data['estado_desc'] + '</li>' +
+                                   '<li>Rotativa: ' + data['rotativa_desc'] + '</li>' +
+
+                                   '<li>Apellido: ' + data['internacion_apellido'] + '</li>' +
+                                   '<li>Nombre: ' + data['internacion_nombre'] + '</li>' +
+
+                                   '<li>Baja: ' + data['baja_desc'] + '</li>' + '</li></ul>';
+                           break;
+
+                   }
+
+                   secondMenu +='</div>';
+
+                   $node.append(secondMenu);
+
+               }
+
+           })
+
+
+           $(".fa-users").removeClass();
+
+
+       }
     
-        {% else %}
-            
-            'depth': 2
-            
-        {% endif %}
-            
-        });
     </script>
 
     {% endif %}

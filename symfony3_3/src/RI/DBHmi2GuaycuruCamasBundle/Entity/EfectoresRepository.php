@@ -30,6 +30,47 @@ use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
  */
 class EfectoresRepository extends EntityRepository
 {
+ 
+    /** Obtiene la cantidad de camas según el parámetro de baja
+     * 
+     * @param integer $id_efector
+     * @param boolean $baja
+     * @return integer
+     * @throws \Exception
+     */
+    public function countCamas(
+            $id_efector,
+            $baja){
+        
+        $dql = 
+                "SELECT "
+                    ."COUNT(c.idCama) "
+                ."FROM "
+                    .RIUtiles::DB_BUNDLE.":Camas c "
+                ."WHERE "
+                    ."c.baja = :baja "
+                ."AND c.idEfector = :id_efector";
+                   
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            $query->setParameter("id_efector", $id_efector);
+            $query->setParameter("baja", $baja);
+
+            $count = $query->getSingleScalarResult();
+            
+        } catch (\Exception $e) {
+
+            RI::$error_debug .= $e->getMessage();
+            
+            throw $e;            
+            
+        }
+        
+        return $count;
+        
+    }
     
     /**
      * Obtiene los efectores activos en el sistema
@@ -65,5 +106,36 @@ class EfectoresRepository extends EntityRepository
         return $efectores;
     }
     
+     public function findOneByIdEfectorConAsociaciones(
+            $id_efector)
+    {
+        
+        
+        
+        $dql =
+            "SELECT "
+                ."e, l "
+            ."FROM "
+                .RIUtiles::DB_BUNDLE.":Efectores e "
+            ."JOIN "
+                ."e.idLocalidad l "
+            ."WHERE "
+                ."e.idEfector = :id_efector ";
+        
+        try{
+            
+            $query = $this->getEntityManager()->createQuery($dql);
+            
+            $query->setParameter("id_efector", $id_efector);
+            
+            $efector = $query->getSingleResult();
+            
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
+        
+        return $efector;
+    }
 }
 

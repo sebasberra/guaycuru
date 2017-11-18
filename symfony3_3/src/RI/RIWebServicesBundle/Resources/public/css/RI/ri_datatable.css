@@ -1,0 +1,112 @@
+/* redefino thead th td */
+table.dataTable thead tr th {
+    padding: 10px 15px;
+    vertical-align: bottom;
+    text-align: center;
+    font-size: 90%
+}
+
+table.dataTable thead tr th:nth-child(n) {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+table.dataTable thead tr:nth-child(1) th:nth-child(1) {
+    border-left: 1px solid black;
+}
+
+table.dataTable thead tr:nth-child(1) th:nth-child(n) {
+    border-top: 1px solid black;
+}
+
+/* redefino tbody tr td */
+table.dataTable tbody tr td {
+    border-color: #dddddd;
+    border-style: solid;
+    border-width: 1px;
+    text-align: left;
+    font-size: 80%;
+}
+
+table.dataTable tbody tr:nth-child(2n+1) td {
+    background-color: #f9f9f9 !important;
+}
+
+.dataTables_length, .dataTables_filter{
+    padding-top: 10px !important;
+    padding-bottom: 0px !important;
+}
+
+.dataTables_length select{
+    display: inherit !important;
+    min-width: 10% !important;
+    width: initial !important;
+}
+
+.dataTables_filter input{
+    display: inherit !important;
+    min-width: 70% !important;
+    width: initial !important;
+}
+
+#listacensodiario_filter {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+#listacensodiario_length {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+div.dataTables_scrollBody {
+    border: 1px solid #9f9d9d !important;
+}
+
+/* Censo Diario - borde lateral y margen inferior */
+#resumencensodiario {
+    margin-top: 25px;
+    border-bottom: 1px solid #9f9d9d;
+    border-left: 1px solid #9f9d9d;
+    border-right: 1px solid #9f9d9d;
+}
+
+/* Censo Diario - centrado */
+#resumencensodiario tbody tr td {
+    text-align: center !important;
+}
+
+/* Resumen del Censo - centrado */
+#resumencensoperiodo tbody tr td {
+    text-align: center !important;
+}
+
+/* Resumen del Censo - Recuadro de totales */
+#resumencensoperiodo tbody tr:nth-of-type(n+2):last-child td {
+    border-left: transparent !important;
+    border-right: 1px solid black !important;
+    border-top: 1px solid black !important;
+    border-bottom: 1px solid black !important;
+    font-weight: bold;
+    text-align: center !important;
+}
+
+/* Resumen del Censo - Recuadro de totales */
+#resumencensoperiodo tbody tr:nth-of-type(n+2):last-child td:nth-child(1) {
+    border-left: 1px solid black !important;
+}
+
+/* Resumen del Censo - borde lateral y margen inferior */
+#resumencensoperiodo {
+    border-bottom: 1px solid #9f9d9d;
+    border-left: 1px solid #9f9d9d;
+    border-right: 1px solid #9f9d9d;
+}
+
+@media print {
+    .printBorder {
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+    }
+}
