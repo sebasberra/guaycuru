@@ -98,7 +98,9 @@ trait ConfiguracionEdiliciaSalas{
             $efector = RIUtiles::getEfector($nueva_sala['id_efector']);
         
             // check area
-            if ($nueva_sala['area_cod_servicio']!=-1){
+            if (
+                    $nueva_sala['area_cod_servicio']!=-1 &&
+                    strtoupper($nueva_sala['area_cod_servicio'])!='NULL'){
 
                 $area_efector_servicio = 
                         RIUtiles::getEfectorServicioCodigoEstadistica(
@@ -339,7 +341,9 @@ trait ConfiguracionEdiliciaSalas{
             
         
             // check area
-            if ($modif_sala['area_cod_servicio']!=-1){
+            if (
+                    $modif_sala['area_cod_servicio']!=-1 &&
+                    strtoupper($modif_sala['area_cod_servicio'])!='NULL'){
 
                 $area_efector_servicio = 
                         RIUtiles::getEfectorServicioCodigoEstadistica(

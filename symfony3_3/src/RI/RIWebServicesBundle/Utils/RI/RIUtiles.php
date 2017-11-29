@@ -608,7 +608,14 @@ class RIUtiles extends RI
         return $cama;
     }
 
-    
+    /**
+     * Si se pasan los string "false" o "true" devuelve el tipo booleano 
+     * correspondiente, en caso contrario aplica la transformación forzada
+     * del string pasado como parámetro al tipo booleano.
+     * 
+     * @param string $strbooleano
+     * @return boolean 
+     */
     public static function wrapBoolean($strbooleano) {
 
         if ($strbooleano == 'false') {
@@ -622,6 +629,24 @@ class RIUtiles extends RI
 
         return (boolean) $strbooleano;
     }
+    
+    /**
+     * Cuando se pasa el string "NULL" como parámetro devuelve el tipo null de
+     * php, en caso contrario devuelve el mismo string de entrada
+     * 
+     * @param string $strnull
+     * @return type Si el string = "NULL" entonces devuelve null, si no devuelve
+     * el mismo string de entrada
+     */
+//    public static function wrapNull($strnull) {
+//
+//        if (strtoupper($strnull) == 'NULL') {
+//
+//            return null;
+//        }
+//        
+//        return $strnull;
+//    }
     
     
     /** formula que genera el token

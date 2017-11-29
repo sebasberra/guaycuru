@@ -2,13 +2,19 @@
 
 {% block cuerpo %} 
 
-    {{form_start(form)}}
-    {{form_end(form)}}
+    <div class="row form">
+        <h3 style="text-align: center">Logger</h3>
+        <h4 style="text-align: center">Configuración</h4>
     
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+
     {% if mensaje != '' %}
         
         <p> {{ mensaje }} </p>
         
     {% endif %}
     
+    </div>
+
 {% endblock %}

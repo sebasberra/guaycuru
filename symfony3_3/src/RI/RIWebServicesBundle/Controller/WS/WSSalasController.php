@@ -197,7 +197,7 @@ trait WSSalasController
     /**
      * **Web Services: Agregar sala**
      * 
-     * @Post("/salas/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}")
+     * @Post("/salas/nueva/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}")
      * 
      * @param int $id_efector ID efector
      * @param string $nombre_sala Nombre único de sala en el efector

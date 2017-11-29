@@ -23,7 +23,52 @@ Response Devuelve el código de estado HTTP: 200(OK - Información de sala) o 40
 ```curl
 $ curl http://localhost:8004/salas/ver/267/obstetricia.json
 ```
+```php
+<?php
 
+	// variables 
+	$get = 'http://localhost:8004/salas/ver';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '267',
+		
+		// nombre_sala
+		2 => 'obstetricia',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -50,7 +95,55 @@ $ curl http://localhost:8004/salas/ver/267/obstetricia.json
 ```curl
 $ curl $(echo "http://localhost:8004/salas/ver/5/sala que no existe.json" | sed 's/ /%20/g' )
 ```
+```php
+<?php
 
+	// variables 
+	$get = 'http://localhost:8004/salas/ver';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '5',
+		
+		// nombre_sala
+		2 => 'sala que no existe',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// reemplaza espacios
+	$get = str_replace ( ' ', '%20', $get);
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 404 Error
@@ -64,9 +157,57 @@ $ curl $(echo "http://localhost:8004/salas/ver/5/sala que no existe.json" | sed 
 #### Ejemplo Request XML con espacios escapados (ver sala)
 
 ```curl
-$ curl $(echo "http://localhost:8004/salas/ver/267/obstetricia.xml" | sed 's/ /%20/g' )
+$ curl $(echo "http://localhost:8004/salas/ver/292/medicina general mujeres.xml" | sed 's/ /%20/g' )
 ```
+```php
+<?php
 
+	// variables 
+	$get = 'http://localhost:8004/salas/ver';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '292',
+		
+		// nombre_sala
+		2 => 'medicina general mujeres',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// reemplaza espacios
+	$get = str_replace ( ' ', '%20', $get);
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -116,26 +257,78 @@ Devuelve el código de estado HTTP: 204 (sala actualizada) o 404 (error de actua
 ```curl
 curl -X PUT http://localhost:8004/salas/modificar/167/emergencias/null/null/null/false/false.json
 ```
+```php
+<?php
 
+	// variables 
+	$put = 'http://localhost:8004/salas/modificar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '167',
+		
+		// nombre_sala
+		2 => 'emergencias',
+		
+		// area_cod_servicio
+		3 => 'null',
+		
+		// area_sector
+		4 => 'null',
+		
+		// area_subsector
+		5 => 'null',
+		
+		// mover_camas
+		6 => 'false',
+		
+		// baja
+		7 => 'false',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$put .= '/'.$var;
+		
+	}
+	$put.='.'.$format;
+		
+	// inicializa cUrl
+	$ch = curl_init($put);
+	curl_setopt($ch, CURLOPT_PUT, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response (modificar sala)
 
-```json
-{
-  "owner": "{username}",
-  "id": "{wobble_id}",
-  "name": null,
-  "description": null,
-  "created": "{timestamp}",
-  "modified": "{timestamp}"
-}
-```
+>HTTP 204 No Content
 
 ### Agregar sala
 
 Agregar una sala.
 
 ```endpoint
-POST /salas/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}.{_format}
+POST /salas/nueva/{id_efector}/{nombre_sala}/{area_cod_servicio}/{area_sector}/{area_subsector}/{mover_camas}/{baja}.{_format}
 ```
 
 Variable | Descripción
@@ -154,20 +347,79 @@ Response Devuelve el código de estado HTTP: 201 (sala nueva ingresada) o 404 (e
 #### Ejemplo Request (agregar sala)
 
 ```curl
-curl https://localhost:8004/salas/nueva/{id_efector}/{nombre_sala}/{nombre_habitacion}/{sexo}/{edad_desde}/{edad_hasta}/{tipo_edad}/{baja}.json
+curl -X POST http://localhost:8004/salas/nueva/63/TRAUMATOLOGIA/null/null/null/false/false.json
 ```
+```php
+<?php
 
+	// variables 
+	$post = 'http://localhost:8004/salas/nueva';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '63',
+		
+		// nombre_sala
+		2 => 'TRAUMATOLOGIA',
+		
+		// area_cod_servicio
+		3 => 'null',
+		
+		// area_sector
+		4 => 'null',
+		
+		// area_subsector
+		5 => 'null',
+		
+		// mover_camas
+		6 => 'false',
+		
+		// baja
+		7 => 'false',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$post .= '/'.$var;
+		
+	}
+	$post.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($post);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response (agregar sala)
+
+>HTTP 201 Created
 
 ```json
 {
-  "owner": "{username}",
-  "id": "{wobble_id}",
-  "created": "{timestamp}",
-  "modified": "{timestamp}"
+ "La sala: TRAUMATOLOGIA fue ingresada al efector: 63. El id de sala asignado es: 63005"
 }
 ```
-
 ### Eliminar sala
 
 Eliminar una sala.
@@ -187,19 +439,62 @@ Devuelve el código de estado HTTP:200 (sala eliminada) o 404 (sala no encontrad
 #### Ejemplo Request (eliminar sala)
 
 ```curl
-$ curl -X DELETE https://localhost:8004/salas/eliminar/{id_efector}/{nombre_sala}.json
+$ curl -X DELETE http://localhost:8004/salas/eliminar/63/TRAUMATOLOGIA.json
 ```
+```php
+<?php
 
+	// variables 
+	$delete = 'http://localhost:8004/salas/eliminar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '63',
+		
+		// nombre_sala
+		2 => 'TRAUMATOLOGIA',
+				
+	];
+	
+	foreach ($vars as $var){
+		
+		$delete .= '/'.$var;
+		
+	}
+	$delete.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($delete);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
 
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response (eliminar sala)
+
+>HTTP 200 OK
 
 ```json
 {
-  "owner": "{username}",
-  "id": "{wobble_id}",
-  "name": "foo",
-  "description": "bar",
-  "created": "{timestamp}",
-  "modified": "{timestamp}"
+ "La sala: TRAUMATOLOGIA fue eliminada/baja del efector: HOSP PROTOMEDICO MANUEL RODRIGUEZ"
 }
 ```

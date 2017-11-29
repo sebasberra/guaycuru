@@ -23,6 +23,55 @@ Devuelve el código de estado HTTP: 200(OK - Información de habitación) o 404 
 ```curl
 $ curl http://localhost:8004/habitaciones/ver/183/guardia/aislados.json
 ```
+```php
+<?php
+
+	// variables 
+	$get = 'http://localhost:8004/habitaciones/ver';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '183',
+		
+		// nombre_sala
+		2 => 'guardia',
+		
+		// nombre_habitacion
+		3 => 'aislados'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -46,7 +95,58 @@ $ curl http://localhost:8004/habitaciones/ver/183/guardia/aislados.json
 ```curl
 $ curl $(echo "http://localhost:8004/habitaciones/ver/121/cim iii/cim iii.json" | sed 's/ /%20/g' )
 ```
+```php
+<?php
 
+	// variables 
+	$get = 'http://localhost:8004/habitaciones/ver';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '121',
+		
+		// nombre_sala
+		2 => 'cim iii',
+		
+		// nombre_habitacion
+		3 => 'cim iii'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// reemplaza espacios
+	$get = str_replace ( ' ', '%20', $get);
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -71,6 +171,55 @@ $ curl $(echo "http://localhost:8004/habitaciones/ver/121/cim iii/cim iii.json" 
 ```curl
 $ curl http://localhost:8004/habitaciones/ver/72/obstetricia/anexo.xml
 ```
+```php
+<?php
+
+	// variables 
+	$get = 'http://localhost:8004/habitaciones/ver';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '72',
+		
+		// nombre_sala
+		2 => 'obstetricia',
+		
+		// nombre_habitacion
+		3 => 'anexo'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$get .= '/'.$var;
+		
+	}
+	$get.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($get);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -90,7 +239,6 @@ $ curl http://localhost:8004/habitaciones/ver/72/obstetricia/anexo.xml
 	<baja>0</baja>
 </response>
 ```
-
      
 ### Modificar habitación
 
@@ -120,6 +268,71 @@ Devuelve el código de estado HTTP: 204 (habitación actualizada) o 404 (error d
 ```curl
 curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo/2/12/55/1/0.json
 ```
+```php
+<?php
+
+	// variables 
+	$put = 'http://localhost:8004/habitaciones/modificar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '72',
+		
+		// nombre_sala
+		2 => 'obstetricia',
+		
+		// nombre_habitacion
+		3 => 'anexo',
+		
+		// sexo
+		4 => '2',
+		
+		// edad_desde
+		5 => '12',
+		
+		// edad_hasta
+		6 => '55',
+		
+		// tipo_edad
+		7 => '1',
+		
+		// baja
+		8 => '0'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$put .= '/'.$var;
+		
+	}
+	$put.='.'.$format;
+		
+	// inicializa cUrl
+	$ch = curl_init($put);
+	curl_setopt($ch, CURLOPT_PUT, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 
 #### Ejemplo Response
 
@@ -130,7 +343,71 @@ curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo/2/
 ```curl
 curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo1/2/12/55/1/0.xml
 ```
+```php
+<?php
 
+	// variables 
+	$put = 'http://localhost:8004/habitaciones/modificar';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '72',
+		
+		// nombre_sala
+		2 => 'obstetricia',
+		
+		// nombre_habitacion
+		3 => 'anexo1',
+		
+		// sexo
+		4 => '2',
+		
+		// edad_desde
+		5 => '12',
+		
+		// edad_hasta
+		6 => '55',
+		
+		// tipo_edad
+		7 => '1',
+		
+		// baja
+		8 => '0'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$put .= '/'.$var;
+		
+	}
+	$put.='.'.$format;
+		
+	// inicializa cUrl
+	$ch = curl_init($put);
+	curl_setopt($ch, CURLOPT_PUT, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response && $code!=204){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 404 Error
@@ -167,9 +444,76 @@ Devuelve el código de estado HTTP: 201 (habitación nueva ingresada) o 404 (err
 #### Ejemplo Request JSON con espacios escapados (agregar habitación)
 
 ```curl
-curl -X POST $(echo "http://localhost:8004/habitaciones/nueva/71/sala 1 uti/hab d/3/0/255/6/0.json" | sed 's/ /%20/g' )
+curl -X POST $(echo "http://localhost:8004/habitaciones/nueva/71/sala 1  uti/hab d/3/0/255/6/0.json" | sed 's/ /%20/g' )
 ```
+```php
+<?php
 
+	// variables 
+	$post = 'http://localhost:8004/habitaciones/nueva';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '71',
+		
+		// nombre_sala
+		2 => 'sala 1  uti',
+		
+		// nombre_habitacion
+		3 => 'hab d',
+		
+		// sexo
+		4 => '3',
+		
+		// edad_desde
+		5 => '0',
+		
+		// edad_hasta
+		6 => '255',
+		
+		// tipo_edad
+		7 => '6',
+		
+		// baja
+		8 => '0'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$post .= '/'.$var;
+		
+	}
+	$post.='.'.$format;
+	
+	// reemplaza espacios
+	$post = str_replace ( ' ', '%20', $post);
+	
+	// inicializa cUrl
+	$ch = curl_init($post);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 201 Created
@@ -183,6 +527,71 @@ curl -X POST $(echo "http://localhost:8004/habitaciones/nueva/71/sala 1 uti/hab 
 
 ```curl
 curl -X POST http://localhost:8004/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.xml
+```
+```php
+<?php
+
+	// variables 
+	$post = 'http://localhost:8004/habitaciones/nueva';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '121',
+		
+		// nombre_sala
+		2 => 'ucip',
+		
+		// nombre_habitacion
+		3 => 'ucip',
+		
+		// sexo
+		4 => '3',
+		
+		// edad_desde
+		5 => '0',
+		
+		// edad_hasta
+		6 => '255',
+		
+		// tipo_edad
+		7 => '6',
+		
+		// baja
+		8 => '0'
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$post .= '/'.$var;
+		
+	}
+	$post.='.'.$format;
+	
+	// inicializa cUrl
+	$ch = curl_init($post);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
 ```
 #### Ejemplo Response
 
@@ -218,7 +627,57 @@ Response Devuelve el código de estado HTTP:200 (habitación eliminada) o 404 (h
 ```curl
 $ curl -X DELETE http://localhost:8004/habitaciones/eliminar/121/ucip/ucip.json
 ```
+```php
+<?php
 
+	// variables 
+	$delete = 'http://localhost:8004/habitaciones/eliminar';
+	$format = 'json';
+	$vars = [
+		// id_efector
+		1 => '121',
+		
+		// nombre_sala
+		2 => 'ucip',
+		
+		// nombre_habitacion
+		3 => 'ucip',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$delete .= '/'.$var;
+		
+	}
+	$delete.='.'.$format;
+	
+	
+	// inicializa cUrl
+	$ch = curl_init($delete);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .$response;
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -233,7 +692,59 @@ $ curl -X DELETE http://localhost:8004/habitaciones/eliminar/121/ucip/ucip.json
 ```curl
 $ curl -X DELETE $(echo "http://localhost:8004/habitaciones/eliminar/5/sala- pediatria/hab de prueba.xml" | sed 's/ /%20/g' )
 ```
+```php
+<?php
 
+	// variables 
+	$delete = 'http://localhost:8004/habitaciones/eliminar';
+	$format = 'xml';
+	$vars = [
+		// id_efector
+		1 => '5',
+		
+		// nombre_sala
+		2 => 'sala- pediatria',
+		
+		// nombre_habitacion
+		3 => 'hab de prueba',
+		
+	];
+	
+	foreach ($vars as $var){
+		
+		$delete .= '/'.$var;
+		
+	}
+	$delete.='.'.$format;
+	
+	// reemplaza espacios
+	$delete = str_replace ( ' ', '%20', $delete);
+	
+	// inicializa cUrl
+	$ch = curl_init($delete);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+	// send request
+	$response = curl_exec($ch);
+	$code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	
+	if (!$response){
+		die('Error: "' . curl_error($ch) . '" - Código: ' . curl_errno($ch));
+	}
+	
+	// cierra conexión, libera recursos
+	curl_close($ch);
+
+	// response
+	echo 
+        'Codigo HTTP: '
+        .$code
+        .' - Contenido: '
+        .htmlspecialchars($response);
+
+?>
+```
 #### Ejemplo Response
 
 >HTTP 404 Error
