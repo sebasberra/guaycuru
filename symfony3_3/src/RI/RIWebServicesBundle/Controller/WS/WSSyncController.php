@@ -153,8 +153,11 @@ trait WSSyncController
 
             // check efector
             $id_efector = $csv[0]['id_efector'];
-            $data = RIUtiles::getEfector($id_efector);
-            
+            $efector = RIUtiles::getEfector($id_efector);
+            $data = 
+                    "La configuración edilicia del efector: "
+                    .$efector->getNomEfector()
+                    ." fue inicializada/sincronizada";
             
             // resync add y update
             foreach ($csv as $row){

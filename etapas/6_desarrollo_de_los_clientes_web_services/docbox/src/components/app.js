@@ -18,7 +18,15 @@ let languageOptions = [
     
   { title: 'PHP',
     short: 'PHP',
-    value: 'php' }
+    value: 'php' },
+    
+  { title: 'SQL',
+    short: 'SQL',
+    value: 'sql' },
+    
+  { title: 'bash',
+    short: 'bash',
+    value: 'bash' }
 ];
 
 let defaultLanguage = languageOptions[0];
