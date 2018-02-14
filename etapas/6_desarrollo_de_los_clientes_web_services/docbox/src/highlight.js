@@ -12,6 +12,8 @@ import bash from 'highlight.js/lib/languages/bash';
 import php from 'highlight.js/lib/languages/php';
 import sql from 'highlight.js/lib/languages/sql';
 import shell from 'highlight.js/lib/languages/shell';
+import vb6 from 'highlight.js/lib/languages/vbnet';
+
 
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('xml', xml);
@@ -23,7 +25,7 @@ hljs.registerLanguage('java', java);
 hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('php', php);
 hljs.registerLanguage('sql', sql);
-hljs.registerLanguage('shell', shell);
+hljs.registerLanguage('vb6', vb6);
 
 /**
  * Adapted from remark-highlight.js

@@ -1,0 +1,45 @@
+.ri-upper {
+    text-transform: uppercase;
+}
+
+.detalles label {
+    display: block;
+    margin-left: 1em;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+
+.detalles span {
+    margin-left: 1em;
+    color: #666;
+    display: block;
+    font-size: 0.9em;
+}
+
+.ri_twig_form_errors {
+    color: red;
+    margin-left: 10px;
+}
+
+.ri-font-x-small {
+    font-size: x-small;   
+}
+
+.ri-button-0-left-padding {
+    padding-right: 15px !important;
+    padding-left: 0px !important;
+}
+
+.ri-required-asteric:after {
+    content: "(*)";
+    color: #EB1C24;
+    margin-left: 5px;
+}
+
+.dataTables_processing{
+    display: block;
+    padding-bottom: 20px;
+    height: 60px !important;
+    font-weight: bolder;
+}

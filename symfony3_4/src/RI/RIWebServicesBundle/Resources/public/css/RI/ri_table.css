@@ -1,0 +1,64 @@
+/* clases para la pagina de ayuda */
+
+.ri-th-ayuda-titulo1 {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    color: black;
+    background-color: #bbb;
+    font-size: 160%;
+    
+}
+
+.ri-th-ayuda-titulo2 {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    color: black;
+    background-color: #ccc;
+    font-size: 130%;
+    
+}
+
+.ri-td-ayuda-titulo-desc {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: left;
+    background-color: #ddd;
+    color: black;
+    font-size: 110%;
+    
+}
+
+.ri-th-ayuda {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: #ddd;
+    color: black;
+    font-size: 100%;
+}
+
+.ri-td-ayuda {
+    
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: left;
+    background-color: #ddd;
+    color: black;
+    font-size: 90%;
+}

@@ -189,18 +189,51 @@ ORDER BY
 	habitacion_nombre,
 	cama_nombre;
 ```
-
+```curl
+# ver ejemplo sql
+```
+```bash
+# ver ejemplo sql
+```
+```vb6
+'Ver ejemplo sql
+```
+```php
+/* Ver ejemplo sql */
+```
 #### Ejemplo convertir resultado de consulta MySQL a archivo .csv con "sed" [solo bash]
 
 ```bash
 $ sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/" confedilicia.dump >confedilicia.csv
 ```
-
+```curl
+# ver ejemplo bash
+```
+```sql
+/* ver ejemplo bash */
+```
+```vb6
+'Ver ejemplo bash
+```
+```php
+/* Ver ejemplo bash */
+```
 #### Ejemplo Request (inicialización/resincronización)
 ```curl
 $ curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8004/sync.json
 ```
-
+```bash
+# ver ejemplo cUrl
+```
+```sql
+/* ver ejemplo cUrl */
+```
+```vb6
+'Ver ejemplo cUrl
+```
+```php
+/* Ver ejemplo cUrl */
+```
 #### Ejemplo Response (inicialización/resincronización)
 
 ```json
@@ -234,4 +267,16 @@ mysql -uroot evaperon_hmi2_20170912 <informe_confedilicia.sql | sed "s/'/\'/;s/\
 
 # Genera una peticion(Request) POST con el archivo "confedilicia.csv" como "BODY"
 curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8004/sync.json 
+```
+```curl
+# ver ejemplo bash
+```
+```sql
+/* ver ejemplo bash */
+```
+```vb6
+'Ver ejemplo bash
+```
+```php
+/* Ver ejemplo bash */
 ```

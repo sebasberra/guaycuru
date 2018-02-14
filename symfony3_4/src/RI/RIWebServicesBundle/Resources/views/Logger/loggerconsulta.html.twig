@@ -1,0 +1,446 @@
+{% extends '::base.html.twig' %}
+
+{% block cuerpo %} 
+
+    <div class="row form">
+        <h3 style="text-align: center">Logger</h3>
+        <h4 style="text-align: center">Consulta</h4>
+    
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+
+    <div id="tree"></div>
+    
+    </div>
+
+    <script>
+        
+            
+        var data = [
+                
+        {% for log_conexion in data %}
+        {
+        
+            name: 'Conexión: {{ log_conexion.id_log_conexion }}',
+            tipo: 'conexion',
+            children: [
+            
+                { name: 'Usuario: {{ log_conexion.user_db }}',
+                  tipo: 'usuario'},
+                { name: 'Host: {{ log_conexion.host_db }}',
+                  tipo: 'host'},
+                { name: 'Descripción: {{ log_conexion.descripcion }}',
+                  tipo: 'descripcion'},
+                { name: 'Fecha/Hora: {{ log_conexion.fecha_hora }}',
+                  tipo: 'fecha_hora'},
+                { name: 'Info:',
+                  tipo: 'info',
+                  children: [
+                    {% for tabla in log_conexion.info %}
+                                
+                        { name: 'Tabla: {{ tabla.tabla }}',
+                          tipo: 'tabla'},
+                        { name: 'SQL: {{ tabla.tipo_sql }}',
+                          tipo: 'sql'},
+                        { name: 'Datos:',
+                          tipo: 'datos',
+                          children: [
+                            {% for key,dato in tabla.datos %}
+                                
+                                { name: '{{ key }}: {{ dato[3:] }}',
+                                  tipo: '{{ dato[0:3] }}' },
+                            {% endfor %}
+                          ]},
+                    {% endfor %}
+                ]}
+                
+                        
+            ]
+        },
+                
+        {% endfor %}
+        ];
+        
+        
+        $(function() {
+            $('#tree').tree({
+                data: data,
+                onCreateLi: function(node, $li) {
+                    
+                    var $title = $li.find('.jqtree-title');
+
+                    switch (node.tipo){
+                        
+                        case 'conexion':
+                            $title.addClass('ri_jqtree_conexion');
+                            break;
+                            
+                        case 'usuario':
+                            $title.before('<span class="fa fa-user"></span>');
+                            break;
+                            
+                        case 'host':
+                            $title.before('<span class="fa fa-laptop"></span>');
+                            break;
+                            
+                        case 'descripcion':
+                            $title.before('<span class="fa fa-comment"></span>');
+                            break;
+                            
+                        case 'fecha_hora':
+                            $title.before('<span class="fa fa-clock-o"></span>');
+                            break;
+                            
+                        case 'info':
+                            $title.addClass('ri_jqtree_info');
+                            break;
+                        
+                        case 'tabla':
+                            $title.before('<span class="fa fa-table"></span>');
+                            break;
+                        
+                        case 'foreignkey':
+                            $title.before('<span class="fa fa-key"></span>');
+                            $title.addClass('ri_jqtree_foreignkey');
+                            break;
+                            
+                        case 'sql':
+                            $title.before('<span class="fa fa-database"></span>');
+                            
+                            switch (node.name){
+                                
+                                case 'SQL: UPDATE':
+                                    $title.addClass('ri_jqtree_blue');
+                                    break;
+                                    
+                                case 'SQL: INSERT':
+                                    $title.addClass('ri_jqtree_green');
+                                    break;
+                                    
+                                case 'SQL: DELETE':
+                                    $title.addClass('ri_jqtree_red');
+                                    break;
+                                    
+                                case 'SQL: LOG':
+                                    $title.addClass('ri_jqtree_magenta');
+                                    break;
+                                    
+                            }
+                            
+                            break;
+                            
+                        case 'datos':
+                            $title.addClass('ri_jqtree_datos');
+                            break;
+                        
+                        // modificacion 
+                        case '[M]':
+                            $title.before('<span class="fa fa-exchange"></span>');
+                            $title.addClass('ri_jqtree_change');
+                            break;
+                            
+                        // insert 
+                        case '[I]':
+                            $title.before('<span class="fa fa-plus"></span>');
+                            break;
+                        
+                        // delete 
+                        case '[D]':
+                            $title.before('<span class="fa fa-minus"></span>');
+                            $title.addClass('ri_jqtree_red');
+                            break;
+                            
+                        // no modificacion 
+                        case '[O]':
+                            $title.before('<span class="fa fa-lock"></span>');
+                            break;
+                            
+                        // log 
+                        case '[L]':
+                            $title.before('<span class="fa fa-bars"></span>');
+                            break;
+                            
+                        // foreignkey 
+                        case '[F]':
+                            
+                            break;
+                    }
+                    
+                }
+            });
+            
+            $('#tree').bind(
+                
+                'tree.click',
+                
+                function(event) {
+                    
+                    
+                    var padre = event.node.parent.name.split(":");
+                    var nodo = event.node.name.split(":");
+                    var x;
+                    
+                    
+                    // check nodo con hijos
+                    if (event.node.children[0]){
+                        console.log("nodo con hijos");
+                        return;
+                    }
+                    
+                    // strings
+                    for (x in padre) {
+                        
+                        padre[x] = limpiarCadena(padre[x]);
+                    } 
+
+                    for (x in nodo) {
+                        
+                        nodo[x] = limpiarCadena(nodo[x]);
+                    } 
+                    
+                    
+                    // check campo <> vacio 
+                    if (nodo[1]===""){
+                        console.log("return");
+                        return;
+                    }
+                    
+                    switch (padre[0]){
+                            
+                        case "datos":
+                            
+                            var tabla = 
+                                    event.node.parent.element.previousElementSibling.previousElementSibling.innerText.split(":");
+                            
+                            var sql = 
+                                    event.node.parent.element.previousElementSibling.innerText.split(":");
+                            
+                            // <> log
+                            if (limpiarCadena(sql[1])!=="log"){
+                                
+                                for (x in tabla) {
+
+                                    tabla[x] = limpiarCadena(tabla[x]);
+
+                                }
+                                tabla=tabla[1];
+                                
+                                
+                                var campo = nodo[0];
+                                
+                                var valor1;
+                                var valor2;
+                                var str_anterior;
+                                
+                                console.log(tabla);
+                                console.log(campo);
+                                console.log(valor1);
+                                console.log(valor2);
+                                                                                                                               
+                                // <> update campo
+                                if (nodo[1]==="anterior"){
+                                
+                                    valor1 = nodo[2].split(" ")[0];
+                                    valor2 = nodo[3];
+                                    str_anterior="[anterior]";
+                                    
+                                }else{
+                                 
+                                    valor1 = nodo[1];
+                                    valor2 ="";
+                                    str_anterior="";
+                                }
+                                
+                                console.log(tabla);
+                                console.log(campo);
+                                console.log(valor1);
+                                console.log(valor2);
+                                
+                                var data_logger_fk = {};
+                                data_logger_fk['tabla'] =  tabla;
+                                data_logger_fk['campo'] =  campo;
+                                data_logger_fk['valor'] =  valor1;
+                                console.log(data_logger_fk);
+                                
+                                $.ajax({
+                                    method: "GET",
+                                    url: "{{ path('ajax_logger_foreignkey') }}",
+                                    data: data_logger_fk,
+                                    dataType: 'json',
+                                    success: function(json)
+                                    {
+                                    
+                                        
+                                        var data = json[0];
+                                        var ref_tabla = json[1];
+                                        var ref_columna = json[2];
+                                        
+                                        if (!data){
+                                            console.log('sin datos');
+                                            return;
+                                        }
+                                        
+                                        // nodo tabla 
+                                        $('#tree').tree(
+                                            'appendNode',
+                                            {
+                                                name: "Tabla" + str_anterior + ": "+ ref_tabla,
+                                                tipo: "tabla"
+                                            },
+                                            event.node
+                                        );
+                                
+                                
+                                        // nodo tipo sql 
+                                        $('#tree').tree(
+                                            'appendNode',
+                                            {
+                                                name: "FOREIGN KEY: " + ref_columna + " ref por: "+ campo,
+                                                tipo: "foreignkey"
+                                            },
+                                            event.node
+                                        );
+                                        
+                                        
+                                        // nodo datos 
+                                        var nuevo_nodo_datos =
+                                                $('#tree').tree(
+                                                'appendNode',
+                                                {
+                                                    name: "Datos: "
+                                                },
+                                                event.node
+                                            );
+                                    
+                                        for (x in data){
+                                            
+                                            var refvalor = "";
+                                            if (data[x]!==null){
+                                                
+                                                refvalor = data[x];
+                                            }
+                                            console.log(refvalor);
+                                            $('#tree').tree(
+                                                'appendNode',
+                                                {
+                                                    name: x + ": " + refvalor,
+                                                    tipo: "[F]"
+                                                },
+                                                nuevo_nodo_datos
+                                            );
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                });
+                                
+                                console.log(valor2);
+                                data_logger_fk['valor'] =  valor2;
+                                
+                                if (valor2!==""){
+                                
+                                    $.ajax({
+                                        method: "GET",
+                                        url: "{{ path('ajax_logger_foreignkey') }}",
+                                        data: data_logger_fk,
+                                        dataType: 'json',
+                                        success: function(json)
+                                        {
+
+
+                                            var data = json[0];
+                                            var ref_tabla = json[1];
+                                            var ref_columna = json[2];
+
+                                            if (!data){
+                                                console.log('sin datos');
+                                                return;
+                                            }
+
+                                            // nodo tabla 
+                                            $('#tree').tree(
+                                                'appendNode',
+                                                {
+                                                    name: "Tabla[nuevo]: "+ ref_tabla,
+                                                    tipo: "tabla"
+                                                },
+                                                event.node
+                                            );
+
+
+                                            // nodo tipo sql 
+                                            $('#tree').tree(
+                                                'appendNode',
+                                                {
+                                                    name: "FOREIGN KEY: " + ref_columna + " ref por: "+ campo,
+                                                    tipo: "foreignkey"
+                                                },
+                                                event.node
+                                            );
+
+
+                                            // nodo datos 
+                                            var nuevo_nodo_datos =
+                                                    $('#tree').tree(
+                                                    'appendNode',
+                                                    {
+                                                        name: "Datos: "
+                                                    },
+                                                    event.node
+                                                );
+
+                                            for (x in data){
+
+                                                var refvalor = "";
+                                                if (data[x]!==null){
+
+                                                    refvalor = data[x];
+                                                }
+                                                console.log(refvalor);
+                                                $('#tree').tree(
+                                                    'appendNode',
+                                                    {
+                                                        name: x + ": " + refvalor,
+                                                        tipo: "[F]"
+                                                    },
+                                                    nuevo_nodo_datos
+                                                );
+
+                                            }
+
+                                        }
+
+                                    });
+                                
+                                }
+                                
+                            }
+                            
+                            break;
+                            
+                    }
+                            
+                    
+                }
+            );
+        });
+        
+        
+        function limpiarCadena(cadena){
+        
+            cadena = cadena.toLowerCase();
+            cadena = cadena.trim();
+            cadena = cadena.replace(/á/gi,"a");
+            cadena = cadena.replace(/é/gi,"e");
+            cadena = cadena.replace(/í/gi,"i");
+            cadena = cadena.replace(/ó/gi,"o");
+            cadena = cadena.replace(/ú/gi,"u");
+            cadena = cadena.replace(/ñ/gi,"n");
+            
+            return cadena;
+            
+        }
+        
+    </script>
+{% endblock %}

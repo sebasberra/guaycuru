@@ -1,0 +1,92 @@
+<?php
+
+namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Habitaciones
+ *
+ * @ORM\Table(name="habitaciones", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_nombre_id_sala", columns={"nombre", "id_sala"})}, indexes={@ORM\Index(name="idx_fk_habitaciones_id_sala", columns={"id_sala"})})
+ * @ORM\Entity
+ */
+class Habitaciones
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_habitacion", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idHabitacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
+     */
+    private $nombre;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="sexo", type="boolean", nullable=false)
+     */
+    private $sexo;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="edad_desde", type="boolean", nullable=false)
+     */
+    private $edadDesde = '0';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="edad_hasta", type="boolean", nullable=false)
+     */
+    private $edadHasta = '255';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo_edad", type="string", length=1, nullable=false)
+     */
+    private $tipoEdad;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cant_camas", type="smallint", nullable=false)
+     */
+    private $cantCamas;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     */
+    private $baja = '0';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=false)
+     */
+    private $fechaModificacion = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \Salas
+     *
+     * @ORM\ManyToOne(targetEntity="Salas")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_sala", referencedColumnName="id_sala")
+     * })
+     */
+    private $idSala;
+
+
+}
+

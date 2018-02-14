@@ -26,7 +26,11 @@ let languageOptions = [
     
   { title: 'bash',
     short: 'bash',
-    value: 'bash' }
+    value: 'bash' },
+    
+  { title: 'vb6',
+    short: 'vb6',
+    value: 'vb6' }
 ];
 
 let defaultLanguage = languageOptions[0];

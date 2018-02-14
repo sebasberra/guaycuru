@@ -72,6 +72,33 @@ $ curl http://localhost:8004/habitaciones/ver/183/guardia/aislados.json
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/ver/183/guardia/aislados.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "GET", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -147,6 +174,33 @@ $ curl $(echo "http://localhost:8004/habitaciones/ver/121/cim iii/cim iii.json" 
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/ver/121/cim iii/cim iii.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "GET", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -219,6 +273,33 @@ $ curl http://localhost:8004/habitaciones/ver/72/obstetricia/anexo.xml
         .htmlspecialchars($response);
 
 ?>
+```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/ver/72/obstetricia/anexo.xml"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "GET", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.responseText, , sUrl
 ```
 #### Ejemplo Response
 
@@ -333,7 +414,33 @@ curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo/2/
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
 
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/modificar/72/obstetricia/anexo/2/12/55/1/0.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "PUT", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 204 No Content
@@ -407,6 +514,33 @@ curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo1/2
         .htmlspecialchars($response);
 
 ?>
+```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/modificar/72/obstetricia/anexo1/2/12/55/1/0.xml"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "PUT", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
 ```
 #### Ejemplo Response
 
@@ -514,6 +648,33 @@ curl -X POST $(echo "http://localhost:8004/habitaciones/nueva/71/sala 1  uti/hab
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/nueva/71/sala 1  uti/hab d/3/0/255/6/0.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "POST", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 201 Created
@@ -592,6 +753,33 @@ curl -X POST http://localhost:8004/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.
         .htmlspecialchars($response);
 
 ?>
+```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+	
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.xml"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "POST", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
 ```
 #### Ejemplo Response
 
@@ -678,6 +866,33 @@ $ curl -X DELETE http://localhost:8004/habitaciones/eliminar/121/ucip/ucip.json
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/eliminar/121/ucip/ucip.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "DELETE", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -745,6 +960,33 @@ $ curl -X DELETE $(echo "http://localhost:8004/habitaciones/eliminar/5/sala- ped
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/habitaciones/eliminar/5/sala- pediatria/hab de prueba.xml"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "DELETE", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 404 Error
@@ -753,7 +995,7 @@ $ curl -X DELETE $(echo "http://localhost:8004/habitaciones/eliminar/5/sala- ped
 {
 <?xml version="1.0" ?>
 <response>
-	<Error>La habitación: hab de prueba de la sala: sala- pediatria no fue encontrada en el efector: 5</Error>
+	<Error>La habitación: [hab de prueba] de la sala: [sala- pediatria] no fue encontrada en el efector: [5]</Error>
 </response>
 
 ```

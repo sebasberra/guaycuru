@@ -69,6 +69,33 @@ $ curl http://localhost:8004/salas/ver/267/obstetricia.json
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/salas/ver/267/obstetricia.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "GET", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'respuesta
+	MsgBox xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 200 OK
@@ -144,13 +171,40 @@ $ curl $(echo "http://localhost:8004/salas/ver/5/sala que no existe.json" | sed 
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/salas/ver/5/sala que no existe.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "GET", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response
 
 >HTTP 404 Error
 
 ```json 
 {
-	"Error": "La sala: sala que no existe no fue encontrada en el efector: 5"
+	"Error": "La sala: [sala que no existe] no fue encontrada en el efector: [5]"
 }
 ```
 
@@ -207,6 +261,33 @@ $ curl $(echo "http://localhost:8004/salas/ver/292/medicina general mujeres.xml"
         .htmlspecialchars($response);
 
 ?>
+```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/salas/ver/292/medicina general mujeres.xml"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "GET", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.responseText, , sUrl
 ```
 #### Ejemplo Response
 
@@ -319,6 +400,33 @@ curl -X PUT http://localhost:8004/salas/modificar/167/emergencias/null/null/null
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/salas/modificar/167/emergencias/null/null/null/false/false.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "PUT", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response (modificar sala)
 
 >HTTP 204 No Content
@@ -411,6 +519,33 @@ curl -X POST http://localhost:8004/salas/nueva/63/TRAUMATOLOGIA/null/null/null/f
 
 ?>
 ```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/salas/nueva/63/TRAUMATOLOGIA/null/null/null/false/false.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "POST", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
+```
 #### Ejemplo Response (agregar sala)
 
 >HTTP 201 Created
@@ -488,6 +623,33 @@ $ curl -X DELETE http://localhost:8004/salas/eliminar/63/TRAUMATOLOGIA.json
         .$response;
 
 ?>
+```
+```sql
+/* Ejemplo no disponible */
+```
+```bash
+# Ver ejemplo cUrl
+```
+```vb6
+	'Agregar la refencia Microsoft XML
+	Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+	'var
+	Dim sUrl As String
+
+	'URL
+	sUrl = "http://192.168.56.1:8005/salas/eliminar/63/TRAUMATOLOGIA.json"
+
+	'inicializa objeto http
+	Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+	'request sincrono
+	xmlhttp.open "DELETE", sUrl, False
+	xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	xmlhttp.send
+
+	'response
+	MsgBox xmlhttp.Status & " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
 ```
 #### Ejemplo Response (eliminar sala)
 

@@ -1,0 +1,134 @@
+<?php
+
+namespace Pruebas\DBHmi2GuaycuruCamasBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Efectores
+ *
+ * @ORM\Table(name="efectores", uniqueConstraints={@ORM\UniqueConstraint(name="idx_unique_claveestd", columns={"claveestd"})}, indexes={@ORM\Index(name="idx_fk_efectores_id_localidad", columns={"id_localidad"}), @ORM\Index(name="idx_fk_efectores_id_dependencia_adm", columns={"id_dependencia_adm"}), @ORM\Index(name="idx_fk_efectores_id_regimen_juridico", columns={"id_regimen_juridico"}), @ORM\Index(name="idx_fk_efectores_id_nodo", columns={"id_nodo"}), @ORM\Index(name="idx_fk_efectores_id_subnodo", columns={"id_subnodo"}), @ORM\Index(name="idx_fk_efectores_id_nivel_complejidad", columns={"id_nivel_complejidad"}), @ORM\Index(name="idx_clavesisa", columns={"clavesisa"})})
+ * @ORM\Entity
+ */
+class Efectores
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_efector", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idEfector;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_nodo", type="smallint", nullable=false)
+     */
+    private $idNodo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_subnodo", type="smallint", nullable=false)
+     */
+    private $idSubnodo;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="id_dependencia_adm", type="boolean", nullable=true)
+     */
+    private $idDependenciaAdm;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="id_regimen_juridico", type="boolean", nullable=false)
+     */
+    private $idRegimenJuridico;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="id_nivel_complejidad", type="boolean", nullable=false)
+     */
+    private $idNivelComplejidad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="claveestd", type="string", length=8, nullable=false)
+     */
+    private $claveestd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clavesisa", type="string", length=14, nullable=true)
+     */
+    private $clavesisa;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo_efector", type="string", length=1, nullable=true)
+     */
+    private $tipoEfector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_efector", type="string", length=255, nullable=false)
+     */
+    private $nomEfector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_red_efector", type="string", length=50, nullable=false)
+     */
+    private $nomRedEfector;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="nodo", type="boolean", nullable=false)
+     */
+    private $nodo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="subnodo", type="smallint", nullable=false)
+     */
+    private $subnodo;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="internacion", type="boolean", nullable=false)
+     */
+    private $internacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="baja", type="boolean", nullable=false)
+     */
+    private $baja;
+
+    /**
+     * @var \Localidades
+     *
+     * @ORM\ManyToOne(targetEntity="Localidades")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_localidad", referencedColumnName="id_localidad")
+     * })
+     */
+    private $idLocalidad;
+
+
+}
+

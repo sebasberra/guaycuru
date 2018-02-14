@@ -1,0 +1,511 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #333333;
+}
+
+#chart-container {
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+    top: 10px;
+    height: 420px;
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    overflow: auto;
+    text-align: center;
+}
+
+#chart-container table {
+    width: 100% !important;
+    margin: 0px !important;
+}
+
+.home-link {
+    margin-top: 20px;
+    margin-right: 20px;
+    float: right;
+}
+
+.home-link a {
+    font-size: 36px;
+    color: #000;
+    text-decoration: none;
+}
+
+.home-link a:hover {
+    text-shadow: 0 0 3px #000;
+}
+
+.home-link img {
+    border-radius: 24px;
+    vertical-align: bottom;
+    margin-left: 20px;
+}
+
+.home-link a:hover + img {
+    box-shadow: 0 1px 0 #ccc,
+                0 2px 0 #c9c9c9,
+                0 3px 0 #bbb,
+                0 4px 0 #b9b9b9,
+                0 5px 0 #aaa,
+                0 6px 1px rgba(0, 0, 0, .1),
+                0 0 5px rgba(0, 0, 0, .1),
+                0 1px 3px rgba(0, 0, 0, .3),
+                0 3px 5px rgba(0, 0, 0, .2),
+                0 5px 10px rgba(0, 0, 0, .25),
+                0 10px 10px rgba(0, 0, 0, .2),
+                0 20px 20px rgba(0, 0, 0, .15);
+    }
+
+table td {
+
+    background: transparent;
+    border-left: none;
+    border-right: none;                
+}
+
+
+/* estilos para nodos efector, sala, habitacion y cama */
+.orgchart .content {
+    border-radius: 0 0 0 0 !important;
+}
+
+
+/* efector */
+.orgchart .ri-orgchart-efector {
+    width: 280px;
+}
+
+.orgchart .ri-orgchart-efector .title {
+    background-color: #505d9e;
+}
+
+.orgchart .ri-orgchart-efector .content {
+    border-color: #505d9e;
+}
+
+/* sala */
+.orgchart .ri-orgchart-sala {
+    width: 180px;
+}
+
+.orgchart .ri-orgchart-sala .title {
+  background-color: #da706d;
+}
+
+.orgchart .ri-orgchart-sala .content {
+  border-color: #da706d;
+}
+
+.orgchart .ri-orgchart-sala-baja {
+    width: 180px;
+}
+
+.orgchart .ri-orgchart-sala-baja .title {
+  background-color: red;
+}
+
+.orgchart .ri-orgchart-sala-baja .content {
+  border-color: red;
+}
+
+/* servicio - sala */
+.orgchart .ri-orgchart-servicio-sala {
+    width: 200px;
+}
+
+.orgchart .ri-orgchart-servicio-sala-baja {
+    width: 200px;
+}
+
+.orgchart .ri-orgchart-servicio-sala .title {
+  background-color: #09e1ec;
+  border-color: #a1c5f3 !important;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-style: solid;
+  border-right-width: 1px;
+  color: #383838;
+}
+
+.orgchart .ri-orgchart-servicio-sala .content {
+  border-color: #a1c5f3;
+}
+
+.orgchart .ri-orgchart-servicio-sala-baja .title {
+  background-color: red;
+}
+
+.orgchart .ri-orgchart-servicio-sala-baja .content {
+  border-color: red;
+}
+
+/* efector_servicio */
+.orgchart .ri-orgchart-efector-servicio {
+    width: 200px;
+}
+
+
+.orgchart .ri-orgchart-efector-servicio .title {
+  background-color: black;
+  border-color: black !important;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-style: solid;
+  border-right-width: 1px;
+  color: white;
+}
+
+.orgchart .ri-orgchart-efector-servicio-baja {
+    width: 200px;
+}
+
+.orgchart .ri-orgchart-efector-servicio-baja .title {
+  background-color: red;
+}
+
+.orgchart .ri-orgchart-efector-servicio .content {
+  border-color: black;
+}
+
+.orgchart .ri-orgchart-efector-servicio-baja .content {
+  border-color: #a1c5f3;
+}
+
+
+
+/* habitacion */
+.orgchart .ri-orgchart-habitacion .title {
+  background-color: #d6ab6b;
+  color: #383838;
+}
+.orgchart .ri-orgchart-habitacion .content {
+  border-color: #d6ab6b;
+}
+
+.orgchart .ri-orgchart-habitacion-baja .title {
+  background-color: red;
+}
+.orgchart .ri-orgchart-habitacion-baja .content {
+  border-color: red;
+}
+
+/* camas */
+.orgchart .ri-orgchart-cama-baja .title {
+  background-color: red;
+}
+.orgchart .ri-orgchart-cama-baja .content {
+  border-color: red;
+}
+
+.orgchart .ri-orgchart-cama-libre .title {
+  background-color: #009933;
+}
+.orgchart .ri-orgchart-cama-libre .content {
+  border-color: #009933;
+}
+
+.orgchart .ri-orgchart-cama-ocupada .title {
+  background-color: #009933;
+}
+.orgchart .ri-orgchart-cama-ocupada .content {
+  border-color: #009933;
+}
+
+.orgchart .ri-orgchart-cama-fuera .title {
+  background-color: #009933;
+}
+.orgchart .ri-orgchart-cama-fuera .content {
+  border-color: #009933;
+}
+
+.orgchart .ri-orgchart-cama-default .title {
+  background-color: #009933;
+}
+.orgchart .ri-orgchart-cama-default .content {
+  border-color: #009933;
+}
+
+.orgchart .ri-orgchart-efector ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid #c78482;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    border-color: #505d9e;
+    background-color: #e2e1dd;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+}
+
+.orgchart .ri-orgchart-sala ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid #da706d;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #dec8c9;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+}
+
+.orgchart .ri-orgchart-sala-baja ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid red;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: red;
+    color: white;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+    font-weight: bold;
+}
+
+.orgchart .ri-orgchart-servicio-sala ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid #a1c5f3;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #b0f5f0;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+}
+
+.orgchart .ri-orgchart-servicio-sala-baja ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid red;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: red;
+    color: white;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+    font-weight: bold;
+    
+}
+
+.orgchart .ri-orgchart-efector-servicio ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid black;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: darkgray;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+    color: black;
+    
+}
+
+.orgchart .ri-orgchart-efector-servicio-baja ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid red;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: red;
+    color: white;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+    font-weight: bold;
+}
+
+.orgchart .ri-orgchart-habitacion ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid #d6ab6b;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #e8e2da;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+}
+
+.orgchart .ri-orgchart-habitacion-baja ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid red;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: red;
+    color: white;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+    font-weight: bold;
+    
+}
+
+.orgchart .ri-orgchart-cama-baja ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid red;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: red;
+    color: white;
+    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+    font-weight: bold;
+    
+}
+
+.orgchart .ri-orgchart-cama-libre ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid #009933;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #c5d6c9;
+    
+    padding-top: 2px;
+    padding-bottom: 2px;
+    
+}
+
+.orgchart .ri-orgchart-cama-ocupada ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid #009933;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #e0c3dc;
+    
+    padding-top: 2px;
+    padding-bottom: 2px;
+    
+}
+
+.orgchart .ri-orgchart-cama-fuera ul {
+    
+    list-style-type: none;
+    
+    border: 1px solid #009933;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #f5fb9e;
+    
+    padding-top: 2px;
+    padding-bottom: 2px;
+    
+}
+
+.orgchart .ri-orgchart-cama-default ul {
+    
+    list-style-type: none;
+    
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    
+    padding-top: 2px;
+    padding-bottom: 2px;
+    
+}
+
+/* Se usa para el full screen del chart*/
+
+.buttonFullScreenChart {
+    height: 30px;
+    width: 30px !important;
+    margin-left: 10px !important;
+
+    margin-left: 10px !important;
+    margin-top: 10px !important;
+    z-index: 9999 !important;
+    background-color: #108a97 !important;
+    color: white;
+    border: 0px;
+    opacity: 0.1;
+
+    -webkit-transition: all 8s ease;
+    -moz-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    -ms-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+
+.buttonFullScreenChart:hover {
+    opacity: 1;
+
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    -ms-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+
+.opacityFull{
+    opacity: 0.6;
+}
+
+.buttonFullScreenContainer {
+    z-index: 9999;
+    position: absolute;
+    margin-left: 10px;
+}
+
+.fullScreen {
+    HEIGHT: 100% !important;
+    WIDTH: 100% !important;
+    POSITION: fixed !important;
+    BACKGROUND-COLOR: rgb(70, 70, 70) !important;
+    Z-INDEX: 9999 !important;
+    top: 0px !important;
+    left: 0px !important;
+    right: 0px !important;
+    border: 0px solid #aaa !important;
+}
+
+.orgcgharImage {
+    background-image: none;
+}
+
+/* Fin de css para chart */

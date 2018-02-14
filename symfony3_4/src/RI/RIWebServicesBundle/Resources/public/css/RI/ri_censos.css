@@ -1,0 +1,78 @@
+/* botones del form de censos diarios */
+[name=censos_diarios_salas] button,[name=censos_diarios_servicios] button{
+    min-width: 3% !important;
+    width: initial !important;
+}
+
+#censos_diarios_salas_ver, #censos_diarios_servicios_ver {
+    min-width: 7% !important;
+    width: initial !important;
+}
+
+#censos_diarios_servicios_guardar, #censos_diarios_servicios_eliminar {
+    min-width: 14% !important;
+    width: initial !important;
+}
+
+#censos_diarios_salas_guardar ,  #censos_diarios_salas_eliminar, #censos_diarios_salas_validar, #censos_diarios_servicios_validar{
+    min-width: 10% !important;
+    width: initial !important;
+}
+
+#censos_diarios_ver_avanzar, #censos_diarios_salas_eliminar, #censos_diarios_servicios_eliminar{
+    margin-right: 4%;
+}
+
+.ri-table-censo{
+    width: 100% !important;
+    margin: 15px 0px !important;
+}
+
+.ri-tabla-censo-titulo {
+
+    border: 1px solid #dddddd;
+    text-align: center;
+    background-color: #f9f9f9 !important;
+    color: black;
+    font-size: 90%;    
+}
+
+.ri-tabla-censo-titulo-vista {
+
+    border: 1px solid #dddddd;
+    text-align: center;
+    background-color: #f9f9f9 !important;
+    color: black;
+    font-size: 120%;    
+}
+
+.ri-tabla-censo-titulo-fecha {
+
+    border: 1px solid #dddddd;
+    text-align: center;
+    background-color: #f9f9f9 !important;
+    color: black;
+    font-size: 90%;    
+}
+
+.ri-tabla-censo-lista-icon {
+    text-align: center !important;
+}
+
+.ri-tabla-censo-lista-info {
+    /* clase para agregar con javascript el icono */
+}
+
+.ri-tabla-censo-lista-info-mas {
+    /* clase para agregar con javascript el icono */
+}
+
+.ri-option-censo-tipo-informe {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.ri-button-censo-resumen-ver {
+    width: initial !important;
+}
+
