@@ -21,13 +21,13 @@ Response Devuelve el código de estado HTTP: 200(OK - Información de sala) o 40
 #### Ejemplo Request JSON (ver sala)
 
 ```curl
-$ curl http://localhost:8004/salas/ver/267/obstetricia.json
+$ curl http://localhost:8000/salas/ver/267/obstetricia.json
 ```
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/salas/ver';
+	$get = 'http://localhost:8000/salas/ver';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -83,7 +83,7 @@ $ curl http://localhost:8004/salas/ver/267/obstetricia.json
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/salas/ver/267/obstetricia.json"
+	sUrl = "http://192.168.56.1:8000/salas/ver/267/obstetricia.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -120,13 +120,13 @@ $ curl http://localhost:8004/salas/ver/267/obstetricia.json
 #### Ejemplo Request JSON con espacios escapados (ver sala que no existe)
 
 ```curl
-$ curl $(echo "http://localhost:8004/salas/ver/5/sala que no existe.json" | sed 's/ /%20/g' )
+$ curl $(echo "http://localhost:8000/salas/ver/5/sala que no existe.json" | sed 's/ /%20/g' )
 ```
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/salas/ver';
+	$get = 'http://localhost:8000/salas/ver';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -185,7 +185,7 @@ $ curl $(echo "http://localhost:8004/salas/ver/5/sala que no existe.json" | sed 
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/salas/ver/5/sala que no existe.json"
+	sUrl = "http://192.168.56.1:8000/salas/ver/5/sala que no existe.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -211,13 +211,13 @@ $ curl $(echo "http://localhost:8004/salas/ver/5/sala que no existe.json" | sed 
 #### Ejemplo Request XML con espacios escapados (ver sala)
 
 ```curl
-$ curl $(echo "http://localhost:8004/salas/ver/292/medicina general mujeres.xml" | sed 's/ /%20/g' )
+$ curl $(echo "http://localhost:8000/salas/ver/292/medicina general mujeres.xml" | sed 's/ /%20/g' )
 ```
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/salas/ver';
+	$get = 'http://localhost:8000/salas/ver';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -276,7 +276,7 @@ $ curl $(echo "http://localhost:8004/salas/ver/292/medicina general mujeres.xml"
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/salas/ver/292/medicina general mujeres.xml"
+	sUrl = "http://192.168.56.1:8000/salas/ver/292/medicina general mujeres.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -336,13 +336,13 @@ Devuelve el código de estado HTTP: 204 (sala actualizada) o 404 (error de actua
 #### Ejemplo Request JSON (modificar sala)
 
 ```curl
-curl -X PUT http://localhost:8004/salas/modificar/167/emergencias/null/null/null/false/false.json
+curl -X PUT http://localhost:8000/salas/modificar/167/emergencias/null/null/null/false/false.json
 ```
 ```php
 <?php
 
 	// variables 
-	$put = 'http://localhost:8004/salas/modificar';
+	$put = 'http://localhost:8000/salas/modificar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -414,7 +414,7 @@ curl -X PUT http://localhost:8004/salas/modificar/167/emergencias/null/null/null
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/salas/modificar/167/emergencias/null/null/null/false/false.json"
+	sUrl = "http://192.168.56.1:8000/salas/modificar/167/emergencias/null/null/null/false/false.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -455,13 +455,13 @@ Response Devuelve el código de estado HTTP: 201 (sala nueva ingresada) o 404 (e
 #### Ejemplo Request (agregar sala)
 
 ```curl
-curl -X POST http://localhost:8004/salas/nueva/63/TRAUMATOLOGIA/null/null/null/false/false.json
+curl -X POST http://localhost:8000/salas/nueva/63/TRAUMATOLOGIA/null/null/null/false/false.json
 ```
 ```php
 <?php
 
 	// variables 
-	$post = 'http://localhost:8004/salas/nueva';
+	$post = 'http://localhost:8000/salas/nueva';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -533,7 +533,7 @@ curl -X POST http://localhost:8004/salas/nueva/63/TRAUMATOLOGIA/null/null/null/f
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/salas/nueva/63/TRAUMATOLOGIA/null/null/null/false/false.json"
+	sUrl = "http://192.168.56.1:8000/salas/nueva/63/TRAUMATOLOGIA/null/null/null/false/false.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -574,13 +574,13 @@ Devuelve el código de estado HTTP:200 (sala eliminada) o 404 (sala no encontrad
 #### Ejemplo Request (eliminar sala)
 
 ```curl
-$ curl -X DELETE http://localhost:8004/salas/eliminar/63/TRAUMATOLOGIA.json
+$ curl -X DELETE http://localhost:8000/salas/eliminar/63/TRAUMATOLOGIA.json
 ```
 ```php
 <?php
 
 	// variables 
-	$delete = 'http://localhost:8004/salas/eliminar';
+	$delete = 'http://localhost:8000/salas/eliminar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -638,7 +638,7 @@ $ curl -X DELETE http://localhost:8004/salas/eliminar/63/TRAUMATOLOGIA.json
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/salas/eliminar/63/TRAUMATOLOGIA.json"
+	sUrl = "http://192.168.56.1:8000/salas/eliminar/63/TRAUMATOLOGIA.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP

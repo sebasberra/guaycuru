@@ -220,7 +220,7 @@ $ sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/" confedilicia.dump >confedilicia.csv
 ```
 #### Ejemplo Request (inicialización/resincronización)
 ```curl
-$ curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8004/sync.json
+$ curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8000/sync.json
 ```
 ```bash
 # ver ejemplo cUrl
@@ -266,7 +266,7 @@ $ curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-
 mysql -uroot evaperon_hmi2_20170912 <informe_confedilicia.sql | sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/" >confedilicia.csv
 
 # Genera una peticion(Request) POST con el archivo "confedilicia.csv" como "BODY"
-curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8004/sync.json 
+curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8000/sync.json 
 ```
 ```curl
 # ver ejemplo bash

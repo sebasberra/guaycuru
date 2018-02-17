@@ -10,7 +10,1004 @@
     <link href='css/railscasts.css' rel='stylesheet' />
   </head>
   <body>
-    <!--START--><div id='app'></div><!--STOP-->
+    <!--START--><div id='app'><div class="container unlimiter" data-reactroot="" data-reactid="1" data-react-checksum="-408466761"><div class="fixed-top fixed-right space-left16" data-reactid="2"><div class="fill-light col6 pin-right" data-reactid="3"></div></div><div class="space-top5 scroll-styled overflow-auto pad1 width16 sidebar fixed-left fill-dark dark" data-reactid="4"><div class="pad0x small" data-reactid="5"><div class="small pad0x quiet space-top1" data-reactid="6">Introducción</div><a href="#introducción-1" class="line-height15 pad0x pad00y quiet block " data-reactid="7">Introducción</a><div class="small pad0x quiet space-top1" data-reactid="8">Camas</div><a href="#alta-baja-y-modificación-de-camas" class="line-height15 pad0x pad00y quiet block " data-reactid="9">Alta, baja y modificación de Camas</a><div class="small pad0x quiet space-top1" data-reactid="10">Habitaciones</div><a href="#habitaciones-1" class="line-height15 pad0x pad00y quiet block " data-reactid="11">Habitaciones</a><div class="small pad0x quiet space-top1" data-reactid="12">Salas</div><a href="#salas-1" class="line-height15 pad0x pad00y quiet block " data-reactid="13">Salas</a><div class="small pad0x quiet space-top1" data-reactid="14">Sincronización</div><a href="#enviar-informe-completo" class="line-height15 pad0x pad00y quiet block " data-reactid="15">Enviar informe completo</a></div></div><div class="space-left16" data-reactid="16"><div class="" data-reactid="17"><div class="clearfix" data-reactid="18"><div data-title="Introducción" class="keyline-top section contain clearfix " data-reactid="19"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="20"><h2 id="introducción-1">Introducción</h2>
+<p>Bienvenido a la documentación para manejo de <strong>Web Services para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe</strong>. Este tutorial tiene una guía de ejemplos de como utilizar los servicios web para mantener la información en línea del estado de las camas de un efector.</p>
+</div></div><div data-title="Alta, baja y modificación de Camas" class="keyline-top section contain clearfix " data-reactid="21"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="22"><h2 id="alta-baja-y-modificación-de-camas">Alta, baja y modificación de Camas</h2>
+<p>Conjunto de WS para actualizar el estado de las camas de un efector en la base centralizada.</p>
+</div></div><div data-title="Ver cama" class="keyline-top section contain clearfix " data-reactid="23"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="24"><h3 id="ver-cama">Ver cama</h3>
+<p>Obtiene los datos de la cama</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_cama</code></td>
+<td>Nombre único de cama en el efector</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 200 (OK - Información de cama) o 404 (cama no encontrada)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="25"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>/camas/ver/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_cama}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-ver-cama">Ejemplo Request JSON (ver cama)</h4>
+<pre class='hljs'>$ curl http://localhost:8000/camas/ver/121/HD4.json</pre>
+<h4 id="ejemplo-response">Ejemplo Response</h4>
+<pre class='hljs'>{
+	<span class="hljs-attr">"idEfector"</span>:<span class="hljs-number">121</span>,
+	<span class="hljs-attr">"nomEfector"</span>:<span class="hljs-string">"HOSP DE NIÑOS DR ORLANDO ALASSIA"</span>,
+	<span class="hljs-attr">"nombre"</span>:<span class="hljs-string">"HD4"</span>,
+	<span class="hljs-attr">"abreviatura"</span>:<span class="hljs-string">"CPO"</span>,
+	<span class="hljs-attr">"categoriaEdad"</span>:<span class="hljs-string">"PED"</span>,
+	<span class="hljs-attr">"clasificacionCama"</span>:<span class="hljs-string">"CRITICAS PEDIATRICAS C/OXIGENO"</span>,
+	<span class="hljs-attr">"estado"</span>:<span class="hljs-string">"F"</span>,
+	<span class="hljs-attr">"rotativa"</span>:<span class="hljs-literal">false</span>,
+	<span class="hljs-attr">"baja"</span>:<span class="hljs-literal">false</span>
+}</pre>
+<h4 id="ejemplo-request-json-con-espacios-escapados-ver-cama">Ejemplo Request JSON con espacios escapados (ver cama)</h4>
+<pre class='hljs'>$ curl $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"http://localhost:8000/camas/ver/63/cgcq-hab2-cama 2.json"</span> | sed <span class="hljs-string">'s/ /%20/g'</span> )</pre>
+<h4 id="ejemplo-response-1">Ejemplo Response</h4>
+<pre class='hljs'>{
+	<span class="hljs-attr">"idEfector"</span>: <span class="hljs-number">63</span>,
+	<span class="hljs-attr">"nomEfector"</span>: <span class="hljs-string">"HOSP PROTOMEDICO MANUEL RODRIGUEZ"</span>,
+	<span class="hljs-attr">"nombre"</span>: <span class="hljs-string">"CGCQ-HAB2-CAMA 2"</span>,
+	<span class="hljs-attr">"abreviatura"</span>: <span class="hljs-string">"IGAO"</span>,
+	<span class="hljs-attr">"categoriaEdad"</span>: <span class="hljs-string">"ADU"</span>,
+	<span class="hljs-attr">"clasificacionCama"</span>: <span class="hljs-string">"INTERNACION GRAL ADULTOS C/OXIGENO"</span>,
+	<span class="hljs-attr">"estado"</span>: <span class="hljs-string">"L"</span>,
+	<span class="hljs-attr">"rotativa"</span>: <span class="hljs-literal">false</span>,
+	<span class="hljs-attr">"baja"</span>: <span class="hljs-literal">false</span>
+}</pre>
+<h4 id="ejemplo-request-xml-ver-cama">Ejemplo Request XML (ver cama)</h4>
+<pre class='hljs'>$ curl http://localhost:8000/camas/ver/121/HD4.xml</pre>
+<h4 id="ejemplo-response-2">Ejemplo Response</h4>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">idEfector</span>&gt;</span>121<span class="hljs-tag">&lt;/<span class="hljs-name">idEfector</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">nomEfector</span>&gt;</span>HOSP DE NIÑOS DR ORLANDO ALASSIA<span class="hljs-tag">&lt;/<span class="hljs-name">nomEfector</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">nombre</span>&gt;</span>HD4<span class="hljs-tag">&lt;/<span class="hljs-name">nombre</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">abreviatura</span>&gt;</span>CPO<span class="hljs-tag">&lt;/<span class="hljs-name">abreviatura</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">categoriaEdad</span>&gt;</span>PED<span class="hljs-tag">&lt;/<span class="hljs-name">categoriaEdad</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">clasificacionCama</span>&gt;</span>CRITICAS PEDIATRICAS C/OXIGENO<span class="hljs-tag">&lt;/<span class="hljs-name">clasificacionCama</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">estado</span>&gt;</span>F<span class="hljs-tag">&lt;/<span class="hljs-name">estado</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">rotativa</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">rotativa</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">baja</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">baja</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Modificar cama" class="keyline-top section contain clearfix " data-reactid="26"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="27"><h3 id="modificar-cama">Modificar cama</h3>
+<p>Modificar datos de la cama</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre de la sala del efector</td>
+</tr>
+<tr>
+<td><code>nombre_habitacion</code></td>
+<td>Nombre de la habitación donde está la cama</td>
+</tr>
+<tr>
+<td><code>nombre_cama</code></td>
+<td>(Nombre único de cama en el efector</td>
+</tr>
+<tr>
+<td><code>id_clasificacion_cama</code></td>
+<td>ID de clasificación de cama. Ver tabla clasificaciones_camas</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td>L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada</td>
+</tr>
+<tr>
+<td><code>rotativa</code></td>
+<td>TRUE o FALSE</td>
+</tr>
+<tr>
+<td><code>baja</code></td>
+<td>TRUE o FALSE</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 204 (cama actualizada)  o 404 (error de actualización)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="28"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>PUT</div>
+      <div class='pad0 code small endpoint-url'>/camas/modificar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{nombre_habitacion}</span>/<span class="strong">{nombre_cama}</span>/<span class="strong">{id_clasificacion_cama}</span>/<span class="strong">{estado}</span>/<span class="strong">{rotativa}</span>/<span class="strong">{baja}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-con-espacios-escapados-modificar-cama">Ejemplo Request JSON con espacios escapados (modificar cama)</h4>
+<pre class='hljs'>$ curl -X PUT $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"http://localhost:8000/camas/modificar/63/clinica medica/hab 5/cm-hab5-cama 2/5/L/false/false.json"</span> | sed <span class="hljs-string">'s/ /%20/g'</span> )</pre>
+<h4 id="ejemplo-response-3">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP: 204 No Content</p>
+</blockquote>
+</div></div><div data-title="Agregar cama" class="keyline-top section contain clearfix " data-reactid="29"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="30"><h3 id="agregar-cama">Agregar cama</h3>
+<p>Agregar una cama</p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre de la sala del efector</td>
+</tr>
+<tr>
+<td><code>nombre_habitacion</code></td>
+<td>Nombre de la habitación donde está la cama</td>
+</tr>
+<tr>
+<td><code>nombre_cama</code></td>
+<td>(Nombre único de cama en el efector</td>
+</tr>
+<tr>
+<td><code>id_clasificacion_cama</code></td>
+<td>ID de clasificación de cama. Ver tabla clasificaciones_camas</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td>L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada</td>
+</tr>
+<tr>
+<td><code>rotativa</code></td>
+<td>TRUE o FALSE</td>
+</tr>
+<tr>
+<td><code>baja</code></td>
+<td>TRUE o FALSE</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 201 (cama nueva ingresada) o 404 (error al agregar la cama)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="31"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>POST</div>
+      <div class='pad0 code small endpoint-url'>/camas/nueva/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{nombre_habitacion}</span>/<span class="strong">{nombre_cama}</span>/<span class="strong">{id_clasificacion_cama}</span>/<span class="strong">{estado}</span>/<span class="strong">{rotativa}</span>/<span class="strong">{baja}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-agregar-cama">Ejemplo Request JSON (agregar cama)</h4>
+<pre class='hljs'>curl -X POST http://localhost:8000/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/<span class="hljs-literal">false</span>/false.json</pre>
+<h4 id="ejemplo-response-4">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 201 Created</p>
+</blockquote>
+<pre class='hljs'>{
+  <span class="hljs-attr">"La cama: t-hab1-cama3 fue ingresada al efector: SAMCO SAN JUSTO en la sala: tocoginecologia y la habitación: hab1"</span>
+}</pre>
+<h4 id="ejemplo-request-xml-agregar-cama-ya-existente">Ejemplo Request XML (agregar cama ya existente)</h4>
+<blockquote>
+<p>Suponiendo que el ejemplo anterior (Request JSON) agregó la cama con éxito, el siguiente ejemplo deberá responder con código 404</p>
+</blockquote>
+<pre class='hljs'>curl -X POST http://localhost:8000/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/<span class="hljs-literal">false</span>/false.xml</pre>
+<h4 id="ejemplo-response-5">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Not Found</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+		Error&gt;(1) El nombre de cama ya existe en el efector.<span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Eliminar cama" class="keyline-top section contain clearfix " data-reactid="32"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="33"><h3 id="eliminar-cama">Eliminar cama</h3>
+<p>Eliminar una cama</p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_cama</code></td>
+<td>(Nombre único de cama en el efector</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 200 (cama eliminada) o 404 (cama no encontrada o error)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="34"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>DELETE</div>
+      <div class='pad0 code small endpoint-url'>/camas/eliminar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_cama}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-eliminar-cama">Ejemplo Request JSON (eliminar cama)</h4>
+<pre class='hljs'>curl -X DELETE http://localhost:8000/camas/eliminar/72/cm-h01-1.json</pre>
+<h4 id="ejemplo-response-6">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'>{
+ <span class="hljs-attr">"La cama: cm-h01-1 fue eliminada del efector: HOSP DR J B ITURRASPE"</span>
+}</pre>
+<h4 id="ejemplo-request-xml-eliminar-cama-no-existente">Ejemplo Request XML (eliminar cama no existente)</h4>
+<pre class='hljs'>curl -X DELETE http://localhost:8000/camas/eliminar/72/cama_no_existe.xml</pre>
+<h4 id="ejemplo-response-7">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Error</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">Error</span>&gt;</span>El nombre de cama: cama_no_existe no se encuentra en el efector: 72<span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Liberar cama" class="keyline-top section contain clearfix " data-reactid="35"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="36"><h3 id="liberar-cama">Liberar cama</h3>
+<p>Liberar o desocupar una cama</p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_cama</code></td>
+<td>(Nombre único de cama en el efector</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 204 (cama liberada) o 404 (cama no encontrada o error)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="37"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>PATCH</div>
+      <div class='pad0 code small endpoint-url'>/camas/liberar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_cama}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-liberar-cama">Ejemplo Request JSON (liberar cama)</h4>
+<pre class='hljs'>curl -X PATCH http://localhost:8000/camas/liberar/71/s1u-ua-4.json</pre>
+<h4 id="ejemplo-response-8">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 204 No Content</p>
+</blockquote>
+<h4 id="ejemplo-request-xml-liberar-cama-libre">Ejemplo Request XML (liberar cama libre)</h4>
+<pre class='hljs'>curl -X PATCH http://localhost:8000/camas/liberar/71/s1u-ua-4.xml</pre>
+<h4 id="ejemplo-response-9">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Error</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">Error</span>&gt;</span>La cama s1u-ua-4 ya está libre<span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Ocupar cama" class="keyline-top section contain clearfix " data-reactid="38"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="39"><h3 id="ocupar-cama">Ocupar cama</h3>
+<p>Ocupar una cama</p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_cama</code></td>
+<td>(Nombre único de cama en el efector</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 204 (cama ocupada) o 404 (cama no encontrada o error)</p>
+<pre><code>    'Agregar la refencia Microsoft XML
+    Dim xmlhttp As MSXML2.ServerXMLHTTP
+
+    'var
+    Dim sUrl As String
+
+    'URL
+    sUrl = "http://192.168.56.1:8000/camas/ocupar/71/s1u-ua-4.xml"
+
+    'inicializa objeto http
+    Set xmlhttp = New MSXML2.ServerXMLHTTP
+
+    'request sincrono
+    xmlhttp.open "PATCH", sUrl, False
+    xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+    xmlhttp.send
+
+    'response
+    MsgBox xmlhttp.Status &#x26; " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
+</code></pre>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="40"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>PATCH</div>
+      <div class='pad0 code small endpoint-url'>/camas/ocupar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_cama}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-ocupar-cama">Ejemplo Request JSON (ocupar cama)</h4>
+<pre class='hljs'>curl -X PATCH http://localhost:8000/camas/ocupar/71/s1u-ua-4.json</pre>
+<h4 id="ejemplo-response-10">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 204 No Content</p>
+</blockquote>
+<h4 id="ejemplo-request-xml-ocupar-cama-ya-ocupada">Ejemplo Request XML (ocupar cama ya ocupada)</h4>
+<pre class='hljs'>curl -X PATCH http://localhost:8000/camas/ocupar/71/s1u-ua-4.xml</pre>
+<h4 id="ejemplo-response-11">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Error</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">Error</span>&gt;</span>La cama s1u-ua-4 está ocupada<span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Habitaciones" class="keyline-top section contain clearfix " data-reactid="41"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="42"><h2 id="habitaciones-1">Habitaciones</h2>
+<p>Librería de Web Services para ABM de la Configuración Edilicia Hospitalaria Prov. de Santa Fe</p>
+</div></div><div data-title="Ver habitación" class="keyline-top section contain clearfix " data-reactid="43"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="44"><h3 id="ver-habitación">Ver habitación</h3>
+<p>Obtiene los datos de la habitación</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>nombre_habitacion</code></td>
+<td>Nombre único de habitación dentro de la sala</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 200(OK - Información de habitación) o 404 (habitación no encontrada)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="45"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>/habitaciones/ver/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{nombre_habitacion}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-ver-habitación">Ejemplo Request JSON (ver habitación)</h4>
+<pre class='hljs'>$ curl http://localhost:8000/habitaciones/ver/183/guardia/aislados.json</pre>
+<h4 id="ejemplo-response-12">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'>{
+	<span class="hljs-attr">"idEfector"</span>: <span class="hljs-number">183</span>,
+	<span class="hljs-attr">"nomEfector"</span>: <span class="hljs-string">"HOSP PROVINCIAL CENTENARIO"</span>,
+	<span class="hljs-attr">"nombre_sala"</span>: <span class="hljs-string">"GUARDIA"</span>,
+	<span class="hljs-attr">"nombre_habitacion"</span>: <span class="hljs-string">"AISLADOS"</span>,
+	<span class="hljs-attr">"sexo"</span>: <span class="hljs-number">3</span>,
+	<span class="hljs-attr">"edadDesde"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"edadHasta"</span>: <span class="hljs-number">255</span>,
+	<span class="hljs-attr">"tipoEdad"</span>: <span class="hljs-string">"1"</span>,
+	<span class="hljs-attr">"cantCamas"</span>: <span class="hljs-number">2</span>,
+	<span class="hljs-attr">"baja"</span>: <span class="hljs-literal">false</span>
+}</pre>
+<h4 id="ejemplo-request-json-con-espacios-escapados-ver-habitación">Ejemplo Request JSON con espacios escapados (ver habitación)</h4>
+<pre class='hljs'>$ curl $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"http://localhost:8000/habitaciones/ver/121/cim iii/cim iii.json"</span> | sed <span class="hljs-string">'s/ /%20/g'</span> )</pre>
+<h4 id="ejemplo-response-13">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'>{
+	<span class="hljs-attr">"idEfector"</span>: <span class="hljs-number">121</span>,
+	<span class="hljs-attr">"nomEfector"</span>: <span class="hljs-string">"HOSP DE NIÑOS DR ORLANDO ALASSIA"</span>,
+	<span class="hljs-attr">"nombre_sala"</span>: <span class="hljs-string">"CIM III"</span>,
+	<span class="hljs-attr">"nombre_habitacion"</span>: <span class="hljs-string">"CIM III"</span>,
+	<span class="hljs-attr">"sexo"</span>: <span class="hljs-number">3</span>,
+	<span class="hljs-attr">"edadDesde"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"edadHasta"</span>: <span class="hljs-number">18</span>,
+	<span class="hljs-attr">"tipoEdad"</span>: <span class="hljs-string">"1"</span>,
+	<span class="hljs-attr">"cantCamas"</span>: <span class="hljs-number">30</span>,
+	<span class="hljs-attr">"baja"</span>: <span class="hljs-literal">false</span>
+}</pre>
+<h4 id="ejemplo-request-xml-ver-habitación">Ejemplo Request XML (ver habitación)</h4>
+<pre class='hljs'>$ curl http://localhost:8000/habitaciones/ver/72/obstetricia/anexo.xml</pre>
+<h4 id="ejemplo-response-14">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">idEfector</span>&gt;</span>72<span class="hljs-tag">&lt;/<span class="hljs-name">idEfector</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">nomEfector</span>&gt;</span>HOSP DR J B ITURRASPE<span class="hljs-tag">&lt;/<span class="hljs-name">nomEfector</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">nombre_sala</span>&gt;</span>OBSTETRICIA<span class="hljs-tag">&lt;/<span class="hljs-name">nombre_sala</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">nombre_habitacion</span>&gt;</span>ANEXO<span class="hljs-tag">&lt;/<span class="hljs-name">nombre_habitacion</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">sexo</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">sexo</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">edadDesde</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">edadDesde</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">edadHasta</span>&gt;</span>255<span class="hljs-tag">&lt;/<span class="hljs-name">edadHasta</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">tipoEdad</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">tipoEdad</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">cantCamas</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">cantCamas</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">baja</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">baja</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Modificar habitación" class="keyline-top section contain clearfix " data-reactid="46"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="47"><h3 id="modificar-habitación">Modificar habitación</h3>
+<p>Modificar datos de la habitación.
+NOTA: si la modificación es sobre el campo baja, entonces las camas asociadas a la habitación se actualizan junto con los valores de los campos cant_camas de la habitación y de la sala que contiene a ésta.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>nombre_habitacion</code></td>
+<td>Nombre único de habitación dentro de la sala</td>
+</tr>
+<tr>
+<td><code>sexo</code></td>
+<td>1=varones 2=mujeres 3=mixta</td>
+</tr>
+<tr>
+<td><code>edad_desde</code></td>
+<td>Edad desde permitida</td>
+</tr>
+<tr>
+<td><code>edad_hasta</code></td>
+<td>Edad hasta permitida</td>
+</tr>
+<tr>
+<td><code>tipo_edad</code></td>
+<td>1=años 2=meses 3=días 4=horas 5=minutos 6=se ignora</td>
+</tr>
+<tr>
+<td><code>baja</code></td>
+<td>0=habilitada; 1=baja</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 204 (habitación actualizada) o 404 (error de actualización)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="48"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>PUT</div>
+      <div class='pad0 code small endpoint-url'>/habitaciones/modificar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{nombre_habitacion}</span>/<span class="strong">{sexo}</span>/<span class="strong">{edad_desde}</span>/<span class="strong">{edad_hasta}</span>/<span class="strong">{tipo_edad}</span>/<span class="strong">{baja}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-modificar-habitación">Ejemplo Request JSON (modificar habitación)</h4>
+<pre class='hljs'>curl -X PUT http://localhost:8000/habitaciones/modificar/72/obstetricia/anexo/2/12/55/1/0.json</pre>
+<h4 id="ejemplo-response-15">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 204 No Content</p>
+</blockquote>
+<h4 id="ejemplo-request-xml-modificar-habitación-que-no-existe">Ejemplo Request XML (modificar habitación que no existe)</h4>
+<pre class='hljs'>curl -X PUT http://localhost:8000/habitaciones/modificar/72/obstetricia/anexo1/2/12/55/1/0.xml</pre>
+<h4 id="ejemplo-response-16">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Error</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">Error</span>&gt;</span>La habitación: anexo1 de la sala: obstetricia no fue encontrada en el efector: 72<span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Agregar habitación" class="keyline-top section contain clearfix " data-reactid="49"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="50"><h3 id="agregar-habitación">Agregar habitación</h3>
+<p>Agregar una habitación</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>nombre_habitacion</code></td>
+<td>Nombre único de habitación dentro de la sala</td>
+</tr>
+<tr>
+<td><code>sexo</code></td>
+<td>1=varones 2=mujeres 3=mixta</td>
+</tr>
+<tr>
+<td><code>edad_desde</code></td>
+<td>Edad desde permitida</td>
+</tr>
+<tr>
+<td><code>edad_hasta</code></td>
+<td>Edad hasta permitida</td>
+</tr>
+<tr>
+<td><code>tipo_edad</code></td>
+<td>1=años 2=meses 3=días 4=horas 5=minutos 6=se ignora</td>
+</tr>
+<tr>
+<td><code>baja</code></td>
+<td>0=habilitada; 1=baja</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 201 (habitación nueva ingresada) o 404 (error al agregar la habitación)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="51"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>POST</div>
+      <div class='pad0 code small endpoint-url'>/habitaciones/nueva/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{nombre_habitacion}</span>/<span class="strong">{sexo}</span>/<span class="strong">{edad_desde}</span>/<span class="strong">{edad_hasta}</span>/<span class="strong">{tipo_edad}</span>/<span class="strong">{baja}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-con-espacios-escapados-agregar-habitación">Ejemplo Request JSON con espacios escapados (agregar habitación)</h4>
+<pre class='hljs'>curl -X POST $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"http://localhost:8000/habitaciones/nueva/71/sala 1  uti/hab d/3/0/255/6/0.json"</span> | sed <span class="hljs-string">'s/ /%20/g'</span> )</pre>
+<h4 id="ejemplo-response-17">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 201 Created</p>
+</blockquote>
+<pre class='hljs'>{
+	<span class="hljs-attr">"La habitación: hab d fue ingresada en la sala: SALA 1 UTI del efector: HOSP DR JOSE MARIA CULLEN"</span>}</pre>
+<h4 id="ejemplo-request-xml-agregar-habitación-ya-existente">Ejemplo Request XML (agregar habitación ya existente)</h4>
+<pre class='hljs'>curl -X POST http://localhost:8000/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.xml</pre>
+<h4 id="ejemplo-response-18">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Error</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">Error</span>&gt;</span>(1) El nombre de habitación: "ucip", ya existe en la sala.<span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Eliminar habitación" class="keyline-top section contain clearfix " data-reactid="52"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="53"><h3 id="eliminar-habitación">Eliminar habitación</h3>
+<p>Eliminar una habitación.
+NOTA: si la habitación tiene camas asociadas a ella, entonces las camas y la habitación no se eliminan, sino que se marcan como dadas de baja.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>nombre_habitacion</code></td>
+<td>Nombre único de habitación dentro de la sala</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Response Devuelve el código de estado HTTP:200 (habitación eliminada) o 404 (habitación no encontrada o error)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="54"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>DELETE</div>
+      <div class='pad0 code small endpoint-url'>/habitaciones/eliminar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{nombre_habitacion}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-eliminar-habitación">Ejemplo Request JSON (eliminar habitación)</h4>
+<pre class='hljs'>$ curl -X DELETE http://localhost:8000/habitaciones/eliminar/121/ucip/ucip.json</pre>
+<h4 id="ejemplo-response-19">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'>{
+<span class="hljs-attr">"La habitación: ucip fue eliminada/baja de la sala: UCIP del efector: HOSP DE NIÑOS DR ORLANDO ALASSIA"</span>}</pre>
+<h4 id="ejemplo-request-xml-con-espacios-escapados-eliminar-habitación-que-no-existe">Ejemplo Request XML con espacios escapados (eliminar habitación que no existe)</h4>
+<pre class='hljs'>$ curl -X DELETE $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"http://localhost:8000/habitaciones/eliminar/5/sala- pediatria/hab de prueba.xml"</span> | sed <span class="hljs-string">'s/ /%20/g'</span> )</pre>
+<h4 id="ejemplo-response-20">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Error</p>
+</blockquote>
+<pre class='hljs'>{
+<span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">Error</span>&gt;</span>La habitación: [hab de prueba] de la sala: [sala- pediatria] no fue encontrada en el efector: [5]<span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Salas" class="keyline-top section contain clearfix " data-reactid="55"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="56"><h2 id="salas-1">Salas</h2>
+<p>Librería de Web Services para ABM de la Configuración Edilicia Hospitalaria Prov. de Santa Fe</p>
+</div></div><div data-title="Ver sala" class="keyline-top section contain clearfix " data-reactid="57"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="58"><h3 id="ver-sala">Ver sala</h3>
+<p>Obtiene los datos de la sala</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Response Devuelve el código de estado HTTP: 200(OK - Información de sala) o 404 (sala no encontrada)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="59"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>/salas/ver/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-ver-sala">Ejemplo Request JSON (ver sala)</h4>
+<pre class='hljs'>$ curl http://localhost:8000/salas/ver/267/obstetricia.json</pre>
+<h4 id="ejemplo-response-21">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'>{
+	<span class="hljs-attr">"idEfector"</span>: <span class="hljs-number">267</span>,
+	<span class="hljs-attr">"nomEfector"</span>: <span class="hljs-string">"SAMCO CORONDA"</span>,
+	<span class="hljs-attr">"idSala"</span>: <span class="hljs-number">267004</span>,
+	<span class="hljs-attr">"nroSala"</span>: <span class="hljs-number">4</span>,
+	<span class="hljs-attr">"nombre"</span>: <span class="hljs-string">"OBSTETRICIA"</span>,
+	<span class="hljs-attr">"areaCodServicio"</span>: <span class="hljs-literal">null</span>,
+	<span class="hljs-attr">"areaSector"</span>: <span class="hljs-literal">null</span>,
+	<span class="hljs-attr">"areaSubsector"</span>: <span class="hljs-literal">null</span>,
+	<span class="hljs-attr">"nomServicioEstadistica"</span>: <span class="hljs-literal">null</span>,
+	<span class="hljs-attr">"moverCamas"</span>: <span class="hljs-literal">false</span>,
+	<span class="hljs-attr">"cantCamas"</span>: <span class="hljs-number">3</span>,
+	<span class="hljs-attr">"baja"</span>: <span class="hljs-literal">false</span>
+}</pre>
+<h4 id="ejemplo-request-json-con-espacios-escapados-ver-sala-que-no-existe">Ejemplo Request JSON con espacios escapados (ver sala que no existe)</h4>
+<pre class='hljs'>$ curl $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"http://localhost:8000/salas/ver/5/sala que no existe.json"</span> | sed <span class="hljs-string">'s/ /%20/g'</span> )</pre>
+<h4 id="ejemplo-response-22">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 404 Error</p>
+</blockquote>
+<pre class='hljs'>{
+	<span class="hljs-attr">"Error"</span>: <span class="hljs-string">"La sala: [sala que no existe] no fue encontrada en el efector: [5]"</span>
+}</pre>
+<h4 id="ejemplo-request-xml-con-espacios-escapados-ver-sala">Ejemplo Request XML con espacios escapados (ver sala)</h4>
+<pre class='hljs'>$ curl $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"http://localhost:8000/salas/ver/292/medicina general mujeres.xml"</span> | sed <span class="hljs-string">'s/ /%20/g'</span> )</pre>
+<h4 id="ejemplo-response-23">Ejemplo Response</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">response</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">idEfector</span>&gt;</span>292<span class="hljs-tag">&lt;/<span class="hljs-name">idEfector</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">nomEfector</span>&gt;</span>SAMCO SAN JUSTO<span class="hljs-tag">&lt;/<span class="hljs-name">nomEfector</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">idSala</span>&gt;</span>292005<span class="hljs-tag">&lt;/<span class="hljs-name">idSala</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">nroSala</span>&gt;</span>5<span class="hljs-tag">&lt;/<span class="hljs-name">nroSala</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">nombre</span>&gt;</span>MEDICINA GENERAL MUJERES<span class="hljs-tag">&lt;/<span class="hljs-name">nombre</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">areaCodServicio</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">areaSector</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">areaSubsector</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">nomServicioEstadistica</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">moverCamas</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">moverCamas</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">cantCamas</span>&gt;</span>16<span class="hljs-tag">&lt;/<span class="hljs-name">cantCamas</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">baja</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">baja</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">response</span>&gt;</span></pre>
+</div></div><div data-title="Modificar sala" class="keyline-top section contain clearfix " data-reactid="60"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="61"><h3 id="modificar-sala">Modificar sala</h3>
+<p>Modificar datos de la sala
+NOTA: si la modificación es sobre el campo baja, entonces las habitaciones y sus camas asociadas se actualizan junto con los valores de los campos cant_camas de cada habitación, además del campo cant_camas de la sala.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>area_cod_servicio</code></td>
+<td>código de 3 dígitos del área SIPES</td>
+</tr>
+<tr>
+<td><code>area_sector</code></td>
+<td>campo sector correspondiente al área SIPES (1=varones; 2=mujeres; 3=mixto; >3 mixto estudios, talleres, etc)</td>
+</tr>
+<tr>
+<td><code>area_subsector</code></td>
+<td>subsector correspondiente al área SIPES (4=internación; 5=CE; 6=atención domiciliaria)</td>
+</tr>
+<tr>
+<td><code>mover_camas</code></td>
+<td>bandera para el sistema que indica si se permite mover camas entre las habitaciones de la misma sala. por ejemplo: las incubadoras</td>
+</tr>
+<tr>
+<td><code>baja</code></td>
+<td>0=habilitada; 1=baja</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP: 204 (sala actualizada) o 404 (error de actualización)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="62"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>PUT</div>
+      <div class='pad0 code small endpoint-url'>/salas/modificar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{area_cod_servicio}</span>/<span class="strong">{area_sector}</span>/<span class="strong">{area_subsector}</span>/<span class="strong">{mover_camas}</span>/<span class="strong">{baja}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-json-modificar-sala">Ejemplo Request JSON (modificar sala)</h4>
+<pre class='hljs'>curl -X PUT http://localhost:8000/salas/modificar/167/emergencias/null/null/null/<span class="hljs-literal">false</span>/false.json</pre>
+<h4 id="ejemplo-response-modificar-sala">Ejemplo Response (modificar sala)</h4>
+<blockquote>
+<p>HTTP 204 No Content</p>
+</blockquote>
+</div></div><div data-title="Agregar sala" class="keyline-top section contain clearfix " data-reactid="63"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="64"><h3 id="agregar-sala">Agregar sala</h3>
+<p>Agregar una sala.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>area_cod_servicio</code></td>
+<td>código de 3 dígitos del área SIPES</td>
+</tr>
+<tr>
+<td><code>area_sector</code></td>
+<td>campo sector correspondiente al área SIPES (1=varones; 2=mujeres; 3=mixto; >3 mixto estudios, talleres, etc)</td>
+</tr>
+<tr>
+<td><code>area_subsector</code></td>
+<td>subsector correspondiente al área SIPES (4=internación; 5=CE; 6=atención domiciliaria)</td>
+</tr>
+<tr>
+<td><code>mover_camas</code></td>
+<td>bandera para el sistema que indica si se permite mover camas entre las habitaciones de la misma sala. por ejemplo: las incubadoras</td>
+</tr>
+<tr>
+<td><code>baja</code></td>
+<td>0=habilitada; 1=baja</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Response Devuelve el código de estado HTTP: 201 (sala nueva ingresada) o 404 (error al agregar la sala)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="65"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>POST</div>
+      <div class='pad0 code small endpoint-url'>/salas/nueva/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>/<span class="strong">{area_cod_servicio}</span>/<span class="strong">{area_sector}</span>/<span class="strong">{area_subsector}</span>/<span class="strong">{mover_camas}</span>/<span class="strong">{baja}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-agregar-sala">Ejemplo Request (agregar sala)</h4>
+<pre class='hljs'>curl -X POST http://localhost:8000/salas/nueva/63/TRAUMATOLOGIA/null/null/null/<span class="hljs-literal">false</span>/false.json</pre>
+<h4 id="ejemplo-response-agregar-sala">Ejemplo Response (agregar sala)</h4>
+<blockquote>
+<p>HTTP 201 Created</p>
+</blockquote>
+<pre class='hljs'>{
+ <span class="hljs-attr">"La sala: TRAUMATOLOGIA fue ingresada al efector: 63. El id de sala asignado es: 63005"</span>
+}</pre>
+</div></div><div data-title="Eliminar sala" class="keyline-top section contain clearfix " data-reactid="66"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="67"><h3 id="eliminar-sala">Eliminar sala</h3>
+<p>Eliminar una sala.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_efector</code></td>
+<td>ID efector</td>
+</tr>
+<tr>
+<td><code>nombre_sala</code></td>
+<td>Nombre único de sala en el efector</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>Devuelve el código de estado HTTP:200 (sala eliminada) o 404 (sala no encontrada o error)</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="68"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>DELETE</div>
+      <div class='pad0 code small endpoint-url'>/salas/eliminar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_sala}</span>.<span class="strong">{_format}</span></div>
+    </div>
+<h4 id="ejemplo-request-eliminar-sala">Ejemplo Request (eliminar sala)</h4>
+<pre class='hljs'>$ curl -X DELETE http://localhost:8000/salas/eliminar/63/TRAUMATOLOGIA.json</pre>
+<h4 id="ejemplo-response-eliminar-sala">Ejemplo Response (eliminar sala)</h4>
+<blockquote>
+<p>HTTP 200 OK</p>
+</blockquote>
+<pre class='hljs'>{
+ <span class="hljs-attr">"La sala: TRAUMATOLOGIA fue eliminada/baja del efector: HOSP PROTOMEDICO MANUEL RODRIGUEZ"</span>
+}</pre>
+</div></div><div data-title="Enviar informe completo" class="keyline-top section contain clearfix " data-reactid="69"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="70"><h2 id="enviar-informe-completo">Enviar informe completo</h2>
+<p>Librería de Web Services para ABM de la Configuración Edilicia Hospitalaria Prov. de Santa Fe</p>
+</div></div><div data-title="Inicialización y resincronización de datos centralizados" class="keyline-top section contain clearfix " data-reactid="71"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="72"><h3 id="inicialización-y-resincronización-de-datos-centralizados">Inicialización y resincronización de datos centralizados</h3>
+<p>La llamada POST debe tener definido en el <strong>HEADER:</strong> <em>Content-Type: text/plain</em> y como <strong>BODY</strong> el texto en formato .csv de la configuración edilicia del efector.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>format</code></td>
+<td>JSON o XML</td>
+</tr>
+</tbody>
+</table>
+<p>La inicialización y/o resincronización de la Configuración Edilicia de un efector se lleva a cabo de la siguiente manera.</p>
+<p><strong>Generar los datos del efector:</strong> El servicio web de sincronización espera los datos con determinado formato de registro. Esto quiere decir que cada fila tiene campos definidos para cada posición de las columnas. Además, los registros esperan que estén en el siguiente orden: primero las salas, segundo las habitaciones y por último las camas.  [ver ejemplo con SQL].</p>
+<table>
+<thead>
+<tr>
+<th>col 1</th>
+<th>col 2</th>
+<th>col 3</th>
+<th>col 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_efector</td>
+<td>sala_nombre</td>
+<td>sala_cant_camas</td>
+<td>sala_mover_camas</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>col 5</th>
+<th>col 6</th>
+<th>col 7</th>
+<th>col 8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>habitacion_nombre</td>
+<td>habitacion_sexo</td>
+<td>habitacion_edad_desde</td>
+<td>habitacion_edad_hasta</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>col 9</th>
+<th>col 10</th>
+<th>col 11</th>
+<th>col 12</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>habitacion_tipo_edad</td>
+<td>habitacion_cant_camas</td>
+<td>habitacion_baja</td>
+<td>cama_nombre</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>col 13</th>
+<th>col 14</th>
+<th>col 15</th>
+<th>col 16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cama_id_clasificacion_cama</td>
+<td>cama_estado</td>
+<td>cama_rotativa</td>
+<td>cama_baja</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Generar archivo csv:</strong> La información debe pasarse al web services en formato csv con los datos de campos separados por comillas dobles (") y usando como caracter de sepador de campos la coma (,). Si el volcado de la consulta SQL del ejemplo de "generar los datos del efector" está en el archivo "confedilicia.dump" entonces se puede convertir facilmente a .csv con la utilidad "sed" [ver ejemplo con bash].</p>
+<p><strong>Enviar informe al web services sync:</strong> La llamada al web services se realiza enviando como texto plano el archivo .csv en el cuerpo del Request. [ver ejemplo con cUrl]</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="73"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>POST</div>
+      <div class='pad0 code small endpoint-url'>/sync.format</div>
+    </div>
+<h4 id="ejemplo-de-generar-datos-del-efector-mysql-configuración-edilicia-diagnose-solo-sql">Ejemplo de generar datos del efector [MySql] (Configuración Edilicia Diagnose) [solo SQL]</h4>
+<pre class='hljs'><span class="hljs-comment"># ver ejemplo sql</span></pre>
+<h4 id="ejemplo-convertir-resultado-de-consulta-mysql-a-archivo-csv-con-sed-solo-bash">Ejemplo convertir resultado de consulta MySQL a archivo .csv con "sed" [solo bash]</h4>
+<pre class='hljs'><span class="hljs-comment"># ver ejemplo bash</span></pre>
+<h4 id="ejemplo-request-inicializaciónresincronización">Ejemplo Request (inicialización/resincronización)</h4>
+<pre class='hljs'>$ curl --data-binary @confedilicia.csv -H <span class="hljs-string">'Content-type:text/plain; charset=utf-8'</span> http://localhost:8000/sync.json</pre>
+<h4 id="ejemplo-response-inicializaciónresincronización">Ejemplo Response (inicialización/resincronización)</h4>
+<pre class='hljs'>{
+<span class="hljs-attr">"La configuración edilicia del efector: HOSP EVA PERON fue inicializada/sincronizada"</span>
+}</pre>
+<h4 id="ejemplo-completo-solo-bash">Ejemplo completo [solo bash]</h4>
+<pre class='hljs'><span class="hljs-comment"># ver ejemplo bash</span></pre>
+</div></div></div></div></div><div class="fixed-top space-left16" data-reactid="74"><div class="events fill-light bottom-shadow pad1 col6 pin-topright  " data-reactid="75"><div class="space-right1 small quiet inline" data-reactid="76">Mostrar ejemplos en:</div><div class="rounded-toggle inline short" data-reactid="77"><a class="strong active" data-reactid="78">cURL</a><a class="strong " data-reactid="79">PHP</a><a class="strong " data-reactid="80">SQL</a><a class="strong " data-reactid="81">bash</a><a class="strong " data-reactid="82">vb6</a></div><div class="fr pad0" data-reactid="83"><a title="Display as 1 column" style="cursor:pointer;" class="icon quiet caret-left pad0 fill-darken0 round" data-reactid="84"></a></div></div></div><div class="fill-dark dark bottom-shadow fixed-top pad0 width16" data-reactid="85"><a href="/" class="active space-top1 space-left1 pin-topleft icon round dark pad0 fill-red" data-reactid="86"></a><div class="strong small pad0
+          
+          space-left4 line-height15" data-reactid="87">Documentación API - Web Services Centralización de camas críticas Sta. Fe</div></div></div></div><!--STOP-->
     <script src='bundle.js'></script>
   </body>
 </html>

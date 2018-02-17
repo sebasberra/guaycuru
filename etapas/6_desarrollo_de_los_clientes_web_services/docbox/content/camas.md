@@ -20,13 +20,13 @@ Devuelve el código de estado HTTP: 200 (OK - Información de cama) o 404 (cama 
 #### Ejemplo Request JSON (ver cama)
 
 ```curl
-$ curl http://localhost:8004/camas/ver/121/HD4.json
+$ curl http://localhost:8000/camas/ver/121/HD4.json
 ```
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/camas/ver';
+	$get = 'http://localhost:8000/camas/ver';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -82,7 +82,7 @@ $ curl http://localhost:8004/camas/ver/121/HD4.json
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/ver/121/HD4.json"
+	sUrl = "http://192.168.56.1:8000/camas/ver/121/HD4.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -115,14 +115,14 @@ $ curl http://localhost:8004/camas/ver/121/HD4.json
 #### Ejemplo Request JSON con espacios escapados (ver cama)
 
 ```curl
-$ curl $(echo "http://localhost:8004/camas/ver/63/cgcq-hab2-cama 2.json" | sed 's/ /%20/g' )
+$ curl $(echo "http://localhost:8000/camas/ver/63/cgcq-hab2-cama 2.json" | sed 's/ /%20/g' )
 ```
 
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/camas/ver';
+	$get = 'http://localhost:8000/camas/ver';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -181,7 +181,7 @@ $ curl $(echo "http://localhost:8004/camas/ver/63/cgcq-hab2-cama 2.json" | sed '
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/ver/63/cgcq-hab2-cama 2.json"
+	sUrl = "http://192.168.56.1:8000/camas/ver/63/cgcq-hab2-cama 2.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -213,14 +213,14 @@ $ curl $(echo "http://localhost:8004/camas/ver/63/cgcq-hab2-cama 2.json" | sed '
 #### Ejemplo Request XML (ver cama)
 
 ```curl
-$ curl http://localhost:8004/camas/ver/121/HD4.xml
+$ curl http://localhost:8000/camas/ver/121/HD4.xml
 ```
 
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/camas/ver';
+	$get = 'http://localhost:8000/camas/ver';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -276,7 +276,7 @@ $ curl http://localhost:8004/camas/ver/121/HD4.xml
 	Dim sUrl As String
 	
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/ver/121/HD4.xml"
+	sUrl = "http://192.168.56.1:8000/camas/ver/121/HD4.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -331,13 +331,13 @@ Devuelve el código de estado HTTP: 204 (cama actualizada)  o 404 (error de actu
 #### Ejemplo Request JSON con espacios escapados (modificar cama)
 
 ```curl
-$ curl -X PUT $(echo "http://localhost:8004/camas/modificar/63/clinica medica/hab 5/cm-hab5-cama 2/5/L/false/false.json" | sed 's/ /%20/g' )
+$ curl -X PUT $(echo "http://localhost:8000/camas/modificar/63/clinica medica/hab 5/cm-hab5-cama 2/5/L/false/false.json" | sed 's/ /%20/g' )
 ```
 ```php
 <?php
 
 	// variables 
-	$put = 'http://localhost:8004/camas/modificar';
+	$put = 'http://localhost:8000/camas/modificar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -415,7 +415,7 @@ $ curl -X PUT $(echo "http://localhost:8004/camas/modificar/63/clinica medica/ha
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/modificar/63/clinica medica/hab 5/cm-hab5-cama 2/5/L/false/false.json"
+	sUrl = "http://192.168.56.1:8000/camas/modificar/63/clinica medica/hab 5/cm-hab5-cama 2/5/L/false/false.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -456,13 +456,13 @@ Devuelve el código de estado HTTP: 201 (cama nueva ingresada) o 404 (error al a
 #### Ejemplo Request JSON (agregar cama)
 
 ```curl
-curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.json
+curl -X POST http://localhost:8000/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.json
 ```
 ```php
 <?php
 
 	// variables 
-	$post = 'http://localhost:8004/camas/nueva';
+	$post = 'http://localhost:8000/camas/nueva';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -537,7 +537,7 @@ curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-c
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.json"
+	sUrl = "http://192.168.56.1:8000/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -565,13 +565,13 @@ curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-c
 >Suponiendo que el ejemplo anterior (Request JSON) agregó la cama con éxito, el siguiente ejemplo deberá responder con código 404
 
 ```curl
-curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.xml
+curl -X POST http://localhost:8000/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.xml
 ```
 ```php
 <?php
 
 	// variables 
-	$post = 'http://localhost:8004/camas/nueva';
+	$post = 'http://localhost:8000/camas/nueva';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -646,7 +646,7 @@ curl -X POST http://localhost:8004/camas/nueva/292/tocoginecologia/hab1/t-hab1-c
 	Dim sUrl As String
 	
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.xml"
+	sUrl = "http://192.168.56.1:8000/camas/nueva/292/tocoginecologia/hab1/t-hab1-cama3/1/L/false/false.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -690,13 +690,13 @@ Devuelve el código de estado HTTP: 200 (cama eliminada) o 404 (cama no encontra
 #### Ejemplo Request JSON (eliminar cama)
 
 ```curl
-curl -X DELETE http://localhost:8004/camas/eliminar/72/cm-h01-1.json
+curl -X DELETE http://localhost:8000/camas/eliminar/72/cm-h01-1.json
 ```
 ```php
 <?php
 
 	// variables 
-	$delete = 'http://localhost:8004/camas/eliminar';
+	$delete = 'http://localhost:8000/camas/eliminar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -754,7 +754,7 @@ curl -X DELETE http://localhost:8004/camas/eliminar/72/cm-h01-1.json
 	Dim sUrl As String
 	
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/eliminar/72/cm-h01-1.json"
+	sUrl = "http://192.168.56.1:8000/camas/eliminar/72/cm-h01-1.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -780,13 +780,13 @@ curl -X DELETE http://localhost:8004/camas/eliminar/72/cm-h01-1.json
 #### Ejemplo Request XML (eliminar cama no existente)
 
 ```curl
-curl -X DELETE http://localhost:8004/camas/eliminar/72/cama_no_existe.xml
+curl -X DELETE http://localhost:8000/camas/eliminar/72/cama_no_existe.xml
 ```
 ```php
 <?php
 
 	// variables 
-	$delete = 'http://localhost:8004/camas/eliminar';
+	$delete = 'http://localhost:8000/camas/eliminar';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -844,7 +844,7 @@ curl -X DELETE http://localhost:8004/camas/eliminar/72/cama_no_existe.xml
 	Dim sUrl As String
 	
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/eliminar/72/cama_no_existe.xml"
+	sUrl = "http://192.168.56.1:8000/camas/eliminar/72/cama_no_existe.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -886,13 +886,13 @@ Devuelve el código de estado HTTP: 204 (cama liberada) o 404 (cama no encontrad
 #### Ejemplo Request JSON (liberar cama)
 
 ```curl
-curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.json
+curl -X PATCH http://localhost:8000/camas/liberar/71/s1u-ua-4.json
 ```
 ```php
 <?php
 
 	// variables 
-	$patch = 'http://localhost:8004/camas/liberar';
+	$patch = 'http://localhost:8000/camas/liberar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -950,7 +950,7 @@ curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.json
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/liberar/71/s1u-ua-4.json"
+	sUrl = "http://192.168.56.1:8000/camas/liberar/71/s1u-ua-4.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -970,13 +970,13 @@ curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.json
 #### Ejemplo Request XML (liberar cama libre)
 
 ```curl
-curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.xml
+curl -X PATCH http://localhost:8000/camas/liberar/71/s1u-ua-4.xml
 ```
 ```php
 <?php
 
 	// variables 
-	$patch = 'http://localhost:8004/camas/liberar';
+	$patch = 'http://localhost:8000/camas/liberar';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -1034,7 +1034,7 @@ curl -X PATCH http://localhost:8004/camas/liberar/71/s1u-ua-4.xml
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/liberar/71/s1u-ua-4.xml"
+	sUrl = "http://192.168.56.1:8000/camas/liberar/71/s1u-ua-4.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -1078,13 +1078,13 @@ PATCH /camas/ocupar/{id_efector}/{nombre_cama}.{_format}
 #### Ejemplo Request JSON (ocupar cama)
 
 ```curl
-curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.json
+curl -X PATCH http://localhost:8000/camas/ocupar/71/s1u-ua-4.json
 ```
 ```php
 <?php
 
 	// variables 
-	$patch = 'http://localhost:8004/camas/ocupar';
+	$patch = 'http://localhost:8000/camas/ocupar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -1142,7 +1142,7 @@ curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.json
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/ocupar/71/s1u-ua-4.json"
+	sUrl = "http://192.168.56.1:8000/camas/ocupar/71/s1u-ua-4.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -1162,13 +1162,13 @@ curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.json
 #### Ejemplo Request XML (ocupar cama ya ocupada)
 
 ```curl
-curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.xml
+curl -X PATCH http://localhost:8000/camas/ocupar/71/s1u-ua-4.xml
 ```
 ```php
 <?php
 
 	// variables 
-	$patch = 'http://localhost:8004/camas/ocupar';
+	$patch = 'http://localhost:8000/camas/ocupar';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -1226,7 +1226,7 @@ curl -X PATCH http://localhost:8004/camas/ocupar/71/s1u-ua-4.xml
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/camas/ocupar/71/s1u-ua-4.xml"
+	sUrl = "http://192.168.56.1:8000/camas/ocupar/71/s1u-ua-4.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP

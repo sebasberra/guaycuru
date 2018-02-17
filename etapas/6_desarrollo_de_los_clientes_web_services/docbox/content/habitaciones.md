@@ -21,13 +21,13 @@ Devuelve el código de estado HTTP: 200(OK - Información de habitación) o 404 
 #### Ejemplo Request JSON (ver habitación)
 
 ```curl
-$ curl http://localhost:8004/habitaciones/ver/183/guardia/aislados.json
+$ curl http://localhost:8000/habitaciones/ver/183/guardia/aislados.json
 ```
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/habitaciones/ver';
+	$get = 'http://localhost:8000/habitaciones/ver';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -86,7 +86,7 @@ $ curl http://localhost:8004/habitaciones/ver/183/guardia/aislados.json
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/ver/183/guardia/aislados.json"
+	sUrl = "http://192.168.56.1:8000/habitaciones/ver/183/guardia/aislados.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -120,13 +120,13 @@ $ curl http://localhost:8004/habitaciones/ver/183/guardia/aislados.json
 
 #### Ejemplo Request JSON con espacios escapados (ver habitación)
 ```curl
-$ curl $(echo "http://localhost:8004/habitaciones/ver/121/cim iii/cim iii.json" | sed 's/ /%20/g' )
+$ curl $(echo "http://localhost:8000/habitaciones/ver/121/cim iii/cim iii.json" | sed 's/ /%20/g' )
 ```
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/habitaciones/ver';
+	$get = 'http://localhost:8000/habitaciones/ver';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -188,7 +188,7 @@ $ curl $(echo "http://localhost:8004/habitaciones/ver/121/cim iii/cim iii.json" 
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/ver/121/cim iii/cim iii.json"
+	sUrl = "http://192.168.56.1:8000/habitaciones/ver/121/cim iii/cim iii.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -223,13 +223,13 @@ $ curl $(echo "http://localhost:8004/habitaciones/ver/121/cim iii/cim iii.json" 
 #### Ejemplo Request XML (ver habitación)
 
 ```curl
-$ curl http://localhost:8004/habitaciones/ver/72/obstetricia/anexo.xml
+$ curl http://localhost:8000/habitaciones/ver/72/obstetricia/anexo.xml
 ```
 ```php
 <?php
 
 	// variables 
-	$get = 'http://localhost:8004/habitaciones/ver';
+	$get = 'http://localhost:8000/habitaciones/ver';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -288,7 +288,7 @@ $ curl http://localhost:8004/habitaciones/ver/72/obstetricia/anexo.xml
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/ver/72/obstetricia/anexo.xml"
+	sUrl = "http://192.168.56.1:8000/habitaciones/ver/72/obstetricia/anexo.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -347,13 +347,13 @@ Devuelve el código de estado HTTP: 204 (habitación actualizada) o 404 (error d
 #### Ejemplo Request JSON (modificar habitación)
 
 ```curl
-curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo/2/12/55/1/0.json
+curl -X PUT http://localhost:8000/habitaciones/modificar/72/obstetricia/anexo/2/12/55/1/0.json
 ```
 ```php
 <?php
 
 	// variables 
-	$put = 'http://localhost:8004/habitaciones/modificar';
+	$put = 'http://localhost:8000/habitaciones/modificar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -428,7 +428,7 @@ curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo/2/
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/modificar/72/obstetricia/anexo/2/12/55/1/0.json"
+	sUrl = "http://192.168.56.1:8000/habitaciones/modificar/72/obstetricia/anexo/2/12/55/1/0.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -448,13 +448,13 @@ curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo/2/
 #### Ejemplo Request XML (modificar habitación que no existe)
 
 ```curl
-curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo1/2/12/55/1/0.xml
+curl -X PUT http://localhost:8000/habitaciones/modificar/72/obstetricia/anexo1/2/12/55/1/0.xml
 ```
 ```php
 <?php
 
 	// variables 
-	$put = 'http://localhost:8004/habitaciones/modificar';
+	$put = 'http://localhost:8000/habitaciones/modificar';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -529,7 +529,7 @@ curl -X PUT http://localhost:8004/habitaciones/modificar/72/obstetricia/anexo1/2
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/modificar/72/obstetricia/anexo1/2/12/55/1/0.xml"
+	sUrl = "http://192.168.56.1:8000/habitaciones/modificar/72/obstetricia/anexo1/2/12/55/1/0.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -578,13 +578,13 @@ Devuelve el código de estado HTTP: 201 (habitación nueva ingresada) o 404 (err
 #### Ejemplo Request JSON con espacios escapados (agregar habitación)
 
 ```curl
-curl -X POST $(echo "http://localhost:8004/habitaciones/nueva/71/sala 1  uti/hab d/3/0/255/6/0.json" | sed 's/ /%20/g' )
+curl -X POST $(echo "http://localhost:8000/habitaciones/nueva/71/sala 1  uti/hab d/3/0/255/6/0.json" | sed 's/ /%20/g' )
 ```
 ```php
 <?php
 
 	// variables 
-	$post = 'http://localhost:8004/habitaciones/nueva';
+	$post = 'http://localhost:8000/habitaciones/nueva';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -662,7 +662,7 @@ curl -X POST $(echo "http://localhost:8004/habitaciones/nueva/71/sala 1  uti/hab
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/nueva/71/sala 1  uti/hab d/3/0/255/6/0.json"
+	sUrl = "http://192.168.56.1:8000/habitaciones/nueva/71/sala 1  uti/hab d/3/0/255/6/0.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -687,13 +687,13 @@ curl -X POST $(echo "http://localhost:8004/habitaciones/nueva/71/sala 1  uti/hab
 #### Ejemplo Request XML (agregar habitación ya existente)
 
 ```curl
-curl -X POST http://localhost:8004/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.xml
+curl -X POST http://localhost:8000/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.xml
 ```
 ```php
 <?php
 
 	// variables 
-	$post = 'http://localhost:8004/habitaciones/nueva';
+	$post = 'http://localhost:8000/habitaciones/nueva';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -768,7 +768,7 @@ curl -X POST http://localhost:8004/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.
 	Dim sUrl As String
 	
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.xml"
+	sUrl = "http://192.168.56.1:8000/habitaciones/nueva/121/ucip/ucip/3/0/255/6/0.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -813,13 +813,13 @@ Response Devuelve el código de estado HTTP:200 (habitación eliminada) o 404 (h
 #### Ejemplo Request JSON (eliminar habitación)
 
 ```curl
-$ curl -X DELETE http://localhost:8004/habitaciones/eliminar/121/ucip/ucip.json
+$ curl -X DELETE http://localhost:8000/habitaciones/eliminar/121/ucip/ucip.json
 ```
 ```php
 <?php
 
 	// variables 
-	$delete = 'http://localhost:8004/habitaciones/eliminar';
+	$delete = 'http://localhost:8000/habitaciones/eliminar';
 	$format = 'json';
 	$vars = [
 		// id_efector
@@ -880,7 +880,7 @@ $ curl -X DELETE http://localhost:8004/habitaciones/eliminar/121/ucip/ucip.json
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/eliminar/121/ucip/ucip.json"
+	sUrl = "http://192.168.56.1:8000/habitaciones/eliminar/121/ucip/ucip.json"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
@@ -905,13 +905,13 @@ $ curl -X DELETE http://localhost:8004/habitaciones/eliminar/121/ucip/ucip.json
 #### Ejemplo Request XML con espacios escapados (eliminar habitación que no existe)
 
 ```curl
-$ curl -X DELETE $(echo "http://localhost:8004/habitaciones/eliminar/5/sala- pediatria/hab de prueba.xml" | sed 's/ /%20/g' )
+$ curl -X DELETE $(echo "http://localhost:8000/habitaciones/eliminar/5/sala- pediatria/hab de prueba.xml" | sed 's/ /%20/g' )
 ```
 ```php
 <?php
 
 	// variables 
-	$delete = 'http://localhost:8004/habitaciones/eliminar';
+	$delete = 'http://localhost:8000/habitaciones/eliminar';
 	$format = 'xml';
 	$vars = [
 		// id_efector
@@ -974,7 +974,7 @@ $ curl -X DELETE $(echo "http://localhost:8004/habitaciones/eliminar/5/sala- ped
 	Dim sUrl As String
 
 	'URL
-	sUrl = "http://192.168.56.1:8005/habitaciones/eliminar/5/sala- pediatria/hab de prueba.xml"
+	sUrl = "http://192.168.56.1:8000/habitaciones/eliminar/5/sala- pediatria/hab de prueba.xml"
 
 	'inicializa objeto http
 	Set xmlhttp = New MSXML2.ServerXMLHTTP
