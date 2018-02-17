@@ -1218,7 +1218,7 @@ curl -X PATCH http://localhost:8000/camas/ocupar/71/s1u-ua-4.xml
 ```bash
 # Ver ejemplo cUrl
 ```
-```
+```vb6
 	'Agregar la refencia Microsoft XML
 	Dim xmlhttp As MSXML2.ServerXMLHTTP
 

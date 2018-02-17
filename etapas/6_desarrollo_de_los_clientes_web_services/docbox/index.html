@@ -10,7 +10,7 @@
     <link href='css/railscasts.css' rel='stylesheet' />
   </head>
   <body>
-    <!--START--><div id='app'><div class="container unlimiter" data-reactroot="" data-reactid="1" data-react-checksum="-408466761"><div class="fixed-top fixed-right space-left16" data-reactid="2"><div class="fill-light col6 pin-right" data-reactid="3"></div></div><div class="space-top5 scroll-styled overflow-auto pad1 width16 sidebar fixed-left fill-dark dark" data-reactid="4"><div class="pad0x small" data-reactid="5"><div class="small pad0x quiet space-top1" data-reactid="6">Introducción</div><a href="#introducción-1" class="line-height15 pad0x pad00y quiet block " data-reactid="7">Introducción</a><div class="small pad0x quiet space-top1" data-reactid="8">Camas</div><a href="#alta-baja-y-modificación-de-camas" class="line-height15 pad0x pad00y quiet block " data-reactid="9">Alta, baja y modificación de Camas</a><div class="small pad0x quiet space-top1" data-reactid="10">Habitaciones</div><a href="#habitaciones-1" class="line-height15 pad0x pad00y quiet block " data-reactid="11">Habitaciones</a><div class="small pad0x quiet space-top1" data-reactid="12">Salas</div><a href="#salas-1" class="line-height15 pad0x pad00y quiet block " data-reactid="13">Salas</a><div class="small pad0x quiet space-top1" data-reactid="14">Sincronización</div><a href="#enviar-informe-completo" class="line-height15 pad0x pad00y quiet block " data-reactid="15">Enviar informe completo</a></div></div><div class="space-left16" data-reactid="16"><div class="" data-reactid="17"><div class="clearfix" data-reactid="18"><div data-title="Introducción" class="keyline-top section contain clearfix " data-reactid="19"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="20"><h2 id="introducción-1">Introducción</h2>
+    <!--START--><div id='app'><div class="container unlimiter" data-reactroot="" data-reactid="1" data-react-checksum="-1669423545"><div class="fixed-top fixed-right space-left16" data-reactid="2"><div class="fill-light col6 pin-right" data-reactid="3"></div></div><div class="space-top5 scroll-styled overflow-auto pad1 width16 sidebar fixed-left fill-dark dark" data-reactid="4"><div class="pad0x small" data-reactid="5"><div class="small pad0x quiet space-top1" data-reactid="6">Introducción</div><a href="#introducción-1" class="line-height15 pad0x pad00y quiet block " data-reactid="7">Introducción</a><div class="small pad0x quiet space-top1" data-reactid="8">Camas</div><a href="#alta-baja-y-modificación-de-camas" class="line-height15 pad0x pad00y quiet block " data-reactid="9">Alta, baja y modificación de Camas</a><div class="small pad0x quiet space-top1" data-reactid="10">Habitaciones</div><a href="#habitaciones-1" class="line-height15 pad0x pad00y quiet block " data-reactid="11">Habitaciones</a><div class="small pad0x quiet space-top1" data-reactid="12">Salas</div><a href="#salas-1" class="line-height15 pad0x pad00y quiet block " data-reactid="13">Salas</a><div class="small pad0x quiet space-top1" data-reactid="14">Sincronización</div><a href="#enviar-informe-completo" class="line-height15 pad0x pad00y quiet block " data-reactid="15">Enviar informe completo</a></div></div><div class="space-left16" data-reactid="16"><div class="" data-reactid="17"><div class="clearfix" data-reactid="18"><div data-title="Introducción" class="keyline-top section contain clearfix " data-reactid="19"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="20"><h2 id="introducción-1">Introducción</h2>
 <p>Bienvenido a la documentación para manejo de <strong>Web Services para centralización de camas críticas de internación en hospitales de la Provincia de Santa Fe</strong>. Este tutorial tiene una guía de ejemplos de como utilizar los servicios web para mantener la información en línea del estado de las camas de un efector.</p>
 </div></div><div data-title="Alta, baja y modificación de Camas" class="keyline-top section contain clearfix " data-reactid="21"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="22"><h2 id="alta-baja-y-modificación-de-camas">Alta, baja y modificación de Camas</h2>
 <p>Conjunto de WS para actualizar el estado de las camas de un efector en la base centralizada.</p>
@@ -338,26 +338,6 @@
 </tbody>
 </table>
 <p>Devuelve el código de estado HTTP: 204 (cama ocupada) o 404 (cama no encontrada o error)</p>
-<pre><code>    'Agregar la refencia Microsoft XML
-    Dim xmlhttp As MSXML2.ServerXMLHTTP
-
-    'var
-    Dim sUrl As String
-
-    'URL
-    sUrl = "http://192.168.56.1:8000/camas/ocupar/71/s1u-ua-4.xml"
-
-    'inicializa objeto http
-    Set xmlhttp = New MSXML2.ServerXMLHTTP
-
-    'request sincrono
-    xmlhttp.open "PATCH", sUrl, False
-    xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
-    xmlhttp.send
-
-    'response
-    MsgBox xmlhttp.Status &#x26; " " + xmlhttp.statusText + " " + xmlhttp.responseText, , sUrl
-</code></pre>
 </div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="40"><div class='endpoint dark fill-dark round '>
       <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>PATCH</div>
       <div class='pad0 code small endpoint-url'>/camas/ocupar/<span class="strong">{id_efector}</span>/<span class="strong">{nombre_cama}</span>.<span class="strong">{_format}</span></div>
