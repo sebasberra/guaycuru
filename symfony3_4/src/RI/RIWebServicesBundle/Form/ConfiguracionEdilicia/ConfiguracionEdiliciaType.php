@@ -6,6 +6,9 @@ namespace RI\RIWebServicesBundle\Form\ConfiguracionEdilicia;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
@@ -68,71 +71,24 @@ class ConfiguracionEdiliciaType extends AbstractType
                     )
             )
             ->add(
-                    'direccion', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                    array(
-                        'label'   => 'Dirección:',
-                        'choices' => array(
-                            'DEFAULT' => 't2b',
-                            'IZQUIERDA A DERECHA' => 'l2r',
-                            'ABAJO HACIA ARRIBA' => 'b2t',
-                            'DERECHA A IZQUIERDA' => 'r2l'
-                        ),
-                        'data'  => '-1'
-                    )
-                )
-            ->add(
                     'zoom', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    CheckboxType::class,
                     array(
                         'label'   => 'Zoom:',
-                        'choices' => array(
-                            'NO' => 'false',
-                            'SI' => 'true'
-                        ),
-                        'data'  => 'false'
+                        'required' => false
                     )
                 )
             ->add(
                     'pan', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    CheckboxType::class,
                     array(
-                        'label'   => 'Pan:',
-                        'choices' => array(
-                            'NO' => 'false',
-                            'SI' => 'true'
-                        ),
-                        'data'  => 'false'
-                    )
-                )
-            ->add(
-                    'profundidad', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                    array(
-                        'label'   => 'Profundidad:',
-                        'choices' => array(
-                            'DEFAULT' => 'false',
-                            'VERTICAL' => 'true'
-                        ),
-                        'data'  => 'false'
-                    )
-                )
-            ->add(
-                    'export_file_extension', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                    array(
-                        'label'   => 'Formato de Exportación:',
-                        'choices' => array(
-                            'DESACTIVADO' => 'false',
-                            'IMAGEN (PNG)' => 'png',
-                            'PDF' => 'pdf'
-                        ),
-                        'data'  => 'false'
+                        'label'   => 'Mover:',
+                        'required' => false
                     )
                 )
             ->add(
                     'bt_ver', 
-                    'Symfony\Component\Form\Extension\Core\Type\SubmitType',
+                    SubmitType::class,
                     array(
                         'label' => 'Ver'
                     )

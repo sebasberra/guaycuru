@@ -25,45 +25,23 @@
 
         </div>
 
-        <div class="col-md-3">
-            
-            {{ form_label(form.direccion) }}
-            {{ form_widget (form.direccion) }}
-            {{ form_errors (form.direccion) }}
-            
-        </div>
         
-        <div class="col-md-2">
+        <div class="col-md-2" style="display: -webkit-box;">
             
             {{ form_label(form.zoom) }}
-            {{ form_widget (form.zoom) }}
+            {{ form_widget (form.zoom, { 'attr': {'style': 'width: 20% !important'} }) }}
             {{ form_errors (form.zoom) }}
             
         </div>
             
-        <div class="col-md-2">
+        <div class="col-md-2" style="display: -webkit-box;">
             
             {{ form_label(form.pan) }}
-            {{ form_widget (form.pan) }}
+            {{ form_widget (form.pan, { 'attr': {'style': 'width: 20% !important'} }) }}
             {{ form_errors (form.pan) }}
             
         </div>
             
-        <div class="col-md-2">
-            
-            {{ form_label(form.profundidad) }}
-            {{ form_widget (form.profundidad) }}
-            {{ form_errors (form.profundidad) }}
-            
-        </div>
-            
-        <div class="col-md-3">
-            
-            {{ form_label(form.export_file_extension) }}
-            {{ form_widget (form.export_file_extension) }}
-            {{ form_errors (form.export_file_extension) }}
-            
-        </div>
         <div class="row">
             
             <div class="col-md-2">
@@ -150,30 +128,16 @@
 
            $oc = $('#chart-container').orgchart({
 
-               'data': json,
-               'nodeContent': 'title',
-               'direction': '{{ config_orgchart.direccion }}',
-               'zoom': {{ config_orgchart.zoom }},
-               'pan': {{ config_orgchart.pan }},
-
-               {% if config_orgchart.export_file_extension != 'false' %}
-
-                   'exportButton': true,
-                   'exportFilename': 'ri_configuracion_edilicia',
-                   'exportFileextension': '{{ config_orgchart.export_file_extension }}',
-
-               {% endif %}
-
-               {% if config_orgchart.profundidad == 'true' %}
-
-                   'verticalDepth': 3,
-                   'depth': 3,
-
-               {% else %}
-
-                   'depth': 2,
-
-               {% endif %}
+                'data': json,
+                'nodeContent': 'title',
+                'direction': '{{ config_orgchart.direccion }}',
+                'zoom': '{{ config_orgchart.zoom }}',
+                'pan': '{{ config_orgchart.pan }}',
+                'exportButton': false,
+                'exportFilename': 'ri_configuracion_edilicia',
+                'exportFileextension': '{{ config_orgchart.export_file_extension }}',
+                'verticalLevel': '{{ config_orgchart.verticalLevel }}',
+                'visibleLevel': 2,
 
                'createNode': function($node, data) {
 

@@ -68,11 +68,16 @@ class ConfiguracionEdiliciaController extends Controller
                 
                 $config_orgchart = array(
                     
-                    'direccion'                 => $param['direccion'],
+                    /* The available values are 
+                     * t2b(implies "top to bottom", it's default value), 
+                     * b2t(implies "bottom to top"), 
+                     * l2r(implies "left to right"), 
+                     * r2l(implies "right to left"). */
+                    'direccion'                 => 't2b',
                     'zoom'                      => $param['zoom'],
                     'pan'                       => $param['pan'],
-                    'profundidad'               => $param['profundidad'],
-                    'export_file_extension'     => $param['export_file_extension']
+                    'verticalLevel'               => 5,
+                    'export_file_extension'     => 'false'
                         
                     );
                 

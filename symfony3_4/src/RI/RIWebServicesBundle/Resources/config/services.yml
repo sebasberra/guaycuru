@@ -8,7 +8,9 @@ services:
     app.ri_utiles:
         class: RI\RIWebServicesBundle\Utils\RI\RIUtiles
         parent: app.ri
+        public: true
         
     app.configuracion_edilicia:
         class: RI\RIWebServicesBundle\Utils\ConfiguracionEdilicia\ConfiguracionEdilicia
         parent: app.ri
+        public: true
