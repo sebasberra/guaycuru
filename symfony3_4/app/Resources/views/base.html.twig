@@ -82,6 +82,7 @@
         <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_table.css') }}"/>
         <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_datatable.css') }}"/>
         <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_modal.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_orgchart.css') }}"/>
         
         <!--[if lte IE 9]>
         <link rel="Shortcut icon" href="//www.santafe.gov.ar/assets/standard/images/favicon.ico" type="image/x-icon"/>
@@ -100,6 +101,16 @@
 
         <link rel="stylesheet" href="{{ asset('bundles/riwebservices/fontawesome-free-5.0.6/fontawesome-all.css') }}"/>
 
+        {#
+
+            --------------
+            estilos jqTree
+            --------------
+
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/jqTree-1.4.4/jqtree.css') }}"/>
+        
         {#
 
             ----------------
@@ -144,7 +155,16 @@
         <script src="{{ asset('bundles/riwebservices/stg/match-media.js') }}"></script>
         <script src="{{ asset('bundles/riwebservices/stg/interface.js') }}"></script>
 
+        {#
 
+            ------------------
+            javascripts jqTree
+            ------------------
+
+        #}
+        
+        <script src="{{ asset('bundles/riwebservices/jqTree-1.4.4/tree.jquery.js') }}"></script>
+        
         {#
 
             --------
