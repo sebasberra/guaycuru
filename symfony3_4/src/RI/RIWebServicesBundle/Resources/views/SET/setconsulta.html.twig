@@ -25,7 +25,7 @@
                     },
                     language:
                     {
-                        url: "{{ asset('bundles/riwebservices/js/datatable/espanol.json') }}",
+                        url: "{{ asset('bundles/riwebservices/DataTables/espanol.json') }}",
                         buttons: {
                             colvis: 'Columnas',
                             colvisRestore: 'Restaurar'
@@ -52,13 +52,14 @@
 
 {% block cuerpo %} 
 
+    <div class="form row">
+
+    <div class="col-md-12">
+        
     {{ form_start(form) }}
     
     {{ form_end(form) }}
 
-    <div class="container row">
-
-    <div class="col-md-11 twelvecol table-responsive">
         
     <table>
         <tr>

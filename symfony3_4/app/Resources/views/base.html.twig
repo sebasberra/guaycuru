@@ -16,19 +16,41 @@
         {#
 
             ------------------
-            estilos datatables
+            DataTables
+            ------------------
+        
+            Librerías incluidas:
+            
+                * jQuery 3 3.2.1
+                * JSZip 2.5.0
+                * pdfmake 0.1.32
+                * DataTables 1.10.16
+                * Buttons 1.5.1
+                * Column visibility 1.5.1
+                * Flash export 1.5.1
+                * HTML5 export 1.5.1
+                * Print view 1.5.1
+                * FixedColumns 3.2.4
+                * FixedHeader 3.1.3
+                * KeyTable 2.3.2
+                * Responsive 2.2.1
+                * Scroller 1.4.4
+        
             ------------------
 
         #}
 
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/jquery.dataTables.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/buttons/buttons.dataTables.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/Responsive/responsive.dataTables.min.css') }}"/>
-        <link rel="stylesheet"
-              href="{{ asset('bundles/riwebservices/css/datatable/FixedColumns/fixedColumns.dataTables.min.css') }}"/>
-        <link rel="stylesheet"
-              href="{{ asset('bundles/riwebservices/css/datatable/FixedHeader/fixedHeader.dataTables.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/datatable/Scroller/scroller.dataTables.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/riwebservices/DataTables/datatables.min.css') }}"/>
+        
+        {#
+
+            -----------
+            bootstrap 4
+            -----------
+
+        #}
+
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/bootstrap-4.0.0/css/bootstrap.min.css') }}"/>
 
         {#
 
@@ -38,19 +60,17 @@
 
         #}
 
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/bootstrap/3.3.7/bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/stg/normalize.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/stg/1140.css') }}"/>
 
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/normalize.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/1140.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/jquery-ui-1.12.1/jquery-ui.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/jquery-ui-1.12.1/jquery-ui.structure.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/jquery-ui-1.12.1/jquery-ui.theme.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_stg_form.css') }}" />
 
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jquery-ui-1.12.1/jquery-ui.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jquery-ui-1.12.1/jquery-ui.structure.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jquery-ui-1.12.1/jquery-ui.theme.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_stg_form.css') }}" />
-
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/menu.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/html5-pagination.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/stg/styles-1.0.2.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/stg/menu.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/stg/html5-pagination.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/stg/styles-1.0.2.css') }}"/>
 
         {#
             --
@@ -58,21 +78,11 @@
             --
         #}
 
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_jqtree.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_censos.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_table.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_datatable.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/RI/ri_modal.css') }}"/>
-
-        {#
-            -----
-            jqtre
-            -----
-        #}
-
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/jqtree/jqtree.css') }}"/>
-
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_table.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_datatable.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_modal.css') }}"/>
+        
         <!--[if lte IE 9]>
         <link rel="Shortcut icon" href="//www.santafe.gov.ar/assets/standard/images/favicon.ico" type="image/x-icon"/>
         <link rel="stylesheet" type="text/css" href="//www.santafe.gov.ar/assets/standard/css/ie.css"/>
@@ -88,7 +98,7 @@
 
         #}
 
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/fontawesome-free-5.0.6/fontawesome-all.css') }}"/>
 
         {#
 
@@ -98,27 +108,13 @@
 
         #}
 
-        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/css/orgchart/jquery.orgchart.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/riwebservices/OrgChart-2.1.1/jquery.orgchart.css') }}"/>
 
     {% endblock %}
 
         
-        {% block javascripts %}
+    {% block javascripts %}
         
-            {# JQuery #}
-            
-            <script src="{{ asset('bundles/riwebservices/js/jquery/jquery-3.2.1.min.js') }}"></script>
-            <script src="{{ asset('bundles/riwebservices/js/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
-        
-        {#
-            ---------------------
-            javascripts de la STG
-            ---------------------
-        #}
-
-        <script src="{{ asset('bundles/riwebservices/js/stg/match-media.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/stg/interface.js') }}"></script>
-
         {#
 
             ----------------------
@@ -126,42 +122,28 @@
             ----------------------
 
         #}
-
-        <script src="{{ asset('bundles/riwebservices/js/datatable/jquery.dataTables.min.js') }}"></script>
-
-        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.flash.min.js') }}"></script>
-
-        <script src="{{ asset('bundles/riwebservices/js/pdfmake/pdfmake.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/pdfmake/vfs_fonts.js') }}"></script>
-
-        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.html5.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.print.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/datatable/buttons/buttons.colVis.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/datatable/FixedColumns/dataTables.fixedColumns.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/datatable/FixedHeader/dataTables.fixedHeader.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/datatable/Responsive/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/datatable/Scroller/dataTables.scroller.min.js') }}"></script>
-
+        
+        <script type="text/javascript" src="{{ asset('bundles/riwebservices/DataTables/datatables.min.js') }}"></script>
+        
         {#
 
-            -----------------
-            javascripts jszip
-            -----------------
+            ---------------------
+            javascripts jquery-ui
+            ---------------------
 
         #}
-
-        <script src="{{ asset('bundles/riwebservices/js/jszip/jszip.min.js') }}"></script>
-
+        
+        <script src="{{ asset('bundles/riwebservices/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+        
         {#
-
-            ------
-            jqtree
-            ------
-
+            ---------------------
+            javascripts de la STG
+            ---------------------
         #}
 
-        <script src="{{ asset('bundles/riwebservices/js/jqtree/tree.jquery.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/stg/match-media.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/stg/interface.js') }}"></script>
+
 
         {#
 
@@ -171,27 +153,25 @@
 
         #}
 
-        <script src="{{ asset('bundles/riwebservices/js/orgchart/jquery.orgchart.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/OrgChart-2.1.1/jquery.orgchart.js') }}"></script>
 
         {#
 
-            -----
-            jspdf
-            -----
-
+            ------
+            Popper
+            ------
         #}
-
-        <script src="{{ asset('bundles/riwebservices/js/jspdf/jspdf.debug.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/jspdf/jspdf.min.js') }}"></script>
-
+        
+        <script src="{{ asset('bundles/riwebservices/Popper/popper.min.js') }}"></script>
+        
         {#
 
-            ---------
-            bootstrap
-            ---------
+            -----------
+            bootstrap 4
+            -----------
         #}
 
-            <script src="{{ asset('bundles/riwebservices/js/bootstrap-3.3.7/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/riwebservices/bootstrap-4.0.0/js/bootstrap.min.js') }}"></script>
 
         {#
 
@@ -201,9 +181,9 @@
 
         #}
 
-        <script src="{{ asset('bundles/riwebservices/js/RI/ri_mod.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/RI/ri_form.js') }}"></script>
-        <script src="{{ asset('bundles/riwebservices/js/RI/ri_orgchart.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/RI/ri_mod.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/RI/ri_form.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/RI/ri_orgchart.js') }}"></script>
 
         {#
 
@@ -213,10 +193,12 @@
 
         #}
 
-        <script src="{{ asset('bundles/riwebservices/js/UIblock/UIblock.js') }}"></script>
+        <script src="{{ asset('bundles/riwebservices/UIblock/UIblock.js') }}"></script>
 
     {% endblock %}
+    
     <link rel="icon" type="image/x-icon" href="{{ asset('red-internacion.ico') }}"/>
+    
 </head>
 
 <body id="top">
@@ -277,9 +259,6 @@
     </div>
 
 </div>
-
-{# RI datepicker #}
-<script src="{{ asset('bundles/riwebservices/js/RI/ri_datepicker.js') }}"></script>
 
 <div id="myProgressBar" style="visibility: hidden;"></div>
 
