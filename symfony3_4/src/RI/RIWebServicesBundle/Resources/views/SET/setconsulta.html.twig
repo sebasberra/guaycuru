@@ -4,162 +4,198 @@
     {{ parent() }}
     
     <script>    
-        $(document).ready(
+        $(document).ready(function () {
             
-            function() {
+            $('#listadoscamas').DataTable({
 
-                $('#listadoscamas').DataTable( {
-                    
-                    responsive: true,
-                    paging: true,
-                    searching: true,
-                    ordering: true,
-                    stateSave: true,
-                    lengthMenu: [ 
-                        [ 5, 10, 25, 50, -1 ], 
-                        [ 5, 10, 25, 50, "Todo" ] 
-                    ],
-                    fixedHeader: {
-                        header: true,
-                        footer: true
-                    },
-                    language:
+                responsive: true,
+                paging: true,
+                searching: true,
+                ordering: true,
+                stateSave: true,
+                lengthMenu: [ 
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "Todo"]
+                ],
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                },
+                language: {
+                    url: "{{ asset('bundles/riwebservices/DataTables/espanol.json') }}",
+                    buttons: {
+                        colvis: '<i class="fa fa-columns"></i>',
+                        colvisRestore: 'Restaurar'
+                    }
+                },
+                dom: 'Blfrtip',
+                buttons: [
                     {
-                        url: "{{ asset('bundles/riwebservices/DataTables/espanol.json') }}",
-                        buttons: {
-                            colvis: 'Columnas',
-                            colvisRestore: 'Restaurar'
-                        }
-                    },
-                    dom: 'Blfrtip',
-                    buttons: [
-                        {
-                            extend: 'colvis',
-                            postfixButtons: [ 'colvisRestore' ]
-                        }
-                    ]
-                    
-                });
-                
-                
-            } 
-        );
+                        extend: 'colvis',
+                        postfixButtons: ['colvisRestore']
+                    }
+                ]
 
+            });
+ 
+        });
+      
     </script>
     
 {% endblock %}
 
+{% form_theme form _self %}
+
+{%- block submit_widget -%}
+
+    {%- set type = type|default('submit') -%}
+
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+        
+        {% if name == 'bt_buscar' %}
+                <i class="fas fa-sync"></i>
+        {% endif %}
+        
+        {{ label|trans({}, translation_domain) }}
+    </button>
+{%- endblock submit_widget -%}
+
 
 {% block cuerpo %} 
 
-    <div class="form row">
+    <div class="form container">
 
-    <div class="col-md-12">
+        <h3>Consulta</h3>
+        <h4>Camas</h4>
+                
+    
         
     {{ form_start(form) }}
     
-    {{ form_end(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_label(form.tipos_cuidados_progresivos) }}
+            {{ form_widget(form.tipos_cuidados_progresivos) }}
 
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.tipos_cuidados_progresivos) }}
+            </div>
+
+        </div>
+
+        <div class="col">
+            {{ form_label(form.categorias_edades) }}
+            {{ form_widget(form.categorias_edades) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.categorias_edades) }}
+            </div>
+
+        </div>
+
+        <div class="col">
+            {{ form_label(form.estado) }}
+            {{ form_widget(form.estado) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.estado) }}
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            {{ form_label(form.efectores) }}
+            {{ form_widget(form.efectores) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.efectores) }}
+            </div>
+
+        </div>
+    </div>
+            
+    <div class="row">
         
-    <table>
-        <tr>
-            <th 
-                class="ri-tabla-titulolibre-left">RESULTADOS:
-            </th>
-            <th
-                class="ri-tabla-titulolibre-right">
-                {% if camas|length!=0 %}
-                    Fecha/Hora: {{ "now"|date('m/d/Y H:i','America/Argentina/Buenos_Aires') }}
-                {% endif %}
-            </th>
-        </tr>
-    </table>
+        <div class="col">
+            {{ form_label(form.salas) }}
+            {{ form_widget(form.salas) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.salas) }}
+            </div>
+
+        </div>
+
+        <div class="col">
+            {{ form_label(form.habitaciones) }}
+            {{ form_widget(form.habitaciones) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.habitaciones) }}
+            </div>
+
+        </div>
+            
+    </div>
+    
+    <div class="row">
+        <div class="col-md-1">
+            {{ form_label(form.bt_buscar) }}
+            {{ form_widget(form.bt_buscar) }}
+        </div>
+    </div>
+        
+    {{ form_end(form) }}
+    
+   
+    <div class="ri-container">
+        
+    <h4 style="margin-top: 20px;">RESULTADOS
+        {% if camas|length!=0 %}
+            (Fecha/Hora: {{ "now"|date('m/d/Y H:i','America/Argentina/Buenos_Aires') }})
+        {% endif %}
+    </h4>
             
             
     <table id="listadoscamas" cellspacing="10" width="100%">
         <thead>
             
             <tr>
-                <th>Efector
-                </th>
-                <th>Sala
-                </th>
-                <th>Habitación
-                </th>
-                <th>Cama
-                </th>
-                <th>Estado
-                </th>
-                <th>Clasificación
-                </th>
-                <th>Oxígeno
-                </th>
-                <th>Respirador
-                </th>
-                <th>Aislamiento
-                </th>
+                <th>Efector</th>
+                <th>Sala</th>
+                <th>Habitación</th>
+                <th>Cama</th>
+                <th>Estado</th>
+                <th>Clasificación</th>
+                <th>Oxígeno</th>
+                <th>Respirador</th>
+                <th>Aislamiento</th>
             </tr>
             
         </thead>
         
         
-        {% if camas|length!=0 %}
-            
-        <tfoot>
-            
-            <tr>
-                <th 
-                    class="ri-th-foot-left-lista">Efector
-                </th>
-                <th 
-                    class="ri-th-foot-left-lista">Sala
-                </th>
-                <th 
-                    class="ri-th-foot-left-lista">Habitación
-                </th>
-                <th 
-                    class="ri-th-foot-left-lista">Cama
-                </th>
-                <th 
-                    class="ri-th-foot-left-lista">Estado
-                </th>
-                <th 
-                    class="ri-th-foot-left-lista">Clasificación
-                </th>
-                <th 
-                    class="ri-th-foot-left-lista">Oxígeno
-                </th>
-                <th 
-                    class="ri-th-foot-left-lista">Respirador
-                </th>
-                <th 
-                    class="ri-th-foot-left-right-lista">Aislamiento
-                </th>
-            </tr>
-            
-        </tfoot>
-        
-        {% endif %}
-        
-        
         <tbody>
             {% for cama in camas %}
             <tr>
-                <td 
-                    class="ri-th-bottom-lista">{{ cama.idEfector.nomEfector }}
-                </td>
-                <td 
-                    class="ri-th-bottom-lista">{{ cama.idHabitacion.idSala.nombre }}
-                </td>
-                <td
-                    class="ri-th-bottom-lista">{{ cama.idHabitacion.nombre }}
-                </td>
-                <td
-                    class="ri-th-bottom-lista">{{ cama.nombre }}
-                </td>
+                <td>{{ cama.idEfector.nomEfector }}</td>
+                <td>{{ cama.idHabitacion.idSala.nombre }}</td>
+                <td>{{ cama.idHabitacion.nombre }}</td>
+                <td>{{ cama.nombre }}</td>
                 {# L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada #}
-                <td
-                    class="ri-th-bottom-lista">
+                <td>
                     {% if cama.estado == 'L' %}
                         LIBRE
                     {% endif %}
@@ -176,27 +212,22 @@
                         RESERVADA
                     {% endif %}
                 </td>
-                <td
-                    class="ri-th-bottom-lista">{{ cama.idClasificacionCama.clasificacionCama }}
-                </td>
-                <td
-                    class="ri-th-bottom-lista">
+                <td>{{ cama.idClasificacionCama.clasificacionCama }}</td>
+                <td>
                     {% if cama.idClasificacionCama.oxigeno %}
                         SI
                     {% else %}
                         NO
                     {% endif %}
                 </td>
-                <td
-                    class="ri-th-bottom-lista">
+                <td>
                     {% if cama.idClasificacionCama.respirador %}
                         SI
                     {% else %}
                         NO
                     {% endif %}
                 </td>
-                <td
-                    class="ri-th-bottom-lista">
+                <td>
                     {% if cama.idClasificacionCama.aislamiento %}
                         SI
                     {% else %}
@@ -208,8 +239,9 @@
                     
         </tbody>
     </table>
-            
-            
+          
+    </div>
+    </div>
             
             
     <script>

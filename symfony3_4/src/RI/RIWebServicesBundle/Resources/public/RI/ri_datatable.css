@@ -1,3 +1,32 @@
+li.active > .page-link {
+    color: white !important;
+}
+
+
+div.dt-buttons {
+    float:left;
+    padding-bottom: 4px;
+}
+
+div.dataTables_length{
+    padding-top: 7px !important;
+    padding-left: 4px;
+    float: left;
+}
+
+div.dataTables_filter{
+    padding-top: 7px !important;
+    float: right;
+}
+
+ul.pagination{
+    margin: 4px 0 !important;
+}
+
+table.dataTable {
+    margin: 0px 0px !important;
+}
+
 /* redefino thead th td */
 table.dataTable thead tr th {
     padding: 10px 15px;
@@ -32,9 +61,8 @@ table.dataTable tbody tr:nth-child(2n+1) td {
     background-color: #f9f9f9 !important;
 }
 
-.dataTables_length, .dataTables_filter{
-    padding-top: 10px !important;
-    padding-bottom: 0px !important;
+div.dataTables_info{
+    float: left;
 }
 
 .dataTables_length select{
@@ -61,6 +89,18 @@ table.dataTable tbody tr:nth-child(2n+1) td {
 
 div.dataTables_scrollBody {
     border: 1px solid #9f9d9d !important;
+}
+
+div.dataTables_wrapper{
+    padding-right: 0px !important;
+    padding-left: 0px !important; 
+}
+
+td.dataTables_empty{    
+    border-width: 1px !important;
+    border-top-width: 0px !important;
+    border-color: gray !important;
+    border-style: solid !important;
 }
 
 /* Censo Diario - borde lateral y margen inferior */

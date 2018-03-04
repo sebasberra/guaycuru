@@ -1,20 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    <link rel="stylesheet" href="{{ asset('bundles/riwebservices/RI/ri_orgchart.css') }}"/>
-
-{% endblock %}
-
-
 
 {% block cuerpo %} 
 
     <div class="row form">
         
-        <h2>Configuración Edilicia - Organigrama</h2>
-
+        <h3>Configuración Edilicia</h3>
+        <h4>Organigrama</h4>
+        
         {{ form_start(form) }}
         
         <div class="col-md-12">

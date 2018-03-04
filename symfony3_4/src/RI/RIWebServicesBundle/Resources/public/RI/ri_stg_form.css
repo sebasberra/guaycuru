@@ -1,5 +1,22 @@
+li.has-sub > ul > li > a:visited > span,
+li.has-sub > a:active > span,
+li.has-sub > a:visited > span,
+li.has-sub > a:hover > span{
+    color: white;
+}
+
+li.has-sub > ul > li > a:active > span,
+li.has-sub > ul > li > a:hover > span{
+    color: #09e1ec;
+}
+
 #cssmenu, #toolbars {
     width: -webkit-fill-available !important;
+}
+
+/*clase footer stg*/ 
+.footer {
+    width: inherit;    
 }
 
 form label{
@@ -53,11 +70,18 @@ button {
 } 
 
 form input[type="text"], form input[type="number"], form select, input[type="password"]{
+    margin-bottom: 1px !important;
     margin-left: 0px !important;
 }
 
+.row {
+    margin-top: 5px !important;
+}
+
 .row button {
+    margin-top: 5px !important;
     margin-left: 0px !important;
+    margin-bottom: 1px !important;
 }
 
 /** 
