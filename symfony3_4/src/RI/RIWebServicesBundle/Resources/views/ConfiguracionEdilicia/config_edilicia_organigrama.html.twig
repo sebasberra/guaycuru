@@ -3,61 +3,54 @@
 
 {% block cuerpo %} 
 
-    <div class="row form">
+    <div class="form container">
         
         <h3>Configuración Edilicia</h3>
         <h4>Organigrama</h4>
         
         {{ form_start(form) }}
         
-        <div class="col-md-12">
-            
-            {{ form_label(form.efectores) }}
-            {{ form_widget (form.efectores) }}
-            {{ form_errors (form.efectores) }}
-
-        </div>
-
-        
-        <div class="col-md-2" style="display: -webkit-box;">
-            
-            {{ form_label(form.zoom) }}
-            {{ form_widget (form.zoom, { 'attr': {'style': 'width: 20% !important'} }) }}
-            {{ form_errors (form.zoom) }}
-            
-        </div>
-            
-        <div class="col-md-2" style="display: -webkit-box;">
-            
-            {{ form_label(form.pan) }}
-            {{ form_widget (form.pan, { 'attr': {'style': 'width: 20% !important'} }) }}
-            {{ form_errors (form.pan) }}
-            
-        </div>
-            
         <div class="row">
+            <div class="col">
             
-            <div class="col-md-2">
+                {{ form_label(form.efectores) }}
+                {{ form_widget (form.efectores) }}
+                {{ form_errors (form.efectores) }}
+            </div>
+        </div>
+           
+        <div class="row">
+            <div class="col">
+                <div id="chart-container"></div>
+            </div>
+        </div>
+                
+        <div class="row">
+            <div 
+                class="col" 
+                style="display: -webkit-box;">
 
-                {{ form_label(form.bt_ver) }}
-                {{ form_widget (form.bt_ver) }}
+                {{ form_label(form.zoom) }}
+                {{ form_widget (form.zoom, { 'attr': {'style': 'width: 20% !important'} }) }}
+                {{ form_errors (form.zoom) }}
+
+            </div>
+                
+            <div 
+                class="col" 
+                style="display: -webkit-box;">
+
+                {{ form_label(form.pan) }}
+                {{ form_widget (form.pan, { 'attr': {'style': 'width: 20% !important'} }) }}
+                {{ form_errors (form.pan) }}
 
             </div>
         </div>
+        
         {{ form_end(form) }}
-        
-    </div>
     
-    {% if config_edilicia is null or config_edilicia is empty %}
+    </div>    
     
-    {% else %}
-        
-    <div id="chart-container">
-
-
-    </div>
-
-        
     
     <script>
         
@@ -86,6 +79,7 @@
     
         );
 
+        
         /**
         * Recarga el organigrama
         */
@@ -111,11 +105,11 @@
 
        }
 
-
-       /**
-       * Recarga el div del organigrama
+        
+        /**
+        * Recarga el div del organigrama
         */
-       function reloadDivChartContainer(json){
+        function reloadDivChartContainer(json){
 
            $('#chart-container').html('');
 
@@ -123,13 +117,13 @@
 
                 'data': json,
                 'nodeContent': 'title',
-                'direction': '{{ config_orgchart.direccion }}',
-                'zoom': '{{ config_orgchart.zoom }}',
-                'pan': '{{ config_orgchart.pan }}',
+                'direction': '{% if config_edilicia is not null and config_edilicia is not empty %}{{ config_orgchart.direccion }}{% endif %}',
+                'zoom': '{% if config_edilicia is not null and config_edilicia is not empty %}{{ config_orgchart.zoom }}{% endif %}',
+                'pan': '{% if config_edilicia is not null and config_edilicia is not empty %}{{ config_orgchart.pan }}{% endif %}',
                 'exportButton': false,
                 'exportFilename': 'ri_configuracion_edilicia',
-                'exportFileextension': '{{ config_orgchart.export_file_extension }}',
-                'verticalLevel': '{{ config_orgchart.verticalLevel }}',
+                'exportFileextension': '{% if config_edilicia is not null and config_edilicia is not empty %}{{ config_orgchart.export_file_extension }}{% endif %}',
+                'verticalLevel': '{% if config_edilicia is not null and config_edilicia is not empty %}{{ config_orgchart.verticalLevel }}{% endif %}',
                 'visibleLevel': 2,
 
                'createNode': function($node, data) {
@@ -201,10 +195,8 @@
            $(".fa-users").removeClass();
 
 
-       }
-    
+        }
+                    
     </script>
-
-    {% endif %}
     
 {% endblock %}

@@ -30,51 +30,6 @@ class SETConsultaType extends AbstractType
         
         $builder
             ->add(
-                    'tipos_cuidados_progresivos', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                    array(
-                        'label'   => 'Cuidado Progresivo:',
-                        'choices' => array(
-                            'TODOS' => '-1',
-                            'MODERADO' => '0',
-                            'INTERMEDIO' => '1',
-                            'CRITICO' => '2'
-                        ),
-                        'data'  => '-1'
-                    )
-                )
-            ->add(
-                    'categorias_edades', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                    array(
-                        'label'   => 'Edad:',
-                        'choices' => array(
-                            'TODAS' => '-1',
-                            'ADULTO' => 'ADU',
-                            'PEDIATRICA' => 'PED',
-                            'NEONATOLOGIA' => 'NEO'
-                        ),
-                        'data'  => '-1'
-                    )
-                )
-            ->add(
-                    'estado', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                    array(
-                        'label'   => 'Estado: ',
-                        'choices' => array(
-                            'TODOS' => '-1',
-                            'LIBRE' => 'L',
-                            'OCUPADA' => 'O',
-                            'FUERA DE SERVICIO' => 'F',
-                            'EN REPARACION' => 'R',
-                            'RESERVADA' => 'V'                            
-                        ),
-                        'data'  => 'L'
-                    
-                    )
-                )
-            ->add(
                     'efectores', 
                     EntityType::class, 
                     array(
@@ -138,10 +93,55 @@ class SETConsultaType extends AbstractType
                     )
             )
             ->add(
-                    'bt_buscar', 
+                    'tipos_cuidados_progresivos', 
+                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    array(
+                        'label'   => 'Cuidado Progresivo:',
+                        'choices' => array(
+                            'TODOS' => '-1',
+                            'MODERADO' => '0',
+                            'INTERMEDIO' => '1',
+                            'CRITICO' => '2'
+                        ),
+                        'data'  => '-1'
+                    )
+                )
+            ->add(
+                    'categorias_edades', 
+                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    array(
+                        'label'   => 'Edad:',
+                        'choices' => array(
+                            'TODAS' => '-1',
+                            'ADULTO' => 'ADU',
+                            'PEDIATRICA' => 'PED',
+                            'NEONATOLOGIA' => 'NEO'
+                        ),
+                        'data'  => '-1'
+                    )
+                )
+            ->add(
+                    'estado', 
+                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    array(
+                        'label'   => 'Estado: ',
+                        'choices' => array(
+                            'TODOS' => '-1',
+                            'LIBRE' => 'L',
+                            'OCUPADA' => 'O',
+                            'FUERA DE SERVICIO' => 'F',
+                            'EN REPARACION' => 'R',
+                            'RESERVADA' => 'V'                            
+                        ),
+                        'data'  => 'L'
+                    
+                    )
+                )
+            ->add(
+                    'bt_ver', 
                     'Symfony\Component\Form\Extension\Core\Type\SubmitType',
                     array(
-                        'label' => 'Buscar'
+                        'label' => 'Ver'
                     )
             )
             ->addEventListener(

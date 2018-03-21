@@ -62,7 +62,7 @@
     {%- endif -%}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
         
-        {% if name == 'bt_buscar' %}
+        {% if name == 'bt_ver' %}
                 <i class="fas fa-sync"></i>
         {% endif %}
         
@@ -81,38 +81,6 @@
     
         
     {{ form_start(form) }}
-    
-    <div class="row">
-        <div class="col">
-            {{ form_label(form.tipos_cuidados_progresivos) }}
-            {{ form_widget(form.tipos_cuidados_progresivos) }}
-
-            <div class="ri_twig_form_errors">
-                {{ form_errors(form.tipos_cuidados_progresivos) }}
-            </div>
-
-        </div>
-
-        <div class="col">
-            {{ form_label(form.categorias_edades) }}
-            {{ form_widget(form.categorias_edades) }}
-
-            <div class="ri_twig_form_errors">
-                {{ form_errors(form.categorias_edades) }}
-            </div>
-
-        </div>
-
-        <div class="col">
-            {{ form_label(form.estado) }}
-            {{ form_widget(form.estado) }}
-
-            <div class="ri_twig_form_errors">
-                {{ form_errors(form.estado) }}
-            </div>
-
-        </div>
-    </div>
     
     <div class="row">
         <div class="col">
@@ -149,14 +117,39 @@
         </div>
             
     </div>
-    
+            
     <div class="row">
-        <div class="col-md-1">
-            {{ form_label(form.bt_buscar) }}
-            {{ form_widget(form.bt_buscar) }}
+        <div class="col">
+            {{ form_label(form.tipos_cuidados_progresivos) }}
+            {{ form_widget(form.tipos_cuidados_progresivos) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.tipos_cuidados_progresivos) }}
+            </div>
+
+        </div>
+
+        <div class="col">
+            {{ form_label(form.categorias_edades) }}
+            {{ form_widget(form.categorias_edades) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.categorias_edades) }}
+            </div>
+
+        </div>
+
+        <div class="col">
+            {{ form_label(form.estado) }}
+            {{ form_widget(form.estado) }}
+
+            <div class="ri_twig_form_errors">
+                {{ form_errors(form.estado) }}
+            </div>
+
         </div>
     </div>
-        
+            
     {{ form_end(form) }}
     
    

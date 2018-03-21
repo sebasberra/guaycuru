@@ -85,14 +85,7 @@ class ConfiguracionEdiliciaType extends AbstractType
                         'label'   => 'Mover:',
                         'required' => false
                     )
-                )
-            ->add(
-                    'bt_ver', 
-                    SubmitType::class,
-                    array(
-                        'label' => 'Ver'
-                    )
-            );
+                );
     }
     
        

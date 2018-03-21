@@ -51,38 +51,6 @@ class ConfiguracionEdiliciaController extends Controller
                     'RI\RIWebServicesBundle\Form\ConfiguracionEdilicia\ConfiguracionEdiliciaType');
             
 
-            $form->handleRequest($request);
-            
-            // check submit
-            if ($form->isSubmitted() && 
-                    $form->isValid()) {
-
-
-                
-                $param = $form->getData();
-                
-                $id_efector = 
-                        $param['efectores']->getIdEfector();
-           
-                $config_edilicia = RIUtiles::getSalasHabCamasChoices($id_efector);
-                
-                $config_orgchart = array(
-                    
-                    /* The available values are 
-                     * t2b(implies "top to bottom", it's default value), 
-                     * b2t(implies "bottom to top"), 
-                     * l2r(implies "left to right"), 
-                     * r2l(implies "right to left"). */
-                    'direccion'                 => 't2b',
-                    'zoom'                      => $param['zoom'],
-                    'pan'                       => $param['pan'],
-                    'verticalLevel'               => 5,
-                    'export_file_extension'     => 'false'
-                        
-                    );
-                
-            }
-
         }catch(\Exception $e){
             
             $msg = 'Desconocido';
