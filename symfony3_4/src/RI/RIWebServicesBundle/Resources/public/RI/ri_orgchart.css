@@ -69,53 +69,53 @@ table td {
 
 /* efector */
 .orgchart .ri-orgchart-efector {
-    width: 280px;
+    width: 280px !important;
 }
 
 .orgchart .ri-orgchart-efector .title {
-    background-color: #505d9e;
+    background-color: #505d9e !important;
 }
 
 .orgchart .ri-orgchart-efector .content {
-    border-color: #505d9e;
+    border-color: #505d9e !important;
 }
 
 /* sala */
 .orgchart .ri-orgchart-sala {
-    width: 180px;
+    width: 180px !important;
 }
 
 .orgchart .ri-orgchart-sala .title {
-  background-color: #da706d;
+  background-color: #da706d !important;
 }
 
 .orgchart .ri-orgchart-sala .content {
-  border-color: #da706d;
+  border-color: #da706d !important;
 }
 
 .orgchart .ri-orgchart-sala-baja {
-    width: 180px;
+    width: 180px !important;
 }
 
 .orgchart .ri-orgchart-sala-baja .title {
-  background-color: red;
+  background-color: red !important;
 }
 
 .orgchart .ri-orgchart-sala-baja .content {
-  border-color: red;
+  border-color: red !important;
 }
 
 /* servicio - sala */
 .orgchart .ri-orgchart-servicio-sala {
-    width: 200px;
+    width: 200px !important;
 }
 
 .orgchart .ri-orgchart-servicio-sala-baja {
-    width: 200px;
+    width: 200px !important;
 }
 
 .orgchart .ri-orgchart-servicio-sala .title {
-  background-color: #09e1ec;
+  background-color: #09e1ec !important;
   border-color: #a1c5f3 !important;
   border-top-style: solid;
   border-top-width: 1px;
@@ -123,29 +123,29 @@ table td {
   border-left-width: 1px;
   border-right-style: solid;
   border-right-width: 1px;
-  color: #383838;
+  color: #383838 !important;
 }
 
 .orgchart .ri-orgchart-servicio-sala .content {
-  border-color: #a1c5f3;
+  border-color: #a1c5f3 !important;
 }
 
 .orgchart .ri-orgchart-servicio-sala-baja .title {
-  background-color: red;
+  background-color: red !important;
 }
 
 .orgchart .ri-orgchart-servicio-sala-baja .content {
-  border-color: red;
+  border-color: red !important;
 }
 
 /* efector_servicio */
 .orgchart .ri-orgchart-efector-servicio {
-    width: 200px;
+    width: 200px !important;
 }
 
 
 .orgchart .ri-orgchart-efector-servicio .title {
-  background-color: black;
+  background-color: black !important;
   border-color: black !important;
   border-top-style: solid;
   border-top-width: 1px;
@@ -153,77 +153,77 @@ table td {
   border-left-width: 1px;
   border-right-style: solid;
   border-right-width: 1px;
-  color: white;
+  color: white !important;
 }
 
 .orgchart .ri-orgchart-efector-servicio-baja {
-    width: 200px;
+    width: 200px !important;
 }
 
 .orgchart .ri-orgchart-efector-servicio-baja .title {
-  background-color: red;
+  background-color: red !important;
 }
 
 .orgchart .ri-orgchart-efector-servicio .content {
-  border-color: black;
+  border-color: black !important;
 }
 
 .orgchart .ri-orgchart-efector-servicio-baja .content {
-  border-color: #a1c5f3;
+  border-color: #a1c5f3 !important;
 }
 
 
 
 /* habitacion */
 .orgchart .ri-orgchart-habitacion .title {
-  background-color: #d6ab6b;
-  color: #383838;
+  background-color: #d6ab6b !important;
+  color: #383838 !important;
 }
 .orgchart .ri-orgchart-habitacion .content {
-  border-color: #d6ab6b;
+  border-color: #d6ab6b !important;
 }
 
 .orgchart .ri-orgchart-habitacion-baja .title {
-  background-color: red;
+  background-color: red !important;
 }
 .orgchart .ri-orgchart-habitacion-baja .content {
-  border-color: red;
+  border-color: red !important;
 }
 
 /* camas */
 .orgchart .ri-orgchart-cama-baja .title {
-  background-color: red;
+  background-color: red !important;
 }
 .orgchart .ri-orgchart-cama-baja .content {
-  border-color: red;
+  border-color: red !important;
 }
 
 .orgchart .ri-orgchart-cama-libre .title {
-  background-color: #009933;
+  background-color: #009933 !important;
 }
 .orgchart .ri-orgchart-cama-libre .content {
-  border-color: #009933;
+  border-color: #009933 !important;
 }
 
 .orgchart .ri-orgchart-cama-ocupada .title {
-  background-color: #009933;
+  background-color: #009933 !important;
 }
 .orgchart .ri-orgchart-cama-ocupada .content {
-  border-color: #009933;
+  border-color: #009933 !important;
 }
 
 .orgchart .ri-orgchart-cama-fuera .title {
-  background-color: #009933;
+  background-color: #009933 !important;
 }
 .orgchart .ri-orgchart-cama-fuera .content {
-  border-color: #009933;
+  border-color: #009933 !important;
 }
 
 .orgchart .ri-orgchart-cama-default .title {
-  background-color: #009933;
+  background-color: #009933 !important;
 }
 .orgchart .ri-orgchart-cama-default .content {
-  border-color: #009933;
+  border-color: #009933 !important;
 }
 
 .orgchart .ri-orgchart-efector ul {
@@ -233,8 +233,8 @@ table td {
     border: 1px solid #c78482;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    border-color: #505d9e;
-    background-color: #e2e1dd;
+    border-color: #505d9e !important;
+    background-color: #e2e1dd !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -248,7 +248,7 @@ table td {
     border: 1px solid #da706d;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: #dec8c9;
+    background-color: #dec8c9 !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -262,8 +262,8 @@ table td {
     border: 1px solid red;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -278,7 +278,7 @@ table td {
     border: 1px solid #a1c5f3;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: #b0f5f0;
+    background-color: #b0f5f0 !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -292,8 +292,8 @@ table td {
     border: 1px solid red;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -309,12 +309,12 @@ table td {
     border: 1px solid black;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: darkgray;
+    background-color: darkgray !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
     
-    color: black;
+    color: black !important;
     
 }
 
@@ -325,8 +325,8 @@ table td {
     border: 1px solid red;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -341,7 +341,7 @@ table td {
     border: 1px solid #d6ab6b;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: #e8e2da;
+    background-color: #e8e2da !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -355,8 +355,8 @@ table td {
     border: 1px solid red;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -372,8 +372,8 @@ table td {
     border: 1px solid red;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
     
     padding-top: 3px;
     padding-bottom: 3px;
@@ -389,7 +389,7 @@ table td {
     border: 1px solid #009933;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: #c5d6c9;
+    background-color: #c5d6c9 !important;
     
     padding-top: 2px;
     padding-bottom: 2px;
@@ -403,7 +403,7 @@ table td {
     border: 1px solid #009933;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: #e0c3dc;
+    background-color: #e0c3dc !important;
     
     padding-top: 2px;
     padding-bottom: 2px;
@@ -417,7 +417,7 @@ table td {
     border: 1px solid #009933;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background-color: #f5fb9e;
+    background-color: #f5fb9e !important;
     
     padding-top: 2px;
     padding-bottom: 2px;
@@ -447,7 +447,7 @@ table td {
     margin-top: 10px !important;
     z-index: 9999 !important;
     background-color: #108a97 !important;
-    color: white;
+    color: white !important;
     border: 0px;
     opacity: 0.1;
 

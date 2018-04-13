@@ -21,3 +21,8 @@ ri_ajax:
     resource: "@RIWebServicesBundle/Controller/Ajax/AjaxController.php"
     type:     annotation
     prefix:   /ajax
+    
+ri_ayuda:
+    resource: "@RIWebServicesBundle/Controller/Ayuda/AyudaController.php"
+    type:     annotation
+    prefix:   /ayuda

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block cuerpo %} 
+    <div class="form container">
+
+        <h3>Ayuda</h3>
+        <h4>Acerca De</h4>
+        
+        <div class="row">
+            <div class="col">
+                
+                Desarrollado por la Sectorial de Informática
+                
+            </div>
+            <div class="col">
+    
+                Versión: {{ major }}.{{ minor }}.{{ revision }}
+                    
+            </div>
+            
+        </div>
+                
+    
+                
+        <table>
+            <tr>
+                <th class="ri-tabla-titulo1" colspan="2">
+                    Datos integrados
+                </th>
+            </tr>
+            <tr>
+                <th class="ri-tabla-titulo2">
+                    id_efector
+                </th>
+                <th class="ri-tabla-titulo2">
+                    Observación
+                </th>
+            </tr>
+            {% for configuracion_sistema in configuraciones_sistemas %}
+            <tr>
+                <td class="ri-tabla-lista">
+                    {{ configuracion_sistema.idEfector.idEfector }}
+                </td>
+                <td class="ri-tabla-lista">
+                    {{ configuracion_sistema.observaciones }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    
+    </div>
+        
+{% endblock %}

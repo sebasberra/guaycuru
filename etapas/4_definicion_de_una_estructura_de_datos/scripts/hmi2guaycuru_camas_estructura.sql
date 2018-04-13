@@ -293,3 +293,26 @@ CREATE TABLE IF NOT EXISTS servicios_salas (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COMMENT = 'servicios de 5 digitos habilitados en la sala';
+
+-- -----------------------------------------------------
+-- Table configuraciones_sistemas
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS configuraciones_sistemas ;
+
+CREATE TABLE IF NOT EXISTS configuraciones_sistemas (
+  id_configuracion_sistema INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID autoincremental',
+  id_efector INT UNSIGNED NOT NULL COMMENT 'Identificativo de efector correspondiente a mod_sims.d_establecimiento.id_establecimiento',
+  activa TINYINT(1) NOT NULL COMMENT 'Efector activo o no en el sistema',
+  tipo_registros TINYINT(1) NOT NULL COMMENT 'Define el tipo de registro que se cargan(ABM) o se actualizan por ws del efector. 0=abm; 1=ws;',
+  fecha_hora_sincro DATETIME NULL DEFAULT NULL COMMENT 'NULL si el campo tipo_registros=0 o la fecha y hora de la ultima sincronizacion de los datos por ws si tipo_registros=1',
+  observaciones VARCHAR(255) NULL DEFAULT NULL COMMENT 'Observaciones',
+  PRIMARY KEY (id_configuracion_sistema),
+  INDEX idx_fk_configuraciones_sistemas_id_efector (id_efector ASC),
+  CONSTRAINT fk_configuraciones_sistemas_id_efector
+    FOREIGN KEY (id_efector)
+    REFERENCES efectores (id_efector)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB
+DEFAULT CHARACTER SET = latin1
+COMMENT = 'activa el efector donde se esta corriendo el hmi2';

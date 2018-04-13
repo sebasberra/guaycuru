@@ -9,7 +9,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use RI\RIWebServicesBundle\Utils\RI\RI;
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
@@ -94,7 +95,7 @@ class SETConsultaType extends AbstractType
             )
             ->add(
                     'tipos_cuidados_progresivos', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    ChoiceType::class,
                     array(
                         'label'   => 'Cuidado Progresivo:',
                         'choices' => array(
@@ -108,7 +109,7 @@ class SETConsultaType extends AbstractType
                 )
             ->add(
                     'categorias_edades', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    ChoiceType::class,
                     array(
                         'label'   => 'Edad:',
                         'choices' => array(
@@ -122,7 +123,7 @@ class SETConsultaType extends AbstractType
                 )
             ->add(
                     'estado', 
-                    'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                    ChoiceType::class,
                     array(
                         'label'   => 'Estado: ',
                         'choices' => array(
@@ -139,7 +140,7 @@ class SETConsultaType extends AbstractType
                 )
             ->add(
                     'bt_ver', 
-                    'Symfony\Component\Form\Extension\Core\Type\SubmitType',
+                    SubmitType::class,
                     array(
                         'label' => 'Ver'
                     )

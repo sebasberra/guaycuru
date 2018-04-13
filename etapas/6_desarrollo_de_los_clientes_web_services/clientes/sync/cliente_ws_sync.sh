@@ -20,4 +20,4 @@
 mysql -uroot evaperon_hmi2_20170912 <informe_confedilicia.sql | sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/" >confedilicia.csv
 
 # Genera una peticion(Request) POST con el archivo "confedilicia.csv" como "BODY"
-curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8004/sync.json 
+curl --data-binary @confedilicia.csv -H 'Content-type:text/plain; charset=utf-8' http://localhost:8005/sync.json 

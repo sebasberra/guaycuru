@@ -10,8 +10,10 @@
  */
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 use RI\RIWebServicesBundle\Utils\RI\RIUtiles;
 
@@ -145,97 +147,132 @@ class CamasRepository extends EntityRepository
             $id_sala=-1,
             $id_habitacion=-1){
         
-        // camas por sala
-        $dql =
-            "SELECT "
-                ."c, e, cc, h, s "
-            ."FROM "
-                .RIUtiles::DB_BUNDLE.":Camas c "
-            ."INNER JOIN "
-                ."c.idEfector e "
-            ."INNER JOIN "
-                ."c.idClasificacionCama cc "
-            ."INNER JOIN "
-                ."c.idHabitacion h "
-            ."LEFT JOIN "
-                ."h.idSala s "
-            ."WHERE "
-                ."c.idEfector = e.idEfector "
-            ."AND c.idClasificacionCama = cc.idClasificacionCama "
-            ."AND c.idHabitacion = h.idHabitacion "
-            ."AND h.idSala = s.idSala ";
+        
+        $sql =
+            'SELECT '
+                .'c.id_cama, '
+                .'c.nombre AS nombre_cama, '
+                .'c.estado, '
+                .'c.fecha_modificacion, '
+                
+                .'cc.id_clasificacion_cama, '
+                .'cc.clasificacion_cama, '
+                .'cc.tipo_cuidado_progresivo, '
+                .'cc.categoria_edad, '
+                .'cc.oxigeno, '
+                .'cc.respirador, '
+                .'cc.aislamiento, '
+                
+                .'e.id_efector, '
+                .'e.nom_efector, '
+                
+                .'s.id_sala, '
+                .'s.nombre AS nombre_sala, '
+                
+                .'h.id_habitacion, '
+                .'h.nombre AS nombre_habitacion,'
+                
+                .'cs.id_configuracion_sistema, '
+                .'cs.activa, '
+                .'cs.fecha_hora_sincro '
+
+            .'FROM '
+                .'camas c '
+
+            .'INNER JOIN '
+                .'clasificaciones_camas cc '
+            .'ON c.id_clasificacion_cama = cc.id_clasificacion_cama '
+                
+            .'INNER JOIN '
+                .'efectores e '
+            .'ON c.id_efector = e.id_efector '
+
+            .'INNER JOIN '
+                .'configuraciones_sistemas cs '
+            .'ON c.id_efector = cs.id_efector '
+                
+            .'LEFT JOIN '
+                .'habitaciones h '
+            .'ON c.id_habitacion = h.id_habitacion '
+                
+            .'LEFT JOIN '
+                .'salas s '
+            .'ON h.id_sala = s.id_sala '
             
+            .'WHERE '
+                .'cs.activa = 1 ';
         
         try{
             
-            
-            
             if ($tipo_cuidado_progresivo!='-1'){
             
-                $dql.='AND cc.tipoCuidadoProgresivo = :tipo_cuidado_progresivo ';
+                $sql.='AND cc.tipo_cuidado_progresivo = :tipo_cuidado_progresivo ';
             }
             
             if ($categoria_edad!='-1'){
             
-                $dql.='AND cc.categoriaEdad = :categoria_edad ';
+                $sql.='AND cc.categoria_edad = :categoria_edad ';
             }
             
             if ($estado!='-1'){
                 
-                $dql.='AND c.estado = :estado ';
+                $sql.='AND c.estado = :estado ';
             }
             
             if ($id_efector!='-1'){
                 
-                $dql.='AND c.idEfector = :id_efector ';
+                $sql.='AND c.id_efector = :id_efector ';
             }
             
             if ($id_sala!='-1'){
                 
-                $dql.='AND h.idSala = :id_sala ';
+                $sql.='AND h.id_sala = :id_sala ';
             }
             
             if ($id_habitacion!='-1'){
                 
-                $dql.='AND h.idHabitacion = :id_habitacion ';
+                $sql.='AND h.id_habitacion = :id_habitacion ';
             }
             
             
-            $query = $this->getEntityManager()->createQuery($dql);
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
             
             
             if ($tipo_cuidado_progresivo!='-1'){
             
-                $query->setParameter("tipo_cuidado_progresivo", $tipo_cuidado_progresivo);
+                $stmt->bindValue("tipo_cuidado_progresivo", $tipo_cuidado_progresivo);
             }
             
             if ($categoria_edad!='-1'){
             
-                $query->setParameter("categoria_edad", $categoria_edad);
+                $stmt->bindValue("categoria_edad", $categoria_edad);
             }
             
             if ($estado!='-1'){
                 
-                $query->setParameter("estado", $estado);
+                $stmt->bindValue("estado", $estado);
             }
             
             if ($id_efector!='-1'){
                 
-                $query->setParameter("id_efector", $id_efector);
+                $stmt->bindValue("id_efector", $id_efector);
             }
             
             if ($id_sala!='-1'){
                 
-                $query->setParameter("id_sala", $id_sala);
+                $stmt->bindValue("id_sala", $id_sala);
             }
             
             if ($id_habitacion!='-1'){
                 
-                $query->setParameter("id_habitacion", $id_habitacion);
+                $stmt->bindValue("id_habitacion", $id_habitacion);
             }
             
-            $camas = $query->getResult();
             
+            $stmt->execute();
+
+            $camas = $stmt->fetchAll();
+                    
         } catch (\Exception $e) {
 
             throw $e;

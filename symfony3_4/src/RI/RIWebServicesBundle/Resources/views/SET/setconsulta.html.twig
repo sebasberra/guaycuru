@@ -14,13 +14,20 @@
                 ordering: true,
                 stateSave: true,
                 lengthMenu: [ 
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "Todo"]
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "Todo"]
                 ],
                 fixedHeader: {
                     header: true,
                     footer: true
                 },
+                columnDefs: [
+
+                    {
+                        targets: [2,9],
+                        visible: false
+                    }
+                ],
                 language: {
                     url: "{{ asset('bundles/riwebservices/DataTables/espanol.json') }}",
                     buttons: {
@@ -28,12 +35,44 @@
                         colvisRestore: 'Restaurar'
                     }
                 },
-                dom: 'Blfrtip',
+                dom: "Blft<'row'<'col-md-6 p-0'i><'col-md-6 p-0'p>>",
                 buttons: [
+            
+                    {
+                        extend: 'copyHtml5',
+                        text: '<i class="fas fa-copy"></i>',
+                        titleAttr: 'Copiar',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    
+                    {
+                    extend: 'csvHtml5',
+                    text: '<i class="fas fa-file-excel"></i>',
+                    titleAttr: 'CSV',
+                    fieldSeparator: ';',
+                    fieldBoundary: '"',
+                    exportOptions: {
+                        columns: ':visible'
+                        }
+                    },
+                    
+                    {
+                        extend: 'print',
+                        footer: true,
+                        text: '<i class="fa fa-print"></i>',
+                        titleAttr: 'Imprimir',
+                        exportOptions: {
+                            columns: ':visible',
+                        }
+                    },
+                    
                     {
                         extend: 'colvis',
                         postfixButtons: ['colvisRestore']
                     }
+                    
                 ]
 
             });
@@ -150,6 +189,12 @@
         </div>
     </div>
             
+    <div class="row">
+        <div class="col-md-1">
+            {{ form_widget (form.bt_ver) }}
+        </div>
+    </div>
+        
     {{ form_end(form) }}
     
    
@@ -175,6 +220,8 @@
                 <th>Oxígeno</th>
                 <th>Respirador</th>
                 <th>Aislamiento</th>
+                <th>Fecha/Hora modificación</th>
+                <th>Fecha/Hora sincronización</th>
             </tr>
             
         </thead>
@@ -183,10 +230,10 @@
         <tbody>
             {% for cama in camas %}
             <tr>
-                <td>{{ cama.idEfector.nomEfector }}</td>
-                <td>{{ cama.idHabitacion.idSala.nombre }}</td>
-                <td>{{ cama.idHabitacion.nombre }}</td>
-                <td>{{ cama.nombre }}</td>
+                <td>{{ cama.nom_efector }}</td>
+                <td>{{ cama.nombre_sala }}</td>
+                <td>{{ cama.nombre_habitacion }}</td>
+                <td>{{ cama.nombre_cama }}</td>
                 {# L=libre; O=ocupada; F=fuera de servicio; R=en reparacion; V=reservada #}
                 <td>
                     {% if cama.estado == 'L' %}
@@ -205,28 +252,36 @@
                         RESERVADA
                     {% endif %}
                 </td>
-                <td>{{ cama.idClasificacionCama.clasificacionCama }}</td>
+                <td>{{ cama.clasificacion_cama }}</td>
                 <td>
-                    {% if cama.idClasificacionCama.oxigeno %}
+                    {% if cama.oxigeno %}
                         SI
                     {% else %}
                         NO
                     {% endif %}
                 </td>
                 <td>
-                    {% if cama.idClasificacionCama.respirador %}
+                    {% if cama.respirador %}
                         SI
                     {% else %}
                         NO
                     {% endif %}
                 </td>
                 <td>
-                    {% if cama.idClasificacionCama.aislamiento %}
+                    {% if cama.aislamiento %}
                         SI
                     {% else %}
                         NO
                     {% endif %}
                 </td>
+                <td>{{ cama.fecha_modificacion }}</td>
+                <td>{% if cama.fecha_hora_sincro == null %}
+                        En Línea
+                    {% else %}
+                        {{ cama.fecha_hora_sincro }}
+                    {% endif %}
+                </td>
+                    
             </tr>
             {% endfor %}
                     

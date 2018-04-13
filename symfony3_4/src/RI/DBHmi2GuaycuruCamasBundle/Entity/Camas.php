@@ -161,9 +161,8 @@ class Camas
      * })
      */
     private $idHabitacion;
-
-
-
+    
+    
     /**
      * Get idCama
      *
@@ -389,7 +388,7 @@ class Camas
     {
         return $this->idHabitacion;
     }
-    
+        
     /**
      * Implementación __toString
      *

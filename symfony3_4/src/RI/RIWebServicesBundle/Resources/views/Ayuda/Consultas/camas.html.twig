@@ -1,0 +1,257 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        
+        table.columnas > tbody > tr > td, table.columnas > thead > tr > th{
+            font-size: smaller !important;
+        }
+        
+        .h5 {
+            border-bottom: 1px solid #ccc1c1;
+            font-weight: 600;
+            background-color: #b7e8e8;
+            padding-bottom: 5px !important;
+        }
+        
+        td {
+            font-size: 1rem !important;
+        }
+        
+        .list-group{
+            font-size: smaller;
+        }
+        .list-group-item{
+            background-color: rgb(228, 229, 230)
+        }
+    </style>
+    
+{% endblock %}
+         
+{% block cuerpo %} 
+    <div class="form container">
+
+        <h3>Ayuda</h3>
+        <h4>Consultas - Camas</h4>
+                
+        <table class="table" style="margin: 0px;">
+            
+            <th id='introduccion' class="h4">Introducción</th>
+            
+            <tr><td>
+                La consulta obtiene de forma rápida un reporte del estado
+                actual de la dotación de camas de los efectores que estén interconectados
+                a la Red Internación de la Provincia de Santa Fe.
+            </td></tr>
+            
+            <th id='descripcion' class="h4">Descripción</th>
+            <tr><td>
+                El formulario está compuesto por los filtros de búsqueda y por la
+                tabla de resultados, esta última a su vez, contiene funciones de 
+                exportación, filtrado y paginado de datos.
+            </td></tr>
+            <tr><td>
+                <img src="{{ asset('bundles/riwebservices/RI/images/ayuda_consulta_camas1.jpg') }}">
+            </td></tr>
+            
+            <th id='filtros' class="h4">Filtros de búsqueda<a href='#introduccion'><i class="fas fa-home float-right"></i></a></th>
+            <tr><td class="h5">Efector</td></tr>
+            <tr><td>Si deja esta casilla en blanco, entonces la consulta se realiza sobre todos los hospitales. 
+                    Si desea restringir la consulta a un solo efector, elija uno de la lista desplegable.</td></tr>
+            <tr><td class="h5">Salas</td></tr>
+            <tr><td>Si selecciona un hospital de la lista de efectores, entonces se 
+                    cargan automáticamente las salas en el correspondiente listado. 
+                    Luego si desea filtrar la búsqueda a una sala determinada, entonces 
+                    seleccione una de la lista o en caso contrario deje la casilla
+                    en blanco.</td></tr>
+            <tr><td class="h5">Habitaciones</td></tr>
+            <tr><td>Si selecciona un hospital de la lista de efectores, y a su vez selecciona
+                    una sala, entonces se cargan automáticamente las habitaciones en el 
+                    listado correspondiente. Luego si desea filtrar la búsqueda a una 
+                    determinada habitación, entonces elija una de la lista o en caso contrario
+                    deje la casilla en blanco.</td></tr>
+            <tr><td class="h5">Cuidado Progresivo y Edad</td></tr>
+            <tr><td>Las camas se clasifican según están compuestas. 
+                    Por ejemplo: si tienen respirador, oxígeno, o si son pediátricas 
+                    o para adultos, entre otras.
+            </td></tr>
+            <tr><td>Clasificación de camas
+            <div class="row">
+                
+                <div class="col">
+                    <ul class="list-group">
+                        <li class="list-group-item">CRITICAS ADULTOS C/RESPIRADOR</li>                  
+                        <li class="list-group-item">CRITICAS ADULTOS C/OXIGENO</li>   
+                        <li class="list-group-item">CRITICAS ADULTOS AISLAMIENTO C/RESPIRADOR</li>
+                        <li class="list-group-item">CRITICAS PEDIATRICAS C/RESPIRADOR</li>              
+                        <li class="list-group-item">CRITICAS PEDIATRICAS C/OXIGENO</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group" style="font-size: smaller;">
+                        <li class="list-group-item">CRITICAS PEDIATRICAS AISLAMIENTO C/RESPIRADOR</li>
+                        <li class="list-group-item">CRITICAS NEONATOLOGICAS</li>          
+                        <li class="list-group-item">INTERNACION GRAL ADULTOS C/OXIGENO</li>
+                        <li class="list-group-item">INTERNACION GRAL ADULTOS AISLAMIENTO C/OXIGENO</li>
+                        <li class="list-group-item">INTERNACION GRAL PEDIATRICA C/OXIGENO</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group" style="font-size: smaller;">
+                        <li class="list-group-item">INTERNACION GRAL PEDIATRICA C/OXIGENO</li>
+                        <li class="list-group-item">INTERNACION GRAL PEDIATRICA AISLAMIENTO C/OXIGENO</li>
+                        <li class="list-group-item">INTERNACION GRAL ADULTOS S/OXIGENO</li>
+                        <li class="list-group-item">INTERNACION GRAL ADULTOS AISLAMIENTO S/OXIGENO</li>
+                        <li class="list-group-item">INTERNACION GRAL PEDIATRICA S/OXIGENO</li> 
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group" style="font-size: smaller;">            
+                        <li class="list-group-item">INTERNACION GRAL PEDIATRICA AISLAMIENTO S/OXIGENO</li>
+                        <li class="list-group-item">C. MODERADOS NEONATOLOGICOS</li>                      
+                        <li class="list-group-item">C. INTERMEDIOS NEONATOLOGICOS</li></ul>
+                    </ul>
+                </div>
+            </div>
+                        
+                Para hacer más simple la búsqueda se definen 2 filtros genéricos: Cuidado Progresivo y Edad.
+                Estos filtros funcionan independientemente uno del otro. Si no se selecciona una opción 
+                no se aplica el filtro correspondiente en la búsqueda.
+            
+            <tr><td>
+            <div class="row">
+                <div class="col">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="background-color: lightblue;">Cuidado Progresivo</li>                  
+                        <li class="list-group-item">Moderado</li>   
+                        <li class="list-group-item">Intermedio</li>
+                        <li class="list-group-item">Crítico</li>              
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="background-color: lightblue;">Edad</li>                  
+                        <li class="list-group-item">Adulto (>14 años)</li>   
+                        <li class="list-group-item">Pediátrica (>28 días y <14 años)</li>
+                        <li class="list-group-item">Neonatológica (<28 días)</li>              
+                    </ul>
+                </div>
+            </div>
+            
+            <tr><td class="h5">Estado</td></tr>
+            <tr><td> La cama puede pasar por varios estados. Por defecto está seleccionado
+                    el filtro de camas libres.
+            <tr><td>
+            <div class="row">
+                <div class="col">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="background-color: lightblue;">Estados</li>                  
+                        <li class="list-group-item">Libre</li>   
+                        <li class="list-group-item">Ocupada</li>
+                        <li class="list-group-item">Fuera de servicio</li>
+                        <li class="list-group-item">En reparación</li>
+                        <li class="list-group-item">Reservada</li>
+                    </ul>
+                </div>
+            </div>
+            </td></tr>
+            
+            <th id='botones' class="h4">Botones: Copiar, CSV, Imprimir y Columnas<a href='#introduccion'><i class="fas fa-home float-right"></i></a></th>
+            <tr><td>Es posible copiar el resultado de la consulta al portapapeles o
+                generar un archivo CSV, el cual puede ser interpretado por cualquier software
+                de planilla de cálculos como por ejemplo Excel. También se pueden imprimir
+                dichos resultados. Por último, el botón Columnas sirve para
+                mostrar/ocultar los campos según elección. Además, la exportación
+                se realiza solo de las columnas que estén seleccionadas.</td></tr>
+            <tr><td class="h5">Copiar</td></tr>
+            <tr><td>Copia al portapapeles el resultado de la consulta, independiente del paginado, pero
+                solo de las columnas visibles. El caracter de separador de campos es el tabulador.</td></tr>
+            <tr><td class="h5">CSV</td></tr>
+            <tr><td>Exporta el resultado completo de la consulta en un archivo de texto del tipo CSV 
+                    con el siguiente formato: primer fila los nombres de columnas, los campos separados 
+                    por punto y coma, y encerrados entre comillas. La exportación solo se genera con
+                    las columnas visibles.</td></tr>
+            <tr><td class="h5">Imprimir</td></tr>
+            <tr><td>Genera una impresión del resultado total de la consulta y solo de las columnas visibles.
+                El navegador utilizado gestiona directamente la impresión.</td></tr>
+            <tr><td class="h5">Columnas</td></tr>
+            <tr><td>Al presionar el botón de columnas se despliega un menú flotante con un listado
+                de nombres de columnas. Estas se pueden marcar o desmarcar y la tabla de resultados
+                se actualiza en el momento. Por último hay una opción que dice Restaurar y sirve
+                para volver atrás las modificaciones de columnas.
+            <table class="table table-striped columnas">
+                <thead>
+                    <tr>
+                      <th style="background-color: lightblue; color: black;">Columna</th>
+                      <th style="background-color: lightblue; color: black;">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>Efector</td>
+                      <td>Nombre del hospital al cual pertenece la cama</td>
+                    </tr>
+                    <tr>
+                      <td>Sala</td>
+                      <td>Nombre de la sala del hospital donde se encuenta la cama</td>
+                    </tr>
+                    <tr>
+                      <td>Habitación</td>
+                      <td>Nombre de la habitación</td>
+                    </tr>
+                    <tr>
+                      <td>Cama</td>
+                      <td>Nombre de cama</td>
+                    </tr>
+                    <tr>
+                      <td>Estado</td>
+                      <td>Los estados posibles son: LIBRE, OCUPADA, FUERA DE SERVICIO, EN REPARACION O RESERVADA</td>
+                    </tr>
+                    <tr>
+                      <td>Clasificación</td>
+                      <td>Descripción de la clasificación de la cama. Ver tabla en la sección más arriba: Filtros de Búsqueda -> Cuidado Progresivo y Edad</td>
+                    </tr>
+                    <tr>
+                      <td>Oxígeno</td>
+                      <td>Si o No</td>
+                    </tr>
+                    <tr>
+                      <td>Respirador</td>
+                      <td>Si o No</td>
+                    </tr>
+                    <tr>
+                      <td>Aislamiento</td>
+                      <td>Si o No</td>
+                    </tr>
+                    <tr>
+                      <td>Fecha/Hora modificación</td>
+                      <td>Es la fecha y hora que se modificó por última vez el estado de la cama en la base central</td>
+                    </tr>
+                    <tr>
+                      <td>Fecha/Hora sincronización</td>
+                      <td>Es la fecha y hora que el efector envió por última vez el informe de configuración edilicia</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            </td></tr>
+            <th id='paginado' class="h4">Paginado de los Resultados<a href='#introduccion'><i class="fas fa-home float-right"></i></a></th>
+            <tr><td>
+                Esta opción sirve para limitar los registros que se muestran en la tabla de resultados. 
+                Cuando los datos superan la cantidad de filas visibles, entonces se crean una serie de 
+                botones con los números de páginas en la parte inferior derecha, que se pueden
+                utilizar para ir navegando.</td></tr>
+            <th id='filtrado_resultados' class="h4">Filtrado de resultados<a href='#introduccion'><i class="fas fa-home float-right"></i></a></th>
+            <tr><td>El filtro se aplica al total de resultados, sin importar el paginado. Al colocar
+                un caracter en la casilla Buscar, automáticamente se aplica el filtro a la tabla. El
+                filtrado se aplica a todas las columnas buscando coincidencia en cualquier parte del
+                texto.</td></tr>
+        </table>
+            
+    </div>        
+        
+    
+    
+    
+{% endblock %}

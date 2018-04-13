@@ -207,6 +207,10 @@ trait WSSyncController
             // resync eliminar salas
             $ce->refreshEliminarSalas($infsalas);
             
+            // actualiza la fecha/hora sincro
+            $ce->actualizarFechaHoraSincro($id_efector);
+            
+            
             // 200
             $status_code = 200;
             

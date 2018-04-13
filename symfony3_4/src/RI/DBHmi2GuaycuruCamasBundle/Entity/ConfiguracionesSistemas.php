@@ -10,6 +10,8 @@
  */
 namespace RI\DBHmi2GuaycuruCamasBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,24 @@ class ConfiguracionesSistemas
      */
     private $activa;
 
+    /**
+     * @var integer 0=ABM; 1=WS
+     *
+     * @Assert\Choice({0, 1},
+     *      message = "El valor de tipo_registros: {{ value }} no es válido. Valores posibles 0=ABM, 1=WS"
+     * )
+     * 
+     * @ORM\Column(name="tipo_registros", type="integer", nullable=false)
+     */
+    private $tipoRegistros;
+    
+    /**
+     * @var \DateTime Fecha de última sincronización por web services
+     *
+     * @ORM\Column(name="fecha_hora_sincro", type="datetime", nullable=true)
+     */
+    private $fechaHoraSincro;
+    
     /**
      * @var string Descripción u observación del efector
      *
@@ -146,5 +166,53 @@ class ConfiguracionesSistemas
     public function getIdEfector()
     {
         return $this->idEfector;
+    }
+    
+    /**
+     * Set tipoRegistros
+     *
+     * @param integer $tipoRegistros
+     *
+     * @return ConfiguracionesSistemas
+     */
+    public function setTipoRegistros($tipoRegistros)
+    {
+        $this->tipoRegistros = $tipoRegistros;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoRegistros
+     *
+     * @return integer
+     */
+    public function getTipoRegistros()
+    {
+        return $this->tipoRegistros;
+    }
+    
+    /**
+     * Set fechaHoraSincro
+     *
+     * @param \DateTime $fechaHoraSincro
+     *
+     * @return ConfiguracionesSistemas
+     */
+    public function setFechaHoraSincro($fechaHoraSincro)
+    {
+        $this->fechaHoraSincro = $fechaHoraSincro;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaHoraSincro
+     *
+     * @return \DateTime
+     */
+    public function getFechaHoraSincro()
+    {
+        return $this->fechaHoraSincro;
     }
 }

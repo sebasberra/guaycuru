@@ -530,4 +530,45 @@ trait ConfiguracionEdiliciaSync{
         
         return;
     }
+    
+    /**
+     * **Actualiza la fecha/hora de sincronización de los datos del efector
+     * con la fecha/hora actual**
+     * 
+     * @param integer $id_efector Efector al cual se actualizará la fecha/hora
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
+    public function actualizarFechaHoraSincro($id_efector){
+        
+        try{
+            
+            // actualiza fecha/hora sync
+            $configuracion_sistema =
+                    RI::$doctrine
+                        ->getRepository
+                            (RIUtiles::DB_BUNDLE.':ConfiguracionesSistemas')
+                        ->findOneByIdEfector($id_efector);
+            $configuracion_sistema->setFechaHoraSincro(new \DateTime);
+
+            // validacion assert
+            RIUtiles::validacionAssert($configuracion_sistema);
+
+            // insert datos en la DB
+            RI::$em->persist($configuracion_sistema);
+            RI::$em->flush();
+        
+        } catch (\Exception $e){
+            
+            RI::$error_debug .= 
+                    ' Función actualizarFechaHoraSincro. Msg: '
+                    .$e->getMessage();
+            
+            throw $e;
+        }
+        
+        return;
+    }
 }
