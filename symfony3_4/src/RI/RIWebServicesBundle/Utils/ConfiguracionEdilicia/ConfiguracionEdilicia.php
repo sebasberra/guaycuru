@@ -62,8 +62,17 @@ class ConfiguracionEdilicia extends RI
                 (RIUtiles::DB_BUNDLE.':Habitaciones')
                 ->countCamas($habitacion->getIdHabitacion(),false);
         
-        // cant camas
-        $habitacion->setCantCamas($count);
+        // check diff
+        if ($count!=$habitacion->getCantCamas()){
+            
+            // cant camas
+            $habitacion->setCantCamas($count);
+            
+        }else{
+            
+            // no modif
+            return;
+        }
         
         // validacion assert
         RIUtiles::validacionAssert($habitacion);
@@ -85,8 +94,17 @@ class ConfiguracionEdilicia extends RI
                 (RIUtiles::DB_BUNDLE.':Salas')
                 ->countCamas($sala->getIdSala(),false);
         
-        // cant camas
-        $sala->setCantCamas($count);
+        // check diff
+        if ($count!=$sala->getCantCamas()){
+            
+            // cant camas
+            $sala->setCantCamas($count);
+            
+        }else{
+            
+            // no modif
+            return;
+        }
         
         
         // validacion assert
@@ -112,7 +130,33 @@ class ConfiguracionEdilicia extends RI
 
         foreach($habitaciones as $habitacion) {
 
-            $this->setCantCamasHab($habitacion->getIdHabitacion());
+            $this->setCantCamasHab($habitacion);
+
+        }
+                
+    }
+    
+    /**
+     * Setea la cantidad de camas del efector
+     * 
+     * @param integer $id_efector
+     */
+    private function setCantCamasEfector($id_efector){
+        
+        
+        // salas del efector
+        $salas = 
+            RI::$doctrine->getRepository
+                (RIUtiles::DB_BUNDLE.':Salas')
+                ->findByIdEfector($id_efector);
+
+        foreach($salas as $sala) {
+
+            // cant camas sala
+            $this->setCantCamasSala($sala);
+            
+            // cant camas de las habitaciones de la sala
+            $this->setCantCamasHabSala($sala->getIdSala());
 
         }
                 

@@ -207,6 +207,9 @@ trait WSSyncController
             // resync eliminar salas
             $ce->refreshEliminarSalas($infsalas);
             
+            // refresh cant camas efector
+            $ce->refreshCantCamasEfector($id_efector);
+            
             // actualiza la fecha/hora sincro
             $ce->actualizarFechaHoraSincro($id_efector);
             

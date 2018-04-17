@@ -532,6 +532,36 @@ trait ConfiguracionEdiliciaSync{
     }
     
     /**
+     * **Recorre todas las salas y habitaciones refrescando la cantidad de 
+     * camas**
+     * 
+     * @param integer $id_efector Efector al cual se actualizarán 
+     * las cantidades de camas
+     * 
+     * @return void Si la función terminó bien no devuelve valor
+     * 
+     * @throws \Exception Las excepciones son capturadas y relanzadas
+     */
+    public function refreshCantCamasEfector($id_efector){
+        
+        try{
+            
+            // actualiza cant camas efector
+            $this->setCantCamasEfector($id_efector);
+        
+        } catch (\Exception $e){
+            
+            RI::$error_debug .= 
+                    ' Función refreshCantCamasEfector. Msg: '
+                    .$e->getMessage();
+            
+            throw $e;
+        }
+        
+        return;
+    }
+    
+    /**
      * **Actualiza la fecha/hora de sincronización de los datos del efector
      * con la fecha/hora actual**
      * 
