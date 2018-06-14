@@ -278,19 +278,32 @@ Private Sub cmdCamasVer_Click()
 
     'Agregar la refencia Microsoft XML
     Dim xmlhttp As MSXML2.ServerXMLHTTP
-    
+
     'var
     Dim sUrl As String
-    
+    Dim sUser_basic As String
+    Dim sPass_basic As String
+    Dim sUser_ws As String
+    Dim sPass_ws As String
+
     'URL
-    sUrl = "http://192.168.56.1:8005/camas/ver/121/HD4.xml"
+    sUrl = "https://twww.santafe.gob.ar/redinternacion/api/camas/ver/121/HD4.json"
+
+    'credenciales
+    sUser_basic = "everis_ws"
+    sPass_basic = "b1f4c2f64c2cced32b4963e902c4ea2bba6f00397383c45165cb5e51ca94da0b"
+    sUser_ws = "everis_ws"
+    sPass_ws = "e099c96f5c6f39c498c810dc748bbc50"
+        
     
     'inicializa objeto http
     Set xmlhttp = New MSXML2.ServerXMLHTTP
-    
+
     'request sincrono
-    xmlhttp.open "GET", sUrl, False
+    xmlhttp.open "GET", sUrl, False, sUser_basic, sPass_basic
     xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+    xmlhttp.setRequestHeader "usuario", sUser_ws
+    xmlhttp.setRequestHeader "password", sPass_ws
     xmlhttp.send
     
     'response

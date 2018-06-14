@@ -70,6 +70,7 @@ INNER JOIN
 ON h.id_sala = s.id_sala	
 WHERE 
 	s.id_efector=@id_efector
+AND h.baja = FALSE
 	
 UNION
 
@@ -108,7 +109,9 @@ LEFT JOIN
 ON h.id_sala = s.id_sala
 
 WHERE 
-	c.id_efector=@id_efector;
+	c.id_efector=@id_efector
+AND h.baja = FALSE
+AND c.baja = FALSE;
 	
 	
 SELECT 
