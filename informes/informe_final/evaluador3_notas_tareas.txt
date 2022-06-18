@@ -1,0 +1,19 @@
+1. Considero que la mayor parte del contenido del primer apéndice 
+debería estar incluido dentro del cuerpo principal del informe,
+reservando para éste los cuadros, diagramas, y demas contenidos 
+ampliatorio del contenido principal.
+
+2. En el cuerpo principal del informe no están mencionados los apéndices, 
+por lo que no es claro qué contenidos el autor está derivando hacia los 
+apéndices y cuáles no.
+
+3. La motivación no es una motivación, sino el problema del proyecto.
+
+4. En la introducción no hay una presentación de la metodología que se 
+sigue en el proyecto. Sería conveniente presentar los aspectos 
+metodológicos, siendo fundamentales para cualquier construcción, en este 
+caso de software. Del mismo modo, no está presentado el objetivo del
+proyecto, solo un propósito, pero existe una gran diferencia entre 
+Objetivo y Propósito. Se requiere incluir en el informe ambos 
+contenidos.
+
