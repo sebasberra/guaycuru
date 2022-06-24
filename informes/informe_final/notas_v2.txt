@@ -1,0 +1,5 @@
+* Apendice Especificacion de Requerimientos se pasa a capitulo 3
+
+2022.06.19
+
+* se pasa parrafo 7.1 Caracteristicas de la informatica hospitalaria como punto 1.2

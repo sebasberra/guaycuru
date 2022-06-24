@@ -17,3 +17,26 @@ proyecto, solo un propósito, pero existe una gran diferencia entre
 Objetivo y Propósito. Se requiere incluir en el informe ambos 
 contenidos.
 
+
+Comentarios sobre las conclusiones:
+
+El enfoque adoptado en la conclusión es incorrecta. Es impropio para una conclusión presentar
+información nueva, sin embargo, en el informe hay mucha información que es muy interesante,
+algunas de ellas como información de contexto (ejemplo: el contenido de 6.1 Características de
+la informática hospitalaria), en otros casos, como datos relevantes para los capítulos referidos
+al desarrollo del mismo (ejemplo, el contenido de 6.2 Implementación), mientras que lo único
+mas atinado para la conclusión, es lo referido al punto 6.3 Resultados y futuro, aunque es
+incompleta para ser una conclusión.
+
+En la conclusión se debería hacer énfasis en la idea o punto principal del proyecto, exhibiendo
+un punto de vista o apreciación general del trabajo como meta, la cual estará relacionada al
+objetivo (que no esta dicho en el proyecto). Se debe pensar también en el propósito del
+proyecto, y esclarecer cualquier duda que aún pueda tener sobre el asunto afrontado, por
+ejemplo el abordaje de la solución del problema. Luego pensar en el problema en sí
+demostrando que el proyecto ofrece una solución real al mismo, y debatiendo sobre la
+propuesta de solución, uniendo lo originalmente supuesto que sería una buena solución, con lo
+que se puede verificar una vez desarrollado el proyecto. Luego, destacar las posibilidades que
+brinda el desarrollo a futuro, las oportunidades que ofrece (beneficios).
+Un punto especialmente interesante es observar críticamente el trabajo, debatiendo sobre las
+correctas elecciones (o no), realizadas a lo largo del proyecto, especialmente en relación con la
+metodología, las tecnologías, el enfoque y abordaje del proyecto, etc.
