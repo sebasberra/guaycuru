@@ -1,5 +1,31 @@
+2022.06.xx
+
 * Apendice Especificacion de Requerimientos se pasa a capitulo 3
 
 2022.06.19
 
 * se pasa parrafo 7.1 Caracteristicas de la informatica hospitalaria como punto 1.2
+
+2022.06.22
+
+* se cambia "Motivación" por "Problema"
+* se agrega objetivo al apartado 1.1
+
+2022.06.30
+
+* se modifica texto 'objetivo' en 1.1
+* se cambia título 1.2 Contexto x 1.3 Organización e informatización en hospitales
+
+2022.07.03
+
+* se comienza con agregar Metodología al punto 1.1
+
+2022.07.16
+
+* se termina el apartado Metodología en el punto 1.1
+
+* organizados contenidos de 1.2 y 1.3
+
+2022.08.27
+
+* se agrega al capítulo diseño "Conectividad entre los sistemas actuales y el proyecto" incluye un gráfico "Conectividad de los sistemas de internación públicos provinciales"

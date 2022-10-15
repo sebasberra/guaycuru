@@ -3,19 +3,84 @@ debería estar incluido dentro del cuerpo principal del informe,
 reservando para éste los cuadros, diagramas, y demas contenidos 
 ampliatorio del contenido principal.
 
+* Apendice Especificacion de Requerimientos se pasa a capitulo 3
+
 2. En el cuerpo principal del informe no están mencionados los apéndices, 
 por lo que no es claro qué contenidos el autor está derivando hacia los 
 apéndices y cuáles no.
 
+? ?
+
 3. La motivación no es una motivación, sino el problema del proyecto.
 
-4. En la introducción no hay una presentación de la metodología que se 
+* Se cambia título "Motivación" por "Problema" en apartado 1.1 introducción.
+
+4. En la introducción no hay una presentación de la metodología que se
 sigue en el proyecto. Sería conveniente presentar los aspectos 
 metodológicos, siendo fundamentales para cualquier construcción, en este 
-caso de software. Del mismo modo, no está presentado el objetivo del
+caso de software.
+
+* se termina el apartado Metodología en el punto 1.1
+
+* organizados contenidos de 1.2 y 1.3
+
+5. Del mismo modo, no está presentado el objetivo del
 proyecto, solo un propósito, pero existe una gran diferencia entre 
 Objetivo y Propósito. Se requiere incluir en el informe ambos 
 contenidos.
+
+* se agrega objetivo al apartado 1.1
+
+6. En el capítulo de Diseño, no se termina de comprender cómo fue diseñado este sistema. En
+primera instancia se hace un repaso de los otros sistemas que tienen relación con el proyecto
+actual. Sería conveniente esquematizar el sistema actual y la relación que tiene con los otros
+sistemas mencionados. Asimismo, se podría describir por qué y para qué se relaciona con esos
+sistemas.
+
+* se agrega al capítulo diseño "Conectividad entre los sistemas actuales y el proyecto" incluye un gráfico "Conectividad de los sistemas de internación públicos provinciales"
+
+
+Del mismo modo, se debería especificar qué herramientas informáticas o tecnologías se utilizan
+para esas interacciones, qué datos comparten, en qué dirección, etc. La tecnología asociada a
+esas interacciones no está mencionada en el informe, sin embargo, sería conveniente que ello
+surja de un diseño previo. Si bien en el capítulo anterior se describen algunos de los sistemas
+ello se presenta como información de contexto, y no como un análisis de los requerimientos del
+proyecto y las necesidades de interacción con el proyecto actual, que daría luego la
+oportunidad de presentar un diseño para esas interacciones. Por lo tanto, se requiere que en el
+capítulo 2 se presente ademas de la información proporcionada, los requerimientos de datos o
+flujos de información entre el proyecto actual y los otros sistemas disponibles, y en el capítulo
+de diseño, se elabore un esquema que posibilite generar las especificaciones para el desarrollo
+del sistema actual.
+
+* se agrega el punto 2.5 "Registro y flujo de los datos" al capítulo 2 y
+se quita el punto 2.5 "Casos de uso"
+
+
+Posteriormente se presenta la arquitectura del sistema. Si bien se declara que se emplea el
+Patrón de diseño Modelo-Vista-Controlador, no se realiza un análisis critico del mismo en
+contraposición con otros patrones por el cual se termina decidiendo por éste. Tampoco se
+presenta el diseño arquitectónico final aplicado en el sistema en cuestión. En la figura 7 se
+presenta un flujo para Symfony pero ello no alcanza a responder a estas inquietudes.
+
+
+
+En cada capítulo el autor expone una síntesis de lo que es esperable encontrar como contenido
+del mismo. En el capítulo 4 sin embargo, se expone el contenido de capítulos siguientes, lo cual
+no es propio dado que excede al capítulo que se esta presentando.
+El punto 4.5 se llama igual que el capítulo. Si bien considero que gran parte del capítulo 4 no se
+trata de desarrollo, una vez que se decide incorporar un contenido X a este capítulo, se da por
+supuesto que el estudiante considera que ello es parte del desarrollo. Siguiendo esa lógica, que
+la sección 4.5 se llame igual cuando es un subtema dentro del tema general, es repetitivo y por
+lo tanto inadecuado.
+Si bien en el capítulo 4 se exponen los aspectos mas importantes de lo que fue el desarrollo, el
+autor parece realizar solo un “sobrevuelo” del tema sin entrar en detalles. El tema podría
+profundizarse y mostrarse detalles de algunas particularidades de lo que fue el desarrollo. Por
+ejemplo, contratiempos encontrados, WS o Apis que no funcionaron, o cómo se resolvió la
+complejidad de varios sistemas interactuando con diseños “importados” en lugar de realizados
+desde cero.
+Por otro lado se presentan fundamentalmente los resultados, mientras que el proceso también
+es rico para informar.
+
 
 
 Comentarios sobre las conclusiones:
