@@ -62,16 +62,23 @@ contraposición con otros patrones por el cual se termina decidiendo por éste. 
 presenta el diseño arquitectónico final aplicado en el sistema en cuestión. En la figura 7 se
 presenta un flujo para Symfony pero ello no alcanza a responder a estas inquietudes.
 
+* no readaptado del todo, pero se modificó el punto 4.2 y el párrafo anterior a éste
 
 
 En cada capítulo el autor expone una síntesis de lo que es esperable encontrar como contenido
 del mismo. En el capítulo 4 sin embargo, se expone el contenido de capítulos siguientes, lo cual
 no es propio dado que excede al capítulo que se esta presentando.
+
+* Modificado los párrafos de la presentación del capítulo 5
+
 El punto 4.5 se llama igual que el capítulo. Si bien considero que gran parte del capítulo 4 no se
 trata de desarrollo, una vez que se decide incorporar un contenido X a este capítulo, se da por
 supuesto que el estudiante considera que ello es parte del desarrollo. Siguiendo esa lógica, que
 la sección 4.5 se llame igual cuando es un subtema dentro del tema general, es repetitivo y por
 lo tanto inadecuado.
+
+* se quito el punto 5.5 Desarrollo y se reemplazó por 5.5 Servidor y 5.6 Los clientes
+
 Si bien en el capítulo 4 se exponen los aspectos mas importantes de lo que fue el desarrollo, el
 autor parece realizar solo un “sobrevuelo” del tema sin entrar en detalles. El tema podría
 profundizarse y mostrarse detalles de algunas particularidades de lo que fue el desarrollo. Por
@@ -81,17 +88,25 @@ desde cero.
 Por otro lado se presentan fundamentalmente los resultados, mientras que el proceso también
 es rico para informar.
 
+* no se realiza la sugerencia de desarrollo el capítulo 5
 
+Como se dijo antes, no hay una presentación metodológica del desarrollo, sin embargo, el
+informe está estructurado sobre una base metodológica de tipo cascada o secuencial, Sin
+embargo, en 5.1 se presenta una metodología incremental o evolutivo, entrando en colisión con
+lo previamente expuesto. Se requiere clarificar la metodología seguida en el proyecto.
 
-Comentarios sobre las conclusiones:
+* se quita parte de la introducción del punto 6.1
 
-El enfoque adoptado en la conclusión es incorrecta. Es impropio para una conclusión presentar
-información nueva, sin embargo, en el informe hay mucha información que es muy interesante,
-algunas de ellas como información de contexto (ejemplo: el contenido de 6.1 Características de
-la informática hospitalaria), en otros casos, como datos relevantes para los capítulos referidos
-al desarrollo del mismo (ejemplo, el contenido de 6.2 Implementación), mientras que lo único
-mas atinado para la conclusión, es lo referido al punto 6.3 Resultados y futuro, aunque es
-incompleta para ser una conclusión.
+El capítulo 5 se queda entre medio de ser una demostración del funcionamiento del software
+con la presentación del desarrollo de algunas características. Parte de los aspectos
+presentados en ese capítulo son exponentes dignos de ser presentados en el capítulo de
+desarrollo, e interesante de saber cómo se codificaron, mientras que otros parece una
+demostración de cómo funciona el software.
+Se debe resaltar que sería deseable tener mayor detalle de un caso de uso típico de la
+aplicación
+
+* queda pendiente de ver la re escritura del capítulo 6
+
 
 En la conclusión se debería hacer énfasis en la idea o punto principal del proyecto, exhibiendo
 un punto de vista o apreciación general del trabajo como meta, la cual estará relacionada al

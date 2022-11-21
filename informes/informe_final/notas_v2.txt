@@ -29,3 +29,17 @@
 2022.08.27
 
 * se agrega al capítulo diseño "Conectividad entre los sistemas actuales y el proyecto" incluye un gráfico "Conectividad de los sistemas de internación públicos provinciales"
+
+2022.10.15
+
+* arquitectura de software: no readaptado del todo, pero se modificó el punto 4.2 y el párrafo anterior a éste
+* Modificado los párrafos de la presentación del capítulo 5
+* se quito el punto 5.5 Desarrollo y se reemplazó por 5.5 Servidor y 5.6 Los clientes
+* no se realiza la sugerencia de desarrollo el capítulo 5
+* se quita parte de la introducción del punto 6.1
+* queda pendiente de ver la re escritura del capítulo 6
+
+2022.10.17
+
+* se pasa punto 7.2 implementación como punto 5.9
+
