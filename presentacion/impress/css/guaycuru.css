@@ -30,8 +30,22 @@
 .impress-supported .fallback-message {
     display: none;
 }
-
+/* ---------- */
 /* mis stilos */
+/* ---------- */
+
+/* fonts */
+@font-face {
+    font-family: "dancingscript";
+    src: url("../fonts/DancingScript-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "titilliumweb";
+    src: url("../fonts/TitilliumWeb-Regular.ttf");
+}
+
+/* fondo de la presentación */
 .gyu-presentacion::before {
     content: " ";
     display: block;
@@ -49,24 +63,239 @@
     background-color: lightblue;
 }
 
+/* slide - generico */
 .gyu-slide{
-    /* background-color: gray; */
-    /* border: 2px solid blueviolet;
-    border-radius: 25px; */
+    background-color: cadetblue;
+
+    border-radius: 25px;
+    border-style: solid;
 
     display: block;
 
-    width: 1024px;
-    height: 768px;
+    width: 1280px;
+    height: 960px;
+
+    padding: 1rem;
 }
 
-.gyu-img{
 
-    width: 100px;
-    height: 100px;
+/* slide - intro */
+.gyu-slide-intro1{
+    background-color: rgb(44, 97, 100);
+    background-image: url("../images/fondo1.png");
+    opacity: 0.1;
+    background-position: bottom;
+    background-size: cover;
+}
+.gyu-slide-intro2{
+    background-color: rgb(39, 102, 105);
+    background-image: url("../images/fondo1_2.png");
+    opacity: 0.1;
+    background-position: bottom;
+    background-size: cover;
+}
 
-    margin-right: auto;
-    margin-left: auto;
+/* slide - contexto */
+.gyu-slide-contexto1{
+    background-color: rgb(186, 215, 252);
+    background-image: url("../images/fondo2.png");
+    
+    background-position: bottom;
+    background-size: cover;
+}
+
+/* slide - contexto */
+.gyu-slide-contexto2{
+    background-color: rgb(186, 215, 252);
+    background-image: url("../images/fondo2_2.png");
+    
+    background-position: bottom;
+    background-size: cover;
+}
+
+/* slide - relevamiento */
+.gyu-slide-relevamiento{
+    background-color: cadetblue;
+    background-image: url("../images/fondo3.png");
+    
+    background-position: bottom;
+    background-size: cover;
+}
+
+/* slide - requerimientos */
+.gyu-slide-requerimientos{
+    background-color: rgb(108, 182, 231);
+    background-image: url("../images/fondo4.png");
+    
+    background-position: bottom;
+    background-size: cover;
+}
+
+/* slide - diseño */
+.gyu-slide-diseño{
+    background-color: rgb(66, 190, 206);
+    background-image: url("../images/fondo5.png");
+    
+    background-position: bottom;
+    background-size: 120% auto;
+}
+
+/* slide - conclusiones */
+.gyu-slide-conclusiones{
+    background-color: cadetblue;
+    background-image: url("../images/fondo6.png");
+    
+    background-position: bottom;
+    background-size: auto;
+}
+
+.gyu-slide-col-p {
+    align-self: center;
+}
+
+.gyu-slide-col-icon{
+    align-self: center;
+    text-align: center;
+}
+
+.gyu-slide-p {
+    font-family: roboto;
+    font-size: 56px;
+}
+
+.gyu-fz-32 { font-size: 32px; }
+
+.gyu-fz-34 { font-size: 34px; }
+
+.gyu-fz-36 { font-size: 36px; }
+
+.gyu-fz-38 { font-size: 38px; }
+
+.gyu-fz-40 { font-size: 40px; }
+
+.gyu-fz-42 { font-size: 42px; }
+
+.gyu-fz-44 { font-size: 44px; }
+
+.gyu-fz-46 { font-size: 46px; }
+
+.gyu-fz-48 { font-size: 48px; }
+
+.gyu-fz-50 { font-size: 50px; }
+
+.gyu-fz-52 { font-size: 52px; }
+
+.gyu-fz-54 { font-size: 54px; }
+
+.gyu-fz-56 { font-size: 56px; }
+
+.gyu-fz-58 { font-size: 58px; }
+
+.gyu-fz-60 { font-size: 60px; }
+
+.gyu-fz-62 { font-size: 62px; }
+
+
+.gyu-slide-icon{
+    font-size: 6rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
+
+/* primer slide */
+.gyu-titulo{
+    font-family: titilliumweb; 
+    font-size: 86px;
+}
+
+.gyu-autor{
+    font-family: dancingscript; 
+    font-size: 28px;
+    margin-top: 1.5rem;
+}
+
+/* slide contenidos */
+.gyu-contenidos{
+
+    background-color: rgba(53, 53, 53, 0.856);
+    /* border: 2px solid blueviolet; */
+    border-radius: 25px;
+
+    width: 1280px;
+    height: 960px;
+    
+    display: block;
+
+    padding: 1rem;
+}
+
+.gyu-contenidos-icon{
+    font-size: xxx-large;
+    padding: 1rem;
+}
+
+.gyu-contenidos-ul{
+    text-align: left;
+    font-size: 20px;
+}
+
+.gyu-contenidos-espacios-entre-temas{
+    height: 0.3rem;
+}
+
+li a {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
+
+/* slide capitulo */
+.gyu-slide-capitulo {
+    background-color: black;
+    color: white;
+
+    border-radius: 25px;
+
+    display: block;
+
+    width: 1280px;
+    height: 960px;
+
+    padding: 1rem;
+}
+
+.gyu-capitulo-ul {
+    text-align: center;
+    font-size: 46px;
+    list-style: none;
+    padding: 4rem;
+}
+
+.gyu-capitulo-sub-ul{
+    text-align: center;
+    font-size: 32px;
+    list-style: none;
+    padding: 1rem;
+}
+
+.gyu-capitulo-icon{
+    font-size: 7rem;
+    padding: 4rem;
+}
+
+/* otros */
+.gyu-image-flip{
+    transform: scaleX(-1);
+}
+
+
+
+/* ------------------------------------- */
+/* modificaciones a clases de impress.js */
+
+body.impress-mouse-timeout div#impress-toolbar {
+    opacity: 0.1;
+    transition: opacity 2s;
+    display: block;
 }
 
 /* .future {
@@ -83,7 +312,7 @@
 } */
 
 .step {
-    opacity: 0.1;
+    opacity: 0.5;
     transition: opacity 1s;
 }
 .step.active {
