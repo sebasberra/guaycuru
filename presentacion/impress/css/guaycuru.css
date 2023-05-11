@@ -131,22 +131,36 @@
     background-size: cover;
 }
 
-/* slide - diseño */
-.gyu-slide-diseño{
+/* slide - desarrollo */
+.gyu-slide-desarrollo{
     background-color: rgb(66, 190, 206);
-    background-image: url("../images/fondo5.png");
+    background-image: url("../images/fondo5_3.png");
     
     background-position: bottom;
-    background-size: 120% auto;
+    background-size: 135% auto;
+}
+
+/* slide - desarrollo2 */
+.gyu-slide-desarrollo2{
+    background-color: rgb(66, 190, 206);
+}
+
+/* slide - desarrollo */
+.gyu-slide-desarrollo3{
+    background-color: rgb(66, 190, 206);
+    background-image: url("../images/fondo5_4.png");
+    
+    background-position: bottom;
+    background-size: 135% auto;
 }
 
 /* slide - conclusiones */
 .gyu-slide-conclusiones{
-    background-color: cadetblue;
-    background-image: url("../images/fondo6.png");
+    background-color: rgb(190, 169, 145);
+    background-image: url("../images/fondo6_2.png");
     
     background-position: bottom;
-    background-size: auto;
+    background-size: 125% auto;
 }
 
 .gyu-slide-col-p {
@@ -231,7 +245,7 @@
 
 .gyu-contenidos-icon{
     font-size: xxx-large;
-    padding: 1rem;
+    padding: 0.9rem;
 }
 
 .gyu-contenidos-ul{
@@ -312,7 +326,7 @@ body.impress-mouse-timeout div#impress-toolbar {
 } */
 
 .step {
-    opacity: 0.5;
+    opacity: 0.3;
     transition: opacity 1s;
 }
 .step.active {
